@@ -1,0 +1,36 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="MySQLDriver" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ODBC Driver 13 For SQL Server</Value>
+    </Setting>
+    <Setting Name="MySQLServer" Type="System.String" Scope="User">
+      <Value Profile="(Default)">DESKTOP-BI1TS62</Value>
+    </Setting>
+    <Setting Name="MySQLDbase" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MyShipping</Value>
+    </Setting>
+    <Setting Name="Trusted" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MySQLUserID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">root</Value>
+    </Setting>
+    <Setting Name="MySQLUserpwd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1234</Value>
+    </Setting>
+    <Setting Name="MySqlDefault" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="firstrun" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="DFLTuserID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin</Value>
+    </Setting>
+    <Setting Name="DFLTUserpwd" Type="System.String" Scope="User">
+      <Value Profile="(Default)">admin123</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
