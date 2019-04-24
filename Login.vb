@@ -13,9 +13,6 @@
         End If
 
         If (tblld = True) Then
-            'MsgBox(GlobalVariables.GL_DfltConnValues.AppMyDFUser)
-
-            ' Set the caption bar text of the form.  
             Me.Text = "myShipping"
             If (ModMisc.FillUsers() = False) Then
                 Application.Exit()

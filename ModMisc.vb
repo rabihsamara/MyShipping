@@ -4,7 +4,7 @@ Imports Excel = Microsoft.Office.Interop.Excel
 
 Module ModMisc
 
-    Private mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+    Private mysqlConn As SqlConnection
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
     Private results As String
@@ -36,6 +36,17 @@ Module ModMisc
         End Function
     End Class
 
+    Public Class CompanyName
+        Private m_CompName As String
+
+        Public Sub New(ByVal inCompName As String)
+            m_CompName = inCompName
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return m_CompName
+        End Function
+    End Class
     '******************************************************************************************************
     Public Function FillUsers() As Boolean
 
@@ -44,7 +55,7 @@ Module ModMisc
             FillUsers = False
             Login.cmbUsers.Items.Clear()
 
-            Using mysqlConn
+            Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
                 Dim command As New SqlCommand("SELECT UserID FROM Users where active = 1 order by UserID desc", mysqlConn)
                 mysqlConn.Open()
@@ -80,14 +91,14 @@ Module ModMisc
             FillCompanies = False
             Login.cmbCompany.Items.Clear()
 
-            Using mysqlConn
+            Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
                 Dim command As New SqlCommand("SELECT CompName FROM company where CompActive = 1 order by CompName asc", mysqlConn)
                 mysqlConn.Open()
 
                 myReader = command.ExecuteReader()
                 Do While myReader.Read()
-                    Login.cmbCompany.Items.Add(New UsersName(myReader.GetString(0)))
+                    Login.cmbCompany.Items.Add(New CompanyName(myReader.GetString(0)))
                 Loop
 
                 FillCompanies = True
@@ -124,57 +135,59 @@ Module ModMisc
         GlobalVariables.GL_Stat = False
         ReadSQL = False
 
-        Try
-            If (inopt = "CUP") Then
-                tsql = "SELECT usrpassword,usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 "
-            Else
-                tsql = GlobalVariables.Gl_SQLStr
-            End If
-
-            myCmd = mysqlConn.CreateCommand
-            myCmd.CommandText = tsql
-
-            mysqlConn.Open()
-
-            myReader = myCmd.ExecuteReader()
-            Do While myReader.Read()
-                'Check user password option
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            Try
                 If (inopt = "CUP") Then
-                    If (myReader.GetString(0).ToString = criteria) Then
-                        ReadSQL = True
-                        GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
-                    End If
-                ElseIf (inopt = "fldchk") Then
-                    fldtext = myReader.GetString(0)
-                    GlobalVariables.GL_Stat = True
-                    ReadSQL = fldtext
-
-                    'ElseIf (inopt = "actn") Then
-                    '    'UserID,ActShortName,bankacctNo,AcctType
-                    '    acctfulname = myReader.GetString(0).ToString & " - " & myReader.GetString(1).ToString & " - " & myReader.GetString(2).ToString
-                    '    GlobalVariables.GL_Stat = True
-                    '    ReadSQL = acctfulname
-                    'ElseIf (inopt = "acttot") Then
-                    '    actotamt = myReader.GetValue(0)
-                    '    GlobalVariables.GL_Stat = True
-                    '    ReadSQL = actotamt
-                    'ElseIf (inopt = "CatN") Then
-                    '    catname = myReader.GetValue(0)
-                    '    GlobalVariables.GL_Stat = True
-                    '    ReadSQL = catname
-                    'ElseIf (inopt = "chseq") Then
-                    '    catname = Trim(myReader.GetString(1).ToString) & myReader.GetValue(2)
-                    '    GlobalVariables.GL_Stat = True
-                    '    ReadSQL = catname
+                    tsql = "SELECT usrpassword,usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 "
+                Else
+                    tsql = GlobalVariables.Gl_SQLStr
                 End If
-            Loop
 
-        Catch ex As Exception
-            MsgBox(ex.ToString)
-        Finally
-            myReader.Close()
-            mysqlConn.Close()
-        End Try
+                myCmd = mysqlConn.CreateCommand
+                myCmd.CommandText = tsql
+
+                mysqlConn.Open()
+
+                myReader = myCmd.ExecuteReader()
+                Do While myReader.Read()
+                    'Check user password option
+                    If (inopt = "CUP") Then
+                        If (myReader.GetString(0).ToString = criteria) Then
+                            ReadSQL = True
+                            GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
+                        End If
+                    ElseIf (inopt = "fldchk") Then
+                        fldtext = myReader.GetString(0)
+                        GlobalVariables.GL_Stat = True
+                        ReadSQL = fldtext
+
+                        'ElseIf (inopt = "actn") Then
+                        '    'UserID,ActShortName,bankacctNo,AcctType
+                        '    acctfulname = myReader.GetString(0).ToString & " - " & myReader.GetString(1).ToString & " - " & myReader.GetString(2).ToString
+                        '    GlobalVariables.GL_Stat = True
+                        '    ReadSQL = acctfulname
+                        'ElseIf (inopt = "acttot") Then
+                        '    actotamt = myReader.GetValue(0)
+                        '    GlobalVariables.GL_Stat = True
+                        '    ReadSQL = actotamt
+                        'ElseIf (inopt = "CatN") Then
+                        '    catname = myReader.GetValue(0)
+                        '    GlobalVariables.GL_Stat = True
+                        '    ReadSQL = catname
+                        'ElseIf (inopt = "chseq") Then
+                        '    catname = Trim(myReader.GetString(1).ToString) & myReader.GetValue(2)
+                        '    GlobalVariables.GL_Stat = True
+                        '    ReadSQL = catname
+                    End If
+                Loop
+
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            Finally
+                myReader.Close()
+                mysqlConn.Close()
+            End Try
+        End Using
 
     End Function
 
@@ -392,39 +405,37 @@ Exit_Excel:
     '******************************************************************************************************************
     Public Sub RunProcedure(ByVal mytransRec As mytransRecord)
 
-        Dim sqlCon = New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
-        Using (sqlCon)
+            Dim sqlCmd As New SqlCommand()
 
-            Dim sqlComm As New SqlCommand()
+            sqlCmd.Connection = mysqlConn
+            sqlCmd.CommandText = "InsertTransData"
+            sqlCmd.CommandType = CommandType.StoredProcedure
 
-            sqlComm.Connection = sqlCon
-            sqlComm.CommandText = "InsertTransData"
-            sqlComm.CommandType = CommandType.StoredProcedure
+            sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
+            sqlCmd.Parameters.AddWithValue("@ptransentid", mytransRec.Transptransentid)
+            sqlCmd.Parameters.AddWithValue("@ptranstype", mytransRec.Transptranstype)
+            sqlCmd.Parameters.AddWithValue("@ptransmode", mytransRec.Transptransmode)
+            sqlCmd.Parameters.AddWithValue("@ptransFrom", mytransRec.TransptransFrom)
+            sqlCmd.Parameters.AddWithValue("@ptranspayto", mytransRec.Transptranspayto)
+            sqlCmd.Parameters.AddWithValue("@ptranspaytofor", mytransRec.Transptranspaytofor)
+            sqlCmd.Parameters.AddWithValue("@ptranscat", mytransRec.Transptranscat)
+            sqlCmd.Parameters.AddWithValue("@ptranssubcat", mytransRec.Transptranssubcat)
+            sqlCmd.Parameters.AddWithValue("@ptranssubcat2", mytransRec.Transptranssubcat2)
+            sqlCmd.Parameters.AddWithValue("@ptransaentnum", mytransRec.Transptransaentnum)
+            sqlCmd.Parameters.AddWithValue("@ptransdate", mytransRec.Transptransdate)
+            sqlCmd.Parameters.AddWithValue("@ptransstat", mytransRec.Transptransstat)
+            sqlCmd.Parameters.AddWithValue("@ptransamount", mytransRec.Transptransamount)
+            sqlCmd.Parameters.AddWithValue("@ptransowner", mytransRec.Transptransowner)
+            sqlCmd.Parameters.AddWithValue("@ptransinformation", mytransRec.Transptransinformation)
+            sqlCmd.Parameters.AddWithValue("@ptransrecurr", mytransRec.Transptransrecurr)
+            sqlCmd.Parameters.AddWithValue("@Pbalance", mytransRec.TransPbalance)
+            sqlCmd.Parameters.AddWithValue("@Popert", mytransRec.TransPopert)
+            sqlCmd.Parameters.AddWithValue("@Pmyid", mytransRec.TransPmyid)
 
-            sqlComm.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
-            sqlComm.Parameters.AddWithValue("@ptransentid", mytransRec.Transptransentid)
-            sqlComm.Parameters.AddWithValue("@ptranstype", mytransRec.Transptranstype)
-            sqlComm.Parameters.AddWithValue("@ptransmode", mytransRec.Transptransmode)
-            sqlComm.Parameters.AddWithValue("@ptransFrom", mytransRec.TransptransFrom)
-            sqlComm.Parameters.AddWithValue("@ptranspayto", mytransRec.Transptranspayto)
-            sqlComm.Parameters.AddWithValue("@ptranspaytofor", mytransRec.Transptranspaytofor)
-            sqlComm.Parameters.AddWithValue("@ptranscat", mytransRec.Transptranscat)
-            sqlComm.Parameters.AddWithValue("@ptranssubcat", mytransRec.Transptranssubcat)
-            sqlComm.Parameters.AddWithValue("@ptranssubcat2", mytransRec.Transptranssubcat2)
-            sqlComm.Parameters.AddWithValue("@ptransaentnum", mytransRec.Transptransaentnum)
-            sqlComm.Parameters.AddWithValue("@ptransdate", mytransRec.Transptransdate)
-            sqlComm.Parameters.AddWithValue("@ptransstat", mytransRec.Transptransstat)
-            sqlComm.Parameters.AddWithValue("@ptransamount", mytransRec.Transptransamount)
-            sqlComm.Parameters.AddWithValue("@ptransowner", mytransRec.Transptransowner)
-            sqlComm.Parameters.AddWithValue("@ptransinformation", mytransRec.Transptransinformation)
-            sqlComm.Parameters.AddWithValue("@ptransrecurr", mytransRec.Transptransrecurr)
-            sqlComm.Parameters.AddWithValue("@Pbalance", mytransRec.TransPbalance)
-            sqlComm.Parameters.AddWithValue("@Popert", mytransRec.TransPopert)
-            sqlComm.Parameters.AddWithValue("@Pmyid", mytransRec.TransPmyid)
-
-            sqlCon.Open()
-            sqlComm.ExecuteNonQuery()
+            mysqlConn.Open()
+            sqlCmd.ExecuteNonQuery()
 
         End Using
 

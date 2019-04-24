@@ -12,7 +12,7 @@ Public Class frmsettings
     Dim sDs As DataSet
     Dim sTable As DataTable
 
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         DataGridCompany.Visible = False
         PropertyGrid1.SelectedObject = My.Settings
@@ -67,10 +67,10 @@ Public Class frmsettings
             Lgform.Show()
         Else
             'other from maitenance screen.
-
             My.Settings.Save()
             Me.Close()
             'go where
+
         End If
 
     End Sub
