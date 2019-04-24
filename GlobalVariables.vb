@@ -10,6 +10,7 @@ Public Class GlobalVariables
 
     Public Shared Property Gl_LogUserID As String
     Public Shared Property Gl_UserIDLevel As String
+    Public Shared Property Gl_Company As String
     Public Shared Property Gl_SQLStr As String
     Public Shared Property GL_SLmsg As String
     Public Shared Property GL_Stat As Boolean

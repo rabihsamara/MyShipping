@@ -57,7 +57,14 @@
             End If
         End If
 
+        If (cmbCompany.Text = "") Then
+            txtmsg.Text = "Must Select company"
+            txtmsg.Visible = True
+            Exit Sub
+        End If
+        GlobalVariables.Gl_Company = cmbCompany.Text
         Me.Hide()
+
         'Check Entry user/password
         frm = MainMenu
         frm.Show()
