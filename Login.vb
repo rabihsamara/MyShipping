@@ -2,11 +2,9 @@
 
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim tblld As Boolean
+        Dim tblld As Boolean = False
 
-        'set form settings
         txtmsg.Visible = False
-        tblld = False
 
         If (GlobalVariables.GL_skipOnce = False) Then
             tblld = MyConn.BuildSQLStr()
@@ -20,6 +18,9 @@
             ' Set the caption bar text of the form.  
             Me.Text = "myShipping"
             If (ModMisc.FillUsers() = False) Then
+                Application.Exit()
+            End If
+            If (FillCompanies() = False) Then
                 Application.Exit()
             End If
         End If

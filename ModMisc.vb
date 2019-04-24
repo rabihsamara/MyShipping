@@ -74,25 +74,53 @@ Module ModMisc
 
     End Function
 
-    'use to read data only
+    Public Function FillCompanies() As Boolean
+        Try
+
+            FillCompanies = False
+            Login.cmbCompany.Items.Clear()
+
+            Using mysqlConn
+
+                Dim command As New SqlCommand("SELECT CompName FROM company where CompActive = 1 order by CompName asc", mysqlConn)
+                mysqlConn.Open()
+
+                myReader = command.ExecuteReader()
+                Do While myReader.Read()
+                    Login.cmbCompany.Items.Add(New UsersName(myReader.GetString(0)))
+                Loop
+
+                FillCompanies = True
+                Exit Function
+            End Using
+
+        Catch ex As Exception
+            MsgBox(Err.Description)
+            FillCompanies = False
+        Finally
+            If Not (myReader Is Nothing) Then
+                myReader.Close()
+            End If
+            If Not (mysqlConn Is Nothing) Then
+                mysqlConn.Close()
+            End If
+        End Try
+    End Function
+
+    'Use to read data only
     'inopt = CUP check user password.
-    'actn = account name for graph
-    'acttot = $total by account report detail tab by account
-    'mxid = max entryid by date of last transaction
-    'CatN = category name
-    'chseq = sequence of cheques
+    'fldchk = company record exists but address1 empty
+
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String
-        Dim acctfulname As String
-        Dim actotamt As Double
+        Dim fldtext As String
         Dim retint As Integer
-        Dim catname As String
 
         tsql = ""
-        acctfulname = ""
-        actotamt = 0
+        fldtext = ""
         retint = 0
+
         GlobalVariables.GL_Stat = False
         ReadSQL = False
 
@@ -116,27 +144,28 @@ Module ModMisc
                         ReadSQL = True
                         GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
                     End If
-                ElseIf (inopt = "actn") Then
-                    'UserID,ActShortName,bankacctNo,AcctType
-                    acctfulname = myReader.GetString(0).ToString & " - " & myReader.GetString(1).ToString & " - " & myReader.GetString(2).ToString
+                ElseIf (inopt = "fldchk") Then
+                    fldtext = myReader.GetString(0)
                     GlobalVariables.GL_Stat = True
-                    ReadSQL = acctfulname
-                ElseIf (inopt = "acttot") Then
-                    actotamt = myReader.GetValue(0)
-                    GlobalVariables.GL_Stat = True
-                    ReadSQL = actotamt
-                ElseIf (inopt = "mxid") Then
-                    retint = myReader.GetValue(0)
-                    GlobalVariables.GL_Stat = True
-                    ReadSQL = retint
-                ElseIf (inopt = "CatN") Then
-                    catname = myReader.GetValue(0)
-                    GlobalVariables.GL_Stat = True
-                    ReadSQL = catname
-                ElseIf (inopt = "chseq") Then
-                    catname = Trim(myReader.GetString(1).ToString) & myReader.GetValue(2)
-                    GlobalVariables.GL_Stat = True
-                    ReadSQL = catname
+                    ReadSQL = fldtext
+
+                    'ElseIf (inopt = "actn") Then
+                    '    'UserID,ActShortName,bankacctNo,AcctType
+                    '    acctfulname = myReader.GetString(0).ToString & " - " & myReader.GetString(1).ToString & " - " & myReader.GetString(2).ToString
+                    '    GlobalVariables.GL_Stat = True
+                    '    ReadSQL = acctfulname
+                    'ElseIf (inopt = "acttot") Then
+                    '    actotamt = myReader.GetValue(0)
+                    '    GlobalVariables.GL_Stat = True
+                    '    ReadSQL = actotamt
+                    'ElseIf (inopt = "CatN") Then
+                    '    catname = myReader.GetValue(0)
+                    '    GlobalVariables.GL_Stat = True
+                    '    ReadSQL = catname
+                    'ElseIf (inopt = "chseq") Then
+                    '    catname = Trim(myReader.GetString(1).ToString) & myReader.GetValue(2)
+                    '    GlobalVariables.GL_Stat = True
+                    '    ReadSQL = catname
                 End If
             Loop
 

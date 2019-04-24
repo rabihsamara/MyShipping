@@ -30,6 +30,8 @@ Partial Class Login
         Me.cmbUsers = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cmdLogin = New System.Windows.Forms.Button()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cmbCompany = New System.Windows.Forms.ComboBox()
         Me.SuspendLayout()
         '
         'txtmsg
@@ -37,22 +39,22 @@ Partial Class Login
         Me.txtmsg.BackColor = System.Drawing.SystemColors.Info
         Me.txtmsg.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtmsg.ForeColor = System.Drawing.SystemColors.InfoText
-        Me.txtmsg.Location = New System.Drawing.Point(1, 144)
+        Me.txtmsg.Location = New System.Drawing.Point(59, 144)
         Me.txtmsg.Name = "txtmsg"
         Me.txtmsg.ReadOnly = True
-        Me.txtmsg.Size = New System.Drawing.Size(210, 20)
+        Me.txtmsg.Size = New System.Drawing.Size(249, 20)
         Me.txtmsg.TabIndex = 16
         Me.txtmsg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'MonthCalendar1
         '
-        Me.MonthCalendar1.Location = New System.Drawing.Point(215, 5)
+        Me.MonthCalendar1.Location = New System.Drawing.Point(320, 2)
         Me.MonthCalendar1.Name = "MonthCalendar1"
         Me.MonthCalendar1.TabIndex = 15
         '
         'cmdExit
         '
-        Me.cmdExit.Location = New System.Drawing.Point(133, 82)
+        Me.cmdExit.Location = New System.Drawing.Point(133, 110)
         Me.cmdExit.Name = "cmdExit"
         Me.cmdExit.Size = New System.Drawing.Size(63, 22)
         Me.cmdExit.TabIndex = 14
@@ -96,18 +98,37 @@ Partial Class Login
         '
         'cmdLogin
         '
-        Me.cmdLogin.Location = New System.Drawing.Point(59, 82)
+        Me.cmdLogin.Location = New System.Drawing.Point(59, 110)
         Me.cmdLogin.Name = "cmdLogin"
         Me.cmdLogin.Size = New System.Drawing.Size(63, 22)
         Me.cmdLogin.TabIndex = 9
         Me.cmdLogin.Text = "Login"
         Me.cmdLogin.UseVisualStyleBackColor = True
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(8, 81)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(54, 13)
+        Me.Label3.TabIndex = 17
+        Me.Label3.Text = "Company:"
+        '
+        'cmbCompany
+        '
+        Me.cmbCompany.FormattingEnabled = True
+        Me.cmbCompany.Location = New System.Drawing.Point(59, 78)
+        Me.cmbCompany.Name = "cmbCompany"
+        Me.cmbCompany.Size = New System.Drawing.Size(249, 21)
+        Me.cmbCompany.TabIndex = 18
+        '
         'Login
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(443, 168)
+        Me.ClientSize = New System.Drawing.Size(548, 168)
+        Me.Controls.Add(Me.cmbCompany)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtmsg)
         Me.Controls.Add(Me.MonthCalendar1)
         Me.Controls.Add(Me.cmdExit)
@@ -131,4 +152,6 @@ Partial Class Login
     Friend WithEvents cmbUsers As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents cmdLogin As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents cmbCompany As ComboBox
 End Class

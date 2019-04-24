@@ -32,5 +32,8 @@
     <Setting Name="DFLTUserpwd" Type="System.String" Scope="User">
       <Value Profile="(Default)">admin123</Value>
     </Setting>
+    <Setting Name="companyname" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

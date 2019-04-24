@@ -173,6 +173,18 @@ Namespace My
                 Me("DFLTUserpwd") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property companyname() As String
+            Get
+                Return CType(Me("companyname"),String)
+            End Get
+            Set
+                Me("companyname") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

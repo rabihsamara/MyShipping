@@ -6,7 +6,7 @@ Public Class GlobalVariables
     Public Shared Property GL_DfltConnValues As MySQLConInfo = New MySQLConInfo()
     Public Shared Property GL_MySqlConn As SqlConnection
     Public Shared Property Gl_AppFirtR As Boolean
-    Public Shared Property GL_DFLTMaster As masterrec = New masterrec()
+    Public Shared Property GL_DFLTMasterConn As masterconnrec = New masterconnrec()
 
     Public Shared Property Gl_LogUserID As String
     Public Shared Property Gl_UserIDLevel As String
@@ -18,21 +18,20 @@ Public Class GlobalVariables
 
 End Class
 
-Public Class masterrec
-    'ID,UserID,sqlserver,sqldbase,sqluser,sqlpassword,sqltrusted,dfltconn,dfluserID,dfltUpwd,appfirstrun,sqlodbcdriver,active
-    Private mastID As Integer
-    Private mastUserID As String
-    Private mastserver As String
-    Private mastdbase As String
+Public Class masterconnrec
+
+    'Table: appconnmaster (companyID,sqlodbcdriver,sqlserver,sqldbase,sqluser,sqlpassword,sqltrusted,dfltconn,appfirstrun,active)
+
+    Private mastcompID As Integer
+    Private mastodbcdriver As String
+    Private mastsqlserver As String
+    Private mastsqldbase As String
     Private mastsqluser As String
     Private mastsqlpasswd As String
-    Private masttrusted As Integer
+    Private mastsqltrusted As Integer
     Private mastdfltconn As Integer
-    Private dfluserID As String
-    Private dfltUpwd As String
-    Private appfirstrun As Integer
-    Private sqlodbcdriver As String
-    Private active As Integer
+    Private mastappfirstrun As Integer
+    Private mastactive As Integer
 
     Public Sub New()   'parameterised constructor
         Console.WriteLine("My sqlConnect Object is being created")
@@ -42,43 +41,39 @@ Public Class masterrec
         Console.WriteLine("Object is being deleted")
     End Sub
 
-    Public Property AppmastID() As Integer
+    Public Property AppmastCompID() As Integer
         Get
-            'Gets the property value.
-            Return mastID
+            Return mastcompID
         End Get
         Set(ByVal Value As Integer)
-            mastID = Value
+            mastcompID = Value
         End Set
     End Property
 
-    Public Property AppmastUserID() As String
+    Public Property Appsqlodbcdriver() As String
         Get
-            'Gets the property value.
-            Return mastUserID
+            Return mastodbcdriver
         End Get
         Set(ByVal Value As String)
-            mastUserID = Value
+            mastodbcdriver = Value
         End Set
     End Property
 
     Public Property Appmastserver() As String
         Get
-            'Gets the property value.
-            Return mastserver
+            Return mastsqlserver
         End Get
         Set(ByVal Value As String)
-            mastserver = Value
+            mastsqlserver = Value
         End Set
     End Property
 
     Public Property Appmastdbase() As String
         Get
-            'Gets the property value.
-            Return mastdbase
+            Return mastsqldbase
         End Get
         Set(ByVal Value As String)
-            mastdbase = Value
+            mastsqldbase = Value
         End Set
     End Property
 
@@ -102,10 +97,10 @@ Public Class masterrec
 
     Public Property Appmasttrusted() As Integer
         Get
-            Return masttrusted
+            Return mastsqltrusted
         End Get
         Set(ByVal Value As Integer)
-            masttrusted = Value
+            mastsqltrusted = Value
         End Set
     End Property
 
@@ -119,69 +114,36 @@ Public Class masterrec
 
     End Property
 
-    Public Property AppdfluserID() As String
-        Get
-            Return dfluserID
-        End Get
-        Set(ByVal Value As String)
-            dfluserID = Value
-        End Set
-    End Property
-
-    Public Property AppdfltUpwd() As String
-        Get
-            'Gets the property value.
-            Return dfltUpwd
-        End Get
-        Set(ByVal Value As String)
-            dfltUpwd = Value
-        End Set
-    End Property
-
     Public Property Appappfirstrun() As Integer
         Get
-            'Gets the property value.
-            Return appfirstrun
+            Return mastappfirstrun
         End Get
         Set(ByVal Value As Integer)
-            appfirstrun = Value
-        End Set
-    End Property
-
-    Public Property Appsqlodbcdriver() As String
-        Get
-            'Gets the property value.
-            Return sqlodbcdriver
-        End Get
-        Set(ByVal Value As String)
-            sqlodbcdriver = Value
+            mastappfirstrun = Value
         End Set
     End Property
 
     Public Property Appactive() As Integer
         Get
-            'Gets the property value.
-            Return active
+            Return mastactive
         End Get
         Set(ByVal Value As Integer)
-            active = Value
+            mastactive = Value
         End Set
     End Property
 
-    Public Sub Setmaster(ByVal inmastID As Integer, ByVal inuserID As String, ByVal inSQSrvr As String, ByVal inSQDbase As String, ByVal inSQUSER As String, ByVal inSQPWD As String, ByVal inSQTrust As Boolean, inSQDflt As Boolean, ByVal inDFLTuser As String, ByVal inDFLTUPwd As String, ByVal inappfirstrun As Boolean, ByVal inodbcDrvvr As String, ByVal inactive As Boolean)
+    Public Sub Setmaster(ByVal inmastcompID As Integer, ByVal inodbcDrvvr As String, ByVal inSQSrvr As String, ByVal inSQDbase As String, ByVal inSQUSER As String,
+                         ByVal inSQPWD As String, ByVal inSQTrust As Boolean, inSQDflt As Boolean, ByVal inappfirstrun As Boolean, ByVal inactive As Boolean)
 
-        Me.AppmastID = inmastID
-        Me.AppmastUserID = inuserID
+        Me.AppmastCompID = inmastcompID
+        Me.Appsqlodbcdriver = inodbcDrvvr
         Me.Appmastserver = inSQSrvr
         Me.Appmastdbase = inSQDbase
         Me.Appmastsqluser = inSQUSER
         Me.Appmastsqlpasswd = inSQPWD
         Me.Appmasttrusted = inSQTrust
         Me.Appmastdfltconn = inSQDflt
-        Me.AppdfluserID = inDFLTuser
-        Me.AppdfltUpwd = inDFLTUPwd
         Me.Appappfirstrun = inappfirstrun
-        Me.Appsqlodbcdriver = inodbcDrvvr
         Me.Appactive = inactive
     End Sub
 
@@ -209,7 +171,6 @@ Public Class MySQLConInfo
 
     Public Property AppSqlODBCDriver() As String
         Get
-            'Gets the property value.
             Return MySqlODBCDriver
         End Get
         Set(ByVal Value As String)
@@ -219,7 +180,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlServer() As String
         Get
-            'Gets the property value.
             Return MySqlServer
         End Get
         Set(ByVal Value As String)
@@ -229,7 +189,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlDbase() As String
         Get
-            'Gets the property value.
             Return MySqlDbase
         End Get
         Set(ByVal Value As String)
@@ -239,7 +198,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlUserID() As String
         Get
-            'Gets the property value.
             Return MySqlUserID
         End Get
         Set(ByVal Value As String)
@@ -249,7 +207,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlPassword() As String
         Get
-            'Gets the property value.
             Return MySqlPassword
         End Get
         Set(ByVal Value As String)
@@ -259,7 +216,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlTrusted() As Boolean
         Get
-            'Gets the property value.
             Return MySqlTrusted
         End Get
         Set(ByVal Value As Boolean)
@@ -269,7 +225,6 @@ Public Class MySQLConInfo
 
     Public Property AppMySqlDefault() As Boolean
         Get
-            'Gets the property value.
             Return MySqlDefault
         End Get
         Set(ByVal Value As Boolean)
@@ -279,7 +234,6 @@ Public Class MySQLConInfo
 
     Public Property AppMyAPPFirstRun() As Boolean
         Get
-            'Gets the property value.
             Return MyAPPFirstRun
         End Get
         Set(ByVal Value As Boolean)
@@ -289,7 +243,6 @@ Public Class MySQLConInfo
 
     Public Property AppMyDFUser() As String
         Get
-            'Gets the property value.
             Return MyDFUser
         End Get
         Set(ByVal Value As String)
@@ -299,7 +252,6 @@ Public Class MySQLConInfo
 
     Public Property AppMyDFUpwd() As String
         Get
-            'Gets the property value.
             Return MyDFUPwd
         End Get
         Set(ByVal Value As String)
@@ -308,7 +260,6 @@ Public Class MySQLConInfo
     End Property
 
     Public Sub SetConn()
-        'Set connection by default values
         Me.AppSqlODBCDriver = My.Settings.MySQLDriver
         Me.AppMySqlServer = My.Settings.MySQLServer
         Me.AppMySqlDbase = My.Settings.MySQLDbase
@@ -322,7 +273,6 @@ Public Class MySQLConInfo
     End Sub
 
     Public Sub SetConnByVal(ByVal SQDRvr As String, ByVal SQSrvr As String, ByVal SQDbase As String, ByVal SQUSER As String, ByVal SQPWD As String, ByVal SQTrust As Boolean, SQDflt As Boolean, ByVal appfirstrun As Boolean, ByVal DFLTuser As String, ByVal DFLTUPwd As String)
-        'Set connection by Parameters values
         Me.AppSqlODBCDriver = SQDRvr
         Me.AppMySqlServer = SQSrvr
         Me.AppMySqlDbase = SQDbase
