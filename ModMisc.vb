@@ -64,8 +64,8 @@ Module ModMisc
                 Do While myReader.Read()
                     Login.cmbUsers.Items.Add(New UsersName(myReader.GetString(0)))
                 Loop
-                'add default user
-                Login.cmbUsers.Items.Add(GlobalVariables.GL_DfltConnValues.AppMyDFUser.ToString())
+                'add default user if not in table users!!!
+                'Login.cmbUsers.Items.Add(GlobalVariables.GL_DfltConnValues.AppMyDFUser.ToString())
 
                 FillUsers = True
                 Exit Function
@@ -150,8 +150,7 @@ Module ModMisc
 
                 myReader = myCmd.ExecuteReader()
                 Do While myReader.Read()
-                    'Check user password option
-                    If (inopt = "CUP") Then
+                    If (inopt = "CUP") Then 'Check user password option
                         If (myReader.GetString(0).ToString = criteria) Then
                             ReadSQL = True
                             GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
@@ -160,24 +159,6 @@ Module ModMisc
                         fldtext = myReader.GetString(0)
                         GlobalVariables.GL_Stat = True
                         ReadSQL = fldtext
-
-                        'ElseIf (inopt = "actn") Then
-                        '    'UserID,ActShortName,bankacctNo,AcctType
-                        '    acctfulname = myReader.GetString(0).ToString & " - " & myReader.GetString(1).ToString & " - " & myReader.GetString(2).ToString
-                        '    GlobalVariables.GL_Stat = True
-                        '    ReadSQL = acctfulname
-                        'ElseIf (inopt = "acttot") Then
-                        '    actotamt = myReader.GetValue(0)
-                        '    GlobalVariables.GL_Stat = True
-                        '    ReadSQL = actotamt
-                        'ElseIf (inopt = "CatN") Then
-                        '    catname = myReader.GetValue(0)
-                        '    GlobalVariables.GL_Stat = True
-                        '    ReadSQL = catname
-                        'ElseIf (inopt = "chseq") Then
-                        '    catname = Trim(myReader.GetString(1).ToString) & myReader.GetValue(2)
-                        '    GlobalVariables.GL_Stat = True
-                        '    ReadSQL = catname
                     End If
                 Loop
 

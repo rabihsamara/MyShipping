@@ -118,6 +118,15 @@ Public Class frmsettings
                     MsgBox("Error Creating default company Record!")
                     Exit Function
                 End If
+                'Create default user (admin) in table users
+                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from users where UserID = '" & My.Settings.DFLTuserID & "') Begin "
+                GlobalVariables.Gl_SQLStr =  GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,Active,usrPassword,usrmode) "
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & My.Settings.DFLTuserID & "','Rabih','Samara','','','','','','',1,'" & My.Settings.DFLTUserpwd & "','A') End"
+                If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error Creating default user Record!")
+                    Exit Function
+                End If
+
             End If
 
         End If
