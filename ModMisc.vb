@@ -401,7 +401,7 @@ Exit_Excel:
     End Function
 
     '******************************************************************************************************************
-    ' Procedure: InsertTransData - It will Insert, update Transaction ecord and adjust balance value.
+    ' Procedure: InsertTransData - It will Insert, update Transaction record and adjust balance value.
     '******************************************************************************************************************
     Public Sub RunProcedure(ByVal mytransRec As mytransRecord)
 

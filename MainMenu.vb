@@ -28,6 +28,10 @@
 
         'Utilities Menu
         Dim UtilItem As New ToolStripMenuItem("&Utilities")
+        Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf Users))
+
+        UserItem.ShortcutKeys = Keys.Control Or Keys.U
+        UtilItem.DropDownItems.Add(userItem)
 
         ms.Items.Add(UtilItem)
 
@@ -49,6 +53,28 @@
     Private Sub OnExit(ByVal sender As Object, ByVal e As EventArgs)
         Application.Exit()
     End Sub
+
+
+    '*********************************************************************
+    'Event handlers for items listed under Menu Edit
+    '*********************************************************************
+
+
+    '*********************************************************************
+    'Event handlers for items listed under Menu Utilities
+    '*********************************************************************
+    Private Sub Users(ByVal sender As Object, ByVal e As EventArgs)
+        Dim frm As New frmUsers()
+        frm.TopLevel = False
+        frm.TopMost = True
+        SplitContainer1.Panel2.Controls.Add(frm)
+        frm.Show()
+
+    End Sub
+
+    '*********************************************************************
+    'Event handlers for items listed under Menu Reports
+    '*********************************************************************
 
 
 
