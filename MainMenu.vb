@@ -1,15 +1,18 @@
 ﻿Public Class MainMenu
+    Private ms As New MenuStrip
 
     Private Sub MainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Text = GlobalVariables.Gl_Company & " - (" & GlobalVariables.Gl_LogUserID & ")"
         BuildMenu()
-
+        If (ModRegSec.RegisterMenu(ms) = False) Then
+            MsgBox("Error Registering forms")
+            Application.Exit()
+        End If
     End Sub
 
     Private Sub BuildMenu()
 
-        Dim ms As New MenuStrip
         ms.Parent = Me
 
         'File Menu

@@ -20,6 +20,10 @@
             If (FillCompanies() = False) Then
                 Application.Exit()
             End If
+            'If (ModRegSec.RegisterMenu() = False) Then
+            '    MsgBox("Error Registering forms")
+            '    Application.Exit()
+            'End If
         End If
 
     End Sub
