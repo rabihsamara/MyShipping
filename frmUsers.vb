@@ -38,10 +38,14 @@ Public Class frmUsers
     End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
+
         Me.Close()
+
     End Sub
 
     Private Sub CmdNewUser_Click(sender As Object, e As EventArgs) Handles cmdNewUser.Click
+
+        GBoxNewUser.Text = "New User"
         GBoxNewUser.Visible = True
         cmdSaveNewUser.Visible = True
         cmdCanNewUser.Visible = True
@@ -50,6 +54,7 @@ Public Class frmUsers
 
     Private Sub CmdCanNewUser_Click(sender As Object, e As EventArgs) Handles cmdCanNewUser.Click
 
+        GBoxNewUser.Text = "New User"
         GBoxNewUser.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
