@@ -10,6 +10,8 @@ Public Class GlobalVariables
 
     Public Shared Property Gl_LogUserID As String
     Public Shared Property Gl_UserIDLevel As String
+    Public Shared Tmpuserrecord As userrec = New userrec()
+
     Public Shared Property Gl_Company As String
     Public Shared Property Gl_SQLStr As String
     Public Shared Property GL_SLmsg As String
@@ -284,6 +286,179 @@ Public Class MySQLConInfo
         Me.AppMyAPPFirstRun = appfirstrun
         Me.AppMyDFUser = DFLTuser
         Me.AppMyDFUpwd = DFLTUPwd
+    End Sub
+
+End Class
+
+Public Class userrec
+
+    Private userID As String
+    Private Fname As String
+    Private Lname As String
+    Private DateOfBirth As Date
+    Private Address1 As String
+    Private Address2 As String
+    Private City As String
+    Private Province As String
+    Private Pcode As String
+    Private Country As String
+    Private Active As Integer
+    Private usrPassword As String
+    Private usrmode As String
+    Private usrseclvl As Integer
+
+    Public Sub New()   'parameterised constructor
+        Console.WriteLine("My sqlConnect Object is being created")
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+        Console.WriteLine("Object is being deleted")
+    End Sub
+
+    Public Property MyUserID() As String
+        Get
+            Return userID
+        End Get
+        Set(ByVal Value As String)
+            userID = Value
+        End Set
+    End Property
+
+
+    Public Property MyFname() As String
+        Get
+            Return Fname
+        End Get
+        Set(ByVal Value As String)
+            Fname = Value
+        End Set
+    End Property
+
+    Public Property MyLname() As String
+        Get
+            Return Lname
+        End Get
+        Set(ByVal Value As String)
+            Lname = Value
+        End Set
+    End Property
+
+    Public Property MyDateOfBirth() As Date
+        Get
+            Return DateOfBirth
+        End Get
+        Set(ByVal Value As Date)
+            DateOfBirth = Value
+        End Set
+    End Property
+
+    Public Property MyAddress1() As String
+        Get
+            Return Address1
+        End Get
+        Set(ByVal Value As String)
+            Address1 = Value
+        End Set
+    End Property
+
+    Public Property MyAddress2() As String
+        Get
+            Return Address2
+        End Get
+        Set(ByVal Value As String)
+            Address2 = Value
+        End Set
+    End Property
+
+    Public Property MyCity() As String
+        Get
+            Return City
+        End Get
+        Set(ByVal Value As String)
+            City = Value
+        End Set
+    End Property
+
+    Public Property MyProvince() As String
+        Get
+            Return Province
+        End Get
+        Set(ByVal Value As String)
+            Province = Value
+        End Set
+    End Property
+
+    Public Property MyPcode() As String
+        Get
+            Return Pcode
+        End Get
+        Set(ByVal Value As String)
+            Pcode = Value
+        End Set
+    End Property
+
+    Public Property MyCountry() As String
+        Get
+            Return Country
+        End Get
+        Set(ByVal Value As String)
+            Country = Value
+        End Set
+    End Property
+
+    Public Property MyActive() As Integer
+        Get
+            Return Active
+        End Get
+        Set(ByVal Value As Integer)
+            Active = Value
+        End Set
+    End Property
+
+    Public Property MyusrPassword() As String
+        Get
+            Return usrPassword
+        End Get
+        Set(ByVal Value As String)
+            usrPassword = Value
+        End Set
+    End Property
+
+    Public Property Myusrmode() As String
+        Get
+            Return usrmode
+        End Get
+        Set(ByVal Value As String)
+            usrmode = Value
+        End Set
+    End Property
+
+    Public Property Myusrseclvl() As Integer
+        Get
+            Return usrseclvl
+        End Get
+        Set(ByVal Value As Integer)
+            usrseclvl = Value
+        End Set
+    End Property
+
+    Public Sub setUsers(tUserID, tFname, tLname, tDateOfBirth, tAddress1, tAddress2, tCity, tProvince, tPcode, tCountry, tActive, tusrPassword, tusrmode, tusrseclvl)
+
+        Me.MyUserID = tUserID
+        Me.MyFname = tFname
+        Me.MyLname = tLname
+        Me.MyDateOfBirth = tDateOfBirth
+        Me.MyAddress1 = tAddress1
+        Me.MyAddress2 = tAddress2
+        Me.MyCity = tCity
+        Me.MyProvince = tProvince
+        Me.MyPcode = tPcode
+        Me.MyCountry = tCountry
+        Me.MyActive = tActive
+        Me.MyusrPassword = tusrPassword
+        Me.Myusrmode = tusrmode
+        Me.Myusrseclvl = tusrseclvl
+
     End Sub
 
 End Class

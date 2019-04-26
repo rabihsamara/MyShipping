@@ -11,6 +11,8 @@ Public Class frmUsers
     Private upmode As String
     Private selrow As Integer
 
+    Private userrecord As userrec = New userrec()
+
     Private Sub FrmUsers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         GBoxNewUser.Visible = False
@@ -47,20 +49,24 @@ Public Class frmUsers
     Private Sub CmdNewUser_Click(sender As Object, e As EventArgs) Handles cmdNewUser.Click
 
         GBoxNewUser.Text = "New User"
+        cmdSaveNewUser.Text = "Save User"
+        clrUserFields()
         GBoxNewUser.Visible = True
         cmdSaveNewUser.Visible = True
         cmdCanNewUser.Visible = True
         cmdNewUser.Enabled = False
-        upmode = "I" ' bew insert.
+        upmode = "I" ' New insert.
     End Sub
 
     Private Sub CmdCanNewUser_Click(sender As Object, e As EventArgs) Handles cmdCanNewUser.Click
 
         GBoxNewUser.Text = "New User"
+        cmdSaveNewUser.Text = "Save User"
         GBoxNewUser.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         cmdNewUser.Enabled = True
+        clrUserFields()
 
     End Sub
 
@@ -68,10 +74,13 @@ Public Class frmUsers
 
 
 
+        GBoxNewUser.Text = "New User"
+        cmdSaveNewUser.Text = "Save User"
         GBoxNewUser.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         cmdNewUser.Enabled = True
+        clrUserFields()
     End Sub
 
     Private Sub DataGridVWUsers_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridVWUsers.MouseClick
@@ -85,13 +94,30 @@ Public Class frmUsers
             I = DataGridVWUsers.CurrentRow.Index
             selusrid = DataGridVWUsers.Item(0, I).Value
             upmode = "U"
-
+            cmdSaveNewUser.Text = "Update User"
             'move data to fields
 
+            GlobalVariables.Gl_SQLStr = "SELECT UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,Country,Active,usrPassword,usrmode,usrseclvl FROM users where UserID = '" & selusrid & "'"
+            userrecord = ModMisc.ReadSQL("userr", "")
+            If (GlobalVariables.GL_Stat = False) Then
+                MsgBox("error reading user info!")
+                Exit Sub
+            End If
 
-
-
-
+            usrID.Text = userrecord.MyUserID
+            DateOfBirth.Value = userrecord.MyDateOfBirth
+            chactive.Checked = userrecord.MyActive
+            usrfname.Text = userrecord.MyFname
+            usrlname.Text = userrecord.MyLname
+            usradd1.Text = userrecord.MyAddress1
+            usradd2.Text = userrecord.MyAddress2
+            cmbUsrCity.Text = userrecord.MyCity
+            cmbUsrState.Text = userrecord.MyProvince
+            usrpcode.Text = userrecord.MyPcode
+            cmbUsrCountry.Text = userrecord.MyCountry
+            cmbUsrSecLvl.Text = userrecord.Myusrseclvl
+            usrpassword.Text = userrecord.MyusrPassword
+            cmbUsrMode.Text = userrecord.Myusrmode
 
             GBoxNewUser.Text = "update User: " & selusrid
             GBoxNewUser.Visible = True
@@ -101,6 +127,24 @@ Public Class frmUsers
 
         End If
 
+    End Sub
+
+
+    Private Sub clrUserFields()
+        usrID.Text = ""
+        DateOfBirth.Value = Now()
+        chactive.Checked = 0
+        usrfname.Text = ""
+        usrlname.Text = ""
+        usradd1.Text = ""
+        usradd2.Text = ""
+        cmbUsrCity.Text = ""
+        cmbUsrState.Text = ""
+        usrpcode.Text = ""
+        cmbUsrCountry.Text = ""
+        cmbUsrSecLvl.Text = ""
+        usrpassword.Text = ""
+        cmbUsrMode.Text = ""
     End Sub
 
 End Class

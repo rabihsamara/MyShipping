@@ -27,6 +27,10 @@ Partial Class frmUsers
         Me.cmdNewUser = New System.Windows.Forms.Button()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.GBoxNewUser = New System.Windows.Forms.GroupBox()
+        Me.cmbUsrMode = New System.Windows.Forms.ComboBox()
+        Me.usrMode = New System.Windows.Forms.Label()
+        Me.usrpassword = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.cmbUsrSecLvl = New System.Windows.Forms.ComboBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.cmbUsrCountry = New System.Windows.Forms.ComboBox()
@@ -51,10 +55,7 @@ Partial Class frmUsers
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cmdSaveNewUser = New System.Windows.Forms.Button()
         Me.cmdCanNewUser = New System.Windows.Forms.Button()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.usrpassword = New System.Windows.Forms.TextBox()
-        Me.usrMode = New System.Windows.Forms.Label()
-        Me.cmbUsrMode = New System.Windows.Forms.ComboBox()
+        Me.chactive = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
@@ -100,6 +101,7 @@ Partial Class frmUsers
         '
         'GBoxNewUser
         '
+        Me.GBoxNewUser.Controls.Add(Me.chactive)
         Me.GBoxNewUser.Controls.Add(Me.cmbUsrMode)
         Me.GBoxNewUser.Controls.Add(Me.usrMode)
         Me.GBoxNewUser.Controls.Add(Me.usrpassword)
@@ -132,6 +134,41 @@ Partial Class frmUsers
         Me.GBoxNewUser.TabIndex = 3
         Me.GBoxNewUser.TabStop = False
         Me.GBoxNewUser.Text = "New User"
+        '
+        'cmbUsrMode
+        '
+        Me.cmbUsrMode.FormattingEnabled = True
+        Me.cmbUsrMode.Items.AddRange(New Object() {"Admin", "User"})
+        Me.cmbUsrMode.Location = New System.Drawing.Point(293, 254)
+        Me.cmbUsrMode.Name = "cmbUsrMode"
+        Me.cmbUsrMode.Size = New System.Drawing.Size(86, 21)
+        Me.cmbUsrMode.TabIndex = 25
+        '
+        'usrMode
+        '
+        Me.usrMode.AutoSize = True
+        Me.usrMode.Location = New System.Drawing.Point(250, 257)
+        Me.usrMode.Name = "usrMode"
+        Me.usrMode.Size = New System.Drawing.Size(37, 13)
+        Me.usrMode.TabIndex = 24
+        Me.usrMode.Text = "Mode:"
+        '
+        'usrpassword
+        '
+        Me.usrpassword.Location = New System.Drawing.Point(71, 254)
+        Me.usrpassword.Name = "usrpassword"
+        Me.usrpassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
+        Me.usrpassword.Size = New System.Drawing.Size(138, 20)
+        Me.usrpassword.TabIndex = 23
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(13, 257)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(56, 13)
+        Me.Label12.TabIndex = 22
+        Me.Label12.Text = "Password:"
         '
         'cmbUsrSecLvl
         '
@@ -328,45 +365,20 @@ Partial Class frmUsers
         '
         Me.cmdCanNewUser.Location = New System.Drawing.Point(118, 258)
         Me.cmdCanNewUser.Name = "cmdCanNewUser"
-        Me.cmdCanNewUser.Size = New System.Drawing.Size(71, 19)
+        Me.cmdCanNewUser.Size = New System.Drawing.Size(71, 22)
         Me.cmdCanNewUser.TabIndex = 5
         Me.cmdCanNewUser.Text = "Cancel"
         Me.cmdCanNewUser.UseVisualStyleBackColor = True
         '
-        'Label12
+        'chactive
         '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(13, 257)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(56, 13)
-        Me.Label12.TabIndex = 22
-        Me.Label12.Text = "Password:"
-        '
-        'usrpassword
-        '
-        Me.usrpassword.Location = New System.Drawing.Point(71, 254)
-        Me.usrpassword.Name = "usrpassword"
-        Me.usrpassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.usrpassword.Size = New System.Drawing.Size(138, 20)
-        Me.usrpassword.TabIndex = 23
-        '
-        'usrMode
-        '
-        Me.usrMode.AutoSize = True
-        Me.usrMode.Location = New System.Drawing.Point(250, 257)
-        Me.usrMode.Name = "usrMode"
-        Me.usrMode.Size = New System.Drawing.Size(37, 13)
-        Me.usrMode.TabIndex = 24
-        Me.usrMode.Text = "Mode:"
-        '
-        'cmbUsrMode
-        '
-        Me.cmbUsrMode.FormattingEnabled = True
-        Me.cmbUsrMode.Items.AddRange(New Object() {"Admin", "User"})
-        Me.cmbUsrMode.Location = New System.Drawing.Point(293, 254)
-        Me.cmbUsrMode.Name = "cmbUsrMode"
-        Me.cmbUsrMode.Size = New System.Drawing.Size(86, 21)
-        Me.cmbUsrMode.TabIndex = 25
+        Me.chactive.AutoSize = True
+        Me.chactive.Location = New System.Drawing.Point(419, 29)
+        Me.chactive.Name = "chactive"
+        Me.chactive.Size = New System.Drawing.Size(56, 17)
+        Me.chactive.TabIndex = 26
+        Me.chactive.Text = "Active"
+        Me.chactive.UseVisualStyleBackColor = True
         '
         'frmUsers
         '
@@ -423,4 +435,5 @@ Partial Class frmUsers
     Friend WithEvents Label12 As Label
     Friend WithEvents cmbUsrMode As ComboBox
     Friend WithEvents usrMode As Label
+    Friend WithEvents chactive As CheckBox
 End Class

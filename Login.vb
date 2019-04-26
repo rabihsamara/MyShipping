@@ -45,7 +45,7 @@
             If (tpasswd = GlobalVariables.GL_DfltConnValues.AppMyDFUpwd) Then
                 GlobalVariables.Gl_UserIDLevel = "A" ' admin
             Else
-                txtmsg.Text = "Invalid Passowrd for default user!"
+                txtmsg.Text = "Invalid Passowrd for admin user!"
                 txtmsg.Visible = True
                 Exit Sub
             End If

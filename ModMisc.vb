@@ -121,7 +121,7 @@ Module ModMisc
     'Use to read data only
     'inopt = CUP check user password.
     'fldchk = company record exists but address1 empty
-
+    'userr = read user record from table users.
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String
@@ -159,6 +159,25 @@ Module ModMisc
                         fldtext = myReader.GetString(0)
                         GlobalVariables.GL_Stat = True
                         ReadSQL = fldtext
+                    ElseIf (inopt = "userr") Then
+                        'UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,Country,Active,usrPassword,usrmode,usrseclvl FROM users
+                        GlobalVariables.Tmpuserrecord.MyUserID = myReader.GetString(0)
+                        GlobalVariables.Tmpuserrecord.MyFname = myReader.GetString(1)
+                        GlobalVariables.Tmpuserrecord.MyLname = myReader.GetString(2)
+                        GlobalVariables.Tmpuserrecord.MyDateOfBirth = myReader.GetDateTime(3)
+                        GlobalVariables.Tmpuserrecord.MyAddress1 = myReader.GetString(4)
+                        GlobalVariables.Tmpuserrecord.MyAddress2 = myReader.GetString(5)
+                        GlobalVariables.Tmpuserrecord.MyCity = myReader.GetString(6)
+                        GlobalVariables.Tmpuserrecord.MyProvince = myReader.GetString(7)
+                        GlobalVariables.Tmpuserrecord.MyPcode = myReader.GetString(8)
+                        GlobalVariables.Tmpuserrecord.MyCountry = myReader.GetString(9)
+                        GlobalVariables.Tmpuserrecord.MyActive = myReader.GetValue(10)
+                        GlobalVariables.Tmpuserrecord.MyusrPassword = myReader.GetString(11)
+                        GlobalVariables.Tmpuserrecord.Myusrmode = myReader.GetString(12)
+                        GlobalVariables.Tmpuserrecord.Myusrseclvl = myReader.GetValue(13)
+
+                        ReadSQL = GlobalVariables.Tmpuserrecord
+                        GlobalVariables.GL_Stat = True
                     End If
                 Loop
 
@@ -421,5 +440,6 @@ Exit_Excel:
         End Using
 
     End Sub
+
 
 End Module
