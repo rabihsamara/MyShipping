@@ -63,6 +63,7 @@ Public Class frmUsers
         cmdCanNewUser.Visible = True
         cmdNewUser.Enabled = False
         upmode = "I" ' New insert.
+        usrID.Enabled = True
     End Sub
 
     Private Sub CmdCanNewUser_Click(sender As Object, e As EventArgs) Handles cmdCanNewUser.Click
@@ -77,23 +78,65 @@ Public Class frmUsers
         GBMSec1.Visible = False
         GBEditSecMnu.Visible = False
         clrUserFields()
+        usrID.Enabled = False
 
     End Sub
 
     Private Sub CmdSaveNewUser_Click(sender As Object, e As EventArgs) Handles cmdSaveNewUser.Click
 
+        Dim tactive As Integer = 0
+
+        If (chactive.Checked = True) Then tactive = 1
+
+        'edit entry
+
+        If (usrID.Text = "") Then
+            MsgBox("Must Enter UserID!")
+            Exit Sub
+        ElseIf (Trim(usrID.Text) = "admin" And upmode = "I") Then
+            MsgBox("Must Not Use this UserID!")
+            Exit Sub
+        End If
+        '
+        If (usrfname.Text = "" Or usrlname.Text = "") Then
+            MsgBox("Must Enter User first and last name!")
+            Exit Sub
+        End If
+
+
         'save or update user
-
-
-
         If (upmode = "I") Then
+            'Create default user (admin) in table users
+            GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from users where UserID = '" & usrID.Text & "') Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,country,Active,usrPassword,usrmode,usrseclvl) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & usrID.Text & "','" & Trim(usrfname.Text) & "','" & Trim(usrlname.Text) & "','" & DateOfBirth.Value & "','" & Trim(usradd1.Text) & "','" & Trim(usradd2.Text) & "','" & Trim(cmbUsrCity.Text) & "','" & Trim(cmbUsrState.Text) & "','" & Trim(usrpcode.Text) & "','" & Trim(cmbUsrCountry.Text) & "'," & tactive & ",'" & Trim(usrpassword.Text) & "','" & Trim(cmbUsrMode.Text) & "','" & Trim(cmbUsrSecLvl.Text) & "') End"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error Creating default user Record!")
+                Exit Sub
+            End If
+            '
             'update user menu security levels (default).
             GlobalVariables.Gl_SQLStr = "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive from MenuDfltSecurity where menuactive = 1"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                MsgBox("Error Creating user Menu security Level!")
+                MsgBox("Error Creating New user Menu security Level!")
                 Exit Sub
             End If
+        Else ' update
+            GlobalVariables.Gl_SQLStr = "Update users  SET UserID = '" & usrID.Text & "', Fname = '" & Trim(usrfname.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Lname = '" & Trim(usrlname.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "DateOfBirth = '" & DateOfBirth.Value & "', Address1 = '" & Trim(usradd1.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Address2 = '" & Trim(usradd2.Text) & "', City = '" & Trim(cmbUsrCity.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Province = '" & Trim(cmbUsrState.Text) & "', Pcode = '" & Trim(usrpcode.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Country = '" & Trim(cmbUsrCountry.Text) & "', Active = " & tactive & ", "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "usrPassword = '" & Trim(usrpassword.Text) & "', usrmode = '" & Trim(cmbUsrMode.Text) & "', "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "usrseclvl = '" & Trim(cmbUsrSecLvl.Text) & "'"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " WHERE userID = '" & usrID.Text & "'"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error Updating user!")
+                Exit Sub
+            End If
+
         End If
 
         GBoxNewUser.Text = "New User"
@@ -104,6 +147,7 @@ Public Class frmUsers
         cmdNewUser.Enabled = True
         GBMSec1.Visible = False
         clrUserFields()
+        usrID.Enabled = False
     End Sub
 
     Private Sub DataGridVWUsers_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridVWUsers.MouseClick
@@ -148,6 +192,7 @@ Public Class frmUsers
             cmdNewUser.Enabled = False
             LoadUsersMenSec()
             GBMSec1.Visible = True
+            usrID.Enabled = False
         End If
 
     End Sub

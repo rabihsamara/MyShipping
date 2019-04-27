@@ -59,11 +59,11 @@ Partial Class frmUsers
         Me.GBMSec1 = New System.Windows.Forms.GroupBox()
         Me.DataGridUsrMsec = New System.Windows.Forms.DataGridView()
         Me.GBEditSecMnu = New System.Windows.Forms.GroupBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.cmdSecLevel = New System.Windows.Forms.ComboBox()
-        Me.chactivesec = New System.Windows.Forms.CheckBox()
-        Me.cmdsecupd = New System.Windows.Forms.Button()
         Me.cmdseccanc = New System.Windows.Forms.Button()
+        Me.cmdsecupd = New System.Windows.Forms.Button()
+        Me.chactivesec = New System.Windows.Forms.CheckBox()
+        Me.cmdSecLevel = New System.Windows.Forms.ComboBox()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
@@ -213,6 +213,7 @@ Partial Class frmUsers
         'cmbUsrCountry
         '
         Me.cmbUsrCountry.FormattingEnabled = True
+        Me.cmbUsrCountry.Items.AddRange(New Object() {"Canada", "USA"})
         Me.cmbUsrCountry.Location = New System.Drawing.Point(71, 222)
         Me.cmbUsrCountry.Name = "cmbUsrCountry"
         Me.cmbUsrCountry.Size = New System.Drawing.Size(138, 21)
@@ -428,23 +429,23 @@ Partial Class frmUsers
         Me.GBEditSecMnu.TabStop = False
         Me.GBEditSecMnu.Text = "Edit User Menu Security level"
         '
-        'Label13
+        'cmdseccanc
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(17, 29)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(73, 13)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Security level:"
+        Me.cmdseccanc.Location = New System.Drawing.Point(219, 68)
+        Me.cmdseccanc.Name = "cmdseccanc"
+        Me.cmdseccanc.Size = New System.Drawing.Size(80, 27)
+        Me.cmdseccanc.TabIndex = 4
+        Me.cmdseccanc.Text = "Cancel"
+        Me.cmdseccanc.UseVisualStyleBackColor = True
         '
-        'cmdSecLevel
+        'cmdsecupd
         '
-        Me.cmdSecLevel.FormattingEnabled = True
-        Me.cmdSecLevel.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.cmdSecLevel.Location = New System.Drawing.Point(103, 26)
-        Me.cmdSecLevel.Name = "cmdSecLevel"
-        Me.cmdSecLevel.Size = New System.Drawing.Size(111, 21)
-        Me.cmdSecLevel.TabIndex = 1
+        Me.cmdsecupd.Location = New System.Drawing.Point(103, 70)
+        Me.cmdsecupd.Name = "cmdsecupd"
+        Me.cmdsecupd.Size = New System.Drawing.Size(85, 25)
+        Me.cmdsecupd.TabIndex = 3
+        Me.cmdsecupd.Text = "Update"
+        Me.cmdsecupd.UseVisualStyleBackColor = True
         '
         'chactivesec
         '
@@ -456,23 +457,23 @@ Partial Class frmUsers
         Me.chactivesec.Text = "Active"
         Me.chactivesec.UseVisualStyleBackColor = True
         '
-        'cmdsecupd
+        'cmdSecLevel
         '
-        Me.cmdsecupd.Location = New System.Drawing.Point(103, 70)
-        Me.cmdsecupd.Name = "cmdsecupd"
-        Me.cmdsecupd.Size = New System.Drawing.Size(85, 25)
-        Me.cmdsecupd.TabIndex = 3
-        Me.cmdsecupd.Text = "Update"
-        Me.cmdsecupd.UseVisualStyleBackColor = True
+        Me.cmdSecLevel.FormattingEnabled = True
+        Me.cmdSecLevel.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
+        Me.cmdSecLevel.Location = New System.Drawing.Point(103, 26)
+        Me.cmdSecLevel.Name = "cmdSecLevel"
+        Me.cmdSecLevel.Size = New System.Drawing.Size(111, 21)
+        Me.cmdSecLevel.TabIndex = 1
         '
-        'cmdseccanc
+        'Label13
         '
-        Me.cmdseccanc.Location = New System.Drawing.Point(219, 68)
-        Me.cmdseccanc.Name = "cmdseccanc"
-        Me.cmdseccanc.Size = New System.Drawing.Size(80, 27)
-        Me.cmdseccanc.TabIndex = 4
-        Me.cmdseccanc.Text = "Cancel"
-        Me.cmdseccanc.UseVisualStyleBackColor = True
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(17, 29)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(73, 13)
+        Me.Label13.TabIndex = 0
+        Me.Label13.Text = "Security level:"
         '
         'frmUsers
         '
