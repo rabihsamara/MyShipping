@@ -4,6 +4,7 @@ Module ModRegSec
 
     '***********************************************************************************************
     '* on startup register all forms for security levels.
+    '* Menuseclevel - 0123456789 where 0 is all 9-admin etc.
     '***********************************************************************************************
     Public Function RegisterMenu(inmenu As MenuStrip) As Boolean
 
@@ -16,14 +17,13 @@ Module ModRegSec
 
         Do While I < inmenu.Items.Count
             MenuMItem = Replace(inmenu.Items(I).Text, "&", "") ' get top menu items File, edit...
-            MsgBox(MenuMItem)
 
             tsql = "If Not Exists(select 1 from MenuDfltSecurity where MenuMItem = '" & MenuMItem & "') "
-            tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','','',0,1) "
+            tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','','','0',1) "
             tsql = tsql & "End"
             GlobalVariables.Gl_SQLStr = tsql
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                MsgBox("error wrting security menus!")
+                MsgBox("Error writing security menus!")
                 RegisterMenu = False
                 Exit Function
             End If
@@ -32,9 +32,9 @@ Module ModRegSec
             S = 0
             Do While S < tmpMenuItem.DropDownItems.Count
                 menuSubItem = Replace(tmpMenuItem.DropDownItems(S).Text, "&", "")
-                MsgBox(menuSubItem)
+
                 tsql = "If Not Exists(select 1 from MenuDfltSecurity where MenuMItem = '" & MenuMItem & "' and MenuSitem = '" & menuSubItem & "') "
-                tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','" & menuSubItem & "','',0,1) "
+                tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','" & menuSubItem & "','','0',1) "
                 tsql = tsql & "End"
                 GlobalVariables.Gl_SQLStr = tsql
                 If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then

@@ -72,7 +72,19 @@ Public Class frmUsers
 
     Private Sub CmdSaveNewUser_Click(sender As Object, e As EventArgs) Handles cmdSaveNewUser.Click
 
+        'save or update user
 
+
+
+        If (upmode = "I") Then
+            'update user menu security levels (default).
+            GlobalVariables.Gl_SQLStr = "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive from MenuDfltSecurity where menuactive = 1"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error Creating user Menu security Level!")
+                Exit Sub
+            End If
+        End If
 
         GBoxNewUser.Text = "New User"
         cmdSaveNewUser.Text = "Save User"

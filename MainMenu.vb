@@ -5,6 +5,7 @@
 
         Me.Text = GlobalVariables.Gl_Company & " - (" & GlobalVariables.Gl_LogUserID & ")"
         BuildMenu()
+
         If (ModRegSec.RegisterMenu(ms) = False) Then
             MsgBox("Error Registering forms")
             Application.Exit()
