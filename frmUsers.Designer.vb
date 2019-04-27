@@ -58,11 +58,18 @@ Partial Class frmUsers
         Me.cmdCanNewUser = New System.Windows.Forms.Button()
         Me.GBMSec1 = New System.Windows.Forms.GroupBox()
         Me.DataGridUsrMsec = New System.Windows.Forms.DataGridView()
+        Me.GBEditSecMnu = New System.Windows.Forms.GroupBox()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.cmdSecLevel = New System.Windows.Forms.ComboBox()
+        Me.chactivesec = New System.Windows.Forms.CheckBox()
+        Me.cmdsecupd = New System.Windows.Forms.Button()
+        Me.cmdseccanc = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
         Me.GBMSec1.SuspendLayout()
         CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GBEditSecMnu.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -388,9 +395,9 @@ Partial Class frmUsers
         'GBMSec1
         '
         Me.GBMSec1.Controls.Add(Me.DataGridUsrMsec)
-        Me.GBMSec1.Location = New System.Drawing.Point(470, 49)
+        Me.GBMSec1.Location = New System.Drawing.Point(470, 43)
         Me.GBMSec1.Name = "GBMSec1"
-        Me.GBMSec1.Size = New System.Drawing.Size(389, 732)
+        Me.GBMSec1.Size = New System.Drawing.Size(389, 248)
         Me.GBMSec1.TabIndex = 6
         Me.GBMSec1.TabStop = False
         Me.GBMSec1.Text = "User Menu Security Level"
@@ -404,8 +411,68 @@ Partial Class frmUsers
         Me.DataGridUsrMsec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridUsrMsec.Location = New System.Drawing.Point(5, 16)
         Me.DataGridUsrMsec.Name = "DataGridUsrMsec"
-        Me.DataGridUsrMsec.Size = New System.Drawing.Size(380, 716)
+        Me.DataGridUsrMsec.Size = New System.Drawing.Size(380, 230)
         Me.DataGridUsrMsec.TabIndex = 0
+        '
+        'GBEditSecMnu
+        '
+        Me.GBEditSecMnu.Controls.Add(Me.cmdseccanc)
+        Me.GBEditSecMnu.Controls.Add(Me.cmdsecupd)
+        Me.GBEditSecMnu.Controls.Add(Me.chactivesec)
+        Me.GBEditSecMnu.Controls.Add(Me.cmdSecLevel)
+        Me.GBEditSecMnu.Controls.Add(Me.Label13)
+        Me.GBEditSecMnu.Location = New System.Drawing.Point(474, 302)
+        Me.GBEditSecMnu.Name = "GBEditSecMnu"
+        Me.GBEditSecMnu.Size = New System.Drawing.Size(380, 197)
+        Me.GBEditSecMnu.TabIndex = 7
+        Me.GBEditSecMnu.TabStop = False
+        Me.GBEditSecMnu.Text = "Edit User Menu Security level"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(17, 29)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(73, 13)
+        Me.Label13.TabIndex = 0
+        Me.Label13.Text = "Security level:"
+        '
+        'cmdSecLevel
+        '
+        Me.cmdSecLevel.FormattingEnabled = True
+        Me.cmdSecLevel.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
+        Me.cmdSecLevel.Location = New System.Drawing.Point(103, 26)
+        Me.cmdSecLevel.Name = "cmdSecLevel"
+        Me.cmdSecLevel.Size = New System.Drawing.Size(111, 21)
+        Me.cmdSecLevel.TabIndex = 1
+        '
+        'chactivesec
+        '
+        Me.chactivesec.AutoSize = True
+        Me.chactivesec.Location = New System.Drawing.Point(244, 28)
+        Me.chactivesec.Name = "chactivesec"
+        Me.chactivesec.Size = New System.Drawing.Size(56, 17)
+        Me.chactivesec.TabIndex = 2
+        Me.chactivesec.Text = "Active"
+        Me.chactivesec.UseVisualStyleBackColor = True
+        '
+        'cmdsecupd
+        '
+        Me.cmdsecupd.Location = New System.Drawing.Point(103, 70)
+        Me.cmdsecupd.Name = "cmdsecupd"
+        Me.cmdsecupd.Size = New System.Drawing.Size(85, 25)
+        Me.cmdsecupd.TabIndex = 3
+        Me.cmdsecupd.Text = "Update"
+        Me.cmdsecupd.UseVisualStyleBackColor = True
+        '
+        'cmdseccanc
+        '
+        Me.cmdseccanc.Location = New System.Drawing.Point(219, 68)
+        Me.cmdseccanc.Name = "cmdseccanc"
+        Me.cmdseccanc.Size = New System.Drawing.Size(80, 27)
+        Me.cmdseccanc.TabIndex = 4
+        Me.cmdseccanc.Text = "Cancel"
+        Me.cmdseccanc.UseVisualStyleBackColor = True
         '
         'frmUsers
         '
@@ -413,6 +480,7 @@ Partial Class frmUsers
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FloralWhite
         Me.ClientSize = New System.Drawing.Size(1379, 794)
+        Me.Controls.Add(Me.GBEditSecMnu)
         Me.Controls.Add(Me.GBMSec1)
         Me.Controls.Add(Me.cmdCanNewUser)
         Me.Controls.Add(Me.cmdSaveNewUser)
@@ -428,6 +496,8 @@ Partial Class frmUsers
         Me.GBoxNewUser.PerformLayout()
         Me.GBMSec1.ResumeLayout(False)
         CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GBEditSecMnu.ResumeLayout(False)
+        Me.GBEditSecMnu.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -468,4 +538,10 @@ Partial Class frmUsers
     Friend WithEvents chactive As CheckBox
     Friend WithEvents GBMSec1 As GroupBox
     Friend WithEvents DataGridUsrMsec As DataGridView
+    Friend WithEvents GBEditSecMnu As GroupBox
+    Friend WithEvents chactivesec As CheckBox
+    Friend WithEvents cmdSecLevel As ComboBox
+    Friend WithEvents Label13 As Label
+    Friend WithEvents cmdseccanc As Button
+    Friend WithEvents cmdsecupd As Button
 End Class

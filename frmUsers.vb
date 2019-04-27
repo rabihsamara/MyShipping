@@ -9,8 +9,11 @@ Public Class frmUsers
 
     Private selusrid As String
     Private upmode As String
-    Private selrow As Integer
 
+    Private selsecID As Integer
+    Private selsecuser As String
+
+    Private selrow As Integer
     Private userrecord As userrec = New userrec()
 
     Private Sub FrmUsers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -19,6 +22,8 @@ Public Class frmUsers
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         GBMSec1.Visible = False
+        GBEditSecMnu.visible = False
+
         LoadUsers()
     End Sub
 
@@ -70,6 +75,7 @@ Public Class frmUsers
         cmdNewUser.Enabled = True
         LoadUsersMenSec()
         GBMSec1.Visible = False
+        GBEditSecMnu.Visible = False
         clrUserFields()
 
     End Sub
@@ -101,7 +107,6 @@ Public Class frmUsers
     End Sub
 
     Private Sub DataGridVWUsers_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridVWUsers.MouseClick
-
 
         Dim I As Integer
         selusrid = ""
@@ -199,6 +204,58 @@ Public Class frmUsers
             DataGridUsrMsec.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
 
         End Using
+
+    End Sub
+
+    Private Sub DataGridUsrMsec_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridUsrMsec.MouseClick
+
+        Dim I As Integer
+        Dim slsec As String
+
+        selsecuser = ""
+
+        If (DataGridUsrMsec.Rows.Count >= 1) Then
+            I = DataGridUsrMsec.CurrentRow.Index
+            selrow = I
+            selsecID = Trim(DataGridUsrMsec.Item(0, I).Value)
+            selsecuser = Trim(DataGridUsrMsec.Item(1, I).Value)
+            GBEditSecMnu.Visible = True
+
+            slsec = Trim(DataGridUsrMsec.Item(5, I).Value.ToString)
+            cmdSecLevel.SelectedIndex = cmdSecLevel.FindString(slsec).ToString
+
+            chactivesec.Checked = DataGridUsrMsec.Item(6, I).Value
+
+
+        End If
+
+    End Sub
+
+    Private Sub Cmdsecupd_Click(sender As Object, e As EventArgs) Handles cmdsecupd.Click
+
+        Dim tnewstat As Integer = 0
+
+        If (chactivesec.Checked = True) Then tnewstat = 1
+
+        GlobalVariables.Gl_SQLStr = "update MenuUserSecurity set MenuSecLevel = '" & cmdSecLevel.SelectedItem & "', MenuActive = " & tnewstat
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selsecID
+        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error update user Menu security Level!")
+        Else
+            DataGridUsrMsec.Item(6, selrow).Value = chactivesec.Checked
+            DataGridUsrMsec.Item(5, selrow).Value = cmdSecLevel.SelectedItem
+            chactivesec.Checked = False
+            cmdSecLevel.SelectedIndex = -1
+            GBEditSecMnu.Visible = False
+        End If
+
+    End Sub
+
+    Private Sub Cmdseccanc_Click(sender As Object, e As EventArgs) Handles cmdseccanc.Click
+
+        chactivesec.Checked = False
+        cmdSecLevel.SelectedIndex = -1
+        GBEditSecMnu.Visible = False
 
     End Sub
 
