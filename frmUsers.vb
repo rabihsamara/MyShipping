@@ -18,7 +18,7 @@ Public Class frmUsers
         GBoxNewUser.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
-
+        GBMSec1.Visible = False
         LoadUsers()
     End Sub
 
@@ -52,6 +52,7 @@ Public Class frmUsers
         GBoxNewUser.Text = "New User"
         cmdSaveNewUser.Text = "Save User"
         clrUserFields()
+        GBMSec1.Visible = True
         GBoxNewUser.Visible = True
         cmdSaveNewUser.Visible = True
         cmdCanNewUser.Visible = True
@@ -67,6 +68,8 @@ Public Class frmUsers
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         cmdNewUser.Enabled = True
+        LoadUsersMenSec()
+        GBMSec1.Visible = False
         clrUserFields()
 
     End Sub
@@ -93,6 +96,7 @@ Public Class frmUsers
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         cmdNewUser.Enabled = True
+        GBMSec1.Visible = False
         clrUserFields()
     End Sub
 
@@ -137,11 +141,11 @@ Public Class frmUsers
             cmdSaveNewUser.Visible = True
             cmdCanNewUser.Visible = True
             cmdNewUser.Enabled = False
-
+            LoadUsersMenSec()
+            GBMSec1.Visible = True
         End If
 
     End Sub
-
 
     Private Sub clrUserFields()
         usrID.Text = ""
@@ -158,6 +162,44 @@ Public Class frmUsers
         cmbUsrSecLvl.Text = ""
         usrpassword.Text = ""
         cmbUsrMode.Text = ""
+    End Sub
+
+    Private Sub LoadUsersMenSec()
+        Dim sql As String = "SELECT ID,UserID,MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive FROM MenuUserSecurity where UserID = '" & selusrid & "'"
+        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            connection.Open()
+            sCommand = New SqlCommand(sql, connection)
+            sAdapter = New SqlDataAdapter(sCommand)
+            sBuilder = New SqlCommandBuilder(sAdapter)
+            sDs = New DataSet()
+            sAdapter.Fill(sDs, "MenuUserSecurity")
+            sTable = sDs.Tables("MenuUserSecurity")
+            connection.Close()
+            DataGridUsrMsec.DataSource = sDs.Tables("MenuUserSecurity")
+            DataGridUsrMsec.ReadOnly = True
+            DataGridUsrMsec.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            'change header text
+            Me.DataGridUsrMsec.Columns(0).HeaderText = "ID"
+            Me.DataGridUsrMsec.Columns(1).HeaderText = "UserID"
+            Me.DataGridUsrMsec.Columns(2).HeaderText = "MItem"
+            Me.DataGridUsrMsec.Columns(3).HeaderText = "SubItem1"
+            Me.DataGridUsrMsec.Columns(4).HeaderText = "SubItem2"
+            Me.DataGridUsrMsec.Columns(5).HeaderText = "SecLevel"
+            Me.DataGridUsrMsec.Columns(6).HeaderText = "Active"
+
+            DataGridUsrMsec.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+
+            'disable sorting
+            DataGridUsrMsec.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+
+        End Using
+
     End Sub
 
 End Class

@@ -56,9 +56,13 @@ Partial Class frmUsers
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cmdSaveNewUser = New System.Windows.Forms.Button()
         Me.cmdCanNewUser = New System.Windows.Forms.Button()
+        Me.GBMSec1 = New System.Windows.Forms.GroupBox()
+        Me.DataGridUsrMsec = New System.Windows.Forms.DataGridView()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
+        Me.GBMSec1.SuspendLayout()
+        CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -381,12 +385,35 @@ Partial Class frmUsers
         Me.cmdCanNewUser.Text = "Cancel"
         Me.cmdCanNewUser.UseVisualStyleBackColor = True
         '
+        'GBMSec1
+        '
+        Me.GBMSec1.Controls.Add(Me.DataGridUsrMsec)
+        Me.GBMSec1.Location = New System.Drawing.Point(470, 49)
+        Me.GBMSec1.Name = "GBMSec1"
+        Me.GBMSec1.Size = New System.Drawing.Size(389, 732)
+        Me.GBMSec1.TabIndex = 6
+        Me.GBMSec1.TabStop = False
+        Me.GBMSec1.Text = "User Menu Security Level"
+        '
+        'DataGridUsrMsec
+        '
+        Me.DataGridUsrMsec.AllowUserToAddRows = False
+        Me.DataGridUsrMsec.AllowUserToDeleteRows = False
+        Me.DataGridUsrMsec.AllowUserToResizeColumns = False
+        Me.DataGridUsrMsec.AllowUserToResizeRows = False
+        Me.DataGridUsrMsec.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridUsrMsec.Location = New System.Drawing.Point(5, 16)
+        Me.DataGridUsrMsec.Name = "DataGridUsrMsec"
+        Me.DataGridUsrMsec.Size = New System.Drawing.Size(380, 716)
+        Me.DataGridUsrMsec.TabIndex = 0
+        '
         'frmUsers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FloralWhite
         Me.ClientSize = New System.Drawing.Size(1379, 794)
+        Me.Controls.Add(Me.GBMSec1)
         Me.Controls.Add(Me.cmdCanNewUser)
         Me.Controls.Add(Me.cmdSaveNewUser)
         Me.Controls.Add(Me.GBoxNewUser)
@@ -399,6 +426,8 @@ Partial Class frmUsers
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GBoxNewUser.ResumeLayout(False)
         Me.GBoxNewUser.PerformLayout()
+        Me.GBMSec1.ResumeLayout(False)
+        CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -437,4 +466,6 @@ Partial Class frmUsers
     Friend WithEvents cmbUsrMode As ComboBox
     Friend WithEvents usrMode As Label
     Friend WithEvents chactive As CheckBox
+    Friend WithEvents GBMSec1 As GroupBox
+    Friend WithEvents DataGridUsrMsec As DataGridView
 End Class
