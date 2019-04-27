@@ -1,6 +1,48 @@
 ﻿
 
 Module ModRegSec
+    Private ms As New MenuStrip
+
+    Public Function BuildMenu() As MenuStrip
+
+        ms.Parent = MainMenu
+
+        'File Menu
+        Dim fileItem As New ToolStripMenuItem("&File")
+        Dim exitItem As New ToolStripMenuItem("&Exit", Nothing, New EventHandler(AddressOf MainMenu.OnExit))
+
+        exitItem.ShortcutKeys = Keys.Control Or Keys.X
+        fileItem.DropDownItems.Add(exitItem)
+
+        ms.Items.Add(fileItem)
+
+        'Edit Menu
+        Dim EditItem As New ToolStripMenuItem("E&dit")
+
+        ms.Items.Add(EditItem)
+
+        'Utilities Menu
+        Dim UtilItem As New ToolStripMenuItem("&Utilities")
+        Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
+
+        UserItem.ShortcutKeys = Keys.Control Or Keys.U
+        UtilItem.DropDownItems.Add(UserItem)
+
+        ms.Items.Add(UtilItem)
+
+        'Reports menu
+        Dim RepItem As New ToolStripMenuItem("&Reports")
+
+
+
+        ms.Items.Add(RepItem)
+
+        If (ModRegSec.RegisterMenu(ms) = False) Then
+            MsgBox("Error Registering forms")
+        End If
+        BuildMenu = ms
+
+    End Function
 
     '***********************************************************************************************
     '* on startup register all forms for security levels.
@@ -49,6 +91,16 @@ Module ModRegSec
         Loop
 
         RegisterMenu = tret
+
+        'check if admin has a default user security record
+        tsql = "If Not Exists(select 1 from MenuUserSecurity where userid = '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "') Begin "
+        tsql = tsql & "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) "
+        tsql = tsql & "Select '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "',MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive from MenuDfltSecurity where MenuActive = 1 End"
+        GlobalVariables.Gl_SQLStr = tsql
+        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error writing default user security menu!")
+            RegisterMenu = False
+        End If
 
     End Function
 

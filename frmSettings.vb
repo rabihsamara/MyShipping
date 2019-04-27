@@ -127,7 +127,6 @@ Public Class frmsettings
                     MsgBox("Error Creating default user Record!")
                     Exit Function
                 End If
-
             End If
 
         End If

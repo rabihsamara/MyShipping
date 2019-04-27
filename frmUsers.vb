@@ -36,6 +36,7 @@ Public Class frmUsers
             DataGridVWUsers.DataSource = sDs.Tables("users")
             DataGridVWUsers.ReadOnly = True
             DataGridVWUsers.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridVWUsers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
         End Using
 
     End Sub

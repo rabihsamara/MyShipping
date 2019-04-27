@@ -27,6 +27,7 @@ Partial Class frmUsers
         Me.cmdNewUser = New System.Windows.Forms.Button()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.GBoxNewUser = New System.Windows.Forms.GroupBox()
+        Me.chactive = New System.Windows.Forms.CheckBox()
         Me.cmbUsrMode = New System.Windows.Forms.ComboBox()
         Me.usrMode = New System.Windows.Forms.Label()
         Me.usrpassword = New System.Windows.Forms.TextBox()
@@ -55,7 +56,6 @@ Partial Class frmUsers
         Me.Label1 = New System.Windows.Forms.Label()
         Me.cmdSaveNewUser = New System.Windows.Forms.Button()
         Me.cmdCanNewUser = New System.Windows.Forms.Button()
-        Me.chactive = New System.Windows.Forms.CheckBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
@@ -66,7 +66,7 @@ Partial Class frmUsers
         Me.GroupBox1.Controls.Add(Me.DataGridVWUsers)
         Me.GroupBox1.Location = New System.Drawing.Point(3, 43)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(539, 207)
+        Me.GroupBox1.Size = New System.Drawing.Size(449, 207)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Application Users"
@@ -78,7 +78,8 @@ Partial Class frmUsers
         Me.DataGridVWUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridVWUsers.Location = New System.Drawing.Point(0, 19)
         Me.DataGridVWUsers.Name = "DataGridVWUsers"
-        Me.DataGridVWUsers.Size = New System.Drawing.Size(533, 181)
+        Me.DataGridVWUsers.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToDisplayedHeaders
+        Me.DataGridVWUsers.Size = New System.Drawing.Size(446, 181)
         Me.DataGridVWUsers.TabIndex = 0
         '
         'cmdNewUser
@@ -130,10 +131,20 @@ Partial Class frmUsers
         Me.GBoxNewUser.Controls.Add(Me.Label1)
         Me.GBoxNewUser.Location = New System.Drawing.Point(3, 285)
         Me.GBoxNewUser.Name = "GBoxNewUser"
-        Me.GBoxNewUser.Size = New System.Drawing.Size(539, 497)
+        Me.GBoxNewUser.Size = New System.Drawing.Size(449, 497)
         Me.GBoxNewUser.TabIndex = 3
         Me.GBoxNewUser.TabStop = False
         Me.GBoxNewUser.Text = "New User"
+        '
+        'chactive
+        '
+        Me.chactive.AutoSize = True
+        Me.chactive.Location = New System.Drawing.Point(323, 161)
+        Me.chactive.Name = "chactive"
+        Me.chactive.Size = New System.Drawing.Size(56, 17)
+        Me.chactive.TabIndex = 26
+        Me.chactive.Text = "Active"
+        Me.chactive.UseVisualStyleBackColor = True
         '
         'cmbUsrMode
         '
@@ -369,16 +380,6 @@ Partial Class frmUsers
         Me.cmdCanNewUser.TabIndex = 5
         Me.cmdCanNewUser.Text = "Cancel"
         Me.cmdCanNewUser.UseVisualStyleBackColor = True
-        '
-        'chactive
-        '
-        Me.chactive.AutoSize = True
-        Me.chactive.Location = New System.Drawing.Point(419, 29)
-        Me.chactive.Name = "chactive"
-        Me.chactive.Size = New System.Drawing.Size(56, 17)
-        Me.chactive.TabIndex = 26
-        Me.chactive.Text = "Active"
-        Me.chactive.UseVisualStyleBackColor = True
         '
         'frmUsers
         '
