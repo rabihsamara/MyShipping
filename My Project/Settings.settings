@@ -35,5 +35,8 @@
     <Setting Name="companyname" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="mastpassword" Type="System.String" Scope="User">
+      <Value Profile="(Default)">scc01</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

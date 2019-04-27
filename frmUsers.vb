@@ -159,6 +159,17 @@ Public Class frmUsers
 
             I = DataGridVWUsers.CurrentRow.Index
             selusrid = DataGridVWUsers.Item(0, I).Value
+            'check if admin
+            If (selusrid = "admin") Then
+                Dim frm As Form
+                frm = Frmchkadpwd
+                frm.ShowDialog()
+                If (GlobalVariables.GL_Stat = False) Then
+                    MsgBox("Cannot edit admin Users!")
+                    Exit Sub
+                End If
+            End If
+
             upmode = "U"
             cmdSaveNewUser.Text = "Update User"
             'move data to fields
