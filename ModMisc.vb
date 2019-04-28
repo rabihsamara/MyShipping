@@ -122,6 +122,7 @@ Module ModMisc
     'inopt = CUP check user password.
     'fldchk = company record exists but address1 empty
     'userr = read user record from table users.
+    'usridcnt = count of userid >0 exists
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String
@@ -177,6 +178,9 @@ Module ModMisc
                         GlobalVariables.Tmpuserrecord.Myusrseclvl = myReader.GetValue(13)
 
                         ReadSQL = GlobalVariables.Tmpuserrecord
+                        GlobalVariables.GL_Stat = True
+                    ElseIf (inopt = "usridcnt") Then
+                        ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop

@@ -326,11 +326,14 @@ Partial Class frmUsers
         '
         'DateOfBirth
         '
+        Me.DateOfBirth.AllowDrop = True
+        Me.DateOfBirth.CustomFormat = "MM/DD/YYYY"
         Me.DateOfBirth.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.DateOfBirth.Location = New System.Drawing.Point(293, 28)
         Me.DateOfBirth.Name = "DateOfBirth"
         Me.DateOfBirth.Size = New System.Drawing.Size(107, 20)
         Me.DateOfBirth.TabIndex = 5
+        Me.DateOfBirth.Value = New Date(2019, 4, 27, 0, 0, 0, 0)
         '
         'Label4
         '
