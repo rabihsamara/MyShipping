@@ -194,8 +194,12 @@ Module ModMisc
             Catch ex As Exception
                 MsgBox(ex.ToString)
             Finally
-                myReader.Close()
-                mysqlConn.Close()
+                If Not (myReader Is Nothing) Then
+                    myReader.Close()
+                End If
+                If Not (mysqlConn Is Nothing) Then
+                    mysqlConn.Close()
+                End If
             End Try
         End Using
 

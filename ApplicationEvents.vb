@@ -10,8 +10,8 @@
         Private Sub MyApplication_Startup(ByVal sender As Object, ByVal e As Microsoft.VisualBasic.ApplicationServices.StartupEventArgs) Handles Me.Startup
             'Select form depending if first run.
             If My.Settings.firstrun = True Then
-                frmSettings.Tag = "appstart"
-                My.Application.MainForm = frmSettings
+                frmsettings.Tag = "appstart"
+                My.Application.MainForm = frmsettings
             Else
                 My.Application.MainForm = Login
             End If

@@ -67,11 +67,8 @@ Public Class frmsettings
             Lgform = Login
             Lgform.Show()
         Else
-            'other from maitenance screen.
             My.Settings.Save()
             Me.Close()
-            'go where
-
         End If
 
     End Sub
