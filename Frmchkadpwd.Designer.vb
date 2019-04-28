@@ -40,6 +40,7 @@ Partial Class Frmchkadpwd
         '
         Me.inmastpwd.Location = New System.Drawing.Point(145, 6)
         Me.inmastpwd.Name = "inmastpwd"
+        Me.inmastpwd.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.inmastpwd.Size = New System.Drawing.Size(174, 20)
         Me.inmastpwd.TabIndex = 1
         '

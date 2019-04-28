@@ -65,6 +65,7 @@ Public Class frmUsers
         cmdNewUser.Enabled = False
         upmode = "I" ' New insert.
         usrID.Enabled = True
+        ReadCountries()
     End Sub
 
     Private Sub CmdCanNewUser_Click(sender As Object, e As EventArgs) Handles cmdCanNewUser.Click
@@ -205,6 +206,7 @@ Public Class frmUsers
                 MsgBox("error reading user info!")
                 Exit Sub
             End If
+            ReadCountries()
 
             usrID.Text = userrecord.MyUserID
             DateOfBirth.Value = userrecord.MyDateOfBirth

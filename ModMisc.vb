@@ -9,6 +9,12 @@ Module ModMisc
     Private myReader As SqlDataReader
     Private results As String
 
+    Private sCommand As SqlCommand
+    Private sAdapter As SqlDataAdapter
+    Private sBuilder As SqlCommandBuilder
+    Private sDs As DataSet
+    Private sTable As DataTable
+
     '******************************************************************************************************
     '* Funcions to handle my,settings value
     '******************************************************************************************************
@@ -445,5 +451,37 @@ Exit_Excel:
 
     End Sub
 
+    Public Function ReadCountries() As String
+
+        Dim tsql As String = String.Empty
+
+        GlobalVariables.GL_Stat = False
+        ReadCountries = String.Empty
+        tsql = "select countryname, ID from countries where active = 1 order by countryname"
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+
+            Try
+                mysqlConn.Open()
+
+                sCommand = New SqlCommand(tsql, mysqlConn)
+                sAdapter = New SqlDataAdapter(sCommand)
+                sBuilder = New SqlCommandBuilder(sAdapter)
+                sDs = New DataSet()
+                sAdapter.Fill(sDs, "countries")
+                sTable = sDs.Tables("countries")
+
+                frmUsers.cmbUsrCountry.DataSource = sTable
+                frmUsers.cmbUsrCountry.DisplayMember = "countryname"
+                frmUsers.cmbUsrCountry.ValueMember = "ID"
+                mysqlConn.Close()
+
+            Catch ex As Exception
+                MsgBox("Error Reading countries!")
+            End Try
+
+        End Using
+
+
+    End Function
 
 End Module

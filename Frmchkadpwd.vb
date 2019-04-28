@@ -13,4 +13,8 @@
         End If
 
     End Sub
+
+    Private Sub Frmchkadpwd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        inmastpwd.Text = ""
+    End Sub
 End Class

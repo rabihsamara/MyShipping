@@ -153,7 +153,7 @@ Partial Class frmUsers
         Me.chactive.Location = New System.Drawing.Point(323, 161)
         Me.chactive.Name = "chactive"
         Me.chactive.Size = New System.Drawing.Size(56, 17)
-        Me.chactive.TabIndex = 26
+        Me.chactive.TabIndex = 10
         Me.chactive.Text = "Active"
         Me.chactive.UseVisualStyleBackColor = True
         '
@@ -164,7 +164,7 @@ Partial Class frmUsers
         Me.cmbUsrMode.Location = New System.Drawing.Point(293, 254)
         Me.cmbUsrMode.Name = "cmbUsrMode"
         Me.cmbUsrMode.Size = New System.Drawing.Size(86, 21)
-        Me.cmbUsrMode.TabIndex = 25
+        Me.cmbUsrMode.TabIndex = 14
         '
         'usrMode
         '
@@ -181,7 +181,7 @@ Partial Class frmUsers
         Me.usrpassword.Name = "usrpassword"
         Me.usrpassword.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.usrpassword.Size = New System.Drawing.Size(138, 20)
-        Me.usrpassword.TabIndex = 23
+        Me.usrpassword.TabIndex = 13
         '
         'Label12
         '
@@ -199,7 +199,7 @@ Partial Class frmUsers
         Me.cmbUsrSecLvl.Location = New System.Drawing.Point(293, 221)
         Me.cmbUsrSecLvl.Name = "cmbUsrSecLvl"
         Me.cmbUsrSecLvl.Size = New System.Drawing.Size(86, 21)
-        Me.cmbUsrSecLvl.TabIndex = 21
+        Me.cmbUsrSecLvl.TabIndex = 12
         '
         'Label11
         '
@@ -213,11 +213,10 @@ Partial Class frmUsers
         'cmbUsrCountry
         '
         Me.cmbUsrCountry.FormattingEnabled = True
-        Me.cmbUsrCountry.Items.AddRange(New Object() {"Canada", "USA"})
         Me.cmbUsrCountry.Location = New System.Drawing.Point(71, 222)
         Me.cmbUsrCountry.Name = "cmbUsrCountry"
         Me.cmbUsrCountry.Size = New System.Drawing.Size(138, 21)
-        Me.cmbUsrCountry.TabIndex = 19
+        Me.cmbUsrCountry.TabIndex = 7
         '
         'Label10
         '
@@ -233,7 +232,7 @@ Partial Class frmUsers
         Me.usrpcode.Location = New System.Drawing.Point(293, 195)
         Me.usrpcode.Name = "usrpcode"
         Me.usrpcode.Size = New System.Drawing.Size(87, 20)
-        Me.usrpcode.TabIndex = 17
+        Me.usrpcode.TabIndex = 11
         '
         'Label9
         '
@@ -250,7 +249,7 @@ Partial Class frmUsers
         Me.cmbUsrState.Location = New System.Drawing.Point(71, 192)
         Me.cmbUsrState.Name = "cmbUsrState"
         Me.cmbUsrState.Size = New System.Drawing.Size(138, 21)
-        Me.cmbUsrState.TabIndex = 15
+        Me.cmbUsrState.TabIndex = 8
         '
         'Label8
         '
@@ -267,7 +266,7 @@ Partial Class frmUsers
         Me.cmbUsrCity.Location = New System.Drawing.Point(71, 159)
         Me.cmbUsrCity.Name = "cmbUsrCity"
         Me.cmbUsrCity.Size = New System.Drawing.Size(230, 21)
-        Me.cmbUsrCity.TabIndex = 13
+        Me.cmbUsrCity.TabIndex = 9
         '
         'Label7
         '
@@ -283,7 +282,7 @@ Partial Class frmUsers
         Me.usradd2.Location = New System.Drawing.Point(71, 127)
         Me.usradd2.Name = "usradd2"
         Me.usradd2.Size = New System.Drawing.Size(329, 20)
-        Me.usradd2.TabIndex = 11
+        Me.usradd2.TabIndex = 6
         '
         'Label6
         '
@@ -299,7 +298,7 @@ Partial Class frmUsers
         Me.usradd1.Location = New System.Drawing.Point(71, 93)
         Me.usradd1.Name = "usradd1"
         Me.usradd1.Size = New System.Drawing.Size(329, 20)
-        Me.usradd1.TabIndex = 9
+        Me.usradd1.TabIndex = 5
         '
         'Label5
         '
@@ -315,14 +314,14 @@ Partial Class frmUsers
         Me.usrlname.Location = New System.Drawing.Point(293, 62)
         Me.usrlname.Name = "usrlname"
         Me.usrlname.Size = New System.Drawing.Size(107, 20)
-        Me.usrlname.TabIndex = 7
+        Me.usrlname.TabIndex = 4
         '
         'usrfname
         '
         Me.usrfname.Location = New System.Drawing.Point(71, 65)
         Me.usrfname.Name = "usrfname"
         Me.usrfname.Size = New System.Drawing.Size(138, 20)
-        Me.usrfname.TabIndex = 6
+        Me.usrfname.TabIndex = 3
         '
         'DateOfBirth
         '
@@ -332,7 +331,7 @@ Partial Class frmUsers
         Me.DateOfBirth.Location = New System.Drawing.Point(293, 28)
         Me.DateOfBirth.Name = "DateOfBirth"
         Me.DateOfBirth.Size = New System.Drawing.Size(107, 20)
-        Me.DateOfBirth.TabIndex = 5
+        Me.DateOfBirth.TabIndex = 2
         Me.DateOfBirth.Value = New Date(2019, 4, 27, 0, 0, 0, 0)
         '
         'Label4
