@@ -213,9 +213,6 @@ Public Class frmUsers
                 Exit Sub
             End If
 
-            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
-            ModMisc.ReadCountries(cmbUsrCountry)
-
             usrID.Text = userrecord.MyUserID
             DateOfBirth.Value = userrecord.MyDateOfBirth
             chactive.Checked = userrecord.MyActive
@@ -223,13 +220,22 @@ Public Class frmUsers
             usrlname.Text = userrecord.MyLname
             usradd1.Text = userrecord.MyAddress1
             usradd2.Text = userrecord.MyAddress2
+
+            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            ModMisc.ReadCountries(cmbUsrCountry)
+
             cmbUsrCountry.Text = userrecord.MyCountry
             slcountryid = cmbUsrCountry.SelectedValue
 
+            GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
+            ModMisc.ReadCountries(cmbUsrState)
             cmbUsrState.Text = userrecord.MyProvince
+            slstateid = cmbUsrState.SelectedValue
 
+            GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
+            ModMisc.ReadCountries(cmbUsrCity)
             cmbUsrCity.Text = userrecord.MyCity
-
+            slcityid = cmbUsrCity.SelectedValue
 
             usrpcode.Text = userrecord.MyPcode
             cmbUsrSecLvl.Text = userrecord.Myusrseclvl
@@ -357,8 +363,31 @@ Public Class frmUsers
 
     Private Sub CmbUsrCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrCountry.SelectionChangeCommitted
         slcountryid = cmbUsrCountry.SelectedValue
-        MsgBox(cmbUsrCountry.SelectedValue.ToString)
+        'MsgBox(cmbUsrCountry.SelectedValue.ToString)
 
+        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
+        ModMisc.ReadCountries(cmbUsrState)
+        cmbUsrState.Text = ""
+        slstateid = cmbUsrState.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbUsrCity)
+        cmbUsrCity.Text = ""
+        slcityid = cmbUsrCity.SelectedValue
+    End Sub
+
+    Private Sub cmbUsrState_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrState.SelectionChangeCommitted
+        slstateid = cmbUsrState.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbUsrCity)
+        cmbUsrCity.Text = ""
+        slcityid = cmbUsrCity.SelectedValue
+
+    End Sub
+
+    Private Sub cmbUsrCity_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrCity.SelectionChangeCommitted
+        slcityid = cmbUsrCity.SelectedValue
     End Sub
 
 End Class
