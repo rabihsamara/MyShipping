@@ -63,7 +63,7 @@ Module ModMisc
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
-                Dim command As New SqlCommand("SELECT UserID FROM Users where active = 1 order by UserID desc", mysqlConn)
+                Dim command As New SqlCommand("SELECT UserID FROM Users where active = 1 order by UserID asc", mysqlConn)
                 mysqlConn.Open()
 
                 myReader = command.ExecuteReader()
@@ -451,29 +451,26 @@ Exit_Excel:
 
     End Sub
 
-    Public Function ReadCountries() As String
-
-        Dim tsql As String = String.Empty
+    Public Sub ReadCountries(ByVal cbo As ComboBox)
 
         GlobalVariables.GL_Stat = False
-        ReadCountries = String.Empty
-        tsql = "select countryname, ID from countries where active = 1 order by countryname"
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
             Try
                 mysqlConn.Open()
 
-                sCommand = New SqlCommand(tsql, mysqlConn)
-                sAdapter = New SqlDataAdapter(sCommand)
-                sBuilder = New SqlCommandBuilder(sAdapter)
-                sDs = New DataSet()
-                sAdapter.Fill(sDs, "countries")
-                sTable = sDs.Tables("countries")
-
-                frmUsers.cmbUsrCountry.DataSource = sTable
-                frmUsers.cmbUsrCountry.DisplayMember = "countryname"
-                frmUsers.cmbUsrCountry.ValueMember = "ID"
-                mysqlConn.Close()
+                Using comm As SqlCommand = New SqlCommand(GlobalVariables.Gl_SQLStr, mysqlConn)
+                    Dim rs As SqlDataReader = comm.ExecuteReader
+                    Dim dt As DataTable = New DataTable
+                    dt.Load(rs)
+                    ' as an example set the ValueMember and DisplayMember'
+                    ' to two columns of the returned table'
+                    cbo.DataSource = dt
+                    cbo.DisplayMember = "countryname"
+                    cbo.ValueMember = "ID"
+                    mysqlConn.Close()
+                    GlobalVariables.GL_Stat = True
+                End Using 'comm
 
             Catch ex As Exception
                 MsgBox("Error Reading countries!")
@@ -481,7 +478,6 @@ Exit_Excel:
 
         End Using
 
-
-    End Function
+    End Sub
 
 End Module

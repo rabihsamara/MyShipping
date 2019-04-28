@@ -11,6 +11,10 @@ Public Class frmUsers
     Private selusrid As String
     Private upmode As String
 
+    Private slcountryid As Integer
+    Private slstateid As Integer
+    Private slcityid As Integer
+
     Private selsecID As Integer
     Private selsecuser As String
 
@@ -65,7 +69,9 @@ Public Class frmUsers
         cmdNewUser.Enabled = False
         upmode = "I" ' New insert.
         usrID.Enabled = True
-        ReadCountries()
+        GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+        ModMisc.ReadCountries(cmbUsrCountry)
+
     End Sub
 
     Private Sub CmdCanNewUser_Click(sender As Object, e As EventArgs) Handles cmdCanNewUser.Click
@@ -206,7 +212,9 @@ Public Class frmUsers
                 MsgBox("error reading user info!")
                 Exit Sub
             End If
-            ReadCountries()
+
+            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            ModMisc.ReadCountries(cmbUsrCountry)
 
             usrID.Text = userrecord.MyUserID
             DateOfBirth.Value = userrecord.MyDateOfBirth
@@ -215,10 +223,15 @@ Public Class frmUsers
             usrlname.Text = userrecord.MyLname
             usradd1.Text = userrecord.MyAddress1
             usradd2.Text = userrecord.MyAddress2
-            cmbUsrCity.Text = userrecord.MyCity
-            cmbUsrState.Text = userrecord.MyProvince
-            usrpcode.Text = userrecord.MyPcode
             cmbUsrCountry.Text = userrecord.MyCountry
+            slcountryid = cmbUsrCountry.SelectedValue
+
+            cmbUsrState.Text = userrecord.MyProvince
+
+            cmbUsrCity.Text = userrecord.MyCity
+
+
+            usrpcode.Text = userrecord.MyPcode
             cmbUsrSecLvl.Text = userrecord.Myusrseclvl
             usrpassword.Text = userrecord.MyusrPassword
             cmbUsrMode.Text = userrecord.Myusrmode
@@ -339,6 +352,12 @@ Public Class frmUsers
         chactivesec.Checked = False
         cmdSecLevel.SelectedIndex = -1
         GBEditSecMnu.Visible = False
+
+    End Sub
+
+    Private Sub CmbUsrCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrCountry.SelectionChangeCommitted
+        slcountryid = cmbUsrCountry.SelectedValue
+        MsgBox(cmbUsrCountry.SelectedValue.ToString)
 
     End Sub
 
