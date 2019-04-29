@@ -710,3 +710,35 @@ Public Class mytransRecord
     End Sub
 
 End Class
+
+Public Class mymisc1
+
+    Private myFormArray As New ArrayList
+
+    Public Property Myfrms() As ArrayList
+        Get
+            Dim myAssembly As System.Reflection.Assembly = System.Reflection.Assembly.GetExecutingAssembly()
+            Dim types As Type() = myAssembly.GetTypes()
+            For Each myType In types
+                If Not IsNothing(myType.BaseType) Then
+                    If myType.BaseType.FullName = "System.Windows.Forms.Form" Then
+                        myFormArray.Add(Trim(myType.Name))
+                    End If
+                End If
+            Next
+            Return myFormArray
+        End Get
+        Set(ByVal Value As ArrayList)
+            myFormArray = Value
+        End Set
+    End Property
+
+    Public Sub New()   'parameterised constructor
+        Console.WriteLine("My sqlConnect Object is being created")
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+        Console.WriteLine("Object is being deleted")
+    End Sub
+
+End Class

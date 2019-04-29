@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmUsers
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmUsers
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.DataGridVWUsers = New System.Windows.Forms.DataGridView()
@@ -59,10 +59,10 @@ Partial Class frmUsers
         Me.GBMSec1 = New System.Windows.Forms.GroupBox()
         Me.DataGridUsrMsec = New System.Windows.Forms.DataGridView()
         Me.GBEditSecMnu = New System.Windows.Forms.GroupBox()
+        Me.chsecshow = New System.Windows.Forms.CheckBox()
         Me.cmdseccanc = New System.Windows.Forms.Button()
         Me.cmdsecupd = New System.Windows.Forms.Button()
         Me.chactivesec = New System.Windows.Forms.CheckBox()
-        Me.chsecshow = New System.Windows.Forms.CheckBox()
         Me.cmdDelete = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -430,6 +430,16 @@ Partial Class frmUsers
         Me.GBEditSecMnu.TabStop = False
         Me.GBEditSecMnu.Text = "Edit User Menu Security level"
         '
+        'chsecshow
+        '
+        Me.chsecshow.AutoSize = True
+        Me.chsecshow.Location = New System.Drawing.Point(23, 31)
+        Me.chsecshow.Name = "chsecshow"
+        Me.chsecshow.Size = New System.Drawing.Size(53, 17)
+        Me.chsecshow.TabIndex = 5
+        Me.chsecshow.Text = "Show"
+        Me.chsecshow.UseVisualStyleBackColor = True
+        '
         'cmdseccanc
         '
         Me.cmdseccanc.Location = New System.Drawing.Point(270, 26)
@@ -457,16 +467,6 @@ Partial Class frmUsers
         Me.chactivesec.TabIndex = 2
         Me.chactivesec.Text = "Active"
         Me.chactivesec.UseVisualStyleBackColor = True
-        '
-        'chsecshow
-        '
-        Me.chsecshow.AutoSize = True
-        Me.chsecshow.Location = New System.Drawing.Point(23, 31)
-        Me.chsecshow.Name = "chsecshow"
-        Me.chsecshow.Size = New System.Drawing.Size(53, 17)
-        Me.chsecshow.TabIndex = 5
-        Me.chsecshow.Text = "Show"
-        Me.chsecshow.UseVisualStyleBackColor = True
         '
         'cmdDelete
         '

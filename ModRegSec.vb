@@ -1,5 +1,4 @@
 ﻿
-
 Module ModRegSec
     Private ms As New MenuStrip
 
@@ -45,16 +44,20 @@ Module ModRegSec
         ms.Items.Add(RepItem)
 
         '***********************************************************************************************
-        'delete MenuDfltSecurity to -recreate
+        'delete MenuDfltSecurity to - recreate
 
         GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
             MsgBox("Error deleting Menu Default security table!")
         Else
             If (ModRegSec.RegisterMenu(ms) = False) Then
-                MsgBox("Error Registering forms")
+                MsgBox("Error Registering Menus")
             End If
             BuildMenu = ms
+        End If
+
+        If (RegisterForms() = False) Then
+            MsgBox("Error Registering forms")
         End If
 
     End Function
@@ -123,6 +126,16 @@ Module ModRegSec
 
         Dim tret As Boolean = True
 
+        Dim myappforms As mymisc1 = New mymisc1()
+        Dim frmarray As ArrayList = myappforms.Myfrms
+
+        frmarray.Sort()
+        For i As Integer = 0 To frmarray.Count - 1
+            Dim val As String = frmarray(i).ToString()
+            MsgBox(val)
+        Next
+
+
 
 
 
@@ -132,7 +145,7 @@ Module ModRegSec
     End Function
 
     '***********************************************************************************************
-    '* Misc functions/subs 
+    '* Misc functions/subs                                                                         *
     '***********************************************************************************************
     Public Sub CloseAllforms()
         Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
