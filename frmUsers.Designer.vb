@@ -67,6 +67,12 @@ Partial Class frmUsers
         Me.GBFormSec = New System.Windows.Forms.GroupBox()
         Me.DataGridForms = New System.Windows.Forms.DataGridView()
         Me.GBEditSecForm = New System.Windows.Forms.GroupBox()
+        Me.chfrmShow = New System.Windows.Forms.CheckBox()
+        Me.chfrmEnabled = New System.Windows.Forms.CheckBox()
+        Me.CHfrmControls = New System.Windows.Forms.CheckBox()
+        Me.cmdFrmUpdate = New System.Windows.Forms.Button()
+        Me.cmdFrmCancel = New System.Windows.Forms.Button()
+        Me.cmdupdcontrols = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
@@ -75,6 +81,7 @@ Partial Class frmUsers
         Me.GBEditSecMnu.SuspendLayout()
         Me.GBFormSec.SuspendLayout()
         CType(Me.DataGridForms, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GBEditSecForm.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -502,12 +509,75 @@ Partial Class frmUsers
         '
         'GBEditSecForm
         '
-        Me.GBEditSecForm.Location = New System.Drawing.Point(876, 302)
+        Me.GBEditSecForm.Controls.Add(Me.cmdupdcontrols)
+        Me.GBEditSecForm.Controls.Add(Me.cmdFrmCancel)
+        Me.GBEditSecForm.Controls.Add(Me.cmdFrmUpdate)
+        Me.GBEditSecForm.Controls.Add(Me.CHfrmControls)
+        Me.GBEditSecForm.Controls.Add(Me.chfrmEnabled)
+        Me.GBEditSecForm.Controls.Add(Me.chfrmShow)
+        Me.GBEditSecForm.Location = New System.Drawing.Point(872, 302)
         Me.GBEditSecForm.Name = "GBEditSecForm"
-        Me.GBEditSecForm.Size = New System.Drawing.Size(538, 67)
+        Me.GBEditSecForm.Size = New System.Drawing.Size(542, 67)
         Me.GBEditSecForm.TabIndex = 10
         Me.GBEditSecForm.TabStop = False
         Me.GBEditSecForm.Text = "Edit User Form Security level"
+        '
+        'chfrmShow
+        '
+        Me.chfrmShow.AutoSize = True
+        Me.chfrmShow.Location = New System.Drawing.Point(11, 32)
+        Me.chfrmShow.Name = "chfrmShow"
+        Me.chfrmShow.Size = New System.Drawing.Size(53, 17)
+        Me.chfrmShow.TabIndex = 0
+        Me.chfrmShow.Text = "Show"
+        Me.chfrmShow.UseVisualStyleBackColor = True
+        '
+        'chfrmEnabled
+        '
+        Me.chfrmEnabled.AutoSize = True
+        Me.chfrmEnabled.Location = New System.Drawing.Point(92, 31)
+        Me.chfrmEnabled.Name = "chfrmEnabled"
+        Me.chfrmEnabled.Size = New System.Drawing.Size(65, 17)
+        Me.chfrmEnabled.TabIndex = 1
+        Me.chfrmEnabled.Text = "Enabled"
+        Me.chfrmEnabled.UseVisualStyleBackColor = True
+        '
+        'CHfrmControls
+        '
+        Me.CHfrmControls.AutoSize = True
+        Me.CHfrmControls.Location = New System.Drawing.Point(182, 32)
+        Me.CHfrmControls.Name = "CHfrmControls"
+        Me.CHfrmControls.Size = New System.Drawing.Size(64, 17)
+        Me.CHfrmControls.TabIndex = 2
+        Me.CHfrmControls.Text = "Controls"
+        Me.CHfrmControls.UseVisualStyleBackColor = True
+        '
+        'cmdFrmUpdate
+        '
+        Me.cmdFrmUpdate.Location = New System.Drawing.Point(252, 28)
+        Me.cmdFrmUpdate.Name = "cmdFrmUpdate"
+        Me.cmdFrmUpdate.Size = New System.Drawing.Size(68, 22)
+        Me.cmdFrmUpdate.TabIndex = 3
+        Me.cmdFrmUpdate.Text = "Update"
+        Me.cmdFrmUpdate.UseVisualStyleBackColor = True
+        '
+        'cmdFrmCancel
+        '
+        Me.cmdFrmCancel.Location = New System.Drawing.Point(341, 26)
+        Me.cmdFrmCancel.Name = "cmdFrmCancel"
+        Me.cmdFrmCancel.Size = New System.Drawing.Size(56, 23)
+        Me.cmdFrmCancel.TabIndex = 4
+        Me.cmdFrmCancel.Text = "Cancel"
+        Me.cmdFrmCancel.UseVisualStyleBackColor = True
+        '
+        'cmdupdcontrols
+        '
+        Me.cmdupdcontrols.Location = New System.Drawing.Point(439, 26)
+        Me.cmdupdcontrols.Name = "cmdupdcontrols"
+        Me.cmdupdcontrols.Size = New System.Drawing.Size(96, 24)
+        Me.cmdupdcontrols.TabIndex = 5
+        Me.cmdupdcontrols.Text = "Update controls"
+        Me.cmdupdcontrols.UseVisualStyleBackColor = True
         '
         'frmUsers
         '
@@ -538,6 +608,8 @@ Partial Class frmUsers
         Me.GBEditSecMnu.PerformLayout()
         Me.GBFormSec.ResumeLayout(False)
         CType(Me.DataGridForms, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GBEditSecForm.ResumeLayout(False)
+        Me.GBEditSecForm.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -587,4 +659,10 @@ Partial Class frmUsers
     Friend WithEvents GBFormSec As GroupBox
     Friend WithEvents DataGridForms As DataGridView
     Friend WithEvents GBEditSecForm As GroupBox
+    Friend WithEvents CHfrmControls As CheckBox
+    Friend WithEvents chfrmEnabled As CheckBox
+    Friend WithEvents chfrmShow As CheckBox
+    Friend WithEvents cmdFrmCancel As Button
+    Friend WithEvents cmdFrmUpdate As Button
+    Friend WithEvents cmdupdcontrols As Button
 End Class

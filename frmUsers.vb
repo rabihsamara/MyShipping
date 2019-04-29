@@ -287,25 +287,6 @@ Public Class frmUsers
 
     End Sub
 
-    Private Sub DataGridForms_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridForms.MouseClick
-
-        selformrow = 0
-        selformNId = 0
-
-        If (DataGridForms.Rows.Count >= 1) Then
-            selformrow = DataGridForms.CurrentRow.Index
-            selformNId = DataGridForms.Item(0, selformrow).Value
-            If (DataGridForms.Item(7, selformrow).Value.ToString = "2") Then
-                MsgBox("cannot edit form security level!")
-                Exit Sub
-            End If
-
-        End If
-
-
-
-    End Sub
-
     Private Sub clrUserFields()
         usrID.Text = ""
         DateOfBirth.Value = Now()
@@ -505,7 +486,78 @@ Public Class frmUsers
             Exit Sub
         End If
 
+    End Sub
+
+    Private Sub DataGridForms_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridForms.MouseClick
+
+        If (DataGridForms.Rows.Count >= 1) Then
+            selformrow = DataGridForms.CurrentRow.Index
+            selformNId = DataGridForms.Item(0, selformrow).Value
+            If (DataGridForms.Item(7, selformrow).Value.ToString = "2") Then
+                If (GlobalVariables.Gl_LogUserID <> "admin") Then
+                    Dim frm As Form
+                    frm = Frmchkadpwd
+                    frm.ShowDialog()
+                    If (GlobalVariables.GL_Stat = False) Then
+                        MsgBox("Cannot form security level!")
+                        Exit Sub
+                    End If
+                Else
+                    MsgBox("cannot edit form security level!")
+                    Exit Sub
+                End If
+            End If
+
+            chfrmShow.Checked = DataGridForms.Item(5, selformrow).Value
+            chfrmEnabled.Checked = DataGridForms.Item(6, selformrow).Value
+            CHfrmControls.Checked = DataGridForms.Item(7, selformrow).Value
+            cmdFrmUpdate.Enabled = True
+            cmdFrmCancel.Enabled = True
+        End If
 
     End Sub
+
+    Private Sub CmdFrmUpdate_Click(sender As Object, e As EventArgs) Handles cmdFrmUpdate.Click
+
+        Dim tshow As Integer = 0
+        Dim tenabled As Integer = 0
+        Dim tcontrols As Integer = 0
+
+        If (chfrmShow.Checked = True) Then tshow = 1
+        If (chfrmEnabled.Checked = True) Then tenabled = 1
+        If (CHfrmControls.Checked = True) Then tcontrols = 1
+
+        GlobalVariables.Gl_SQLStr = "update FormUserSecurity set FormShow = " & tshow & ", Formenabled = " & tenabled & ", FormControls = " & tcontrols
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selformNId
+        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error update user form security Level!")
+        Else
+            DataGridForms.Item(5, selformrow).Value = tshow
+            DataGridForms.Item(6, selformrow).Value = tenabled
+            DataGridForms.Item(7, selformrow).Value = tcontrols
+            chfrmShow.Checked = False
+            chfrmEnabled.Checked = False
+            CHfrmControls.Checked = False
+            cmdFrmUpdate.Enabled = False
+            cmdFrmCancel.Enabled = False
+        End If
+
+    End Sub
+
+    Private Sub CmdFrmCancel_Click(sender As Object, e As EventArgs) Handles cmdFrmCancel.Click
+
+        chfrmShow.Checked = False
+        chfrmEnabled.Checked = False
+        CHfrmControls.Checked = False
+        cmdFrmUpdate.Enabled = False
+        cmdFrmCancel.Enabled = False
+
+    End Sub
+
+    Private Sub Cmdupdcontrols_Click(sender As Object, e As EventArgs) Handles cmdupdcontrols.Click
+        Dim frm As New frmControls()
+        frm.ShowDialog()
+    End Sub
+
 
 End Class

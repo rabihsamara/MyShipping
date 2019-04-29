@@ -1,4 +1,5 @@
 ﻿Public Class Frmchkadpwd
+
     Private Sub Cmdchk_Click(sender As Object, e As EventArgs) Handles cmdchk.Click
 
         Dim tpwd As String = Trim(inmastpwd.Text)
@@ -16,5 +17,11 @@
 
     Private Sub Frmchkadpwd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         inmastpwd.Text = ""
+        MsgBox(sender.ToString)
     End Sub
+
+    Private Sub Frmchkadpwd_Closing(sender As Object, e As EventArgs) Handles MyBase.Load
+        GlobalVariables.GL_Stat = False
+    End Sub
+
 End Class
