@@ -18,6 +18,9 @@ Public Class frmUsers
     Private selsecID As Integer
     Private selsecuser As String
 
+    Private selformrow As Integer
+    Private selformNId As Integer
+
     Private selrow As Integer
     Private userrecord As userrec = New userrec()
 
@@ -29,7 +32,8 @@ Public Class frmUsers
         cmdDelete.Visible = False
         GBMSec1.Visible = False
         GBEditSecMnu.visible = False
-
+        GBFormSec.Visible = False
+        GBEditSecForm.Visible = False
         LoadUsers()
     End Sub
 
@@ -64,7 +68,9 @@ Public Class frmUsers
         cmdSaveNewUser.Text = "Save User"
         clrUserFields()
         GBMSec1.Visible = True
+        GBFormSec.Visible = True
         GBEditSecMnu.Visible = True
+        GBEditSecForm.Visible = True
         cmdsecupd.Enabled = False
         cmdseccanc.Enabled = False
         GBoxNewUser.Visible = True
@@ -84,12 +90,13 @@ Public Class frmUsers
         GBoxNewUser.Text = "New User"
         cmdSaveNewUser.Text = "Save User"
         GBoxNewUser.Visible = False
+        GBFormSec.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
         cmdNewUser.Enabled = True
-        LoadUsersMenSec()
         GBMSec1.Visible = False
         GBEditSecMnu.Visible = False
+        GBEditSecForm.Visible = False
         clrUserFields()
         usrID.Enabled = False
         cmdDelete.Visible = False
@@ -151,6 +158,15 @@ Public Class frmUsers
                 End If
             Next
 
+            'check if user has default forms security.
+            GlobalVariables.Gl_SQLStr = "If Not Exists(select 1 from FormUserSecurity where userid = '" & usrID.Text & "') Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into FormUserSecurity (UserID, FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls from FormDfltSecurity End"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error writing default admin security forms!")
+                Exit Sub
+            End If
+            LoadUsersFormsSec()
         Else ' update
             GlobalVariables.Gl_SQLStr = "Update users  SET UserID = '" & usrID.Text & "', Fname = '" & Trim(usrfname.Text) & "', "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Lname = '" & Trim(usrlname.Text) & "', "
@@ -248,13 +264,45 @@ Public Class frmUsers
             cmdCanNewUser.Visible = True
             cmdNewUser.Enabled = False
             LoadUsersMenSec()
+            LoadUsersFormsSec()
             GBMSec1.Visible = True
+            GBFormSec.Visible = True
             GBEditSecMnu.Visible = True
+            GBEditSecForm.Visible = True
             cmdsecupd.Enabled = False
             cmdseccanc.Enabled = False
             usrID.Enabled = False
             cmdDelete.Visible = True
+
+            'check if user has default forms security.
+            GlobalVariables.Gl_SQLStr = "If Not Exists(select 1 from FormUserSecurity where userid = '" & usrID.Text & "') Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into FormUserSecurity (UserID, FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls from FormDfltSecurity End"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error writing default admin security forms!")
+                Exit Sub
+            End If
+            LoadUsersFormsSec()
         End If
+
+    End Sub
+
+    Private Sub DataGridForms_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridForms.MouseClick
+
+        selformrow = 0
+        selformNId = 0
+
+        If (DataGridForms.Rows.Count >= 1) Then
+            selformrow = DataGridForms.CurrentRow.Index
+            selformNId = DataGridForms.Item(0, selformrow).Value
+            If (DataGridForms.Item(7, selformrow).Value.ToString = "2") Then
+                MsgBox("cannot edit form security level!")
+                Exit Sub
+            End If
+
+        End If
+
+
 
     End Sub
 
@@ -308,6 +356,46 @@ Public Class frmUsers
             DataGridUsrMsec.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
             DataGridUsrMsec.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
             DataGridUsrMsec.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+
+        End Using
+
+    End Sub
+
+    Private Sub LoadUsersFormsSec()
+
+        Dim sql As String = "SELECT ID,UserID,FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls FROM FormUserSecurity where UserID = '" & selusrid & "'"
+        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            connection.Open()
+            sCommand = New SqlCommand(sql, connection)
+            sAdapter = New SqlDataAdapter(sCommand)
+            sBuilder = New SqlCommandBuilder(sAdapter)
+            sDs = New DataSet()
+            sAdapter.Fill(sDs, "FormUserSecurity")
+            sTable = sDs.Tables("FormUserSecurity")
+            connection.Close()
+            DataGridForms.DataSource = sDs.Tables("FormUserSecurity")
+            DataGridForms.ReadOnly = True
+            DataGridForms.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            'change header text
+            Me.DataGridForms.Columns(0).HeaderText = "ID"
+            Me.DataGridForms.Columns(1).HeaderText = "UserID"
+            Me.DataGridForms.Columns(2).HeaderText = "FormName"
+            Me.DataGridForms.Columns(3).HeaderText = "Type"
+            Me.DataGridForms.Columns(4).HeaderText = "MenuName"
+            Me.DataGridForms.Columns(5).HeaderText = "Show"
+            Me.DataGridForms.Columns(6).HeaderText = "Enabled"
+            Me.DataGridForms.Columns(7).HeaderText = "Controls"
+
+            DataGridForms.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+
+            'disable sorting
+            DataGridForms.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
 
         End Using
 

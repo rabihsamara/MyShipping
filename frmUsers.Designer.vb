@@ -64,12 +64,17 @@ Partial Class frmUsers
         Me.cmdsecupd = New System.Windows.Forms.Button()
         Me.chactivesec = New System.Windows.Forms.CheckBox()
         Me.cmdDelete = New System.Windows.Forms.Button()
+        Me.GBFormSec = New System.Windows.Forms.GroupBox()
+        Me.DataGridForms = New System.Windows.Forms.DataGridView()
+        Me.GBEditSecForm = New System.Windows.Forms.GroupBox()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
         Me.GBMSec1.SuspendLayout()
         CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBEditSecMnu.SuspendLayout()
+        Me.GBFormSec.SuspendLayout()
+        CType(Me.DataGridForms, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupBox1
@@ -104,9 +109,9 @@ Partial Class frmUsers
         '
         'cmdExit
         '
-        Me.cmdExit.Location = New System.Drawing.Point(287, 13)
+        Me.cmdExit.Location = New System.Drawing.Point(134, 12)
         Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(78, 23)
+        Me.cmdExit.Size = New System.Drawing.Size(78, 25)
         Me.cmdExit.TabIndex = 2
         Me.cmdExit.Text = "Exit"
         Me.cmdExit.UseVisualStyleBackColor = True
@@ -477,12 +482,41 @@ Partial Class frmUsers
         Me.cmdDelete.Text = "Delete User"
         Me.cmdDelete.UseVisualStyleBackColor = True
         '
+        'GBFormSec
+        '
+        Me.GBFormSec.Controls.Add(Me.DataGridForms)
+        Me.GBFormSec.Location = New System.Drawing.Point(872, 43)
+        Me.GBFormSec.Name = "GBFormSec"
+        Me.GBFormSec.Size = New System.Drawing.Size(543, 247)
+        Me.GBFormSec.TabIndex = 9
+        Me.GBFormSec.TabStop = False
+        Me.GBFormSec.Text = "User Form Security Level"
+        '
+        'DataGridForms
+        '
+        Me.DataGridForms.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridForms.Location = New System.Drawing.Point(7, 16)
+        Me.DataGridForms.Name = "DataGridForms"
+        Me.DataGridForms.Size = New System.Drawing.Size(529, 217)
+        Me.DataGridForms.TabIndex = 0
+        '
+        'GBEditSecForm
+        '
+        Me.GBEditSecForm.Location = New System.Drawing.Point(876, 302)
+        Me.GBEditSecForm.Name = "GBEditSecForm"
+        Me.GBEditSecForm.Size = New System.Drawing.Size(538, 67)
+        Me.GBEditSecForm.TabIndex = 10
+        Me.GBEditSecForm.TabStop = False
+        Me.GBEditSecForm.Text = "Edit User Form Security level"
+        '
         'frmUsers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FloralWhite
-        Me.ClientSize = New System.Drawing.Size(1379, 794)
+        Me.ClientSize = New System.Drawing.Size(1419, 794)
+        Me.Controls.Add(Me.GBEditSecForm)
+        Me.Controls.Add(Me.GBFormSec)
         Me.Controls.Add(Me.cmdDelete)
         Me.Controls.Add(Me.GBEditSecMnu)
         Me.Controls.Add(Me.GBMSec1)
@@ -502,6 +536,8 @@ Partial Class frmUsers
         CType(Me.DataGridUsrMsec, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GBEditSecMnu.ResumeLayout(False)
         Me.GBEditSecMnu.PerformLayout()
+        Me.GBFormSec.ResumeLayout(False)
+        CType(Me.DataGridForms, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -548,4 +584,7 @@ Partial Class frmUsers
     Friend WithEvents cmdsecupd As Button
     Friend WithEvents chsecshow As CheckBox
     Friend WithEvents cmdDelete As Button
+    Friend WithEvents GBFormSec As GroupBox
+    Friend WithEvents DataGridForms As DataGridView
+    Friend WithEvents GBEditSecForm As GroupBox
 End Class

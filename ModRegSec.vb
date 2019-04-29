@@ -125,20 +125,52 @@ Module ModRegSec
     Public Function RegisterForms() As Boolean
 
         Dim tret As Boolean = True
+        Dim tsql As String = String.Empty
+        Dim tfrmtype As String = String.Empty
+        Dim tmnuname As String = String.Empty
+        Dim tcontorls As Integer = 1
 
         Dim myappforms As mymisc1 = New mymisc1()
         Dim frmarray As ArrayList = myappforms.Myfrms
 
         frmarray.Sort()
         For i As Integer = 0 To frmarray.Count - 1
-            Dim val As String = frmarray(i).ToString()
-            MsgBox(val)
+            Dim val As String = Trim(frmarray(i).ToString())
+
+            tfrmtype = "A"
+            tmnuname = ""
+            tcontorls = 2
+            If (val = "frmsettings") Then
+                tfrmtype = "M"
+                tmnuname = "frmSettings"
+                tcontorls = 1
+            End If
+            If (val = "frmUsers") Then
+                tfrmtype = "M"
+                tmnuname = "frmUsers"
+                tcontorls = 1
+            End If
+
+            tsql = "If Not Exists(Select 1 from FormDfltSecurity where FormName = '" & val & "') Begin "
+            tsql = tsql & "INSERT INTO FormDfltSecurity (FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls) VALUES ('" & val & "','" & tfrmtype & "','" & tmnuname & "',1,1," & tcontorls & ") End"
+            GlobalVariables.Gl_SQLStr = tsql
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error writing default form security!")
+                RegisterForms = False
+                Exit Function
+            End If
         Next
 
-
-
-
-
+        'check if admin user has default forms security.
+        tsql = "If Not Exists(select 1 from FormUserSecurity where userid = '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "') Begin "
+        tsql = tsql & "insert into FormUserSecurity (UserID, FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls) "
+        tsql = tsql & "Select '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "',FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls from FormDfltSecurity End"
+        GlobalVariables.Gl_SQLStr = tsql
+        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error writing default admin security forms!")
+            RegisterForms = False
+            Exit Function
+        End If
 
         RegisterForms = tret
 
