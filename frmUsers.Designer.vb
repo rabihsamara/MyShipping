@@ -62,8 +62,8 @@ Partial Class frmUsers
         Me.cmdseccanc = New System.Windows.Forms.Button()
         Me.cmdsecupd = New System.Windows.Forms.Button()
         Me.chactivesec = New System.Windows.Forms.CheckBox()
-        Me.cmdSecLevel = New System.Windows.Forms.ComboBox()
-        Me.Label13 = New System.Windows.Forms.Label()
+        Me.chsecshow = New System.Windows.Forms.CheckBox()
+        Me.cmdDelete = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         CType(Me.DataGridVWUsers, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBoxNewUser.SuspendLayout()
@@ -419,21 +419,20 @@ Partial Class frmUsers
         '
         'GBEditSecMnu
         '
+        Me.GBEditSecMnu.Controls.Add(Me.chsecshow)
         Me.GBEditSecMnu.Controls.Add(Me.cmdseccanc)
         Me.GBEditSecMnu.Controls.Add(Me.cmdsecupd)
         Me.GBEditSecMnu.Controls.Add(Me.chactivesec)
-        Me.GBEditSecMnu.Controls.Add(Me.cmdSecLevel)
-        Me.GBEditSecMnu.Controls.Add(Me.Label13)
         Me.GBEditSecMnu.Location = New System.Drawing.Point(474, 302)
         Me.GBEditSecMnu.Name = "GBEditSecMnu"
-        Me.GBEditSecMnu.Size = New System.Drawing.Size(380, 197)
+        Me.GBEditSecMnu.Size = New System.Drawing.Size(380, 68)
         Me.GBEditSecMnu.TabIndex = 7
         Me.GBEditSecMnu.TabStop = False
         Me.GBEditSecMnu.Text = "Edit User Menu Security level"
         '
         'cmdseccanc
         '
-        Me.cmdseccanc.Location = New System.Drawing.Point(219, 68)
+        Me.cmdseccanc.Location = New System.Drawing.Point(270, 26)
         Me.cmdseccanc.Name = "cmdseccanc"
         Me.cmdseccanc.Size = New System.Drawing.Size(80, 27)
         Me.cmdseccanc.TabIndex = 4
@@ -442,7 +441,7 @@ Partial Class frmUsers
         '
         'cmdsecupd
         '
-        Me.cmdsecupd.Location = New System.Drawing.Point(103, 70)
+        Me.cmdsecupd.Location = New System.Drawing.Point(160, 26)
         Me.cmdsecupd.Name = "cmdsecupd"
         Me.cmdsecupd.Size = New System.Drawing.Size(85, 25)
         Me.cmdsecupd.TabIndex = 3
@@ -452,30 +451,31 @@ Partial Class frmUsers
         'chactivesec
         '
         Me.chactivesec.AutoSize = True
-        Me.chactivesec.Location = New System.Drawing.Point(244, 28)
+        Me.chactivesec.Location = New System.Drawing.Point(82, 31)
         Me.chactivesec.Name = "chactivesec"
         Me.chactivesec.Size = New System.Drawing.Size(56, 17)
         Me.chactivesec.TabIndex = 2
         Me.chactivesec.Text = "Active"
         Me.chactivesec.UseVisualStyleBackColor = True
         '
-        'cmdSecLevel
+        'chsecshow
         '
-        Me.cmdSecLevel.FormattingEnabled = True
-        Me.cmdSecLevel.Items.AddRange(New Object() {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"})
-        Me.cmdSecLevel.Location = New System.Drawing.Point(103, 26)
-        Me.cmdSecLevel.Name = "cmdSecLevel"
-        Me.cmdSecLevel.Size = New System.Drawing.Size(111, 21)
-        Me.cmdSecLevel.TabIndex = 1
+        Me.chsecshow.AutoSize = True
+        Me.chsecshow.Location = New System.Drawing.Point(23, 31)
+        Me.chsecshow.Name = "chsecshow"
+        Me.chsecshow.Size = New System.Drawing.Size(53, 17)
+        Me.chsecshow.TabIndex = 5
+        Me.chsecshow.Text = "Show"
+        Me.chsecshow.UseVisualStyleBackColor = True
         '
-        'Label13
+        'cmdDelete
         '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(17, 29)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(73, 13)
-        Me.Label13.TabIndex = 0
-        Me.Label13.Text = "Security level:"
+        Me.cmdDelete.Location = New System.Drawing.Point(212, 258)
+        Me.cmdDelete.Name = "cmdDelete"
+        Me.cmdDelete.Size = New System.Drawing.Size(74, 22)
+        Me.cmdDelete.TabIndex = 8
+        Me.cmdDelete.Text = "Delete User"
+        Me.cmdDelete.UseVisualStyleBackColor = True
         '
         'frmUsers
         '
@@ -483,6 +483,7 @@ Partial Class frmUsers
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FloralWhite
         Me.ClientSize = New System.Drawing.Size(1379, 794)
+        Me.Controls.Add(Me.cmdDelete)
         Me.Controls.Add(Me.GBEditSecMnu)
         Me.Controls.Add(Me.GBMSec1)
         Me.Controls.Add(Me.cmdCanNewUser)
@@ -543,8 +544,8 @@ Partial Class frmUsers
     Friend WithEvents DataGridUsrMsec As DataGridView
     Friend WithEvents GBEditSecMnu As GroupBox
     Friend WithEvents chactivesec As CheckBox
-    Friend WithEvents cmdSecLevel As ComboBox
-    Friend WithEvents Label13 As Label
     Friend WithEvents cmdseccanc As Button
     Friend WithEvents cmdsecupd As Button
+    Friend WithEvents chsecshow As CheckBox
+    Friend WithEvents cmdDelete As Button
 End Class

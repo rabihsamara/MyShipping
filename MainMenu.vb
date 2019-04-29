@@ -35,6 +35,13 @@
 
     End Sub
 
+    Public Sub Mysettings(ByVal sender As Object, ByVal e As EventArgs)
+        Dim frm As New frmsettings()
+        frm.TopLevel = False
+        frm.TopMost = True
+        SplitContainer1.Panel2.Controls.Add(frm)
+        frm.Show()
+    End Sub
     '*********************************************************************
     'Event handlers for items listed under Menu Reports
     '*********************************************************************

@@ -26,6 +26,7 @@ Public Class frmUsers
         GBoxNewUser.Visible = False
         cmdSaveNewUser.Visible = False
         cmdCanNewUser.Visible = False
+        cmdDelete.Visible = False
         GBMSec1.Visible = False
         GBEditSecMnu.visible = False
 
@@ -63,10 +64,14 @@ Public Class frmUsers
         cmdSaveNewUser.Text = "Save User"
         clrUserFields()
         GBMSec1.Visible = True
+        GBEditSecMnu.Visible = True
+        cmdsecupd.Enabled = False
+        cmdseccanc.Enabled = False
         GBoxNewUser.Visible = True
         cmdSaveNewUser.Visible = True
         cmdCanNewUser.Visible = True
         cmdNewUser.Enabled = False
+        cmdDelete.Visible = False
         upmode = "I" ' New insert.
         usrID.Enabled = True
         GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
@@ -87,6 +92,7 @@ Public Class frmUsers
         GBEditSecMnu.Visible = False
         clrUserFields()
         usrID.Enabled = False
+        cmdDelete.Visible = False
 
     End Sub
 
@@ -130,8 +136,8 @@ Public Class frmUsers
             End If
             '
             'update user menu security levels (default).
-            GlobalVariables.Gl_SQLStr = "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive from MenuDfltSecurity where menuactive = 1"
+            GlobalVariables.Gl_SQLStr = "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuShow, MenuActive) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & usrID.Text & "',MenuMItem,MenuSitem,MenuS2Item,MenuShow,MenuActive from MenuDfltSecurity where menuactive = 1"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error Creating New user Menu security Level!")
                 Exit Sub
@@ -171,12 +177,6 @@ Public Class frmUsers
         usrID.Enabled = False
         GBMSec1.Visible = True
         upmode = "U"
-
-        'GBoxNewUser.Visible = False
-        'cmdSaveNewUser.Visible = False
-        'cmdCanNewUser.Visible = False
-        'cmdNewUser.Enabled = True
-        'clrUserFields()
 
     End Sub
 
@@ -249,7 +249,11 @@ Public Class frmUsers
             cmdNewUser.Enabled = False
             LoadUsersMenSec()
             GBMSec1.Visible = True
+            GBEditSecMnu.Visible = True
+            cmdsecupd.Enabled = False
+            cmdseccanc.Enabled = False
             usrID.Enabled = False
+            cmdDelete.Visible = True
         End If
 
     End Sub
@@ -272,7 +276,7 @@ Public Class frmUsers
     End Sub
 
     Private Sub LoadUsersMenSec()
-        Dim sql As String = "SELECT ID,UserID,MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive FROM MenuUserSecurity where UserID = '" & selusrid & "'"
+        Dim sql As String = "SELECT ID,UserID,MenuMItem,MenuSitem,MenuS2Item,MenuShow,MenuActive FROM MenuUserSecurity where UserID = '" & selusrid & "'"
         Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             connection.Open()
             sCommand = New SqlCommand(sql, connection)
@@ -291,7 +295,7 @@ Public Class frmUsers
             Me.DataGridUsrMsec.Columns(2).HeaderText = "MItem"
             Me.DataGridUsrMsec.Columns(3).HeaderText = "SubItem1"
             Me.DataGridUsrMsec.Columns(4).HeaderText = "SubItem2"
-            Me.DataGridUsrMsec.Columns(5).HeaderText = "SecLevel"
+            Me.DataGridUsrMsec.Columns(5).HeaderText = "ShowMenu"
             Me.DataGridUsrMsec.Columns(6).HeaderText = "Active"
 
             DataGridUsrMsec.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
@@ -312,7 +316,6 @@ Public Class frmUsers
     Private Sub DataGridUsrMsec_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridUsrMsec.MouseClick
 
         Dim I As Integer
-        Dim slsec As String
 
         selsecuser = ""
 
@@ -321,14 +324,11 @@ Public Class frmUsers
             selrow = I
             selsecID = Trim(DataGridUsrMsec.Item(0, I).Value)
             selsecuser = Trim(DataGridUsrMsec.Item(1, I).Value)
-            GBEditSecMnu.Visible = True
 
-            slsec = Trim(DataGridUsrMsec.Item(5, I).Value.ToString)
-            cmdSecLevel.SelectedIndex = cmdSecLevel.FindString(slsec).ToString
-
+            chsecshow.Checked = DataGridUsrMsec.Item(5, I).Value
             chactivesec.Checked = DataGridUsrMsec.Item(6, I).Value
-
-
+            cmdsecupd.Enabled = True
+            cmdseccanc.Enabled = True
         End If
 
     End Sub
@@ -336,19 +336,22 @@ Public Class frmUsers
     Private Sub Cmdsecupd_Click(sender As Object, e As EventArgs) Handles cmdsecupd.Click
 
         Dim tnewstat As Integer = 0
+        Dim tshow As Integer = 0
 
         If (chactivesec.Checked = True) Then tnewstat = 1
+        If (chsecshow.Checked = True) Then tshow = 1
 
-        GlobalVariables.Gl_SQLStr = "update MenuUserSecurity set MenuSecLevel = '" & cmdSecLevel.SelectedItem & "', MenuActive = " & tnewstat
+        GlobalVariables.Gl_SQLStr = "update MenuUserSecurity set MenuShow = " & tshow & ", MenuActive = " & tnewstat
         GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selsecID
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
             MsgBox("Error update user Menu security Level!")
         Else
             DataGridUsrMsec.Item(6, selrow).Value = chactivesec.Checked
-            DataGridUsrMsec.Item(5, selrow).Value = cmdSecLevel.SelectedItem
+            DataGridUsrMsec.Item(5, selrow).Value = chsecshow.Checked
             chactivesec.Checked = False
-            cmdSecLevel.SelectedIndex = -1
-            GBEditSecMnu.Visible = False
+            chsecshow.Checked = False
+            cmdsecupd.Enabled = False
+            cmdseccanc.Enabled = False
         End If
 
     End Sub
@@ -356,14 +359,13 @@ Public Class frmUsers
     Private Sub Cmdseccanc_Click(sender As Object, e As EventArgs) Handles cmdseccanc.Click
 
         chactivesec.Checked = False
-        cmdSecLevel.SelectedIndex = -1
-        GBEditSecMnu.Visible = False
-
+        chsecshow.Checked = False
+        cmdsecupd.Enabled = False
+        cmdseccanc.Enabled = False
     End Sub
 
     Private Sub CmbUsrCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrCountry.SelectionChangeCommitted
         slcountryid = cmbUsrCountry.SelectedValue
-        'MsgBox(cmbUsrCountry.SelectedValue.ToString)
 
         GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
         ModMisc.ReadCountries(cmbUsrState)
@@ -377,8 +379,8 @@ Public Class frmUsers
     End Sub
 
     Private Sub cmbUsrState_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrState.SelectionChangeCommitted
-        slstateid = cmbUsrState.SelectedValue
 
+        slstateid = cmbUsrState.SelectedValue
         GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbUsrCity)
         cmbUsrCity.Text = ""
@@ -388,6 +390,34 @@ Public Class frmUsers
 
     Private Sub cmbUsrCity_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbUsrCity.SelectionChangeCommitted
         slcityid = cmbUsrCity.SelectedValue
+    End Sub
+
+    'Delete user - check if we can
+    Private Sub CmdDelete_Click(sender As Object, e As EventArgs) Handles cmdDelete.Click
+
+        If (selusrid = "admin") Then
+            MsgBox("Cannot delete user admin!")
+            Exit Sub
+        End If
+
+        'check if we can delete 
+
+        If (GlobalVariables.GL_Stat = True) Then ' ok to delete
+            GlobalVariables.Gl_SQLStr = "delete from users where userID = '" & selusrid & "'" 'menuusrsecurity deleted by constraint
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = True) Then
+                'delete other !
+
+            Else
+                MsgBox("Error deleting user " & selusrid)
+                Exit Sub
+            End If
+
+        Else
+            MsgBox("Cannot delete user " & selusrid)
+            Exit Sub
+        End If
+
+
     End Sub
 
 End Class

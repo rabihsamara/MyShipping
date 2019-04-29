@@ -202,7 +202,7 @@ Public Class frmsettings
 
     Private Sub Initiiaze_DataGridCompany()
 
-        Dim sql As String = "SELECT * FROM company"
+        Dim sql As String = "SELECT * FROM company order by compname asc"
         connection = New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
         connection.Open()

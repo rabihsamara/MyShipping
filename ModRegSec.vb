@@ -21,26 +21,41 @@ Module ModRegSec
 
         ms.Items.Add(EditItem)
 
+        '***********************************************************************************************
         'Utilities Menu
+        '***********************************************************************************************
         Dim UtilItem As New ToolStripMenuItem("&Utilities")
+        '                    ---- sub items of Utilities ----
         Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
+        Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
 
         UserItem.ShortcutKeys = Keys.Control Or Keys.U
         UtilItem.DropDownItems.Add(UserItem)
+        UtilItem.DropDownItems.Add(mysetItem)
 
         ms.Items.Add(UtilItem)
 
+        '***********************************************************************************************
         'Reports menu
+        '***********************************************************************************************
         Dim RepItem As New ToolStripMenuItem("&Reports")
 
 
 
         ms.Items.Add(RepItem)
 
-        If (ModRegSec.RegisterMenu(ms) = False) Then
-            MsgBox("Error Registering forms")
+        '***********************************************************************************************
+        'delete MenuDfltSecurity to -recreate
+
+        GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
+        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error deleting Menu Default security table!")
+        Else
+            If (ModRegSec.RegisterMenu(ms) = False) Then
+                MsgBox("Error Registering forms")
+            End If
+            BuildMenu = ms
         End If
-        BuildMenu = ms
 
     End Function
 
@@ -61,7 +76,7 @@ Module ModRegSec
             MenuMItem = Replace(inmenu.Items(I).Text, "&", "") ' get top menu items File, edit...
 
             tsql = "If Not Exists(select 1 from MenuDfltSecurity where MenuMItem = '" & MenuMItem & "') "
-            tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','','','0',1) "
+            tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuShow, MenuActive) values ('" & MenuMItem & "','','',1,1) "
             tsql = tsql & "End"
             GlobalVariables.Gl_SQLStr = tsql
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
@@ -76,7 +91,7 @@ Module ModRegSec
                 menuSubItem = Replace(tmpMenuItem.DropDownItems(S).Text, "&", "")
 
                 tsql = "If Not Exists(select 1 from MenuDfltSecurity where MenuMItem = '" & MenuMItem & "' and MenuSitem = '" & menuSubItem & "') "
-                tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) values ('" & MenuMItem & "','" & menuSubItem & "','','0',1) "
+                tsql = tsql & "Begin insert into MenuDfltSecurity (MenuMItem, MenuSitem, MenuS2Item, MenuShow, MenuActive) values ('" & MenuMItem & "','" & menuSubItem & "','',1,1) "
                 tsql = tsql & "End"
                 GlobalVariables.Gl_SQLStr = tsql
                 If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
@@ -94,8 +109,8 @@ Module ModRegSec
 
         'check if admin has a default user security record
         tsql = "If Not Exists(select 1 from MenuUserSecurity where userid = '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "') Begin "
-        tsql = tsql & "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuSecLevel, MenuActive) "
-        tsql = tsql & "Select '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "',MenuMItem,MenuSitem,MenuS2Item,MenuSecLevel,MenuActive from MenuDfltSecurity where MenuActive = 1 End"
+        tsql = tsql & "insert into MenuUserSecurity (UserID, MenuMItem, MenuSitem, MenuS2Item, MenuShow, MenuActive) "
+        tsql = tsql & "Select '" & GlobalVariables.GL_DfltConnValues.AppMyDFUser & "',MenuMItem,MenuSitem,MenuS2Item,MenuShow,MenuActive from MenuDfltSecurity where MenuActive = 1 End"
         GlobalVariables.Gl_SQLStr = tsql
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
             MsgBox("Error writing default user security menu!")
