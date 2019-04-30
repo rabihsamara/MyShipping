@@ -499,12 +499,9 @@ Public Class frmUsers
                     frm = Frmchkadpwd
                     frm.ShowDialog()
                     If (GlobalVariables.GL_Stat = False) Then
-                        MsgBox("Cannot form security level!")
+                        MsgBox("Cannot change form security level without master password!")
                         Exit Sub
                     End If
-                Else
-                    MsgBox("cannot edit form security level!")
-                    Exit Sub
                 End If
             End If
 
@@ -513,6 +510,10 @@ Public Class frmUsers
             CHfrmControls.Checked = DataGridForms.Item(7, selformrow).Value
             cmdFrmUpdate.Enabled = True
             cmdFrmCancel.Enabled = True
+            cmdupdcontrols.Enabled = False
+            If (chfrmShow.Checked = True And chfrmEnabled.Checked = True) Then
+                cmdupdcontrols.Enabled = True
+            End If
         End If
 
     End Sub
@@ -540,6 +541,7 @@ Public Class frmUsers
             CHfrmControls.Checked = False
             cmdFrmUpdate.Enabled = False
             cmdFrmCancel.Enabled = False
+            cmdupdcontrols.Enabled = False
         End If
 
     End Sub
@@ -551,6 +553,7 @@ Public Class frmUsers
         CHfrmControls.Checked = False
         cmdFrmUpdate.Enabled = False
         cmdFrmCancel.Enabled = False
+        cmdupdcontrols.Enabled = False
 
     End Sub
 
@@ -559,5 +562,23 @@ Public Class frmUsers
         frm.ShowDialog()
     End Sub
 
+    Private Sub chfrmShow_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chfrmShow.Click
+
+        If (chfrmShow.Checked = True And chfrmEnabled.Checked = True) Then
+            cmdupdcontrols.Enabled = True
+        Else
+            cmdupdcontrols.Enabled = False
+        End If
+
+    End Sub
+
+    Private Sub chfrmEnabled_click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chfrmEnabled.Click
+        If (chfrmShow.Checked = True And chfrmEnabled.Checked = True) Then
+            cmdupdcontrols.Enabled = True
+        Else
+            cmdupdcontrols.Enabled = False
+        End If
+
+    End Sub
 
 End Class

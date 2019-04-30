@@ -535,7 +535,7 @@ Partial Class frmUsers
         'chfrmEnabled
         '
         Me.chfrmEnabled.AutoSize = True
-        Me.chfrmEnabled.Location = New System.Drawing.Point(92, 31)
+        Me.chfrmEnabled.Location = New System.Drawing.Point(70, 31)
         Me.chfrmEnabled.Name = "chfrmEnabled"
         Me.chfrmEnabled.Size = New System.Drawing.Size(65, 17)
         Me.chfrmEnabled.TabIndex = 1
@@ -545,7 +545,7 @@ Partial Class frmUsers
         'CHfrmControls
         '
         Me.CHfrmControls.AutoSize = True
-        Me.CHfrmControls.Location = New System.Drawing.Point(182, 32)
+        Me.CHfrmControls.Location = New System.Drawing.Point(141, 30)
         Me.CHfrmControls.Name = "CHfrmControls"
         Me.CHfrmControls.Size = New System.Drawing.Size(64, 17)
         Me.CHfrmControls.TabIndex = 2
@@ -554,7 +554,7 @@ Partial Class frmUsers
         '
         'cmdFrmUpdate
         '
-        Me.cmdFrmUpdate.Location = New System.Drawing.Point(252, 28)
+        Me.cmdFrmUpdate.Location = New System.Drawing.Point(240, 28)
         Me.cmdFrmUpdate.Name = "cmdFrmUpdate"
         Me.cmdFrmUpdate.Size = New System.Drawing.Size(68, 22)
         Me.cmdFrmUpdate.TabIndex = 3
@@ -563,7 +563,7 @@ Partial Class frmUsers
         '
         'cmdFrmCancel
         '
-        Me.cmdFrmCancel.Location = New System.Drawing.Point(341, 26)
+        Me.cmdFrmCancel.Location = New System.Drawing.Point(326, 27)
         Me.cmdFrmCancel.Name = "cmdFrmCancel"
         Me.cmdFrmCancel.Size = New System.Drawing.Size(56, 23)
         Me.cmdFrmCancel.TabIndex = 4
@@ -572,7 +572,7 @@ Partial Class frmUsers
         '
         'cmdupdcontrols
         '
-        Me.cmdupdcontrols.Location = New System.Drawing.Point(439, 26)
+        Me.cmdupdcontrols.Location = New System.Drawing.Point(415, 26)
         Me.cmdupdcontrols.Name = "cmdupdcontrols"
         Me.cmdupdcontrols.Size = New System.Drawing.Size(96, 24)
         Me.cmdupdcontrols.TabIndex = 5
