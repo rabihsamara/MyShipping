@@ -60,6 +60,8 @@ Module ModRegSec
             MsgBox("Error Registering forms")
         End If
 
+        RegisterFormControls()
+
     End Function
 
     '***********************************************************************************************
@@ -176,18 +178,22 @@ Module ModRegSec
 
     End Function
 
-    '***********************************************************************************************
-    '* Misc functions/subs                                                                         *
-    '***********************************************************************************************
-    Public Sub CloseAllforms()
-        Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
+    Public Function RegisterFormControls() As Boolean
 
-        For Each frm As Windows.Forms.Form In openForms
-            If frm.Name.ToString() <> "MainNew" Then
-                frm.Close()
-            End If
-        Next
-    End Sub
+        RegisterFormControls = False
+        Try
+            For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
+                Dim tfname As String = formprop.Name
+                Dim frm As New Form
+                frm = CType(formprop.GetValue(My.Forms, Nothing), Form)
+                RegisterCurrControls(frm.Controls, frm.Name)
+            Next
+            RegisterFormControls = True
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+        End Try
+
+    End Function
 
     Public Sub RegisterCurrControls(ctl As Control.ControlCollection, inform As String)
 
@@ -229,4 +235,18 @@ Module ModRegSec
         Next
 
     End Sub
+
+    '***********************************************************************************************
+    '* Misc functions/subs                                                                         *
+    '***********************************************************************************************
+    Public Sub CloseAllforms()
+        Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
+
+        For Each frm As Windows.Forms.Form In openForms
+            If frm.Name.ToString() <> "MainNew" Then
+                frm.Close()
+            End If
+        Next
+    End Sub
+
 End Module

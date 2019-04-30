@@ -6,15 +6,12 @@ Public Class frmControls
     Private Sub FrmControls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dspuserdID.Text = GlobalVariables.Gl_tmpuserID
         dpsfname.Text = GlobalVariables.Gl_tmpfname
-        ModRegSec.RegisterCurrControls(Me.Controls, Me.Name)
-        getallforms()
+        LoadFormControls()
 
     End Sub
 
     Private Sub LoadFormControls()
 
-        Dim frm As New Form()
-        frm = frmUsers
 
 
         'DataGridDspCont.DataSource = sDs.Tables("users")
@@ -23,18 +20,8 @@ Public Class frmControls
         'DataGridDspCont.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
 
 
-        Dim control As Control
-        For Each control In Me.Controls
-            MessageBox.Show(control.Name)
-        Next
-
-
     End Sub
 
-    Public Sub getallforms()
-
-
-    End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
         Me.Close()
