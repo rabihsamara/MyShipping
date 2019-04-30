@@ -19,6 +19,10 @@ Public Class GlobalVariables
 
     Public Shared Property GL_skipOnce As Boolean
 
+    Public Shared Property Gl_tmpuserID As String
+    Public Shared Property Gl_tmpfname As String
+    Public Shared Property Gl_tmpfnameID As Integer
+
 End Class
 
 Public Class masterconnrec

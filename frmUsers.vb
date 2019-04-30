@@ -504,7 +504,7 @@ Public Class frmUsers
                     End If
                 End If
             End If
-
+            GlobalVariables.Gl_tmpfname = DataGridForms.Item(2, selformrow).Value
             chfrmShow.Checked = DataGridForms.Item(5, selformrow).Value
             chfrmEnabled.Checked = DataGridForms.Item(6, selformrow).Value
             CHfrmControls.Checked = DataGridForms.Item(7, selformrow).Value
@@ -558,6 +558,10 @@ Public Class frmUsers
     End Sub
 
     Private Sub Cmdupdcontrols_Click(sender As Object, e As EventArgs) Handles cmdupdcontrols.Click
+
+        GlobalVariables.Gl_tmpuserID = selusrid
+        GlobalVariables.Gl_tmpfnameID = selformNId
+
         Dim frm As New frmControls()
         frm.ShowDialog()
     End Sub
