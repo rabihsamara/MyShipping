@@ -89,7 +89,7 @@ Partial Class frmControls
         Me.DataGridusrCont.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridusrCont.Location = New System.Drawing.Point(225, 32)
         Me.DataGridusrCont.Name = "DataGridusrCont"
-        Me.DataGridusrCont.Size = New System.Drawing.Size(608, 680)
+        Me.DataGridusrCont.Size = New System.Drawing.Size(717, 680)
         Me.DataGridusrCont.TabIndex = 7
         '
         'frmControls

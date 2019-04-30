@@ -206,9 +206,8 @@ Module ModRegSec
 
         For Each ctrl As Control In controls
             If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
-                'Dim child = node.Nodes.Add(ctrl.Tag, ctrl.GetType.Name & ": " & ctrl.Name)
                 'create default form controls.
-                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = '" & inform & "') Begin "
+                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = '" & inform & "' and controlname ='" & ctrl.Name & " ') Begin "
                 GlobalVariables.Gl_SQLStr = "insert into frmDfltcontrols (FormName, controlname, controltype, contvisible, contenabled,conteditable) values"
                 GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & inform & "','" & ctrl.Name & "','" & ctrl.GetType.Name & "',1,1,1)"
                 If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
