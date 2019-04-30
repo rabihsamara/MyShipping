@@ -28,6 +28,8 @@ Partial Class frmControls
         Me.dpsfname = New System.Windows.Forms.TextBox()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.TreeControls = New System.Windows.Forms.TreeView()
+        Me.DataGridusrCont = New System.Windows.Forms.DataGridView()
+        CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Label1
@@ -82,11 +84,20 @@ Partial Class frmControls
         Me.TreeControls.Size = New System.Drawing.Size(204, 680)
         Me.TreeControls.TabIndex = 6
         '
+        'DataGridusrCont
+        '
+        Me.DataGridusrCont.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridusrCont.Location = New System.Drawing.Point(225, 32)
+        Me.DataGridusrCont.Name = "DataGridusrCont"
+        Me.DataGridusrCont.Size = New System.Drawing.Size(608, 680)
+        Me.DataGridusrCont.TabIndex = 7
+        '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
+        Me.Controls.Add(Me.DataGridusrCont)
         Me.Controls.Add(Me.TreeControls)
         Me.Controls.Add(Me.cmdExit)
         Me.Controls.Add(Me.dpsfname)
@@ -95,6 +106,7 @@ Partial Class frmControls
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmControls"
         Me.Text = "frmControls"
+        CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -106,4 +118,5 @@ Partial Class frmControls
     Friend WithEvents dpsfname As TextBox
     Friend WithEvents cmdExit As Button
     Friend WithEvents TreeControls As TreeView
+    Friend WithEvents DataGridusrCont As DataGridView
 End Class

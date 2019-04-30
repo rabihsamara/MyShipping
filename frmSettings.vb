@@ -48,6 +48,16 @@ Public Class frmsettings
                         MsgBox("Must Update Company Information!")
                         Exit Sub
                     End If
+                    '
+                    'createforms, and form control sexurity levels (Default)
+                    If (ModRegSec.RegisterForms() = False) Then
+                        MsgBox("Error Registering forms")
+                    End If
+
+                    If (ModRegSec.RegisterFormControls() = False) Then
+                        MsgBox("Error Registering forms controls")
+                    End If
+
                 End If
             End If
         Catch ex As ArgumentException

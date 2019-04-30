@@ -56,11 +56,13 @@ Module ModRegSec
             BuildMenu = ms
         End If
 
-        If (RegisterForms() = False) Then
-            MsgBox("Error Registering forms")
-        End If
+        'If (RegisterForms() = False) Then
+        '    MsgBox("Error Registering forms")
+        'End If
 
-        RegisterFormControls()
+        'If (RegisterFormControls() = False) Then
+        '    MsgBox("Error Registering forms controls")
+        'End If
 
     End Function
 
@@ -181,7 +183,7 @@ Module ModRegSec
     '*************************************************************************************************
     '* register forms controls
     '*************************************************************************************************
-    Private Function RegisterFormControls() As Boolean
+    Public Function RegisterFormControls() As Boolean
 
         Try
             RegisterFormControls = False
@@ -215,47 +217,6 @@ Module ModRegSec
                 End If
                 ControlsRecr(ctrl.Controls, inform)
             End If
-        Next
-
-    End Sub
-
-    Public Sub RegisterCurrControls(ctl As Control.ControlCollection, inform As String)
-
-        Dim control As Control
-        Dim cttype As String = String.Empty
-        Dim addcont As Boolean = False
-
-        For Each control In ctl
-            addcont = False
-
-            If TypeOf (control) Is TextBox Then
-                cttype = "TextBox"
-                addcont = True
-            ElseIf TypeOf (control) Is Button Then
-                cttype = "Button"
-                addcont = True
-            ElseIf TypeOf (control) Is DataGridView Then
-                cttype = "DataGridView"
-                addcont = True
-            ElseIf TypeOf (control) Is ComboBox Then
-                cttype = "ComboBox"
-                addcont = True
-            ElseIf TypeOf (control) Is ListBox Then
-                cttype = "ListBox"
-                addcont = True
-            End If
-
-            If (addcont = True) Then
-                'create default form controls.
-                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = '" & inform & "') Begin "
-                GlobalVariables.Gl_SQLStr = "insert into frmDfltcontrols (FormName, controlname, controltype, contvisible, contenabled,conteditable) values"
-                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & inform & "','" & control.Name & "','" & cttype & "',1,1,1)"
-                If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                    MsgBox("Error Creating Form Controls for form " & GlobalVariables.Gl_tmpfname)
-                    Exit Sub
-                End If
-            End If
-
         Next
 
     End Sub
