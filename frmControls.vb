@@ -6,7 +6,9 @@ Public Class frmControls
     Private Sub FrmControls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dspuserdID.Text = GlobalVariables.Gl_tmpuserID
         dpsfname.Text = GlobalVariables.Gl_tmpfname
-        LoadFormControls()
+        ModRegSec.RegisterCurrControls(Me.Controls, Me.Name)
+        getallforms()
+
     End Sub
 
     Private Sub LoadFormControls()
@@ -29,8 +31,10 @@ Public Class frmControls
 
     End Sub
 
+    Public Sub getallforms()
 
 
+    End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
         Me.Close()
