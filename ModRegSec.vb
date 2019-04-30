@@ -178,22 +178,46 @@ Module ModRegSec
 
     End Function
 
-    Public Function RegisterFormControls() As Boolean
+    '*************************************************************************************************
+    '* register forms controls
+    '*************************************************************************************************
+    Private Function RegisterFormControls() As Boolean
 
-        RegisterFormControls = False
         Try
+            RegisterFormControls = False
+
             For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
                 Dim tfname As String = formprop.Name
-                Dim frm As New Form
-                frm = CType(formprop.GetValue(My.Forms, Nothing), Form)
-                RegisterCurrControls(frm.Controls, frm.Name)
+                Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
+                ControlsRecr(frm.Controls, tfname)
             Next
             RegisterFormControls = True
+            Exit Function
         Catch ex As Exception
             MsgBox(ex.ToString)
+            RegisterFormControls = False
         End Try
 
     End Function
+
+    Private Sub ControlsRecr(ByVal controls As Control.ControlCollection, ByVal inform As String)
+
+        For Each ctrl As Control In controls
+            If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
+                'Dim child = node.Nodes.Add(ctrl.Tag, ctrl.GetType.Name & ": " & ctrl.Name)
+                'create default form controls.
+                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = '" & inform & "') Begin "
+                GlobalVariables.Gl_SQLStr = "insert into frmDfltcontrols (FormName, controlname, controltype, contvisible, contenabled,conteditable) values"
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & inform & "','" & ctrl.Name & "','" & ctrl.GetType.Name & "',1,1,1)"
+                If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error Creating Form Controls for form " & inform)
+                    Exit Sub
+                End If
+                ControlsRecr(ctrl.Controls, inform)
+            End If
+        Next
+
+    End Sub
 
     Public Sub RegisterCurrControls(ctl As Control.ControlCollection, inform As String)
 
@@ -223,7 +247,7 @@ Module ModRegSec
 
             If (addcont = True) Then
                 'create default form controls.
-                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = 'frmControls') Begin "
+                GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from frmDfltcontrols where formname = '" & inform & "') Begin "
                 GlobalVariables.Gl_SQLStr = "insert into frmDfltcontrols (FormName, controlname, controltype, contvisible, contenabled,conteditable) values"
                 GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & inform & "','" & control.Name & "','" & cttype & "',1,1,1)"
                 If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
@@ -235,6 +259,7 @@ Module ModRegSec
         Next
 
     End Sub
+    '*************************************ENF Form controls Registration ***************************
 
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *

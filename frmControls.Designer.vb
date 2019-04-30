@@ -26,9 +26,8 @@ Partial Class frmControls
         Me.dspuserdID = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dpsfname = New System.Windows.Forms.TextBox()
-        Me.DataGridDspCont = New System.Windows.Forms.DataGridView()
         Me.cmdExit = New System.Windows.Forms.Button()
-        CType(Me.DataGridDspCont, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TreeControls = New System.Windows.Forms.TreeView()
         Me.SuspendLayout()
         '
         'Label1
@@ -67,14 +66,6 @@ Partial Class frmControls
         Me.dpsfname.Size = New System.Drawing.Size(161, 20)
         Me.dpsfname.TabIndex = 3
         '
-        'DataGridDspCont
-        '
-        Me.DataGridDspCont.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridDspCont.Location = New System.Drawing.Point(12, 32)
-        Me.DataGridDspCont.Name = "DataGridDspCont"
-        Me.DataGridDspCont.Size = New System.Drawing.Size(1107, 575)
-        Me.DataGridDspCont.TabIndex = 4
-        '
         'cmdExit
         '
         Me.cmdExit.Location = New System.Drawing.Point(736, 3)
@@ -84,20 +75,26 @@ Partial Class frmControls
         Me.cmdExit.Text = "Exit"
         Me.cmdExit.UseVisualStyleBackColor = True
         '
+        'TreeControls
+        '
+        Me.TreeControls.Location = New System.Drawing.Point(15, 32)
+        Me.TreeControls.Name = "TreeControls"
+        Me.TreeControls.Size = New System.Drawing.Size(204, 680)
+        Me.TreeControls.TabIndex = 6
+        '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
+        Me.Controls.Add(Me.TreeControls)
         Me.Controls.Add(Me.cmdExit)
-        Me.Controls.Add(Me.DataGridDspCont)
         Me.Controls.Add(Me.dpsfname)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.dspuserdID)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmControls"
         Me.Text = "frmControls"
-        CType(Me.DataGridDspCont, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -107,6 +104,6 @@ Partial Class frmControls
     Friend WithEvents dspuserdID As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents dpsfname As TextBox
-    Friend WithEvents DataGridDspCont As DataGridView
     Friend WithEvents cmdExit As Button
+    Friend WithEvents TreeControls As TreeView
 End Class
