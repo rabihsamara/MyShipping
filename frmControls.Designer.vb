@@ -29,7 +29,17 @@ Partial Class frmControls
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.TreeControls = New System.Windows.Forms.TreeView()
         Me.DataGridusrCont = New System.Windows.Forms.DataGridView()
+        Me.GBeditContsec = New System.Windows.Forms.GroupBox()
+        Me.cmdCancel = New System.Windows.Forms.Button()
+        Me.cmdUpdate = New System.Windows.Forms.Button()
+        Me.chkeditable = New System.Windows.Forms.CheckBox()
+        Me.chkenabled = New System.Windows.Forms.CheckBox()
+        Me.chkvisible = New System.Windows.Forms.CheckBox()
+        Me.txtmsg = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblmsg = New System.Windows.Forms.Label()
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GBeditContsec.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -92,11 +102,106 @@ Partial Class frmControls
         Me.DataGridusrCont.Size = New System.Drawing.Size(717, 680)
         Me.DataGridusrCont.TabIndex = 7
         '
+        'GBeditContsec
+        '
+        Me.GBeditContsec.Controls.Add(Me.lblmsg)
+        Me.GBeditContsec.Controls.Add(Me.Label3)
+        Me.GBeditContsec.Controls.Add(Me.txtmsg)
+        Me.GBeditContsec.Controls.Add(Me.cmdCancel)
+        Me.GBeditContsec.Controls.Add(Me.cmdUpdate)
+        Me.GBeditContsec.Controls.Add(Me.chkeditable)
+        Me.GBeditContsec.Controls.Add(Me.chkenabled)
+        Me.GBeditContsec.Controls.Add(Me.chkvisible)
+        Me.GBeditContsec.Location = New System.Drawing.Point(955, 32)
+        Me.GBeditContsec.Name = "GBeditContsec"
+        Me.GBeditContsec.Size = New System.Drawing.Size(388, 131)
+        Me.GBeditContsec.TabIndex = 8
+        Me.GBeditContsec.TabStop = False
+        Me.GBeditContsec.Text = "Edit control security"
+        '
+        'cmdCancel
+        '
+        Me.cmdCancel.Location = New System.Drawing.Point(305, 89)
+        Me.cmdCancel.Name = "cmdCancel"
+        Me.cmdCancel.Size = New System.Drawing.Size(67, 25)
+        Me.cmdCancel.TabIndex = 4
+        Me.cmdCancel.Text = "Cancel"
+        Me.cmdCancel.UseVisualStyleBackColor = True
+        '
+        'cmdUpdate
+        '
+        Me.cmdUpdate.Location = New System.Drawing.Point(185, 89)
+        Me.cmdUpdate.Name = "cmdUpdate"
+        Me.cmdUpdate.Size = New System.Drawing.Size(79, 25)
+        Me.cmdUpdate.TabIndex = 3
+        Me.cmdUpdate.Text = "Update"
+        Me.cmdUpdate.UseVisualStyleBackColor = True
+        '
+        'chkeditable
+        '
+        Me.chkeditable.AutoSize = True
+        Me.chkeditable.Location = New System.Drawing.Point(251, 57)
+        Me.chkeditable.Name = "chkeditable"
+        Me.chkeditable.Size = New System.Drawing.Size(64, 17)
+        Me.chkeditable.TabIndex = 2
+        Me.chkeditable.Text = "Editable"
+        Me.chkeditable.UseVisualStyleBackColor = True
+        '
+        'chkenabled
+        '
+        Me.chkenabled.AutoSize = True
+        Me.chkenabled.Location = New System.Drawing.Point(143, 57)
+        Me.chkenabled.Name = "chkenabled"
+        Me.chkenabled.Size = New System.Drawing.Size(65, 17)
+        Me.chkenabled.TabIndex = 1
+        Me.chkenabled.Text = "Enabled"
+        Me.chkenabled.UseVisualStyleBackColor = True
+        '
+        'chkvisible
+        '
+        Me.chkvisible.AutoSize = True
+        Me.chkvisible.Location = New System.Drawing.Point(45, 57)
+        Me.chkvisible.Name = "chkvisible"
+        Me.chkvisible.Size = New System.Drawing.Size(62, 17)
+        Me.chkvisible.TabIndex = 0
+        Me.chkvisible.Text = "Visiable"
+        Me.chkvisible.UseVisualStyleBackColor = True
+        '
+        'txtmsg
+        '
+        Me.txtmsg.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.txtmsg.Enabled = False
+        Me.txtmsg.Location = New System.Drawing.Point(40, 19)
+        Me.txtmsg.Name = "txtmsg"
+        Me.txtmsg.ReadOnly = True
+        Me.txtmsg.Size = New System.Drawing.Size(332, 20)
+        Me.txtmsg.TabIndex = 5
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 22)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(25, 13)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "For:"
+        '
+        'lblmsg
+        '
+        Me.lblmsg.AutoSize = True
+        Me.lblmsg.BackColor = System.Drawing.Color.Yellow
+        Me.lblmsg.Location = New System.Drawing.Point(13, 95)
+        Me.lblmsg.Name = "lblmsg"
+        Me.lblmsg.Size = New System.Drawing.Size(49, 13)
+        Me.lblmsg.TabIndex = 7
+        Me.lblmsg.Text = "message"
+        '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
+        Me.Controls.Add(Me.GBeditContsec)
         Me.Controls.Add(Me.DataGridusrCont)
         Me.Controls.Add(Me.TreeControls)
         Me.Controls.Add(Me.cmdExit)
@@ -107,6 +212,8 @@ Partial Class frmControls
         Me.Name = "frmControls"
         Me.Text = "frmControls"
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GBeditContsec.ResumeLayout(False)
+        Me.GBeditContsec.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -119,4 +226,13 @@ Partial Class frmControls
     Friend WithEvents cmdExit As Button
     Friend WithEvents TreeControls As TreeView
     Friend WithEvents DataGridusrCont As DataGridView
+    Friend WithEvents GBeditContsec As GroupBox
+    Friend WithEvents chkeditable As CheckBox
+    Friend WithEvents chkenabled As CheckBox
+    Friend WithEvents chkvisible As CheckBox
+    Friend WithEvents cmdCancel As Button
+    Friend WithEvents cmdUpdate As Button
+    Friend WithEvents Label3 As Label
+    Friend WithEvents txtmsg As TextBox
+    Friend WithEvents lblmsg As Label
 End Class

@@ -2,6 +2,10 @@
 
 Public Class frmControls
     Private slusrfrmsecID As Integer = GlobalVariables.Gl_tmpfnameID
+    Private selrow As Integer
+    Private selid As Integer
+    Private selUserid As String
+
     Private sCommand As SqlCommand
     Private sAdapter As SqlDataAdapter
     Private sBuilder As SqlCommandBuilder
@@ -23,7 +27,7 @@ Public Class frmControls
                 Exit Sub
             End If
         End If
-
+        GBeditContsec.Visible = False
         LoadFormControls()
         LoadUsrControls()
 
@@ -53,7 +57,7 @@ Public Class frmControls
 
     Private Sub LoadUsrControls()
         'DataGridusrCont
-        Dim sql As String = "select * from frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "'"
+        Dim sql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "' order by controlname asc, controltype asc"
         Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             connection.Open()
             sCommand = New SqlCommand(sql, connection)
@@ -71,20 +75,72 @@ Public Class frmControls
 
     End Sub
 
-
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
         Me.Close()
     End Sub
 
+    Private Sub DataGridusrCont_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridusrCont.MouseClick
+        Dim I As Integer
+        selrow = 0
+        selid = 0
+        selUserid = ""
 
-    'tmp
-    Private Sub LoadAllControls()
+        If (DataGridusrCont.Rows.Count >= 1) Then
+            lblmsg.Visible = False
+            selrow = DataGridusrCont.CurrentRow.Index
+            selid = DataGridusrCont.Item(0, I).Value
+            selUserid = DataGridusrCont.Item(1, I).Value
+            '
+            txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value & " : " & DataGridusrCont.Item(3, I).Value
+            chkvisible.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
+            chkenabled.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
+            chkeditable.Checked = If(DataGridusrCont.Item(7, I).Value = 1, True, False)
 
-        For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
-            Dim node = Me.TreeControls.Nodes.Add(formprop.Name)
-            Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
-            ControlsTree(node, frm.Controls)
-        Next
+            GBeditContsec.Visible = True
+        End If
 
     End Sub
+
+    Private Sub CmdUpdate_Click(sender As Object, e As EventArgs) Handles cmdUpdate.Click
+
+        'update file
+        GlobalVariables.Gl_SQLStr = "update frmUsercontrols  set contvisible = " & If(chkvisible.Checked = True, 1, 0) & ", contenabled = " & If(chkenabled.Checked = True, 1, 0)
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & ", conteditable = " & If(chkeditable.Checked = True, 1, 0)
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selid
+        If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error updating User Form controls levels!")
+            Exit Sub
+        End If
+
+        'update screeen
+        DataGridusrCont.Item(5, selrow).Value = If(chkvisible.Checked = True, 1, 0)
+        DataGridusrCont.Item(6, selrow).Value = If(chkenabled.Checked = True, 1, 0)
+        DataGridusrCont.Item(7, selrow).Value = If(chkeditable.Checked = True, 1, 0)
+        lblmsg.Text = "Updated"
+        lblmsg.Visible = True
+    End Sub
+
+    Private Sub CmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
+
+        lblmsg.Text = ""
+        lblmsg.Visible = False
+        chkvisible.Checked = False
+        chkenabled.Checked = False
+        chkeditable.Checked = False
+        GBeditContsec.Visible = False
+
+    End Sub
+
+
+    'tmp - load all forms and controls
+    'Private Sub LoadAllControls()
+
+    '    For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
+    '        Dim node = Me.TreeControls.Nodes.Add(formprop.Name)
+    '        Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
+    '        ControlsTree(node, frm.Controls)
+    '    Next
+
+    'End Sub
+
 End Class
