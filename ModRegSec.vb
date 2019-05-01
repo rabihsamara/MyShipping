@@ -12,15 +12,31 @@ Module ModRegSec
         Dim fileItem As New ToolStripMenuItem("&File")
         Dim exitItem As New ToolStripMenuItem("&Exit", Nothing, New EventHandler(AddressOf MainMenu.OnExit))
 
-        exitItem.ShortcutKeys = Keys.Control Or Keys.X
-        fileItem.DropDownItems.Add(exitItem)
-
-        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "File", "", "") = True And inopt = "M") Then
-            If (GlobalVariables.GL_mshow = 1) Then
-                ms.Items.Add(fileItem)
-                If (GlobalVariables.GL_mactive = 0) Then fileItem.Enabled = False
+        If (inopt = "M") Then
+            If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "File", "", "") = True) Then
+                If (GlobalVariables.GL_mshow = 1) Then
+                    ms.Items.Add(fileItem)
+                    If (GlobalVariables.GL_mactive = 0) Then
+                        fileItem.Enabled = False
+                    Else
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "File", "Exit", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                exitItem.ShortcutKeys = Keys.Control Or Keys.X
+                                fileItem.DropDownItems.Add(exitItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    exitItem.Enabled = False
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Else
+                exitItem.ShortcutKeys = Keys.Control Or Keys.X
+                fileItem.DropDownItems.Add(exitItem)
             End If
         Else
+            exitItem.ShortcutKeys = Keys.Control Or Keys.X
+            fileItem.DropDownItems.Add(exitItem)
             ms.Items.Add(fileItem)
         End If
 
@@ -39,15 +55,59 @@ Module ModRegSec
 
         '---- sub items of Utilities ----
         Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
-        Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
         Dim mysecControls As New ToolStripMenuItem("&Security Controls", Nothing, New EventHandler(AddressOf MainMenu.MenyMyControls))
+        Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
 
-        UserItem.ShortcutKeys = Keys.Control Or Keys.U
-        UtilItem.DropDownItems.Add(UserItem)
-        UtilItem.DropDownItems.Add(mysecControls)
-        UtilItem.DropDownItems.Add(mysetItem)
-
-        ms.Items.Add(UtilItem)
+        If (inopt = "M") Then
+            If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "", "") = True) Then
+                If (GlobalVariables.GL_mshow = 1) Then
+                    ms.Items.Add(UtilItem)
+                    If (GlobalVariables.GL_mactive = 0) Then
+                        UtilItem.Enabled = False
+                    Else
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "Users", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                UserItem.ShortcutKeys = Keys.Control Or Keys.U
+                                UtilItem.DropDownItems.Add(UserItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    UserItem.Enabled = False
+                                End If
+                            End If
+                        End If
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "Security Controls", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                mysecControls.ShortcutKeys = Keys.Control Or Keys.C
+                                UtilItem.DropDownItems.Add(mysecControls)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    mysecControls.Enabled = False
+                                End If
+                            End If
+                        End If
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "Settings", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                mysetItem.ShortcutKeys = Keys.Control Or Keys.S
+                                UtilItem.DropDownItems.Add(mysetItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    mysetItem.Enabled = False
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Else
+                UserItem.ShortcutKeys = Keys.Control Or Keys.U
+                UtilItem.DropDownItems.Add(UserItem)
+                UtilItem.DropDownItems.Add(mysecControls)
+                UtilItem.DropDownItems.Add(mysetItem)
+                ms.Items.Add(UtilItem)
+            End If
+        Else
+            UserItem.ShortcutKeys = Keys.Control Or Keys.U
+            UtilItem.DropDownItems.Add(UserItem)
+            UtilItem.DropDownItems.Add(mysecControls)
+            UtilItem.DropDownItems.Add(mysetItem)
+            ms.Items.Add(UtilItem)
+        End If
 
         '***********************************************************************************************
         'Reports menu
