@@ -2,20 +2,31 @@
 Module ModRegSec
     Private ms As New MenuStrip
 
+    'inopt = "R" new setup, M = Menu load
     Public Function BuildMenu(ByVal inopt As String) As MenuStrip
 
         ms.Parent = MainMenu
-
+        '***********************************************************************************************
         'File Menu
+        '***********************************************************************************************
         Dim fileItem As New ToolStripMenuItem("&File")
         Dim exitItem As New ToolStripMenuItem("&Exit", Nothing, New EventHandler(AddressOf MainMenu.OnExit))
 
         exitItem.ShortcutKeys = Keys.Control Or Keys.X
         fileItem.DropDownItems.Add(exitItem)
 
-        ms.Items.Add(fileItem)
+        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "File", "", "") = True And inopt = "M") Then
+            If (GlobalVariables.GL_mshow = 1) Then
+                ms.Items.Add(fileItem)
+                If (GlobalVariables.GL_mactive = 0) Then fileItem.Enabled = False
+            End If
+        Else
+            ms.Items.Add(fileItem)
+        End If
 
+        '***********************************************************************************************
         'Edit Menu
+        '***********************************************************************************************
         Dim EditItem As New ToolStripMenuItem("E&dit")
 
         ms.Items.Add(EditItem)
@@ -25,7 +36,8 @@ Module ModRegSec
         '***********************************************************************************************
 
         Dim UtilItem As New ToolStripMenuItem("&Utilities")
-        '                    ---- sub items of Utilities ----
+
+        '---- sub items of Utilities ----
         Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
         Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
         Dim mysecControls As New ToolStripMenuItem("&Security Controls", Nothing, New EventHandler(AddressOf MainMenu.MenyMyControls))
@@ -42,13 +54,10 @@ Module ModRegSec
         '***********************************************************************************************
         Dim RepItem As New ToolStripMenuItem("&Reports")
 
-
-
         ms.Items.Add(RepItem)
-
+        '
         '***********************************************************************************************
         'delete MenuDfltSecurity to - recreate
-
         If (inopt = "R") Then
             GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
@@ -60,6 +69,7 @@ Module ModRegSec
             End If
         End If
         BuildMenu = ms
+
     End Function
 
     '***********************************************************************************************
@@ -215,19 +225,42 @@ Module ModRegSec
         Next
 
     End Sub
+
     '*************************************ENF Form controls Registration ***************************
+    'GetMenuSecLevel(GlobalVariables.Gl_LogUserID,,,'')
+    Public Function GetMenuSecLevel(ByVal userid As String, ByVal mitem As String, mitems1 As String, mitems2 As String) As Boolean
+
+        GetMenuSecLevel = False
+        GlobalVariables.Gl_SQLStr = "select MenuShow, Menuactive FROM MenuUserSecurity where userid = '" & userid & "' and MenuMItem = '" & mitem & "' and menuSitem = '" & mitems1 & "'"
+        If (ModMisc.ReadSQL("MSEC", "") = True) Then
+
+        End If
+        GetMenuSecLevel = GlobalVariables.GL_Stat
+
+    End Function
 
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *
     '***********************************************************************************************
-    Public Sub CloseAllforms()
-        Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
+    Public Sub Closeforms(ByVal infrm As String)
 
-        For Each frm As Windows.Forms.Form In openForms
-            If frm.Name.ToString() <> "MainNew" Then
-                frm.Close()
-            End If
+        Dim formNames As New List(Of String)
+
+        If (infrm = "E") Then
+            Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
+            For Each currentForm As Form In openForms
+                If currentForm.Name <> "MainMenu" Then
+                    formNames.Add(currentForm.Name)
+                End If
+            Next
+        Else
+            formNames.Add(infrm)
+        End If
+
+        For Each currentFormName As String In formNames
+            Application.OpenForms(currentFormName).Close()
         Next
+
     End Sub
 
 End Module

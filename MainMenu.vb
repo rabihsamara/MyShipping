@@ -1,6 +1,5 @@
 ﻿Public Class MainMenu
 
-
     Private Sub MainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Text = GlobalVariables.Gl_Company & " - (" & GlobalVariables.Gl_LogUserID & ")"
@@ -12,9 +11,19 @@
     'Event handlers for items listed under Menu File
     '*********************************************************************
     Public Sub OnExit(ByVal sender As Object, ByVal e As EventArgs)
+        ModRegSec.Closeforms("E")
         Application.Exit()
     End Sub
 
+    Private Sub MainMenu_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+
+        If e.CloseReason = CloseReason.UserClosing Then
+            e.Cancel = True
+            ModRegSec.Closeforms("E")
+            Application.Exit()
+        End If
+
+    End Sub
 
     '*********************************************************************
     'Event handlers for items listed under Menu Edit

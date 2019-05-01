@@ -130,6 +130,8 @@ Module ModMisc
     'fldchk = company record exists but address1 empty
     'userr = read user record from table users.
     'usridcnt = count of userid >0 exists
+    'MSEC = read security levels for menu show and active. 1 1
+    '
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String
@@ -188,6 +190,10 @@ Module ModMisc
                         GlobalVariables.GL_Stat = True
                     ElseIf (inopt = "usridcnt") Then
                         ReadSQL = myReader.GetValue(0)
+                        GlobalVariables.GL_Stat = True
+                    ElseIf (inopt = "MSEC") Then
+                        GlobalVariables.GL_mshow = myReader.GetValue(0)
+                        GlobalVariables.GL_mactive = myReader.GetValue(1)
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop

@@ -24,7 +24,8 @@ Public Class GlobalVariables
     Public Shared Property Gl_tmpfnameID As Integer
 
     Public Shared Property GL_SecContcalledBy As String
-
+    Public Shared Property GL_mshow As Integer
+    Public Shared Property GL_mactive As Integer
 End Class
 
 Public Class masterconnrec
