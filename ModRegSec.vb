@@ -1,9 +1,14 @@
 ﻿
 Module ModRegSec
     Private ms As New MenuStrip
+    Private MyMenus(10, 10, 10, 10) As String
 
     'inopt = "R" new setup, M = Menu load
     Public Function BuildMenu(ByVal inopt As String) As MenuStrip
+
+        'tmp
+        ModRegSec.GetALLMenuSecLevel(GlobalVariables.Gl_LogUserID)
+        'tmp
 
         ms.Parent = MainMenu
         '***********************************************************************************************
@@ -113,9 +118,17 @@ Module ModRegSec
         'Reports menu
         '***********************************************************************************************
         Dim RepItem As New ToolStripMenuItem("&Reports")
+        If (inopt = "M") Then
+            'fix later 
+            ms.Items.Add(RepItem)
 
-        ms.Items.Add(RepItem)
-        '
+
+
+
+        Else
+            ms.Items.Add(RepItem)
+        End If
+
         '***********************************************************************************************
         'delete MenuDfltSecurity to - recreate
         If (inopt = "R") Then
@@ -287,15 +300,45 @@ Module ModRegSec
     End Sub
 
     '*************************************ENF Form controls Registration ***************************
-    'GetMenuSecLevel(GlobalVariables.Gl_LogUserID,,,'')
+
+    'Public Function GetMenuSecLevel(ByVal userid As String, ByVal mitem As String, mitems1 As String, mitems2 As String) As Boolean
+
+    '    GetMenuSecLevel = False
+    '    GlobalVariables.Gl_SQLStr = "select MenuShow, Menuactive FROM MenuUserSecurity where userid = '" & userid & "' and MenuMItem = '" & mitem & "' and menuSitem = '" & mitems1 & "'"
+    '    GetMenuSecLevel = ModMisc.ReadSQL("MSEC", "") 'returns GlobalVariables.GL_mshow & GlobalVariables.GL_mactive
+
+    'End Function
+
     Public Function GetMenuSecLevel(ByVal userid As String, ByVal mitem As String, mitems1 As String, mitems2 As String) As Boolean
 
-        GetMenuSecLevel = False
-        GlobalVariables.Gl_SQLStr = "select MenuShow, Menuactive FROM MenuUserSecurity where userid = '" & userid & "' and MenuMItem = '" & mitem & "' and menuSitem = '" & mitems1 & "'"
-        If (ModMisc.ReadSQL("MSEC", "") = True) Then
+        Dim F As Integer = 0
+        Dim N As Integer = 0
+        Dim L As Integer = 0
+        Dim T As Integer = 0
 
-        End If
-        GetMenuSecLevel = GlobalVariables.GL_Stat
+        GetMenuSecLevel = False
+        GlobalVariables.GL_mshow = 1
+        GlobalVariables.GL_mactive = 1
+        For F = 0 To 10
+            If (MyMenus(F, 0, 0, 0) = mitem) Then
+                If (MyMenus(F, 1, 0, 0) = mitems1) Then
+                    GlobalVariables.GL_mshow = MyMenus(F, 0, 1, 0)
+                    GlobalVariables.GL_mactive = MyMenus(F, 0, 0, 1)
+                    GetMenuSecLevel = True
+                    Exit For
+                End If
+            End If
+        Next
+
+    End Function
+
+    '* Get Menu security levels by user into an array
+
+    Public Function GetALLMenuSecLevel(ByVal userid As String) As Boolean
+
+        GlobalVariables.Gl_SQLStr = "SELECT MenuMItem,MenuSitem,MenuShow,MenuActive,MenuS2Item FROM MenuUserSecurity where userid = '" & userid & "'"
+        MyMenus = ModMisc.ReadSQL("ALLM", "")
+        GetALLMenuSecLevel = GlobalVariables.GL_Stat
 
     End Function
 

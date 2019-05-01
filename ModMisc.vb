@@ -131,19 +131,20 @@ Module ModMisc
     'userr = read user record from table users.
     'usridcnt = count of userid >0 exists
     'MSEC = read security levels for menu show and active. 1 1
-    '
+    'ALLM = all menus in an array
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
-        Dim tsql As String
-        Dim fldtext As String
-        Dim retint As Integer
-
-        tsql = ""
-        fldtext = ""
-        retint = 0
+        Dim tsql As String = String.Empty
+        Dim fldtext As String = String.Empty
+        Dim retint As Integer = 0
+        Dim tMyMenus(10, 10, 10, 10) As String
+        Dim F As Integer = 0
+        Dim N As Integer = 0
+        Dim L As Integer = 0
+        Dim T As Integer = 0
 
         GlobalVariables.GL_Stat = False
-        ReadSQL = False
+        ReadSQL = Nothing
 
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             Try
@@ -191,9 +192,18 @@ Module ModMisc
                     ElseIf (inopt = "usridcnt") Then
                         ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
-                    ElseIf (inopt = "MSEC") Then
-                        GlobalVariables.GL_mshow = myReader.GetValue(0)
-                        GlobalVariables.GL_mactive = myReader.GetValue(1)
+                        'ElseIf (inopt = "MSEC") Then
+                        '    GlobalVariables.GL_mshow = myReader.GetValue(0)
+                        '    GlobalVariables.GL_mactive = myReader.GetValue(1)
+                        '    ReadSQL = True
+                    ElseIf (inopt = "ALLM") Then
+                        'MenuMItem,MenuSitem,MenuShow,MenuActive
+                        tMyMenus(F, 0, 0, 0) = myReader.GetValue(0)
+                        tMyMenus(F, 1, 0, 0) = myReader.GetValue(1)
+                        tMyMenus(F, 0, 1, 0) = myReader.GetValue(2).ToString
+                        tMyMenus(F, 0, 0, 1) = myReader.GetValue(3).ToString
+                        F = F + 1
+                        ReadSQL = tMyMenus
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop
