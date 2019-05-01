@@ -561,7 +561,7 @@ Public Class frmUsers
 
         GlobalVariables.Gl_tmpuserID = selusrid
         GlobalVariables.Gl_tmpfnameID = selformNId
-
+        GlobalVariables.GL_SecContcalledBy = "U"
         Dim frm As New frmControls()
         frm.ShowDialog()
     End Sub

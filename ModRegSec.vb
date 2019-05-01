@@ -23,13 +23,16 @@ Module ModRegSec
         '***********************************************************************************************
         'Utilities Menu
         '***********************************************************************************************
+
         Dim UtilItem As New ToolStripMenuItem("&Utilities")
         '                    ---- sub items of Utilities ----
         Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
         Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
+        Dim mysecControls As New ToolStripMenuItem("&Security Controls", Nothing, New EventHandler(AddressOf MainMenu.MenyMyControls))
 
         UserItem.ShortcutKeys = Keys.Control Or Keys.U
         UtilItem.DropDownItems.Add(UserItem)
+        UtilItem.DropDownItems.Add(mysecControls)
         UtilItem.DropDownItems.Add(mysetItem)
 
         ms.Items.Add(UtilItem)

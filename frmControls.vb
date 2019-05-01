@@ -13,23 +13,30 @@ Public Class frmControls
     Private sTable As DataTable
 
     Private Sub FrmControls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        dspuserdID.Text = GlobalVariables.Gl_tmpuserID
-        dpsfname.Text = GlobalVariables.Gl_tmpfname
 
-        'check if user has form controls setup for this form.
-        GlobalVariables.Gl_SQLStr = "select count(*) from frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "'"
-        If (ModMisc.ReadSQL("usridcnt") = 0) Then
-            GlobalVariables.Gl_SQLStr = "insert into frmUsercontrols (UserID, FormName, controlname, controltype, contvisible, contenabled, conteditable) "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & GlobalVariables.Gl_tmpuserID & "',FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDfltcontrols "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "where Formname = '" & GlobalVariables.Gl_tmpfname & "'"
-            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                MsgBox("Error Creating default user Form controls!")
-                Exit Sub
+        If (GlobalVariables.GL_SecContcalledBy = "U") Then
+            dspuserdID.Text = GlobalVariables.Gl_tmpuserID
+            dpsfname.Text = GlobalVariables.Gl_tmpfname
+
+            'check if user has form controls setup for this form.
+            GlobalVariables.Gl_SQLStr = "select count(*) from frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "'"
+            If (ModMisc.ReadSQL("usridcnt") = 0) Then
+                GlobalVariables.Gl_SQLStr = "insert into frmUsercontrols (UserID, FormName, controlname, controltype, contvisible, contenabled, conteditable) "
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Select '" & GlobalVariables.Gl_tmpuserID & "',FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDfltcontrols "
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "where Formname = '" & GlobalVariables.Gl_tmpfname & "'"
+                If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error Creating default user Form controls!")
+                    Exit Sub
+                End If
             End If
+            LoadFormControls()
+            LoadUsrControls()
+        Else
+            LoadAllControls()
         End If
+
         GBeditContsec.Visible = False
-        LoadFormControls()
-        LoadUsrControls()
+
 
     End Sub
 
@@ -131,16 +138,15 @@ Public Class frmControls
 
     End Sub
 
+    'load all forms and controls
+    Private Sub LoadAllControls()
 
-    'tmp - load all forms and controls
-    'Private Sub LoadAllControls()
+        For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
+            Dim node = Me.TreeControls.Nodes.Add(formprop.Name)
+            Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
+            ControlsTree(node, frm.Controls)
+        Next
 
-    '    For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
-    '        Dim node = Me.TreeControls.Nodes.Add(formprop.Name)
-    '        Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
-    '        ControlsTree(node, frm.Controls)
-    '    Next
-
-    'End Sub
+    End Sub
 
 End Class
