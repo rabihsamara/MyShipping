@@ -137,11 +137,7 @@ Module ModMisc
         Dim tsql As String = String.Empty
         Dim fldtext As String = String.Empty
         Dim retint As Integer = 0
-        Dim tMyMenus(10, 10, 10, 10) As String
         Dim F As Integer = 0
-        Dim N As Integer = 0
-        Dim L As Integer = 0
-        Dim T As Integer = 0
 
         GlobalVariables.GL_Stat = False
         ReadSQL = Nothing
@@ -197,13 +193,9 @@ Module ModMisc
                         '    GlobalVariables.GL_mactive = myReader.GetValue(1)
                         '    ReadSQL = True
                     ElseIf (inopt = "ALLM") Then
-                        'MenuMItem,MenuSitem,MenuShow,MenuActive
-                        tMyMenus(F, 0, 0, 0) = myReader.GetValue(0)
-                        tMyMenus(F, 1, 0, 0) = myReader.GetValue(1)
-                        tMyMenus(F, 0, 1, 0) = myReader.GetValue(2).ToString
-                        tMyMenus(F, 0, 0, 1) = myReader.GetValue(3).ToString
+                        GlobalVariables.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
                         F = F + 1
-                        ReadSQL = tMyMenus
+                        ReadSQL = True
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop
