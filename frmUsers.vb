@@ -494,15 +494,15 @@ Public Class frmUsers
             selformrow = DataGridForms.CurrentRow.Index
             selformNId = DataGridForms.Item(0, selformrow).Value
             If (DataGridForms.Item(7, selformrow).Value.ToString = "2") Then
-                If (GlobalVariables.Gl_LogUserID <> "admin") Then
-                    Dim frm As Form
+                'If (GlobalVariables.Gl_LogUserID <> "admin") Then
+                Dim frm As Form
                     frm = Frmchkadpwd
                     frm.ShowDialog()
                     If (GlobalVariables.GL_Stat = False) Then
                         MsgBox("Cannot change form security level without master password!")
                         Exit Sub
                     End If
-                End If
+                'End If
             End If
             GlobalVariables.Gl_tmpfname = DataGridForms.Item(2, selformrow).Value
             chfrmShow.Checked = DataGridForms.Item(5, selformrow).Value

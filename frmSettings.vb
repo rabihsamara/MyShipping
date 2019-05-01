@@ -32,6 +32,7 @@ Public Class frmsettings
     Private Sub cmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
 
         Dim compcnt As String = String.Empty
+        Dim tmpmenu As MenuStrip
 
         Try
             GlobalVariables.GL_skipOnce = False
@@ -49,7 +50,10 @@ Public Class frmsettings
                         Exit Sub
                     End If
                     '
-                    'createforms, and form control sexurity levels (Default)
+                    'Menus,createforms, and form control sexurity levels (Default)
+                    tmpmenu = ModRegSec.BuildMenu("R")
+                    tmpmenu = Nothing
+                    '
                     If (ModRegSec.RegisterForms() = False) Then
                         MsgBox("Error Registering forms")
                     End If

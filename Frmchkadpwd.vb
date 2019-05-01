@@ -17,7 +17,6 @@
 
     Private Sub Frmchkadpwd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         inmastpwd.Text = ""
-        MsgBox(sender.ToString)
     End Sub
 
     Private Sub Frmchkadpwd_Closing(sender As Object, e As EventArgs) Handles MyBase.Load

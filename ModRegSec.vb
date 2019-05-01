@@ -2,7 +2,7 @@
 Module ModRegSec
     Private ms As New MenuStrip
 
-    Public Function BuildMenu() As MenuStrip
+    Public Function BuildMenu(ByVal inopt As String) As MenuStrip
 
         ms.Parent = MainMenu
 
@@ -46,24 +46,17 @@ Module ModRegSec
         '***********************************************************************************************
         'delete MenuDfltSecurity to - recreate
 
-        GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
-        If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-            MsgBox("Error deleting Menu Default security table!")
-        Else
-            If (ModRegSec.RegisterMenu(ms) = False) Then
-                MsgBox("Error Registering Menus")
+        If (inopt = "R") Then
+            GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error deleting Menu Default security table!")
+            Else
+                If (ModRegSec.RegisterMenu(ms) = False) Then
+                    MsgBox("Error Registering Menus")
+                End If
             End If
-            BuildMenu = ms
         End If
-
-        'If (RegisterForms() = False) Then
-        '    MsgBox("Error Registering forms")
-        'End If
-
-        'If (RegisterFormControls() = False) Then
-        '    MsgBox("Error Registering forms controls")
-        'End If
-
+        BuildMenu = ms
     End Function
 
     '***********************************************************************************************
