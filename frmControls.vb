@@ -14,9 +14,15 @@ Public Class frmControls
 
     Private Sub FrmControls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        cmbuserct.Visible = False
+        cmbFnameCT.Visible = False
+        dspuserID.Visible = False
+        dspfname.Visible = False
         If (GlobalVariables.GL_SecContcalledBy = "U") Then
-            dspuserdID.Text = GlobalVariables.Gl_tmpuserID
-            dpsfname.Text = GlobalVariables.Gl_tmpfname
+            dspuserID.Visible = True
+            dspfname.Visible = True
+            dspuserID.Text = GlobalVariables.Gl_tmpuserID
+            dspfname.Text = GlobalVariables.Gl_tmpfname
 
             'check if user has form controls setup for this form.
             GlobalVariables.Gl_SQLStr = "select count(*) from frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "'"
@@ -32,6 +38,11 @@ Public Class frmControls
             LoadFormControls()
             LoadUsrControls()
         Else
+            cmbuserct.Visible = True
+            cmbFnameCT.Visible = True
+            If (ModMisc.FillCBox(cmbuserct, "C") = False) Then
+                Exit Sub
+            End If
             LoadAllControls()
         End If
 

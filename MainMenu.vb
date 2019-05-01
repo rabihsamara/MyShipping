@@ -11,7 +11,7 @@
     'Event handlers for items listed under Menu File
     '*********************************************************************
     Public Sub OnExit(ByVal sender As Object, ByVal e As EventArgs)
-        ModRegSec.Closeforms("E")
+        ModMisc.Closeforms("E")
         Application.Exit()
     End Sub
 
@@ -19,7 +19,7 @@
 
         If e.CloseReason = CloseReason.UserClosing Then
             e.Cancel = True
-            ModRegSec.Closeforms("E")
+            ModMisc.Closeforms("E")
             Application.Exit()
         End If
 

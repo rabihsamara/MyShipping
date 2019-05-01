@@ -2,24 +2,24 @@
 
     Private Sub Login_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim tblld As Boolean = False
+        Dim tblld As Boolean = True
+        Dim I As Integer = 0
 
         txtmsg.Visible = False
 
         If (GlobalVariables.GL_skipOnce = False) Then
             tblld = MyConn.BuildSQLStr()
-        Else
-            tblld = True
         End If
 
         If (tblld = True) Then
             Me.Text = "myShipping"
-            If (ModMisc.FillUsers() = False) Then
+            If (ModMisc.FillCBox(cmbUsers, "L") = False) Then
                 Application.Exit()
             End If
-            If (FillCompanies() = False) Then
+            If (ModMisc.FillCBox(cmbCompany, "P") = False) Then
                 Application.Exit()
             End If
+
         End If
 
     End Sub

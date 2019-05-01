@@ -53,34 +53,42 @@ Module ModMisc
             Return m_CompName
         End Function
     End Class
+
     '******************************************************************************************************
-
-    Public Function FillUsers() As Boolean
+    'L=login, C=Control screen, P=company
+    '******************************************************************************************************
+    Public Function FillCBox(tmpcombo As ComboBox, ByVal callby As String) As Boolean
 
         Try
+            Dim tsql As String = ""
+            FillCBox = False
 
-            FillUsers = False
-            Login.cmbUsers.Items.Clear()
+            If (callby = "L" Or callby = "C") Then
+                tsql = "SELECT UserID FROM Users where active = 1 order by UserID asc"
+            ElseIf (callby = "P") Then
+                tsql = "SELECT CompName FROM company where CompActive = 1 order by CompName asc"
+            End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
-                Dim command As New SqlCommand("SELECT UserID FROM Users where active = 1 order by UserID asc", mysqlConn)
+                Dim command As New SqlCommand(tsql, mysqlConn)
                 mysqlConn.Open()
 
                 myReader = command.ExecuteReader()
                 Do While myReader.Read()
-                    Login.cmbUsers.Items.Add(New UsersName(myReader.GetString(0)))
+                    If (callby = "L" Or callby = "C") Then
+                        tmpcombo.Items.Add(New UsersName(myReader.GetString(0)))
+                    ElseIf (callby = "P") Then
+                        tmpcombo.Items.Add(New CompanyName(myReader.GetString(0)))
+                    End If
                 Loop
-                'add default user if not in table users!!!
-                'Login.cmbUsers.Items.Add(GlobalVariables.GL_DfltConnValues.AppMyDFUser.ToString())
-
-                FillUsers = True
+                FillCBox = True
                 Exit Function
             End Using
 
         Catch ex As Exception
             MsgBox(Err.Description)
-            FillUsers = False
+            FillCBox = False
         Finally
             If Not (myReader Is Nothing) Then
                 myReader.Close()
@@ -90,39 +98,6 @@ Module ModMisc
             End If
         End Try
 
-    End Function
-
-    Public Function FillCompanies() As Boolean
-        Try
-
-            FillCompanies = False
-            Login.cmbCompany.Items.Clear()
-
-            Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-
-                Dim command As New SqlCommand("SELECT CompName FROM company where CompActive = 1 order by CompName asc", mysqlConn)
-                mysqlConn.Open()
-
-                myReader = command.ExecuteReader()
-                Do While myReader.Read()
-                    Login.cmbCompany.Items.Add(New CompanyName(myReader.GetString(0)))
-                Loop
-
-                FillCompanies = True
-                Exit Function
-            End Using
-
-        Catch ex As Exception
-            MsgBox(Err.Description)
-            FillCompanies = False
-        Finally
-            If Not (myReader Is Nothing) Then
-                myReader.Close()
-            End If
-            If Not (mysqlConn Is Nothing) Then
-                mysqlConn.Close()
-            End If
-        End Try
     End Function
 
     'Use to read data only
@@ -490,6 +465,30 @@ Exit_Excel:
             End Try
 
         End Using
+
+    End Sub
+
+    '***********************************************************************************************
+    '* Misc functions/subs                                                                         *
+    '***********************************************************************************************
+    Public Sub Closeforms(ByVal infrm As String)
+
+        Dim formNames As New List(Of String)
+
+        If (infrm = "E") Then
+            Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
+            For Each currentForm As Form In openForms
+                If currentForm.Name <> "MainMenu" Then
+                    formNames.Add(currentForm.Name)
+                End If
+            Next
+        Else
+            formNames.Add(infrm)
+        End If
+
+        For Each currentFormName As String In formNames
+            Application.OpenForms(currentFormName).Close()
+        Next
 
     End Sub
 

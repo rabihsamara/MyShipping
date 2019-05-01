@@ -23,21 +23,23 @@ Partial Class frmControls
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dspuserdID = New System.Windows.Forms.TextBox()
+        Me.dspuserID = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.dpsfname = New System.Windows.Forms.TextBox()
+        Me.dspfname = New System.Windows.Forms.TextBox()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.TreeControls = New System.Windows.Forms.TreeView()
         Me.DataGridusrCont = New System.Windows.Forms.DataGridView()
         Me.GBeditContsec = New System.Windows.Forms.GroupBox()
+        Me.lblmsg = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtmsg = New System.Windows.Forms.TextBox()
         Me.cmdCancel = New System.Windows.Forms.Button()
         Me.cmdUpdate = New System.Windows.Forms.Button()
         Me.chkeditable = New System.Windows.Forms.CheckBox()
         Me.chkenabled = New System.Windows.Forms.CheckBox()
         Me.chkvisible = New System.Windows.Forms.CheckBox()
-        Me.txtmsg = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lblmsg = New System.Windows.Forms.Label()
+        Me.cmbuserct = New System.Windows.Forms.ComboBox()
+        Me.cmbFnameCT = New System.Windows.Forms.ComboBox()
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBeditContsec.SuspendLayout()
         Me.SuspendLayout()
@@ -51,14 +53,14 @@ Partial Class frmControls
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "UserID:"
         '
-        'dspuserdID
+        'dspuserID
         '
-        Me.dspuserdID.Enabled = False
-        Me.dspuserdID.Location = New System.Drawing.Point(61, 6)
-        Me.dspuserdID.Name = "dspuserdID"
-        Me.dspuserdID.ReadOnly = True
-        Me.dspuserdID.Size = New System.Drawing.Size(147, 20)
-        Me.dspuserdID.TabIndex = 1
+        Me.dspuserID.Enabled = False
+        Me.dspuserID.Location = New System.Drawing.Point(61, 6)
+        Me.dspuserID.Name = "dspuserID"
+        Me.dspuserID.ReadOnly = True
+        Me.dspuserID.Size = New System.Drawing.Size(147, 20)
+        Me.dspuserID.TabIndex = 1
         '
         'Label2
         '
@@ -69,14 +71,14 @@ Partial Class frmControls
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "FormName:"
         '
-        'dpsfname
+        'dspfname
         '
-        Me.dpsfname.Enabled = False
-        Me.dpsfname.Location = New System.Drawing.Point(281, 6)
-        Me.dpsfname.Name = "dpsfname"
-        Me.dpsfname.ReadOnly = True
-        Me.dpsfname.Size = New System.Drawing.Size(161, 20)
-        Me.dpsfname.TabIndex = 3
+        Me.dspfname.Enabled = False
+        Me.dspfname.Location = New System.Drawing.Point(281, 6)
+        Me.dspfname.Name = "dspfname"
+        Me.dspfname.ReadOnly = True
+        Me.dspfname.Size = New System.Drawing.Size(161, 20)
+        Me.dspfname.TabIndex = 3
         '
         'cmdExit
         '
@@ -114,10 +116,40 @@ Partial Class frmControls
         Me.GBeditContsec.Controls.Add(Me.chkvisible)
         Me.GBeditContsec.Location = New System.Drawing.Point(955, 32)
         Me.GBeditContsec.Name = "GBeditContsec"
-        Me.GBeditContsec.Size = New System.Drawing.Size(388, 131)
+        Me.GBeditContsec.Size = New System.Drawing.Size(388, 124)
         Me.GBeditContsec.TabIndex = 8
         Me.GBeditContsec.TabStop = False
         Me.GBeditContsec.Text = "Edit control security"
+        '
+        'lblmsg
+        '
+        Me.lblmsg.AutoSize = True
+        Me.lblmsg.BackColor = System.Drawing.Color.Yellow
+        Me.lblmsg.Font = New System.Drawing.Font("Microsoft Sans Serif", 13.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblmsg.Location = New System.Drawing.Point(8, 89)
+        Me.lblmsg.Name = "lblmsg"
+        Me.lblmsg.Size = New System.Drawing.Size(82, 22)
+        Me.lblmsg.TabIndex = 7
+        Me.lblmsg.Text = "message"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(9, 22)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(25, 13)
+        Me.Label3.TabIndex = 6
+        Me.Label3.Text = "For:"
+        '
+        'txtmsg
+        '
+        Me.txtmsg.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.txtmsg.Enabled = False
+        Me.txtmsg.Location = New System.Drawing.Point(40, 19)
+        Me.txtmsg.Name = "txtmsg"
+        Me.txtmsg.ReadOnly = True
+        Me.txtmsg.Size = New System.Drawing.Size(332, 20)
+        Me.txtmsg.TabIndex = 5
         '
         'cmdCancel
         '
@@ -167,47 +199,36 @@ Partial Class frmControls
         Me.chkvisible.Text = "Visiable"
         Me.chkvisible.UseVisualStyleBackColor = True
         '
-        'txtmsg
+        'cmbuserct
         '
-        Me.txtmsg.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.txtmsg.Enabled = False
-        Me.txtmsg.Location = New System.Drawing.Point(40, 19)
-        Me.txtmsg.Name = "txtmsg"
-        Me.txtmsg.ReadOnly = True
-        Me.txtmsg.Size = New System.Drawing.Size(332, 20)
-        Me.txtmsg.TabIndex = 5
+        Me.cmbuserct.FormattingEnabled = True
+        Me.cmbuserct.Location = New System.Drawing.Point(61, 6)
+        Me.cmbuserct.Name = "cmbuserct"
+        Me.cmbuserct.Size = New System.Drawing.Size(147, 21)
+        Me.cmbuserct.TabIndex = 9
         '
-        'Label3
+        'cmbFnameCT
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(9, 22)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(25, 13)
-        Me.Label3.TabIndex = 6
-        Me.Label3.Text = "For:"
-        '
-        'lblmsg
-        '
-        Me.lblmsg.AutoSize = True
-        Me.lblmsg.BackColor = System.Drawing.Color.Yellow
-        Me.lblmsg.Location = New System.Drawing.Point(13, 95)
-        Me.lblmsg.Name = "lblmsg"
-        Me.lblmsg.Size = New System.Drawing.Size(49, 13)
-        Me.lblmsg.TabIndex = 7
-        Me.lblmsg.Text = "message"
+        Me.cmbFnameCT.FormattingEnabled = True
+        Me.cmbFnameCT.Location = New System.Drawing.Point(281, 6)
+        Me.cmbFnameCT.Name = "cmbFnameCT"
+        Me.cmbFnameCT.Size = New System.Drawing.Size(161, 21)
+        Me.cmbFnameCT.TabIndex = 10
         '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
+        Me.Controls.Add(Me.cmbFnameCT)
+        Me.Controls.Add(Me.cmbuserct)
         Me.Controls.Add(Me.GBeditContsec)
         Me.Controls.Add(Me.DataGridusrCont)
         Me.Controls.Add(Me.TreeControls)
         Me.Controls.Add(Me.cmdExit)
-        Me.Controls.Add(Me.dpsfname)
+        Me.Controls.Add(Me.dspfname)
         Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.dspuserdID)
+        Me.Controls.Add(Me.dspuserID)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmControls"
         Me.Text = "frmControls"
@@ -220,9 +241,9 @@ Partial Class frmControls
     End Sub
 
     Friend WithEvents Label1 As Label
-    Friend WithEvents dspuserdID As TextBox
+    Friend WithEvents dspuserID As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents dpsfname As TextBox
+    Friend WithEvents dspfname As TextBox
     Friend WithEvents cmdExit As Button
     Friend WithEvents TreeControls As TreeView
     Friend WithEvents DataGridusrCont As DataGridView
@@ -235,4 +256,6 @@ Partial Class frmControls
     Friend WithEvents Label3 As Label
     Friend WithEvents txtmsg As TextBox
     Friend WithEvents lblmsg As Label
+    Friend WithEvents cmbuserct As ComboBox
+    Friend WithEvents cmbFnameCT As ComboBox
 End Class

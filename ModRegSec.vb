@@ -337,28 +337,4 @@ Module ModRegSec
 
     'End Function
 
-    '***********************************************************************************************
-    '* Misc functions/subs                                                                         *
-    '***********************************************************************************************
-    Public Sub Closeforms(ByVal infrm As String)
-
-        Dim formNames As New List(Of String)
-
-        If (infrm = "E") Then
-            Dim openForms As Windows.Forms.FormCollection = Application.OpenForms
-            For Each currentForm As Form In openForms
-                If currentForm.Name <> "MainMenu" Then
-                    formNames.Add(currentForm.Name)
-                End If
-            Next
-        Else
-            formNames.Add(infrm)
-        End If
-
-        For Each currentFormName As String In formNames
-            Application.OpenForms(currentFormName).Close()
-        Next
-
-    End Sub
-
 End Module
