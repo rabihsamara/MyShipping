@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmControls
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmControls
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dspuserID = New System.Windows.Forms.TextBox()
@@ -41,8 +41,6 @@ Partial Class frmControls
         Me.dspfname = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.ListView1 = New System.Windows.Forms.ListView()
-        Me.Label6 = New System.Windows.Forms.Label()
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBeditContsec.SuspendLayout()
         Me.SuspendLayout()
@@ -86,7 +84,7 @@ Partial Class frmControls
         Me.DataGridusrCont.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridusrCont.Location = New System.Drawing.Point(225, 51)
         Me.DataGridusrCont.Name = "DataGridusrCont"
-        Me.DataGridusrCont.Size = New System.Drawing.Size(717, 661)
+        Me.DataGridusrCont.Size = New System.Drawing.Size(717, 531)
         Me.DataGridusrCont.TabIndex = 7
         '
         'GBeditContsec
@@ -99,7 +97,7 @@ Partial Class frmControls
         Me.GBeditContsec.Controls.Add(Me.chkeditable)
         Me.GBeditContsec.Controls.Add(Me.chkenabled)
         Me.GBeditContsec.Controls.Add(Me.chkvisible)
-        Me.GBeditContsec.Location = New System.Drawing.Point(955, 51)
+        Me.GBeditContsec.Location = New System.Drawing.Point(232, 588)
         Me.GBeditContsec.Name = "GBeditContsec"
         Me.GBeditContsec.Size = New System.Drawing.Size(388, 124)
         Me.GBeditContsec.TabIndex = 8
@@ -232,32 +230,11 @@ Partial Class frmControls
         Me.Label5.TabIndex = 11
         Me.Label5.Text = "User Defined Form Controls"
         '
-        'ListView1
-        '
-        Me.ListView1.Location = New System.Drawing.Point(985, 269)
-        Me.ListView1.Name = "ListView1"
-        Me.ListView1.Size = New System.Drawing.Size(318, 213)
-        Me.ListView1.TabIndex = 12
-        Me.ListView1.UseCompatibleStateImageBehavior = False
-        Me.ListView1.Visible = False
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(988, 232)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(39, 13)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "Label6"
-        Me.Label6.Visible = False
-        '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1355, 744)
-        Me.Controls.Add(Me.Label6)
-        Me.Controls.Add(Me.ListView1)
+        Me.ClientSize = New System.Drawing.Size(948, 744)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cmbuserct)
@@ -298,6 +275,4 @@ Partial Class frmControls
     Friend WithEvents dspfname As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents ListView1 As ListView
-    Friend WithEvents Label6 As Label
 End Class

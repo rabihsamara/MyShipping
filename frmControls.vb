@@ -2,11 +2,12 @@
 
 Public Class frmControls
     Private slusrfrmsecID As Integer = GlobalVariables.Gl_tmpfnameID
-    Private selrow As Integer
-    Private selid As Integer
+    Private selrow As Integer = 0
+    Private selid As Integer = 0
     Private selUserid As String = String.Empty
 
     Private sltreeform As String = String.Empty
+    Private selmode As String = "U"
 
     Private sCommand As SqlCommand
     Private sAdapter As SqlDataAdapter
@@ -39,7 +40,7 @@ Public Class frmControls
                 End If
             End If
             LoadFormControls()
-            LoadUsrControls()
+            LoadUsrControls(GlobalVariables.Gl_tmpuserID, GlobalVariables.Gl_tmpfname)
         Else
             cmbuserct.Visible = True
             If (ModMisc.FillCBox(cmbuserct, "C") = False) Then
@@ -76,9 +77,9 @@ Public Class frmControls
 
     End Sub
 
-    Private Sub LoadUsrControls()
+    Private Sub LoadUsrControls(ByVal inuser As String, ByVal inform As String)
         'DataGridusrCont
-        Dim sql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & GlobalVariables.Gl_tmpuserID & "' and Formname = '" & GlobalVariables.Gl_tmpfname & "' order by controlname asc, controltype asc"
+        Dim sql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & inuser & "' and Formname = '" & inform & "' order by controlname asc, controltype asc"
         Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             connection.Open()
             sCommand = New SqlCommand(sql, connection)
@@ -101,28 +102,23 @@ Public Class frmControls
     End Sub
 
     Private Sub DataGridusrCont_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridusrCont.MouseClick
-        Dim I As Integer
-        selrow = 0
-        selid = 0
-        selUserid = ""
 
         If (DataGridusrCont.Rows.Count >= 1) Then
             lblmsg.Visible = False
             selrow = DataGridusrCont.CurrentRow.Index
-            selid = DataGridusrCont.Item(0, I).Value
-            selUserid = DataGridusrCont.Item(1, I).Value
+            selid = DataGridusrCont.Item(0, selrow).Value
+            selUserid = DataGridusrCont.Item(1, selrow).Value
             '
-            If (GlobalVariables.GL_SecContcalledBy = "M") Then
-                txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value
-                chkvisible.Checked = If(DataGridusrCont.Item(4, I).Value = 1, True, False)
-                chkenabled.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
-                chkeditable.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
+            If (GlobalVariables.GL_SecContcalledBy = "M" And selmode = "D") Then
+                txtmsg.Text = DataGridusrCont.Item(1, selrow).Value & " : " & DataGridusrCont.Item(2, selrow).Value
+                chkvisible.Checked = If(DataGridusrCont.Item(4, selrow).Value = 1, True, False)
+                chkenabled.Checked = If(DataGridusrCont.Item(5, selrow).Value = 1, True, False)
+                chkeditable.Checked = If(DataGridusrCont.Item(6, selrow).Value = 1, True, False)
             Else
-                txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value & " : " & DataGridusrCont.Item(3, I).Value
-                chkvisible.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
-                chkenabled.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
-                chkeditable.Checked = If(DataGridusrCont.Item(7, I).Value = 1, True, False)
-
+                txtmsg.Text = DataGridusrCont.Item(1, selrow).Value & " : " & DataGridusrCont.Item(2, selrow).Value & " : " & DataGridusrCont.Item(3, selrow).Value
+                chkvisible.Checked = If(DataGridusrCont.Item(5, selrow).Value = 1, True, False)
+                chkenabled.Checked = If(DataGridusrCont.Item(6, selrow).Value = 1, True, False)
+                chkeditable.Checked = If(DataGridusrCont.Item(7, selrow).Value = 1, True, False)
             End If
 
             GBeditContsec.Visible = True
@@ -133,7 +129,7 @@ Public Class frmControls
     Private Sub CmdUpdate_Click(sender As Object, e As EventArgs) Handles cmdUpdate.Click
 
         'update file
-        If (GlobalVariables.GL_SecContcalledBy = "M") Then
+        If (GlobalVariables.GL_SecContcalledBy = "M" And selmode = "D") Then
             GlobalVariables.Gl_SQLStr = "update frmDFLTcontrols  set contvisible = " & If(chkvisible.Checked = True, 1, 0) & ", contenabled = " & If(chkenabled.Checked = True, 1, 0)
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & ", conteditable = " & If(chkeditable.Checked = True, 1, 0)
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selid
@@ -152,7 +148,7 @@ Public Class frmControls
         End If
 
         'update screeen
-        If (GlobalVariables.GL_SecContcalledBy = "M") Then
+        If (GlobalVariables.GL_SecContcalledBy = "M" And selmode = "D") Then
             DataGridusrCont.Item(4, selrow).Value = If(chkvisible.Checked = True, 1, 0)
             DataGridusrCont.Item(5, selrow).Value = If(chkenabled.Checked = True, 1, 0)
             DataGridusrCont.Item(6, selrow).Value = If(chkeditable.Checked = True, 1, 0)
@@ -199,27 +195,24 @@ Public Class frmControls
                 Label5.Text = "User Defined Form Controls"
             End If
 
-            Dim childnum, index, i As Int32
+            Dim childnum, index As Integer
             childnum = TreeControls.SelectedNode.GetNodeCount(False)
             index = TreeControls.SelectedNode.Index
-
-            'index = index + 1
-            'ListView1.Items.Clear()
-            'For i = 0 To childnum - 1
-            '    ListView1.Items.Add(index.ToString + "." + i.ToString, 1)
-            'Next
-            'Label6.Text = TreeControls.SelectedNode.FullPath
 
             sltreeform = ""
             If (InStr(Trim(TreeControls.SelectedNode.Text), ":") = 0) Then
                 sltreeform = Trim(TreeControls.SelectedNode.Text)
-                LoadDfltControls(sltreeform)
+                If (cmbuserct.Text = "Default") Then
+                    selmode = "D"
+                    LoadDfltControls(sltreeform)
+                Else
+                    selmode = "U"
+                    LoadUsrControls(Trim(cmbuserct.Text).ToString, Trim(sltreeform))
+                End If
+
             End If
 
-
-
         End If
-
 
     End Sub
 
@@ -243,5 +236,18 @@ Public Class frmControls
 
     End Sub
 
+    Private Sub cmbuserct_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbuserct.SelectedIndexChanged
+
+        If (cmbuserct.Text = "Default") Then
+            selmode = "D"
+            Label5.Text = "Default Controls"
+            DataGridusrCont.DataSource = Nothing
+        Else
+            selmode = "U"
+            Label5.Text = "User Defined Form Controls"
+            DataGridusrCont.DataSource = Nothing
+        End If
+
+    End Sub
 
 End Class
