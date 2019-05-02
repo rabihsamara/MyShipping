@@ -752,3 +752,53 @@ Public Class mymisc1
     End Sub
 
 End Class
+
+Public Class Customers
+
+    Private ID As Integer
+    Private CustName As String
+    Private custactive As Integer
+
+    Public Sub New() 'parameterised constructor
+        Console.WriteLine("Class created")
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+        Console.WriteLine("Class destroyed")
+    End Sub
+
+    Public Property MyID() As String
+
+        Get
+            Return ID
+        End Get
+        Set(ByVal Value As String)
+            ID = Value
+        End Set
+
+    End Property
+
+    Public Property MyCustName() As String
+
+        Get
+            Return CustName
+        End Get
+        Set(ByVal Value As String)
+            CustName = Value
+        End Set
+
+    End Property
+
+    Public Property MyCustActive() As String
+
+        Get
+            Return CustActive
+        End Get
+        Set(ByVal Value As String)
+            CustActive = Value
+        End Set
+
+    End Property
+
+End Class
+

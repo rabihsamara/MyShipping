@@ -1,6 +1,7 @@
 ﻿Imports System.Configuration
 Imports System.Data.SqlClient
 Imports Excel = Microsoft.Office.Interop.Excel
+Imports System.IO
 
 Module ModMisc
 
@@ -55,7 +56,11 @@ Module ModMisc
     End Class
 
     '******************************************************************************************************
-    'L=login, C=Control screen, P=company
+    '* L=login             - 
+    '* C=Control screen    - 
+    '* P=company           - 
+    '* CRI=Customers screen - customer ID Combo
+    '* CRN=Customers screen - customer Name Combo
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -67,6 +72,10 @@ Module ModMisc
                 tsql = "SELECT UserID FROM Users where active = 1 order by UserID asc"
             ElseIf (callby = "P") Then
                 tsql = "SELECT CompName FROM company where CompActive = 1 order by CompName asc"
+            ElseIf (callby = "CRI") Then
+                tsql = "SELECT ID  FROM Customers where CustActive = 1 order by ID asc"
+            ElseIf (callby = "CRN") Then
+                tsql = "SELECT CustName  FROM Customers where CustActive = 1 order by CustName asc"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -80,6 +89,10 @@ Module ModMisc
                         incombo.Items.Add(New UsersName(myReader.GetString(0)))
                     ElseIf (callby = "P") Then
                         incombo.Items.Add(New CompanyName(myReader.GetString(0)))
+                    ElseIf (callby = "CRI") Then
+                        incombo.Items.Add(myReader.GetString(0))
+                    ElseIf (callby = "CRN") Then
+                        incombo.Items.Add(myReader.GetString(0))
                     End If
                 Loop
                 FillCBox = True
@@ -107,6 +120,7 @@ Module ModMisc
     'usridcnt = count of userid >0 exists
     'MSEC = read security levels for menu show and active. 1 1
     'ALLM = all menus in an array
+    'NCST= read count of cust for new custom if exists
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String = String.Empty
@@ -160,13 +174,9 @@ Module ModMisc
 
                         ReadSQL = GlobalVariables.Tmpuserrecord
                         GlobalVariables.GL_Stat = True
-                    ElseIf (inopt = "usridcnt") Then
+                    ElseIf (inopt = "usridcnt" Or inopt = "NCST") Then
                         ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
-                        'ElseIf (inopt = "MSEC") Then
-                        '    GlobalVariables.GL_mshow = myReader.GetValue(0)
-                        '    GlobalVariables.GL_mactive = myReader.GetValue(1)
-                        '    ReadSQL = True
                     ElseIf (inopt = "ALLM") Then
                         GlobalVariables.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
                         F = F + 1
@@ -489,4 +499,90 @@ Exit_Excel:
 
     End Sub
 
+
+    '********************************************************************************************
+    '*                                    Tmp Function                                          *
+    '********************************************************************************************
+    ' to get list of all tables Select Myshipping.INFORMATION_SCHEMA.TABLES.TABLE_NAME  from  Myshipping.INFORMATION_SCHEMA.TABLES
+    ' to get table columns Select INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME from Myshipping.INFORMATION_SCHEMA.COLUMNS  where table_name = N'cities'
+    '
+
+    Public Sub RunClassGen()
+
+        Dim myarlist As ArrayList = ModMisc.createClass("Customers")
+
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\custclass.txt")
+
+        For Each currentElement As String In myarlist
+            theWriter.WriteLine(currentElement)
+        Next
+
+        theWriter.Close()
+
+    End Sub
+
+    Public Function createClass(ByVal inTable As String) As ArrayList
+
+        Dim al As ArrayList = New ArrayList()
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            Dim dbase As String = "MyShipping"
+            Dim tcode As String
+            Dim tsql2 As String = ""
+
+            If (inTable <> "") Then
+                tsql2 = "Select " & dbase & ".INFORMATION_SCHEMA.TABLES.TABLE_NAME from " & dbase & ".INFORMATION_SCHEMA.TABLES where " & dbase & ".INFORMATION_SCHEMA.TABLES.TABLE_NAME = '" & inTable & "'"
+            Else
+                tsql2 = "Select " & dbase & ".INFORMATION_SCHEMA.TABLES.TABLE_NAME from " & dbase & ".INFORMATION_SCHEMA.TABLES"
+            End If
+
+            Dim cmd As New SqlCommand(tsql2, mysqlConn)
+
+            mysqlConn.Open()
+            Dim cols = 0
+            Dim dbr As SqlDataReader = cmd.ExecuteReader()
+            Dim i = 0
+
+            While dbr.Read()
+                Dim ColArr(20) As String
+
+                tcode = "Public Class " & Trim(dbr.Item("Table_Name"))
+                al.Add(tcode & vbNewLine)
+
+                al.Add("Public Sub New() 'parameterised constructor" & vbNewLine)
+                al.Add("Console.WriteLine('')" & vbNewLine)
+                al.Add("End Sub" & vbNewLine)
+
+                al.Add("Protected Overrides Sub Finalize()  ' destructor" & vbNewLine)
+                al.Add("Console.WriteLine('')" & vbNewLine)
+                al.Add("End Sub" & vbNewLine)
+
+                al.Add(vbNewLine)
+
+                Using mysqlConn1 As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+                    Dim cmdcol As New SqlCommand("Select INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME from " & dbase & ".INFORMATION_SCHEMA.COLUMNS where table_name = N'" & dbr.Item("Table_Name") & "'", mysqlConn1)
+                    mysqlConn1.Open()
+                    Dim dcr As SqlDataReader = cmdcol.ExecuteReader()
+                    While dcr.Read()
+                        al.Add("Public Property My" & dcr.Item("Column_Name") & "() As String" & vbNewLine)
+                        al.Add("   Get" & vbNewLine)
+                        al.Add("     Return " & dcr.Item("Column_Name") & vbNewLine)
+                        al.Add("   End Get" & vbNewLine)
+                        al.Add("   Set(ByVal Value As String)" & vbNewLine)
+                        al.Add("      " & dcr.Item("Column_Name") & " = Value" & vbNewLine)
+                        al.Add("   End Set" & vbNewLine)
+                        al.Add("End Property" & vbNewLine)
+                        al.Add(vbNewLine)
+                    End While
+                End Using
+                al.Add(vbNewLine)
+                al.Add("End Class" & vbNewLine)
+                i += 1
+            End While
+
+        End Using
+        createClass = al
+
+    End Function
+    '********************************************END OF TMP FUNCTIONS *******************************************
 End Module
