@@ -57,7 +57,7 @@ Module ModMisc
     '******************************************************************************************************
     'L=login, C=Control screen, P=company
     '******************************************************************************************************
-    Public Function FillCBox(tmpcombo As ComboBox, ByVal callby As String) As Boolean
+    Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
         Try
             Dim tsql As String = ""
@@ -77,9 +77,9 @@ Module ModMisc
                 myReader = command.ExecuteReader()
                 Do While myReader.Read()
                     If (callby = "L" Or callby = "C") Then
-                        tmpcombo.Items.Add(New UsersName(myReader.GetString(0)))
+                        incombo.Items.Add(New UsersName(myReader.GetString(0)))
                     ElseIf (callby = "P") Then
-                        tmpcombo.Items.Add(New CompanyName(myReader.GetString(0)))
+                        incombo.Items.Add(New CompanyName(myReader.GetString(0)))
                     End If
                 Loop
                 FillCBox = True
@@ -446,13 +446,10 @@ Exit_Excel:
 
             Try
                 mysqlConn.Open()
-
                 Using comm As SqlCommand = New SqlCommand(GlobalVariables.Gl_SQLStr, mysqlConn)
                     Dim rs As SqlDataReader = comm.ExecuteReader
                     Dim dt As DataTable = New DataTable
                     dt.Load(rs)
-                    ' as an example set the ValueMember and DisplayMember'
-                    ' to two columns of the returned table'
                     cbo.DataSource = dt
                     cbo.DisplayMember = "countryname"
                     cbo.ValueMember = "ID"

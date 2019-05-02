@@ -15,11 +15,12 @@ Public Class frmControls
     Private Sub FrmControls_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         cmbuserct.Visible = False
-        cmbFnameCT.Visible = False
         dspuserID.Visible = False
+        Label2.Visible = False
         dspfname.Visible = False
         If (GlobalVariables.GL_SecContcalledBy = "U") Then
             dspuserID.Visible = True
+            Label2.Visible = True
             dspfname.Visible = True
             dspuserID.Text = GlobalVariables.Gl_tmpuserID
             dspfname.Text = GlobalVariables.Gl_tmpfname
@@ -39,10 +40,10 @@ Public Class frmControls
             LoadUsrControls()
         Else
             cmbuserct.Visible = True
-            cmbFnameCT.Visible = True
             If (ModMisc.FillCBox(cmbuserct, "C") = False) Then
                 Exit Sub
             End If
+            cmbuserct.Items.Add("Default")
             LoadAllControls()
         End If
 
@@ -152,12 +153,19 @@ Public Class frmControls
     'load all forms and controls
     Private Sub LoadAllControls()
 
-        For Each formprop In My.Forms.GetType.GetProperties 'percorre todos os forms 
+        For Each formprop In My.Forms.GetType.GetProperties
             Dim node = Me.TreeControls.Nodes.Add(formprop.Name)
             Dim frm As Form = CType(formprop.GetValue(My.Forms, Nothing), Form)
             ControlsTree(node, frm.Controls)
         Next
 
     End Sub
+
+    Private Sub treeControls_NodeMouseClick(ByVal sender As Object, ByVal e As TreeNodeMouseClickEventArgs) Handles TreeControls.NodeMouseClick
+
+        MsgBox(e.Node.Text)
+
+    End Sub
+
 
 End Class

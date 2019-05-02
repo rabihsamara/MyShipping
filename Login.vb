@@ -19,7 +19,6 @@
             If (ModMisc.FillCBox(cmbCompany, "P") = False) Then
                 Application.Exit()
             End If
-
         End If
 
     End Sub

@@ -24,8 +24,6 @@ Partial Class frmControls
     Private Sub InitializeComponent()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dspuserID = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.dspfname = New System.Windows.Forms.TextBox()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.TreeControls = New System.Windows.Forms.TreeView()
         Me.DataGridusrCont = New System.Windows.Forms.DataGridView()
@@ -39,7 +37,8 @@ Partial Class frmControls
         Me.chkenabled = New System.Windows.Forms.CheckBox()
         Me.chkvisible = New System.Windows.Forms.CheckBox()
         Me.cmbuserct = New System.Windows.Forms.ComboBox()
-        Me.cmbFnameCT = New System.Windows.Forms.ComboBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.dspfname = New System.Windows.Forms.TextBox()
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBeditContsec.SuspendLayout()
         Me.SuspendLayout()
@@ -61,24 +60,6 @@ Partial Class frmControls
         Me.dspuserID.ReadOnly = True
         Me.dspuserID.Size = New System.Drawing.Size(147, 20)
         Me.dspuserID.TabIndex = 1
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(214, 9)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(61, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "FormName:"
-        '
-        'dspfname
-        '
-        Me.dspfname.Enabled = False
-        Me.dspfname.Location = New System.Drawing.Point(281, 6)
-        Me.dspfname.Name = "dspfname"
-        Me.dspfname.ReadOnly = True
-        Me.dspfname.Size = New System.Drawing.Size(161, 20)
-        Me.dspfname.TabIndex = 3
         '
         'cmdExit
         '
@@ -207,20 +188,29 @@ Partial Class frmControls
         Me.cmbuserct.Size = New System.Drawing.Size(147, 21)
         Me.cmbuserct.TabIndex = 9
         '
-        'cmbFnameCT
+        'Label2
         '
-        Me.cmbFnameCT.FormattingEnabled = True
-        Me.cmbFnameCT.Location = New System.Drawing.Point(281, 6)
-        Me.cmbFnameCT.Name = "cmbFnameCT"
-        Me.cmbFnameCT.Size = New System.Drawing.Size(161, 21)
-        Me.cmbFnameCT.TabIndex = 10
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(214, 9)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(61, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "FormName:"
+        '
+        'dspfname
+        '
+        Me.dspfname.Enabled = False
+        Me.dspfname.Location = New System.Drawing.Point(281, 6)
+        Me.dspfname.Name = "dspfname"
+        Me.dspfname.ReadOnly = True
+        Me.dspfname.Size = New System.Drawing.Size(161, 20)
+        Me.dspfname.TabIndex = 3
         '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
-        Me.Controls.Add(Me.cmbFnameCT)
         Me.Controls.Add(Me.cmbuserct)
         Me.Controls.Add(Me.GBeditContsec)
         Me.Controls.Add(Me.DataGridusrCont)
@@ -242,8 +232,6 @@ Partial Class frmControls
 
     Friend WithEvents Label1 As Label
     Friend WithEvents dspuserID As TextBox
-    Friend WithEvents Label2 As Label
-    Friend WithEvents dspfname As TextBox
     Friend WithEvents cmdExit As Button
     Friend WithEvents TreeControls As TreeView
     Friend WithEvents DataGridusrCont As DataGridView
@@ -257,5 +245,6 @@ Partial Class frmControls
     Friend WithEvents txtmsg As TextBox
     Friend WithEvents lblmsg As Label
     Friend WithEvents cmbuserct As ComboBox
-    Friend WithEvents cmbFnameCT As ComboBox
+    Friend WithEvents Label2 As Label
+    Friend WithEvents dspfname As TextBox
 End Class
