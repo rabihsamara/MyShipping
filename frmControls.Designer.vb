@@ -239,6 +239,7 @@ Partial Class frmControls
         Me.ListView1.Size = New System.Drawing.Size(318, 213)
         Me.ListView1.TabIndex = 12
         Me.ListView1.UseCompatibleStateImageBehavior = False
+        Me.ListView1.Visible = False
         '
         'Label6
         '
@@ -248,6 +249,7 @@ Partial Class frmControls
         Me.Label6.Size = New System.Drawing.Size(39, 13)
         Me.Label6.TabIndex = 13
         Me.Label6.Text = "Label6"
+        Me.Label6.Visible = False
         '
         'frmControls
         '

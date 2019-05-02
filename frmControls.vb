@@ -112,10 +112,18 @@ Public Class frmControls
             selid = DataGridusrCont.Item(0, I).Value
             selUserid = DataGridusrCont.Item(1, I).Value
             '
-            txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value & " : " & DataGridusrCont.Item(3, I).Value
-            chkvisible.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
-            chkenabled.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
-            chkeditable.Checked = If(DataGridusrCont.Item(7, I).Value = 1, True, False)
+            If (GlobalVariables.GL_SecContcalledBy = "M") Then
+                txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value
+                chkvisible.Checked = If(DataGridusrCont.Item(4, I).Value = 1, True, False)
+                chkenabled.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
+                chkeditable.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
+            Else
+                txtmsg.Text = DataGridusrCont.Item(1, I).Value & " : " & DataGridusrCont.Item(2, I).Value & " : " & DataGridusrCont.Item(3, I).Value
+                chkvisible.Checked = If(DataGridusrCont.Item(5, I).Value = 1, True, False)
+                chkenabled.Checked = If(DataGridusrCont.Item(6, I).Value = 1, True, False)
+                chkeditable.Checked = If(DataGridusrCont.Item(7, I).Value = 1, True, False)
+
+            End If
 
             GBeditContsec.Visible = True
         End If
@@ -125,18 +133,35 @@ Public Class frmControls
     Private Sub CmdUpdate_Click(sender As Object, e As EventArgs) Handles cmdUpdate.Click
 
         'update file
-        GlobalVariables.Gl_SQLStr = "update frmUsercontrols  set contvisible = " & If(chkvisible.Checked = True, 1, 0) & ", contenabled = " & If(chkenabled.Checked = True, 1, 0)
-        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & ", conteditable = " & If(chkeditable.Checked = True, 1, 0)
-        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selid
-        If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-            MsgBox("Error updating User Form controls levels!")
-            Exit Sub
+        If (GlobalVariables.GL_SecContcalledBy = "M") Then
+            GlobalVariables.Gl_SQLStr = "update frmDFLTcontrols  set contvisible = " & If(chkvisible.Checked = True, 1, 0) & ", contenabled = " & If(chkenabled.Checked = True, 1, 0)
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & ", conteditable = " & If(chkeditable.Checked = True, 1, 0)
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selid
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error updating User Form controls levels!")
+                Exit Sub
+            End If
+        Else
+            GlobalVariables.Gl_SQLStr = "update frmUsercontrols  set contvisible = " & If(chkvisible.Checked = True, 1, 0) & ", contenabled = " & If(chkenabled.Checked = True, 1, 0)
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & ", conteditable = " & If(chkeditable.Checked = True, 1, 0)
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where ID = " & selid
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error updating User Form controls levels!")
+                Exit Sub
+            End If
         End If
 
         'update screeen
-        DataGridusrCont.Item(5, selrow).Value = If(chkvisible.Checked = True, 1, 0)
-        DataGridusrCont.Item(6, selrow).Value = If(chkenabled.Checked = True, 1, 0)
-        DataGridusrCont.Item(7, selrow).Value = If(chkeditable.Checked = True, 1, 0)
+        If (GlobalVariables.GL_SecContcalledBy = "M") Then
+            DataGridusrCont.Item(4, selrow).Value = If(chkvisible.Checked = True, 1, 0)
+            DataGridusrCont.Item(5, selrow).Value = If(chkenabled.Checked = True, 1, 0)
+            DataGridusrCont.Item(6, selrow).Value = If(chkeditable.Checked = True, 1, 0)
+        Else
+            DataGridusrCont.Item(5, selrow).Value = If(chkvisible.Checked = True, 1, 0)
+            DataGridusrCont.Item(6, selrow).Value = If(chkenabled.Checked = True, 1, 0)
+            DataGridusrCont.Item(7, selrow).Value = If(chkeditable.Checked = True, 1, 0)
+        End If
+
         lblmsg.Text = "Updated"
         lblmsg.Visible = True
     End Sub
@@ -163,14 +188,6 @@ Public Class frmControls
 
     End Sub
 
-    Private Sub treeControls_NodeMouseClick(ByVal sender As Object, ByVal e As TreeNodeMouseClickEventArgs) Handles TreeControls.NodeMouseClick
-
-        'MsgBox(e.Node.Text)
-
-
-
-    End Sub
-
     Private Sub treeControls_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeControls.AfterSelect
         If (GlobalVariables.GL_SecContcalledBy = "M") Then
             If (cmbuserct.Text = "") Then
@@ -186,12 +203,12 @@ Public Class frmControls
             childnum = TreeControls.SelectedNode.GetNodeCount(False)
             index = TreeControls.SelectedNode.Index
 
-            index = index + 1
-            ListView1.Items.Clear()
-            For i = 0 To childnum - 1
-                ListView1.Items.Add(index.ToString + "." + i.ToString, 1)
-            Next
-            Label6.Text = TreeControls.SelectedNode.FullPath
+            'index = index + 1
+            'ListView1.Items.Clear()
+            'For i = 0 To childnum - 1
+            '    ListView1.Items.Add(index.ToString + "." + i.ToString, 1)
+            'Next
+            'Label6.Text = TreeControls.SelectedNode.FullPath
 
             sltreeform = ""
             If (InStr(Trim(TreeControls.SelectedNode.Text), ":") = 0) Then
