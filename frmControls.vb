@@ -238,15 +238,9 @@ Public Class frmControls
 
     Private Sub cmbuserct_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbuserct.SelectedIndexChanged
 
-        If (cmbuserct.Text = "Default") Then
-            selmode = "D"
-            Label5.Text = "Default Controls"
-            DataGridusrCont.DataSource = Nothing
-        Else
-            selmode = "U"
-            Label5.Text = "User Defined Form Controls"
-            DataGridusrCont.DataSource = Nothing
-        End If
+        selmode = If(cmbuserct.Text = "Default", "D", "U")
+        Label5.Text = If(cmbuserct.Text = "Default", "Default Controls", "User Defined Form Controls")
+        DataGridusrCont.DataSource = Nothing
 
     End Sub
 
