@@ -47,10 +47,8 @@ Public Class frmCustomers
     Private Sub CmdProcess_Click(sender As Object, e As EventArgs) Handles cmdProcess.Click
 
         tmsg = EditEntry("N")
-        If (tmsg <> "") Then
-            MsgBox(tmsg)
-            Exit Sub
-        End If
+        If (tmsg <> "") Then Exit Sub
+
         TabControl1.Visible = True
 
     End Sub
@@ -76,6 +74,7 @@ Public Class frmCustomers
         Dim terr As String = String.Empty
 
         txtmsg.Visible = False
+        terr = ""
 
         If (inedit = "N") Then
             If (inCustID.Text = "") Then
@@ -89,6 +88,19 @@ Public Class frmCustomers
             If (ModMisc.ReadSQL("NCST", "") > 0) Then
                 terr = "New Customer ID Exists!"
                 GoTo EDIT_EXIT
+            Else
+                'create new customer message
+                Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
+                If (result = DialogResult.OK) Then
+                    'Ok create new cust. load screen to database
+
+
+                Else
+                    inCustID.Text = ""
+                    inCustName.Text = ""
+                    terr = "X"
+                    GoTo EDIT_EXIT
+                End If
             End If
         End If
 
@@ -100,21 +112,22 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = "select * From customers where ID = '" & selcustid & "'"
+            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select * From customers where ID = '" & selcustid & "'", "select * From customers where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
             End If
+            'load data to screen
 
         End If
 
 EDIT_EXIT:
-        If (terr <> "") Then
+        If (terr <> "" And terr <> "X") Then
             txtmsg.Text = terr
             txtmsg.Visible = True
 
-            timer1.Interval = 3000 'ms
-            timer1.Start()
+            Timer1.Interval = 3000 'ms
+            Timer1.Start()
         End If
         EditEntry = terr
 
