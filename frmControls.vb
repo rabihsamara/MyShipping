@@ -4,7 +4,9 @@ Public Class frmControls
     Private slusrfrmsecID As Integer = GlobalVariables.Gl_tmpfnameID
     Private selrow As Integer
     Private selid As Integer
-    Private selUserid As String
+    Private selUserid As String = String.Empty
+
+    Private sltreeform As String = String.Empty
 
     Private sCommand As SqlCommand
     Private sAdapter As SqlDataAdapter
@@ -163,7 +165,64 @@ Public Class frmControls
 
     Private Sub treeControls_NodeMouseClick(ByVal sender As Object, ByVal e As TreeNodeMouseClickEventArgs) Handles TreeControls.NodeMouseClick
 
-        MsgBox(e.Node.Text)
+        'MsgBox(e.Node.Text)
+
+
+
+    End Sub
+
+    Private Sub treeControls_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles TreeControls.AfterSelect
+        If (GlobalVariables.GL_SecContcalledBy = "M") Then
+            If (cmbuserct.Text = "") Then
+                MsgBox("Must Select user/Default")
+                Exit Sub
+            ElseIf (cmbuserct.Text = "Default") Then
+                Label5.Text = "Default Controls"
+            Else
+                Label5.Text = "User Defined Form Controls"
+            End If
+
+            Dim childnum, index, i As Int32
+            childnum = TreeControls.SelectedNode.GetNodeCount(False)
+            index = TreeControls.SelectedNode.Index
+
+            index = index + 1
+            ListView1.Items.Clear()
+            For i = 0 To childnum - 1
+                ListView1.Items.Add(index.ToString + "." + i.ToString, 1)
+            Next
+            Label6.Text = TreeControls.SelectedNode.FullPath
+
+            sltreeform = ""
+            If (InStr(Trim(TreeControls.SelectedNode.Text), ":") = 0) Then
+                sltreeform = Trim(TreeControls.SelectedNode.Text)
+                LoadDfltControls(sltreeform)
+            End If
+
+
+
+        End If
+
+
+    End Sub
+
+    Private Sub LoadDfltControls(ByVal inform As String)
+        'DataGridusrCont
+        Dim sql As String = "SELECT ID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDFLTcontrols where Formname = '" & inform & "' order by controlname asc, controltype asc"
+        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            connection.Open()
+            sCommand = New SqlCommand(sql, connection)
+            sAdapter = New SqlDataAdapter(sCommand)
+            sBuilder = New SqlCommandBuilder(sAdapter)
+            sDs = New DataSet()
+            sAdapter.Fill(sDs, "frmDFLTcontrols")
+            sTable = sDs.Tables("frmDFLTcontrols")
+            connection.Close()
+            DataGridusrCont.DataSource = sDs.Tables("frmDFLTcontrols")
+            DataGridusrCont.ReadOnly = True
+            DataGridusrCont.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            DataGridusrCont.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+        End Using
 
     End Sub
 

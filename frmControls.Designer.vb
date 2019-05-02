@@ -39,6 +39,10 @@ Partial Class frmControls
         Me.cmbuserct = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dspfname = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.ListView1 = New System.Windows.Forms.ListView()
+        Me.Label6 = New System.Windows.Forms.Label()
         CType(Me.DataGridusrCont, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GBeditContsec.SuspendLayout()
         Me.SuspendLayout()
@@ -72,17 +76,17 @@ Partial Class frmControls
         '
         'TreeControls
         '
-        Me.TreeControls.Location = New System.Drawing.Point(15, 32)
+        Me.TreeControls.Location = New System.Drawing.Point(15, 51)
         Me.TreeControls.Name = "TreeControls"
-        Me.TreeControls.Size = New System.Drawing.Size(204, 680)
+        Me.TreeControls.Size = New System.Drawing.Size(204, 661)
         Me.TreeControls.TabIndex = 6
         '
         'DataGridusrCont
         '
         Me.DataGridusrCont.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridusrCont.Location = New System.Drawing.Point(225, 32)
+        Me.DataGridusrCont.Location = New System.Drawing.Point(225, 51)
         Me.DataGridusrCont.Name = "DataGridusrCont"
-        Me.DataGridusrCont.Size = New System.Drawing.Size(717, 680)
+        Me.DataGridusrCont.Size = New System.Drawing.Size(717, 661)
         Me.DataGridusrCont.TabIndex = 7
         '
         'GBeditContsec
@@ -95,7 +99,7 @@ Partial Class frmControls
         Me.GBeditContsec.Controls.Add(Me.chkeditable)
         Me.GBeditContsec.Controls.Add(Me.chkenabled)
         Me.GBeditContsec.Controls.Add(Me.chkvisible)
-        Me.GBeditContsec.Location = New System.Drawing.Point(955, 32)
+        Me.GBeditContsec.Location = New System.Drawing.Point(955, 51)
         Me.GBeditContsec.Name = "GBeditContsec"
         Me.GBeditContsec.Size = New System.Drawing.Size(388, 124)
         Me.GBeditContsec.TabIndex = 8
@@ -191,7 +195,7 @@ Partial Class frmControls
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(214, 9)
+        Me.Label2.Location = New System.Drawing.Point(229, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(61, 13)
         Me.Label2.TabIndex = 2
@@ -200,17 +204,60 @@ Partial Class frmControls
         'dspfname
         '
         Me.dspfname.Enabled = False
-        Me.dspfname.Location = New System.Drawing.Point(281, 6)
+        Me.dspfname.Location = New System.Drawing.Point(296, 6)
         Me.dspfname.Name = "dspfname"
         Me.dspfname.ReadOnly = True
         Me.dspfname.Size = New System.Drawing.Size(161, 20)
         Me.dspfname.TabIndex = 3
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.Label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label4.Location = New System.Drawing.Point(16, 35)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(116, 15)
+        Me.Label4.TabIndex = 10
+        Me.Label4.Text = "Form Controls (Current)"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label5.Location = New System.Drawing.Point(222, 35)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(138, 15)
+        Me.Label5.TabIndex = 11
+        Me.Label5.Text = "User Defined Form Controls"
+        '
+        'ListView1
+        '
+        Me.ListView1.Location = New System.Drawing.Point(985, 269)
+        Me.ListView1.Name = "ListView1"
+        Me.ListView1.Size = New System.Drawing.Size(318, 213)
+        Me.ListView1.TabIndex = 12
+        Me.ListView1.UseCompatibleStateImageBehavior = False
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(988, 232)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(39, 13)
+        Me.Label6.TabIndex = 13
+        Me.Label6.Text = "Label6"
         '
         'frmControls
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1355, 744)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.ListView1)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.cmbuserct)
         Me.Controls.Add(Me.GBeditContsec)
         Me.Controls.Add(Me.DataGridusrCont)
@@ -247,4 +294,8 @@ Partial Class frmControls
     Friend WithEvents cmbuserct As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents dspfname As TextBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label5 As Label
+    Friend WithEvents ListView1 As ListView
+    Friend WithEvents Label6 As Label
 End Class
