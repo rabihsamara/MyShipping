@@ -47,7 +47,37 @@ Module ModRegSec
         '***********************************************************************************************
         Dim EditItem As New ToolStripMenuItem("E&dit")
 
-        ms.Items.Add(EditItem)
+        '---- sub items of Edit ----
+        Dim CustomerItem As New ToolStripMenuItem("&Customers", Nothing, New EventHandler(AddressOf MainMenu.frmCustomers))
+        If (inopt = "M") Then
+            If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Edit", "", "") = True) Then
+                If (GlobalVariables.GL_mshow = 1) Then
+                    ms.Items.Add(EditItem)
+                    If (GlobalVariables.GL_mactive = 0) Then
+                        EditItem.Enabled = False
+                    Else
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Edit", "Customers", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                CustomerItem.ShortcutKeys = Keys.Control Or Keys.U
+                                EditItem.DropDownItems.Add(CustomerItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    CustomerItem.Enabled = False
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Else
+                CustomerItem.ShortcutKeys = Keys.Control Or Keys.U
+                EditItem.DropDownItems.Add(CustomerItem)
+                ms.Items.Add(EditItem)
+            End If
+        Else 'not M
+
+            CustomerItem.ShortcutKeys = Keys.Control Or Keys.U
+            EditItem.DropDownItems.Add(CustomerItem)
+            ms.Items.Add(EditItem)
+        End If
 
         '***********************************************************************************************
         'Utilities Menu

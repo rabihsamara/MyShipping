@@ -28,7 +28,13 @@
     '*********************************************************************
     'Event handlers for items listed under Menu Edit
     '*********************************************************************
-
+    Public Sub frmCustomers(ByVal sender As Object, ByVal e As EventArgs)
+        Dim frm As New frmCustomers()
+        frm.TopLevel = False
+        frm.TopMost = True
+        SplitContainer1.Panel2.Controls.Add(frm)
+        frm.Show()
+    End Sub
 
     '*********************************************************************
     'Event handlers for items listed under Menu Utilities
