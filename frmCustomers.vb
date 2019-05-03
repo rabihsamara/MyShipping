@@ -22,7 +22,7 @@ Public Class frmCustomers
         TabControl1.Visible = False
 
         tstat = ModMisc.FillCBox(cmbSelType, "CST")
-        tstat = ModMisc.FillCBox(cmdCustType, "CST")
+        tstat = ModMisc.FillCBox(cmbCustType, "CST")
         LoadData()
 
     End Sub
@@ -33,7 +33,10 @@ Public Class frmCustomers
         Dim clnmode As String = "CRN"
         If (chslactonly.Checked = True) Then climode = "CRIA"
         If (chslactonly.Checked = True) Then clnmode = "CRNA"
-
+        '
+        If (Trim(cmbSelType.Text) <> "") Then climode = climode & Trim(cmbSelType.Text).Substring(0, 2) 'CRI or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL
+        If (Trim(cmbSelType.Text) <> "") Then clnmode = clnmode & Trim(cmbSelType.Text).Substring(0, 2) 'CRN or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL
+        '
         tstat = ModMisc.FillCBox(cmbCustID, climode)
         tstat = ModMisc.FillCBox(cmbCustName, clnmode)
 
@@ -59,7 +62,7 @@ Public Class frmCustomers
     Private Sub CmdProcess_Click(sender As Object, e As EventArgs) Handles cmdProcess.Click
 
         tmsg = EditEntry("N")
-        If (tmsg <> "") Then Exit Sub
+        If (tmsg = "X" Or tmsg <> "Customer Created Successfully!") Then Exit Sub ' user cancelled creating 
 
         TabControl1.Visible = True
 
@@ -106,12 +109,12 @@ Public Class frmCustomers
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
                     'Ok create new cust. load screen to database
-                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CustName, Custactive) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "',1)"
+                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CustName, CustType, Custactive) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "','PR',1)"
                     If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                         MsgBox("Error Creating new Customer!")
                         GoTo EDIT_EXIT
                     End If
-                    terr = "Customer Created Successfullty!"
+                    terr = "Customer Created Successfully!"
                     seluw = "U"
                     LoadData()
                 Else
@@ -131,14 +134,13 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CustName,Custactive From customers where CustID = '" & selcustid & "'", "select CustID,CustName,Custactive From customers where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CustName,CustType,Custactive From customers where CustID = '" & selcustid & "'", "select CustID,CustName, Custtype, Custactive From customers where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
             End If
             'load data to screen
             seluw = "U"
-
 
         End If
 
@@ -160,6 +162,15 @@ EDIT_EXIT:
         txtmsg.Visible = False
     End Sub
 
+    'Reload existing customer filters custtype.
+    Private Sub cmbSelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSelType.SelectedIndexChanged
+        cmbCustID.Text = ""
+        cmbCustID.Items.Clear()
+        cmbCustName.Text = ""
+        cmbCustName.Items.Clear()
+        LoadData()
+    End Sub
+
     Public Function ReadCustomer(ByVal inopt As String) As Boolean
 
         GlobalVariables.GL_Stat = False
@@ -176,7 +187,9 @@ EDIT_EXIT:
                 Do While myReader.Read()
                     Custrecord.MyCustID = myReader.GetString(0).ToString
                     Custrecord.MyCustName = myReader.GetString(1).ToString
-                    Custrecord.MyCustActive = myReader.GetValue(2)
+                    Custrecord.MyCustType = myReader.GetString(2).ToString
+                    Custrecord.MyCustActive = myReader.GetValue(3)
+
                     ReadCustomer = True
                 Loop
 
@@ -194,5 +207,21 @@ EDIT_EXIT:
         End Using
 
     End Function
+
+    Private Sub CmdCanCust_Click(sender As Object, e As EventArgs) Handles cmdCanCust.Click
+        'check if new was pressed or update
+
+
+        'release log later
+
+
+        inCustID.Text = ""
+        inCustName.Text = ""
+        cmbCustID.Text = ""
+        cmbCustName.Text = ""
+        LoadData() ' inacse new 
+        TabControl1.Visible = False
+
+    End Sub
 
 End Class

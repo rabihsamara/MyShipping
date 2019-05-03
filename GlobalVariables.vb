@@ -757,7 +757,8 @@ Public Class Customers
 
     Private CustID As String
     Private CustName As String
-    Private custactive As Integer
+    Private CustType As String
+    Private custActive As Integer
 
     Public Sub New() 'parameterised constructor
         Console.WriteLine("Class created")
@@ -785,6 +786,17 @@ Public Class Customers
         End Get
         Set(ByVal Value As String)
             CustName = Value
+        End Set
+
+    End Property
+
+    Public Property MyCustType() As String
+
+        Get
+            Return Custtype
+        End Get
+        Set(ByVal Value As String)
+            Custtype = Value
         End Set
 
     End Property

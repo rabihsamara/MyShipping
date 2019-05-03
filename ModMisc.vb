@@ -58,10 +58,12 @@ Module ModMisc
     '******************************************************************************************************
     '* L=login             - 
     '* C=Control screen    - 
-    '* P=company           - 
-    '* CRI/CRIA=Customers screen - customer ID Combo
-    '* CRN/CRNA=Customers screen - customer Name Combo
-    '* CST=Customers screen seltype in selection of existing customers
+    '* P=company
+    '* CST=Customers screen seltype in selection of existing customers- 
+    '* CRI CRIA or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL = Customers screen - customer ID Combo
+    '* CRN CRNA or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL = Customers screen - customer Name Combo
+    '*
+
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -73,16 +75,22 @@ Module ModMisc
                 tsql = "SELECT UserID FROM Users where active = 1 order by UserID asc"
             ElseIf (callby = "P") Then
                 tsql = "SELECT CompName FROM company where CompActive = 1 order by CompName asc"
-            ElseIf (callby = "CRI" Or callby = "CRIA") Then
-                tsql = "SELECT CustID  FROM Customers"
-                If (callby = "CRIA") Then tsql = tsql & " where CustActive = 1"
-                tsql = tsql & " order by CustID asc"
-            ElseIf (callby = "CRN" Or callby = "CRNA") Then
-                tsql = "Select CustName  FROM Customers"
-                If (callby = "CRNA") Then tsql = tsql & " where CustActive = 1"
-                tsql = tsql & " order by CustName asc"
             ElseIf (callby = "CST") Then
                 tsql = "Select concat(custtype,' - ',typename) as ctype from custtype where typeactive = 1 order by ID"
+            ElseIf (callby.substring(0, 3) = "CRI") Then
+                tsql = "SELECT CustID  FROM Customers"
+                If (callby = "CRIA" Or callby = "CRIACS" Or callby = "CRIAPR" Or callby = "CRIAAL") Then tsql = tsql & " where CustActive = 1"
+                If (callby = "CRIACS" Or callby = "CRIAPR") Then
+                    tsql = tsql & " and custtype = '" & callby.Substring(4, 2) & "'"
+                End If
+                tsql = tsql & " order by CustID asc"
+            ElseIf (callby.substring(0, 3) = "CRN") Then
+                tsql = "Select CustName  FROM Customers"
+                If (callby = "CRNA" Or callby = "CRNACS" Or callby = "CRNAPR" Or callby = "CRNAAL") Then tsql = tsql & " where CustActive = 1"
+                If (callby = "CRNACS" Or callby = "CRNAPR") Then
+                    tsql = tsql & " and Custtype = '" & callby.Substring(4, 2) & "'"
+                End If
+                tsql = tsql & " order by CustName asc"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -94,17 +102,21 @@ Module ModMisc
                 Do While myReader.Read()
                     If (callby = "L" Or callby = "C") Then
                         incombo.Items.Add(New UsersName(myReader.GetString(0)))
+                        FillCBox = True
                     ElseIf (callby = "P") Then
                         incombo.Items.Add(New CompanyName(myReader.GetString(0)))
-                    ElseIf (callby = "CRI" Or callby = "CRIA") Then
-                        incombo.Items.Add(myReader.GetString(0))
-                    ElseIf (callby = "CRN" Or callby = "CRNA") Then
-                        incombo.Items.Add(myReader.GetString(0))
+                        FillCBox = True
                     ElseIf (callby = "CST") Then
-                        incombo.Items.Add(myReader.GetString(0))
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
+                    ElseIf (callby.substring(0, 3) = "CRI") Then
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
+                    ElseIf (callby.substring(0, 3) = "CRN") Then
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
                     End If
                 Loop
-                FillCBox = True
                 Exit Function
             End Using
 
