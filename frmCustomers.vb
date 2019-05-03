@@ -27,8 +27,10 @@ Public Class frmCustomers
     Private slSHCity As Integer
 
     Private Custrecord As Customers = New Customers()
+    Private AppCustLocks As AppLocks = New AppLocks()
 
     Private Sub FrmCustomers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        RunClassGen() 'tmp
 
         txtmsg.Visible = False
         chslactonly.Checked = True
@@ -50,6 +52,8 @@ Public Class frmCustomers
         If (Trim(cmbSelType.Text) <> "") Then climode = climode & Trim(cmbSelType.Text).Substring(0, 2) 'CRI or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL
         If (Trim(cmbSelType.Text) <> "") Then clnmode = clnmode & Trim(cmbSelType.Text).Substring(0, 2) 'CRN or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL
         '
+        cmbCustID.Items.Clear()
+        cmbCustName.Items.Clear()
         tstat = ModMisc.FillCBox(cmbCustID, climode)
         tstat = ModMisc.FillCBox(cmbCustName, clnmode)
 
@@ -120,6 +124,8 @@ Public Class frmCustomers
                 'create new customer message
                 seluw = "I"
                 seluw2 = "I"
+                inCustName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(inCustName.Text)
+
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
                     'Ok create new cust. load screen to database
@@ -133,6 +139,8 @@ Public Class frmCustomers
                     CIName.Text = Trim(inCustName.Text)
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
+                    'lock record
+
                 Else
                     inCustID.Text = ""
                     inCustName.Text = ""
@@ -155,9 +163,30 @@ Public Class frmCustomers
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
             End If
-            'load data to screen
             seluw = "U"
             seluw2 = "U"
+
+            'check if locked
+            GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks where FormName = 'Customer' and ctrlname = 'Customer' and ctrlvalue = '" & selcustid & "'"
+            AppCustLocks = ModMisc.ReadSQL("APPL", "")
+            If (GlobalVariables.GL_Stat = False) Then
+                'lock it
+                GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & selcustid & "','Customer','Customer','" & selcustid & "','" & seluw2 & "','" & Now() & "')"
+                If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error Creating Lock Record!")
+                    GoTo EDIT_EXIT
+                End If
+            Else
+                'check if same user or another
+                If (AppCustLocks.MyUserid = selcustid And AppCustLocks.MyFormname = "Customer" And AppCustLocks.Myctrlname = "Customer" And AppCustLocks.Myctrlvalue = selcustid) Then
+                    MsgBox("record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid)
+                    terr = "X"
+                    GoTo EDIT_EXIT
+                End If
+            End If
+
+            'load data to screen
+
             LoadCombCountries("ACT", seluw2)
 
         End If

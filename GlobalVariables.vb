@@ -16,6 +16,7 @@ Public Class GlobalVariables
     Public Shared Property Gl_SQLStr As String
     Public Shared Property GL_SLmsg As String
     Public Shared Property GL_Stat As Boolean
+    Public Shared Property GL_Stattxt As String
 
     Public Shared Property GL_skipOnce As Boolean
 
@@ -813,4 +814,3 @@ Public Class Customers
     End Property
 
 End Class
-

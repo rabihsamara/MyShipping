@@ -142,12 +142,14 @@ Module ModMisc
     'MSEC = read security levels for menu show and active. 1 1
     'ALLM = all menus in an array
     'NCST= read count of cust for new custom if exists
+    'APPL=Application lock read
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String = String.Empty
         Dim fldtext As String = String.Empty
         Dim retint As Integer = 0
         Dim F As Integer = 0
+        Dim AppLockings As AppLocks = New AppLocks()
 
         GlobalVariables.GL_Stat = False
         ReadSQL = Nothing
@@ -202,6 +204,16 @@ Module ModMisc
                         GlobalVariables.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
                         F = F + 1
                         ReadSQL = True
+                        GlobalVariables.GL_Stat = True
+                    ElseIf (inopt = "APPL") Then
+                        AppLockings.MyID = myReader.GetValue(0)
+                        AppLockings.MyUserid = myReader.GetString(1)
+                        AppLockings.MyFormname = myReader.GetString(2)
+                        AppLockings.Myctrlname = myReader.GetString(3)
+                        AppLockings.Myctrlvalue = myReader.GetString(4)
+                        AppLockings.Myctrlopert = myReader.GetString(5)
+                        AppLockings.Mylockeddate = myReader.GetDateTime(6)
+                        ReadSQL = AppLockings
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop
@@ -530,9 +542,9 @@ Exit_Excel:
 
     Public Sub RunClassGen()
 
-        Dim myarlist As ArrayList = ModMisc.createClass("Customers")
+        Dim myarlist As ArrayList = ModMisc.createClass("Applocks")
 
-        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\custclass.txt")
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\applockclass.txt")
 
         For Each currentElement As String In myarlist
             theWriter.WriteLine(currentElement)
@@ -545,6 +557,7 @@ Exit_Excel:
     Public Function createClass(ByVal inTable As String) As ArrayList
 
         Dim al As ArrayList = New ArrayList()
+        Dim al2 As ArrayList = New ArrayList()
 
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             Dim dbase As String = "MyShipping"
@@ -585,6 +598,8 @@ Exit_Excel:
                     mysqlConn1.Open()
                     Dim dcr As SqlDataReader = cmdcol.ExecuteReader()
                     While dcr.Read()
+                        al2.Add("Private " & dcr.Item("Column_Name") & " As String" & vbNewLine)
+
                         al.Add("Public Property My" & dcr.Item("Column_Name") & "() As String" & vbNewLine)
                         al.Add("   Get" & vbNewLine)
                         al.Add("     Return " & dcr.Item("Column_Name") & vbNewLine)
@@ -596,6 +611,11 @@ Exit_Excel:
                         al.Add(vbNewLine)
                     End While
                 End Using
+                al.Add(vbNewLine)
+
+                For Each currentElement As String In al2
+                    al.Add(currentElement)
+                Next
                 al.Add(vbNewLine)
                 al.Add("End Class" & vbNewLine)
                 i += 1

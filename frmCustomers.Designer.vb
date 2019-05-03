@@ -44,6 +44,7 @@ Partial Class frmCustomers
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.GPCommands = New System.Windows.Forms.GroupBox()
+        Me.cmdSaveCust = New System.Windows.Forms.Button()
         Me.cmdCanCust = New System.Windows.Forms.Button()
         Me.GBShipToAdd1 = New System.Windows.Forms.GroupBox()
         Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
@@ -101,7 +102,6 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.cmdSaveCust = New System.Windows.Forms.Button()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -329,15 +329,25 @@ Partial Class frmCustomers
         Me.GPCommands.Controls.Add(Me.cmdCanCust)
         Me.GPCommands.Location = New System.Drawing.Point(6, 557)
         Me.GPCommands.Name = "GPCommands"
-        Me.GPCommands.Size = New System.Drawing.Size(428, 76)
+        Me.GPCommands.Size = New System.Drawing.Size(411, 76)
         Me.GPCommands.TabIndex = 3
         Me.GPCommands.TabStop = False
         Me.GPCommands.Text = "Commands"
         '
+        'cmdSaveCust
+        '
+        Me.cmdSaveCust.BackColor = System.Drawing.Color.Azure
+        Me.cmdSaveCust.Location = New System.Drawing.Point(6, 19)
+        Me.cmdSaveCust.Name = "cmdSaveCust"
+        Me.cmdSaveCust.Size = New System.Drawing.Size(43, 20)
+        Me.cmdSaveCust.TabIndex = 1
+        Me.cmdSaveCust.Text = "Save"
+        Me.cmdSaveCust.UseVisualStyleBackColor = False
+        '
         'cmdCanCust
         '
         Me.cmdCanCust.BackColor = System.Drawing.Color.Azure
-        Me.cmdCanCust.Location = New System.Drawing.Point(371, 19)
+        Me.cmdCanCust.Location = New System.Drawing.Point(346, 19)
         Me.cmdCanCust.Name = "cmdCanCust"
         Me.cmdCanCust.Size = New System.Drawing.Size(51, 20)
         Me.cmdCanCust.TabIndex = 0
@@ -365,9 +375,9 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.Controls.Add(Me.Label21)
         Me.GBShipToAdd1.Controls.Add(Me.SHName)
         Me.GBShipToAdd1.Controls.Add(Me.Label22)
-        Me.GBShipToAdd1.Location = New System.Drawing.Point(440, 6)
+        Me.GBShipToAdd1.Location = New System.Drawing.Point(423, 6)
         Me.GBShipToAdd1.Name = "GBShipToAdd1"
-        Me.GBShipToAdd1.Size = New System.Drawing.Size(398, 262)
+        Me.GBShipToAdd1.Size = New System.Drawing.Size(415, 262)
         Me.GBShipToAdd1.TabIndex = 2
         Me.GBShipToAdd1.TabStop = False
         Me.GBShipToAdd1.Text = "Shipping Address"
@@ -554,9 +564,9 @@ Partial Class frmCustomers
         Me.GBcustBillto.Controls.Add(Me.Label15)
         Me.GBcustBillto.Controls.Add(Me.BLName)
         Me.GBcustBillto.Controls.Add(Me.Label16)
-        Me.GBcustBillto.Location = New System.Drawing.Point(6, 274)
+        Me.GBcustBillto.Location = New System.Drawing.Point(3, 274)
         Me.GBcustBillto.Name = "GBcustBillto"
-        Me.GBcustBillto.Size = New System.Drawing.Size(428, 277)
+        Me.GBcustBillto.Size = New System.Drawing.Size(414, 277)
         Me.GBcustBillto.TabIndex = 1
         Me.GBcustBillto.TabStop = False
         Me.GBcustBillto.Text = "BillTO Address"
@@ -708,7 +718,7 @@ Partial Class frmCustomers
         Me.GBcustAdd1.Controls.Add(Me.Label5)
         Me.GBcustAdd1.Location = New System.Drawing.Point(3, 6)
         Me.GBcustAdd1.Name = "GBcustAdd1"
-        Me.GBcustAdd1.Size = New System.Drawing.Size(431, 262)
+        Me.GBcustAdd1.Size = New System.Drawing.Size(414, 262)
         Me.GBcustAdd1.TabIndex = 0
         Me.GBcustAdd1.TabStop = False
         Me.GBcustAdd1.Text = "Customer Information"
@@ -867,16 +877,6 @@ Partial Class frmCustomers
         '
         'Timer1
         '
-        '
-        'cmdSaveCust
-        '
-        Me.cmdSaveCust.BackColor = System.Drawing.Color.Azure
-        Me.cmdSaveCust.Location = New System.Drawing.Point(6, 19)
-        Me.cmdSaveCust.Name = "cmdSaveCust"
-        Me.cmdSaveCust.Size = New System.Drawing.Size(43, 20)
-        Me.cmdSaveCust.TabIndex = 1
-        Me.cmdSaveCust.Text = "Save"
-        Me.cmdSaveCust.UseVisualStyleBackColor = False
         '
         'frmCustomers
         '
