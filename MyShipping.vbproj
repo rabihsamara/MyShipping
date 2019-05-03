@@ -182,6 +182,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AppLocksScreen.resx">
+      <DependentUpon>AppLocksScreen.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Frmchkadpwd.resx">
       <DependentUpon>Frmchkadpwd.vb</DependentUpon>
     </EmbeddedResource>
