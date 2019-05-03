@@ -24,7 +24,7 @@ Public Class frmCustomers
         tstat = ModMisc.FillCBox(cmbSelType, "CST")
         tstat = ModMisc.FillCBox(cmbCustType, "CST")
         LoadData()
-
+        LoadCombo("ACT")
     End Sub
 
     Private Sub LoadData()
@@ -116,6 +116,7 @@ Public Class frmCustomers
                     End If
                     terr = "Customer Created Successfully!"
                     seluw = "U"
+                    CIName.Text = Trim(inCustName.Text)
                     LoadData()
                 Else
                     inCustID.Text = ""
@@ -221,6 +222,87 @@ EDIT_EXIT:
         cmbCustName.Text = ""
         LoadData() ' inacse new 
         TabControl1.Visible = False
+
+    End Sub
+
+    'Billto copy aaddres from customer nfo address
+    Private Sub cmdBillCopy_Click(sender As Object, e As EventArgs) Handles cmdBillCopy.Click
+        BLName.Text = CIName.Text
+        BLadd1.Text = CIadd1.Text
+        BLadd2.Text = CIAdd2.Text
+        cmbBLcity.Text = cmbCICity.Text
+        BLpcode.Text = CIpcode.Text
+        cmbBLProv.Text = cmbCIProv.Text
+        cmbBLCountry.Text = cmbCICountry.Text
+    End Sub
+
+    'shipto save it
+    Private Sub CmdSaveShpto_Click(sender As Object, e As EventArgs) Handles cmdSaveShpto.Click
+
+    End Sub
+
+    'shipto section copy from customer info
+    Private Sub CmdSaveshipasinfo_Click(sender As Object, e As EventArgs) Handles cmdSaveshipasinfo.Click
+        SHName.Text = CIName.Text
+        SHadd1.Text = CIadd1.Text
+        SHadd2.Text = CIAdd2.Text
+        cmbSHCity.Text = cmbCICity.Text
+        SHPcode.Text = CIpcode.Text
+        cmbSHProv.Text = cmbCIProv.Text
+        cmbSHCountry.Text = cmbCICountry.Text
+    End Sub
+
+    'shipto section copy from billto
+    Private Sub CmdShSaveBill_Click(sender As Object, e As EventArgs) Handles cmdShSaveBill.Click
+        SHName.Text = BLName.Text
+        SHadd1.Text = BLadd1.Text
+        SHadd2.Text = BLadd2.Text
+        cmbSHCity.Text = cmbBLcity.Text
+        SHPcode.Text = BLpcode.Text
+        cmbSHProv.Text = cmbBLProv.Text
+        cmbSHCountry.Text = cmbBLCountry.Text
+    End Sub
+
+    '************************************************************************************************************
+    'inopt - ACT=All
+    '        CCT=customer info   Combo country
+    '        BCT=Customer bill   Combo country
+    '        SCT=Customer shipto Combo country
+    '************************************************************************************************************
+    Private Sub LoadCombo(ByVal inopt As String)
+
+        If (inopt = "ACT" Or inopt = "CCT") Then
+            'Set Customer info combobox: cmbCICountry
+            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            ModMisc.ReadCountries(cmbCICountry)
+        End If
+
+        'cmbUsrCountry.Text = userrecord.MyCountry
+        'slcountryid = cmbUsrCountry.SelectedValue
+
+        'GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
+        'ModMisc.ReadCountries(cmbUsrState)
+        'cmbUsrState.Text = userrecord.MyProvince
+        'slstateid = cmbUsrState.SelectedValue
+
+        'GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
+        'ModMisc.ReadCountries(cmbUsrCity)
+        'cmbUsrCity.Text = userrecord.MyCity
+        'slcityid = cmbUsrCity.SelectedValue
+
+        If (inopt = "ACT" Or inopt = "BCT") Then
+            'Set Customer Billto combobox: cmbBLCountry
+            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            ModMisc.ReadCountries(cmbBLCountry)
+        End If
+
+
+        If (inopt = "ACT" Or inopt = "SCT") Then
+            'Set Shipto combobox: cmbSHCountry
+            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            ModMisc.ReadCountries(cmbSHCountry)
+        End If
+
 
     End Sub
 

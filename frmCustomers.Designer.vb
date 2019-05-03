@@ -43,58 +43,64 @@ Partial Class frmCustomers
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GPCommands = New System.Windows.Forms.GroupBox()
+        Me.cmdCanCust = New System.Windows.Forms.Button()
         Me.GBShipToAdd1 = New System.Windows.Forms.GroupBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.ComboBox9 = New System.Windows.Forms.ComboBox()
+        Me.cmdSaveShpto = New System.Windows.Forms.Button()
+        Me.cmdShpID = New System.Windows.Forms.ComboBox()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.TextBox9 = New System.Windows.Forms.TextBox()
+        Me.cmdSaveshipasinfo = New System.Windows.Forms.Button()
+        Me.cmdShSaveBill = New System.Windows.Forms.Button()
+        Me.SHPcode = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
-        Me.ComboBox5 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox6 = New System.Windows.Forms.ComboBox()
-        Me.TextBox10 = New System.Windows.Forms.TextBox()
-        Me.TextBox11 = New System.Windows.Forms.TextBox()
+        Me.cmbSHProv = New System.Windows.Forms.ComboBox()
+        Me.cmbSHCity = New System.Windows.Forms.ComboBox()
+        Me.SHadd2 = New System.Windows.Forms.TextBox()
+        Me.SHadd1 = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label21 = New System.Windows.Forms.Label()
-        Me.TextBox12 = New System.Windows.Forms.TextBox()
+        Me.SHName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.GBcustBillto = New System.Windows.Forms.GroupBox()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.cmdBillCopy = New System.Windows.Forms.Button()
+        Me.BLpcode = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox4 = New System.Windows.Forms.ComboBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
+        Me.cmbBLProv = New System.Windows.Forms.ComboBox()
+        Me.cmbBLcity = New System.Windows.Forms.ComboBox()
+        Me.BLadd2 = New System.Windows.Forms.TextBox()
+        Me.BLadd1 = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
-        Me.TextBox8 = New System.Windows.Forms.TextBox()
+        Me.BLName = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GBcustAdd1 = New System.Windows.Forms.GroupBox()
         Me.cmbCustType = New System.Windows.Forms.ComboBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.TextBox4 = New System.Windows.Forms.TextBox()
+        Me.chCIactive = New System.Windows.Forms.CheckBox()
+        Me.CIpcode = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
-        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
+        Me.cmbCIProv = New System.Windows.Forms.ComboBox()
+        Me.cmbCICity = New System.Windows.Forms.ComboBox()
+        Me.CIAdd2 = New System.Windows.Forms.TextBox()
+        Me.CIadd1 = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.CIName = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.GPCommands = New System.Windows.Forms.GroupBox()
-        Me.cmdCanCust = New System.Windows.Forms.Button()
+        Me.Label26 = New System.Windows.Forms.Label()
+        Me.cmbCICountry = New System.Windows.Forms.ComboBox()
+        Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -103,10 +109,10 @@ Partial Class frmCustomers
         Me.GroupBox1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GPCommands.SuspendLayout()
         Me.GBShipToAdd1.SuspendLayout()
         Me.GBcustBillto.SuspendLayout()
         Me.GBcustAdd1.SuspendLayout()
-        Me.GPCommands.SuspendLayout()
         Me.SuspendLayout()
         '
         'GBSelect
@@ -316,24 +322,46 @@ Partial Class frmCustomers
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Info"
         '
+        'GPCommands
+        '
+        Me.GPCommands.Controls.Add(Me.cmdCanCust)
+        Me.GPCommands.Location = New System.Drawing.Point(6, 557)
+        Me.GPCommands.Name = "GPCommands"
+        Me.GPCommands.Size = New System.Drawing.Size(428, 76)
+        Me.GPCommands.TabIndex = 3
+        Me.GPCommands.TabStop = False
+        Me.GPCommands.Text = "Commands"
+        '
+        'cmdCanCust
+        '
+        Me.cmdCanCust.BackColor = System.Drawing.Color.Azure
+        Me.cmdCanCust.Location = New System.Drawing.Point(371, 19)
+        Me.cmdCanCust.Name = "cmdCanCust"
+        Me.cmdCanCust.Size = New System.Drawing.Size(51, 20)
+        Me.cmdCanCust.TabIndex = 0
+        Me.cmdCanCust.Text = "Cancel"
+        Me.cmdCanCust.UseVisualStyleBackColor = False
+        '
         'GBShipToAdd1
         '
-        Me.GBShipToAdd1.Controls.Add(Me.Button3)
-        Me.GBShipToAdd1.Controls.Add(Me.ComboBox9)
+        Me.GBShipToAdd1.Controls.Add(Me.cmbSHCountry)
+        Me.GBShipToAdd1.Controls.Add(Me.Label28)
+        Me.GBShipToAdd1.Controls.Add(Me.cmdSaveShpto)
+        Me.GBShipToAdd1.Controls.Add(Me.cmdShpID)
         Me.GBShipToAdd1.Controls.Add(Me.Label25)
-        Me.GBShipToAdd1.Controls.Add(Me.Button2)
-        Me.GBShipToAdd1.Controls.Add(Me.Button1)
-        Me.GBShipToAdd1.Controls.Add(Me.TextBox9)
+        Me.GBShipToAdd1.Controls.Add(Me.cmdSaveshipasinfo)
+        Me.GBShipToAdd1.Controls.Add(Me.cmdShSaveBill)
+        Me.GBShipToAdd1.Controls.Add(Me.SHPcode)
         Me.GBShipToAdd1.Controls.Add(Me.Label17)
-        Me.GBShipToAdd1.Controls.Add(Me.ComboBox5)
-        Me.GBShipToAdd1.Controls.Add(Me.ComboBox6)
-        Me.GBShipToAdd1.Controls.Add(Me.TextBox10)
-        Me.GBShipToAdd1.Controls.Add(Me.TextBox11)
+        Me.GBShipToAdd1.Controls.Add(Me.cmbSHProv)
+        Me.GBShipToAdd1.Controls.Add(Me.cmbSHCity)
+        Me.GBShipToAdd1.Controls.Add(Me.SHadd2)
+        Me.GBShipToAdd1.Controls.Add(Me.SHadd1)
         Me.GBShipToAdd1.Controls.Add(Me.Label18)
         Me.GBShipToAdd1.Controls.Add(Me.Label19)
         Me.GBShipToAdd1.Controls.Add(Me.Label20)
         Me.GBShipToAdd1.Controls.Add(Me.Label21)
-        Me.GBShipToAdd1.Controls.Add(Me.TextBox12)
+        Me.GBShipToAdd1.Controls.Add(Me.SHName)
         Me.GBShipToAdd1.Controls.Add(Me.Label22)
         Me.GBShipToAdd1.Location = New System.Drawing.Point(440, 6)
         Me.GBShipToAdd1.Name = "GBShipToAdd1"
@@ -342,24 +370,24 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.TabStop = False
         Me.GBShipToAdd1.Text = "Shipping Address"
         '
-        'Button3
+        'cmdSaveShpto
         '
-        Me.Button3.BackColor = System.Drawing.Color.Azure
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button3.Location = New System.Drawing.Point(234, 19)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(123, 21)
-        Me.Button3.TabIndex = 28
-        Me.Button3.Text = "Save Shipto ID"
-        Me.Button3.UseVisualStyleBackColor = False
+        Me.cmdSaveShpto.BackColor = System.Drawing.Color.Azure
+        Me.cmdSaveShpto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdSaveShpto.Location = New System.Drawing.Point(234, 19)
+        Me.cmdSaveShpto.Name = "cmdSaveShpto"
+        Me.cmdSaveShpto.Size = New System.Drawing.Size(123, 21)
+        Me.cmdSaveShpto.TabIndex = 28
+        Me.cmdSaveShpto.Text = "Save Shipto ID"
+        Me.cmdSaveShpto.UseVisualStyleBackColor = False
         '
-        'ComboBox9
+        'cmdShpID
         '
-        Me.ComboBox9.FormattingEnabled = True
-        Me.ComboBox9.Location = New System.Drawing.Point(65, 20)
-        Me.ComboBox9.Name = "ComboBox9"
-        Me.ComboBox9.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox9.TabIndex = 27
+        Me.cmdShpID.FormattingEnabled = True
+        Me.cmdShpID.Location = New System.Drawing.Point(65, 20)
+        Me.cmdShpID.Name = "cmdShpID"
+        Me.cmdShpID.Size = New System.Drawing.Size(117, 21)
+        Me.cmdShpID.TabIndex = 27
         '
         'Label25
         '
@@ -370,34 +398,34 @@ Partial Class frmCustomers
         Me.Label25.TabIndex = 26
         Me.Label25.Text = "ShipTo ID:"
         '
-        'Button2
+        'cmdSaveshipasinfo
         '
-        Me.Button2.BackColor = System.Drawing.Color.Azure
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button2.Location = New System.Drawing.Point(234, 142)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(126, 21)
-        Me.Button2.TabIndex = 25
-        Me.Button2.Text = "<<<<Same as Address"
-        Me.Button2.UseVisualStyleBackColor = False
+        Me.cmdSaveshipasinfo.BackColor = System.Drawing.Color.Azure
+        Me.cmdSaveshipasinfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdSaveshipasinfo.Location = New System.Drawing.Point(56, 167)
+        Me.cmdSaveshipasinfo.Name = "cmdSaveshipasinfo"
+        Me.cmdSaveshipasinfo.Size = New System.Drawing.Size(126, 21)
+        Me.cmdSaveshipasinfo.TabIndex = 25
+        Me.cmdSaveshipasinfo.Text = "<<<<Same as Address"
+        Me.cmdSaveshipasinfo.UseVisualStyleBackColor = False
         '
-        'Button1
+        'cmdShSaveBill
         '
-        Me.Button1.BackColor = System.Drawing.Color.Azure
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button1.Location = New System.Drawing.Point(234, 177)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(126, 19)
-        Me.Button1.TabIndex = 24
-        Me.Button1.Text = "Same as Bill Address"
-        Me.Button1.UseVisualStyleBackColor = False
+        Me.cmdShSaveBill.BackColor = System.Drawing.Color.Azure
+        Me.cmdShSaveBill.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdShSaveBill.Location = New System.Drawing.Point(231, 167)
+        Me.cmdShSaveBill.Name = "cmdShSaveBill"
+        Me.cmdShSaveBill.Size = New System.Drawing.Size(126, 19)
+        Me.cmdShSaveBill.TabIndex = 24
+        Me.cmdShSaveBill.Text = "Same as Bill Address"
+        Me.cmdShSaveBill.UseVisualStyleBackColor = False
         '
-        'TextBox9
+        'SHPcode
         '
-        Me.TextBox9.Location = New System.Drawing.Point(259, 114)
-        Me.TextBox9.Name = "TextBox9"
-        Me.TextBox9.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox9.TabIndex = 23
+        Me.SHPcode.Location = New System.Drawing.Point(259, 114)
+        Me.SHPcode.Name = "SHPcode"
+        Me.SHPcode.Size = New System.Drawing.Size(100, 20)
+        Me.SHPcode.TabIndex = 23
         '
         'Label17
         '
@@ -408,35 +436,35 @@ Partial Class frmCustomers
         Me.Label17.TabIndex = 22
         Me.Label17.Text = "Postal Code:"
         '
-        'ComboBox5
+        'cmbSHProv
         '
-        Me.ComboBox5.FormattingEnabled = True
-        Me.ComboBox5.Location = New System.Drawing.Point(65, 140)
-        Me.ComboBox5.Name = "ComboBox5"
-        Me.ComboBox5.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox5.TabIndex = 21
+        Me.cmbSHProv.FormattingEnabled = True
+        Me.cmbSHProv.Location = New System.Drawing.Point(65, 140)
+        Me.cmbSHProv.Name = "cmbSHProv"
+        Me.cmbSHProv.Size = New System.Drawing.Size(117, 21)
+        Me.cmbSHProv.TabIndex = 21
         '
-        'ComboBox6
+        'cmbSHCity
         '
-        Me.ComboBox6.FormattingEnabled = True
-        Me.ComboBox6.Location = New System.Drawing.Point(65, 113)
-        Me.ComboBox6.Name = "ComboBox6"
-        Me.ComboBox6.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox6.TabIndex = 20
+        Me.cmbSHCity.FormattingEnabled = True
+        Me.cmbSHCity.Location = New System.Drawing.Point(65, 113)
+        Me.cmbSHCity.Name = "cmbSHCity"
+        Me.cmbSHCity.Size = New System.Drawing.Size(117, 21)
+        Me.cmbSHCity.TabIndex = 20
         '
-        'TextBox10
+        'SHadd2
         '
-        Me.TextBox10.Location = New System.Drawing.Point(65, 91)
-        Me.TextBox10.Name = "TextBox10"
-        Me.TextBox10.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox10.TabIndex = 19
+        Me.SHadd2.Location = New System.Drawing.Point(65, 91)
+        Me.SHadd2.Name = "SHadd2"
+        Me.SHadd2.Size = New System.Drawing.Size(294, 20)
+        Me.SHadd2.TabIndex = 19
         '
-        'TextBox11
+        'SHadd1
         '
-        Me.TextBox11.Location = New System.Drawing.Point(65, 68)
-        Me.TextBox11.Name = "TextBox11"
-        Me.TextBox11.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox11.TabIndex = 18
+        Me.SHadd1.Location = New System.Drawing.Point(65, 68)
+        Me.SHadd1.Name = "SHadd1"
+        Me.SHadd1.Size = New System.Drawing.Size(294, 20)
+        Me.SHadd1.TabIndex = 18
         '
         'Label18
         '
@@ -474,12 +502,12 @@ Partial Class frmCustomers
         Me.Label21.TabIndex = 14
         Me.Label21.Text = "Address1:"
         '
-        'TextBox12
+        'SHName
         '
-        Me.TextBox12.Location = New System.Drawing.Point(65, 43)
-        Me.TextBox12.Name = "TextBox12"
-        Me.TextBox12.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox12.TabIndex = 13
+        Me.SHName.Location = New System.Drawing.Point(65, 43)
+        Me.SHName.Name = "SHName"
+        Me.SHName.Size = New System.Drawing.Size(294, 20)
+        Me.SHName.TabIndex = 13
         '
         'Label22
         '
@@ -492,18 +520,20 @@ Partial Class frmCustomers
         '
         'GBcustBillto
         '
-        Me.GBcustBillto.Controls.Add(Me.Button4)
-        Me.GBcustBillto.Controls.Add(Me.TextBox5)
+        Me.GBcustBillto.Controls.Add(Me.cmbBLCountry)
+        Me.GBcustBillto.Controls.Add(Me.Label27)
+        Me.GBcustBillto.Controls.Add(Me.cmdBillCopy)
+        Me.GBcustBillto.Controls.Add(Me.BLpcode)
         Me.GBcustBillto.Controls.Add(Me.Label11)
-        Me.GBcustBillto.Controls.Add(Me.ComboBox3)
-        Me.GBcustBillto.Controls.Add(Me.ComboBox4)
-        Me.GBcustBillto.Controls.Add(Me.TextBox6)
-        Me.GBcustBillto.Controls.Add(Me.TextBox7)
+        Me.GBcustBillto.Controls.Add(Me.cmbBLProv)
+        Me.GBcustBillto.Controls.Add(Me.cmbBLcity)
+        Me.GBcustBillto.Controls.Add(Me.BLadd2)
+        Me.GBcustBillto.Controls.Add(Me.BLadd1)
         Me.GBcustBillto.Controls.Add(Me.Label12)
         Me.GBcustBillto.Controls.Add(Me.Label13)
         Me.GBcustBillto.Controls.Add(Me.Label14)
         Me.GBcustBillto.Controls.Add(Me.Label15)
-        Me.GBcustBillto.Controls.Add(Me.TextBox8)
+        Me.GBcustBillto.Controls.Add(Me.BLName)
         Me.GBcustBillto.Controls.Add(Me.Label16)
         Me.GBcustBillto.Location = New System.Drawing.Point(6, 274)
         Me.GBcustBillto.Name = "GBcustBillto"
@@ -512,23 +542,23 @@ Partial Class frmCustomers
         Me.GBcustBillto.TabStop = False
         Me.GBcustBillto.Text = "BillTO Address"
         '
-        'Button4
+        'cmdBillCopy
         '
-        Me.Button4.BackColor = System.Drawing.Color.Azure
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button4.Location = New System.Drawing.Point(251, 119)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(100, 19)
-        Me.Button4.TabIndex = 24
-        Me.Button4.Text = "Same as Above"
-        Me.Button4.UseVisualStyleBackColor = False
+        Me.cmdBillCopy.BackColor = System.Drawing.Color.Azure
+        Me.cmdBillCopy.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.cmdBillCopy.Location = New System.Drawing.Point(251, 140)
+        Me.cmdBillCopy.Name = "cmdBillCopy"
+        Me.cmdBillCopy.Size = New System.Drawing.Size(100, 19)
+        Me.cmdBillCopy.TabIndex = 24
+        Me.cmdBillCopy.Text = "Same as Above"
+        Me.cmdBillCopy.UseVisualStyleBackColor = False
         '
-        'TextBox5
+        'BLpcode
         '
-        Me.TextBox5.Location = New System.Drawing.Point(251, 90)
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox5.TabIndex = 23
+        Me.BLpcode.Location = New System.Drawing.Point(251, 90)
+        Me.BLpcode.Name = "BLpcode"
+        Me.BLpcode.Size = New System.Drawing.Size(100, 20)
+        Me.BLpcode.TabIndex = 23
         '
         'Label11
         '
@@ -539,35 +569,35 @@ Partial Class frmCustomers
         Me.Label11.TabIndex = 22
         Me.Label11.Text = "Postal Code:"
         '
-        'ComboBox3
+        'cmbBLProv
         '
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(57, 116)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox3.TabIndex = 21
+        Me.cmbBLProv.FormattingEnabled = True
+        Me.cmbBLProv.Location = New System.Drawing.Point(57, 116)
+        Me.cmbBLProv.Name = "cmbBLProv"
+        Me.cmbBLProv.Size = New System.Drawing.Size(117, 21)
+        Me.cmbBLProv.TabIndex = 21
         '
-        'ComboBox4
+        'cmbBLcity
         '
-        Me.ComboBox4.FormattingEnabled = True
-        Me.ComboBox4.Location = New System.Drawing.Point(57, 89)
-        Me.ComboBox4.Name = "ComboBox4"
-        Me.ComboBox4.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox4.TabIndex = 20
+        Me.cmbBLcity.FormattingEnabled = True
+        Me.cmbBLcity.Location = New System.Drawing.Point(57, 89)
+        Me.cmbBLcity.Name = "cmbBLcity"
+        Me.cmbBLcity.Size = New System.Drawing.Size(117, 21)
+        Me.cmbBLcity.TabIndex = 20
         '
-        'TextBox6
+        'BLadd2
         '
-        Me.TextBox6.Location = New System.Drawing.Point(57, 67)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox6.TabIndex = 19
+        Me.BLadd2.Location = New System.Drawing.Point(57, 67)
+        Me.BLadd2.Name = "BLadd2"
+        Me.BLadd2.Size = New System.Drawing.Size(294, 20)
+        Me.BLadd2.TabIndex = 19
         '
-        'TextBox7
+        'BLadd1
         '
-        Me.TextBox7.Location = New System.Drawing.Point(57, 44)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox7.TabIndex = 18
+        Me.BLadd1.Location = New System.Drawing.Point(57, 44)
+        Me.BLadd1.Name = "BLadd1"
+        Me.BLadd1.Size = New System.Drawing.Size(294, 20)
+        Me.BLadd1.TabIndex = 18
         '
         'Label12
         '
@@ -605,12 +635,12 @@ Partial Class frmCustomers
         Me.Label15.TabIndex = 14
         Me.Label15.Text = "Address1:"
         '
-        'TextBox8
+        'BLName
         '
-        Me.TextBox8.Location = New System.Drawing.Point(57, 19)
-        Me.TextBox8.Name = "TextBox8"
-        Me.TextBox8.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox8.TabIndex = 13
+        Me.BLName.Location = New System.Drawing.Point(57, 19)
+        Me.BLName.Name = "BLName"
+        Me.BLName.Size = New System.Drawing.Size(294, 20)
+        Me.BLName.TabIndex = 13
         '
         'Label16
         '
@@ -623,20 +653,22 @@ Partial Class frmCustomers
         '
         'GBcustAdd1
         '
+        Me.GBcustAdd1.Controls.Add(Me.cmbCICountry)
+        Me.GBcustAdd1.Controls.Add(Me.Label26)
         Me.GBcustAdd1.Controls.Add(Me.cmbCustType)
         Me.GBcustAdd1.Controls.Add(Me.Label23)
-        Me.GBcustAdd1.Controls.Add(Me.CheckBox1)
-        Me.GBcustAdd1.Controls.Add(Me.TextBox4)
+        Me.GBcustAdd1.Controls.Add(Me.chCIactive)
+        Me.GBcustAdd1.Controls.Add(Me.CIpcode)
         Me.GBcustAdd1.Controls.Add(Me.Label10)
-        Me.GBcustAdd1.Controls.Add(Me.ComboBox2)
-        Me.GBcustAdd1.Controls.Add(Me.ComboBox1)
-        Me.GBcustAdd1.Controls.Add(Me.TextBox3)
-        Me.GBcustAdd1.Controls.Add(Me.TextBox2)
+        Me.GBcustAdd1.Controls.Add(Me.cmbCIProv)
+        Me.GBcustAdd1.Controls.Add(Me.cmbCICity)
+        Me.GBcustAdd1.Controls.Add(Me.CIAdd2)
+        Me.GBcustAdd1.Controls.Add(Me.CIadd1)
         Me.GBcustAdd1.Controls.Add(Me.Label9)
         Me.GBcustAdd1.Controls.Add(Me.Label8)
         Me.GBcustAdd1.Controls.Add(Me.Label7)
         Me.GBcustAdd1.Controls.Add(Me.Label6)
-        Me.GBcustAdd1.Controls.Add(Me.TextBox1)
+        Me.GBcustAdd1.Controls.Add(Me.CIName)
         Me.GBcustAdd1.Controls.Add(Me.Label5)
         Me.GBcustAdd1.Location = New System.Drawing.Point(3, 6)
         Me.GBcustAdd1.Name = "GBcustAdd1"
@@ -662,22 +694,22 @@ Partial Class frmCustomers
         Me.Label23.TabIndex = 13
         Me.Label23.Text = "Type:"
         '
-        'CheckBox1
+        'chCIactive
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.Location = New System.Drawing.Point(254, 122)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(56, 17)
-        Me.CheckBox1.TabIndex = 12
-        Me.CheckBox1.Text = "Active"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chCIactive.AutoSize = True
+        Me.chCIactive.Location = New System.Drawing.Point(254, 154)
+        Me.chCIactive.Name = "chCIactive"
+        Me.chCIactive.Size = New System.Drawing.Size(56, 17)
+        Me.chCIactive.TabIndex = 12
+        Me.chCIactive.Text = "Active"
+        Me.chCIactive.UseVisualStyleBackColor = True
         '
-        'TextBox4
+        'CIpcode
         '
-        Me.TextBox4.Location = New System.Drawing.Point(254, 94)
-        Me.TextBox4.Name = "TextBox4"
-        Me.TextBox4.Size = New System.Drawing.Size(100, 20)
-        Me.TextBox4.TabIndex = 11
+        Me.CIpcode.Location = New System.Drawing.Point(254, 94)
+        Me.CIpcode.Name = "CIpcode"
+        Me.CIpcode.Size = New System.Drawing.Size(100, 20)
+        Me.CIpcode.TabIndex = 11
         '
         'Label10
         '
@@ -688,35 +720,35 @@ Partial Class frmCustomers
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "Postal Code:"
         '
-        'ComboBox2
+        'cmbCIProv
         '
-        Me.ComboBox2.FormattingEnabled = True
-        Me.ComboBox2.Location = New System.Drawing.Point(60, 120)
-        Me.ComboBox2.Name = "ComboBox2"
-        Me.ComboBox2.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox2.TabIndex = 9
+        Me.cmbCIProv.FormattingEnabled = True
+        Me.cmbCIProv.Location = New System.Drawing.Point(60, 120)
+        Me.cmbCIProv.Name = "cmbCIProv"
+        Me.cmbCIProv.Size = New System.Drawing.Size(117, 21)
+        Me.cmbCIProv.TabIndex = 9
         '
-        'ComboBox1
+        'cmbCICity
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Location = New System.Drawing.Point(60, 93)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(117, 21)
-        Me.ComboBox1.TabIndex = 8
+        Me.cmbCICity.FormattingEnabled = True
+        Me.cmbCICity.Location = New System.Drawing.Point(60, 93)
+        Me.cmbCICity.Name = "cmbCICity"
+        Me.cmbCICity.Size = New System.Drawing.Size(117, 21)
+        Me.cmbCICity.TabIndex = 8
         '
-        'TextBox3
+        'CIAdd2
         '
-        Me.TextBox3.Location = New System.Drawing.Point(60, 71)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox3.TabIndex = 7
+        Me.CIAdd2.Location = New System.Drawing.Point(60, 71)
+        Me.CIAdd2.Name = "CIAdd2"
+        Me.CIAdd2.Size = New System.Drawing.Size(294, 20)
+        Me.CIAdd2.TabIndex = 7
         '
-        'TextBox2
+        'CIadd1
         '
-        Me.TextBox2.Location = New System.Drawing.Point(60, 48)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox2.TabIndex = 6
+        Me.CIadd1.Location = New System.Drawing.Point(60, 48)
+        Me.CIadd1.Name = "CIadd1"
+        Me.CIadd1.Size = New System.Drawing.Size(294, 20)
+        Me.CIadd1.TabIndex = 6
         '
         'Label9
         '
@@ -754,12 +786,12 @@ Partial Class frmCustomers
         Me.Label6.TabIndex = 2
         Me.Label6.Text = "Address1:"
         '
-        'TextBox1
+        'CIName
         '
-        Me.TextBox1.Location = New System.Drawing.Point(60, 23)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(294, 20)
-        Me.TextBox1.TabIndex = 1
+        Me.CIName.Location = New System.Drawing.Point(60, 23)
+        Me.CIName.Name = "CIName"
+        Me.CIName.Size = New System.Drawing.Size(294, 20)
+        Me.CIName.TabIndex = 1
         '
         'Label5
         '
@@ -783,25 +815,56 @@ Partial Class frmCustomers
         'Timer1
         '
         '
-        'GPCommands
+        'Label26
         '
-        Me.GPCommands.Controls.Add(Me.cmdCanCust)
-        Me.GPCommands.Location = New System.Drawing.Point(6, 557)
-        Me.GPCommands.Name = "GPCommands"
-        Me.GPCommands.Size = New System.Drawing.Size(428, 76)
-        Me.GPCommands.TabIndex = 3
-        Me.GPCommands.TabStop = False
-        Me.GPCommands.Text = "Commands"
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(204, 123)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(46, 13)
+        Me.Label26.TabIndex = 15
+        Me.Label26.Text = "Country:"
         '
-        'cmdCanCust
+        'cmbCICountry
         '
-        Me.cmdCanCust.BackColor = System.Drawing.Color.Azure
-        Me.cmdCanCust.Location = New System.Drawing.Point(371, 19)
-        Me.cmdCanCust.Name = "cmdCanCust"
-        Me.cmdCanCust.Size = New System.Drawing.Size(51, 20)
-        Me.cmdCanCust.TabIndex = 0
-        Me.cmdCanCust.Text = "Cancel"
-        Me.cmdCanCust.UseVisualStyleBackColor = False
+        Me.cmbCICountry.FormattingEnabled = True
+        Me.cmbCICountry.Location = New System.Drawing.Point(254, 120)
+        Me.cmbCICountry.Name = "cmbCICountry"
+        Me.cmbCICountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbCICountry.TabIndex = 16
+        '
+        'cmbBLCountry
+        '
+        Me.cmbBLCountry.FormattingEnabled = True
+        Me.cmbBLCountry.Location = New System.Drawing.Point(251, 116)
+        Me.cmbBLCountry.Name = "cmbBLCountry"
+        Me.cmbBLCountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbBLCountry.TabIndex = 26
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(201, 119)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(46, 13)
+        Me.Label27.TabIndex = 25
+        Me.Label27.Text = "Country:"
+        '
+        'cmbSHCountry
+        '
+        Me.cmbSHCountry.FormattingEnabled = True
+        Me.cmbSHCountry.Location = New System.Drawing.Point(257, 140)
+        Me.cmbSHCountry.Name = "cmbSHCountry"
+        Me.cmbSHCountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbSHCountry.TabIndex = 30
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(207, 143)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(46, 13)
+        Me.Label28.TabIndex = 29
+        Me.Label28.Text = "Country:"
         '
         'frmCustomers
         '
@@ -825,13 +888,13 @@ Partial Class frmCustomers
         Me.GroupBox1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GPCommands.ResumeLayout(False)
         Me.GBShipToAdd1.ResumeLayout(False)
         Me.GBShipToAdd1.PerformLayout()
         Me.GBcustBillto.ResumeLayout(False)
         Me.GBcustBillto.PerformLayout()
         Me.GBcustAdd1.ResumeLayout(False)
         Me.GBcustAdd1.PerformLayout()
-        Me.GPCommands.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -858,54 +921,60 @@ Partial Class frmCustomers
     Friend WithEvents GBcustAdd1 As GroupBox
     Friend WithEvents GBcustBillto As GroupBox
     Friend WithEvents GBShipToAdd1 As GroupBox
-    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents CIpcode As TextBox
     Friend WithEvents Label10 As Label
-    Friend WithEvents ComboBox2 As ComboBox
-    Friend WithEvents ComboBox1 As ComboBox
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents cmbCIProv As ComboBox
+    Friend WithEvents cmbCICity As ComboBox
+    Friend WithEvents CIAdd2 As TextBox
+    Friend WithEvents CIadd1 As TextBox
     Friend WithEvents Label9 As Label
     Friend WithEvents Label8 As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents CIName As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents chCIactive As CheckBox
     Friend WithEvents chslactonly As CheckBox
-    Friend WithEvents TextBox9 As TextBox
+    Friend WithEvents SHPcode As TextBox
     Friend WithEvents Label17 As Label
-    Friend WithEvents ComboBox5 As ComboBox
-    Friend WithEvents ComboBox6 As ComboBox
-    Friend WithEvents TextBox10 As TextBox
-    Friend WithEvents TextBox11 As TextBox
+    Friend WithEvents cmbSHProv As ComboBox
+    Friend WithEvents cmbSHCity As ComboBox
+    Friend WithEvents SHadd2 As TextBox
+    Friend WithEvents SHadd1 As TextBox
     Friend WithEvents Label18 As Label
     Friend WithEvents Label19 As Label
     Friend WithEvents Label20 As Label
     Friend WithEvents Label21 As Label
-    Friend WithEvents TextBox12 As TextBox
+    Friend WithEvents SHName As TextBox
     Friend WithEvents Label22 As Label
-    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents BLpcode As TextBox
     Friend WithEvents Label11 As Label
-    Friend WithEvents ComboBox3 As ComboBox
-    Friend WithEvents ComboBox4 As ComboBox
-    Friend WithEvents TextBox6 As TextBox
-    Friend WithEvents TextBox7 As TextBox
+    Friend WithEvents cmbBLProv As ComboBox
+    Friend WithEvents cmbBLcity As ComboBox
+    Friend WithEvents BLadd2 As TextBox
+    Friend WithEvents BLadd1 As TextBox
     Friend WithEvents Label12 As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents Label14 As Label
     Friend WithEvents Label15 As Label
-    Friend WithEvents TextBox8 As TextBox
+    Friend WithEvents BLName As TextBox
     Friend WithEvents Label16 As Label
     Friend WithEvents cmbCustType As ComboBox
     Friend WithEvents Label23 As Label
     Friend WithEvents cmbSelType As ComboBox
     Friend WithEvents Label24 As Label
-    Friend WithEvents ComboBox9 As ComboBox
+    Friend WithEvents cmdShpID As ComboBox
     Friend WithEvents Label25 As Label
-    Friend WithEvents Button2 As Button
-    Friend WithEvents Button1 As Button
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button4 As Button
+    Friend WithEvents cmdSaveshipasinfo As Button
+    Friend WithEvents cmdShSaveBill As Button
+    Friend WithEvents cmdSaveShpto As Button
+    Friend WithEvents cmdBillCopy As Button
     Friend WithEvents GPCommands As GroupBox
     Friend WithEvents cmdCanCust As Button
+    Friend WithEvents cmbBLCountry As ComboBox
+    Friend WithEvents Label27 As Label
+    Friend WithEvents cmbCICountry As ComboBox
+    Friend WithEvents Label26 As Label
+    Friend WithEvents cmbSHCountry As ComboBox
+    Friend WithEvents Label28 As Label
 End Class
