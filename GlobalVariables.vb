@@ -28,8 +28,6 @@ Public Class GlobalVariables
     Public Shared Property GL_mshow As Integer
     Public Shared Property GL_mactive As Integer
 
-    Public Shared tMyMenus(100) As String
-
 End Class
 
 Public Class masterconnrec

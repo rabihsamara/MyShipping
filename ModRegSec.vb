@@ -1,11 +1,12 @@
 ﻿
 Module ModRegSec
     Private ms As New MenuStrip
+    Public tMyMenus() As String
 
     'inopt = "R" new setup, M = Menu load
     Public Function BuildMenu(ByVal inopt As String) As MenuStrip
 
-        ModRegSec.GetALLMenuSecLevel(GlobalVariables.Gl_LogUserID)
+        GetALLMenuSecLevel(GlobalVariables.Gl_LogUserID)
 
         ms.Parent = MainMenu
         '***********************************************************************************************
@@ -89,6 +90,7 @@ Module ModRegSec
         Dim UserItem As New ToolStripMenuItem("&Users", Nothing, New EventHandler(AddressOf MainMenu.Users))
         Dim mysecControls As New ToolStripMenuItem("&Security Controls", Nothing, New EventHandler(AddressOf MainMenu.MenyMyControls))
         Dim mysetItem As New ToolStripMenuItem("&Settings", Nothing, New EventHandler(AddressOf MainMenu.Mysettings))
+        Dim myLockscrItem As New ToolStripMenuItem("&LockScreen", Nothing, New EventHandler(AddressOf MainMenu.AppLocksScreen))
 
         If (inopt = "M") Then
             If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "", "") = True) Then
@@ -124,20 +126,37 @@ Module ModRegSec
                                 End If
                             End If
                         End If
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Utilities", "LockScreen", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                myLockscrItem.ShortcutKeys = Keys.Control Or Keys.L
+                                UtilItem.DropDownItems.Add(myLockscrItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    myLockscrItem.Enabled = False
+                                End If
+                            End If
+                        End If
                     End If
                 End If
             Else
                 UserItem.ShortcutKeys = Keys.Control Or Keys.U
+                mysecControls.ShortcutKeys = Keys.Control Or Keys.C
+                mysetItem.ShortcutKeys = Keys.Control Or Keys.S
+                myLockscrItem.ShortcutKeys = Keys.Control Or Keys.L
                 UtilItem.DropDownItems.Add(UserItem)
                 UtilItem.DropDownItems.Add(mysecControls)
                 UtilItem.DropDownItems.Add(mysetItem)
+                UtilItem.DropDownItems.Add(myLockscrItem)
                 ms.Items.Add(UtilItem)
             End If
         Else
             UserItem.ShortcutKeys = Keys.Control Or Keys.U
+            mysecControls.ShortcutKeys = Keys.Control Or Keys.C
+            mysetItem.ShortcutKeys = Keys.Control Or Keys.S
+            myLockscrItem.ShortcutKeys = Keys.Control Or Keys.L
             UtilItem.DropDownItems.Add(UserItem)
             UtilItem.DropDownItems.Add(mysecControls)
             UtilItem.DropDownItems.Add(mysetItem)
+            UtilItem.DropDownItems.Add(myLockscrItem)
             ms.Items.Add(UtilItem)
         End If
 
@@ -336,8 +355,8 @@ Module ModRegSec
         GetMenuSecLevel = False
         GlobalVariables.GL_mshow = 1
         GlobalVariables.GL_mactive = 1
-        For F = 0 To 100
-            strArr = Split(GlobalVariables.tMyMenus(F), ":")
+        For F = 0 To tMyMenus.Count - 1
+            strArr = Split(tMyMenus(F), ":")
             If (Trim(strArr(0).ToString) = mitem) Then
                 If (Trim(strArr(1).ToString) = mitems1) Then
                     GlobalVariables.GL_mshow = strArr(2)

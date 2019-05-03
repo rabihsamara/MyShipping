@@ -201,7 +201,8 @@ Module ModMisc
                         ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
                     ElseIf (inopt = "ALLM") Then
-                        GlobalVariables.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
+                        ReDim Preserve ModRegSec.tMyMenus(F)
+                        ModRegSec.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
                         F = F + 1
                         ReadSQL = True
                         GlobalVariables.GL_Stat = True

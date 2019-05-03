@@ -81,10 +81,6 @@
             End Set
         End Property
 
-        Public Function SetAppLock() As String
-
-        End Function
-
     End Class
 
 End Module

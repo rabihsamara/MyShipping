@@ -66,6 +66,15 @@
 
     End Sub
 
+    Public Sub AppLocksScreen(ByVal sender As Object, ByVal e As EventArgs)
+        GlobalVariables.GL_SecContcalledBy = "M"
+        Dim frm As New AppLocksScreen()
+        frm.TopLevel = False
+        frm.TopMost = True
+        SplitContainer1.Panel2.Controls.Add(frm)
+        frm.Show()
+
+    End Sub
 
     '*********************************************************************
     'Event handlers for items listed under Menu Reports
