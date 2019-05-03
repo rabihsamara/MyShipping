@@ -59,8 +59,9 @@ Module ModMisc
     '* L=login             - 
     '* C=Control screen    - 
     '* P=company           - 
-    '* CRI=Customers screen - customer ID Combo
-    '* CRN=Customers screen - customer Name Combo
+    '* CRI/CRIA=Customers screen - customer ID Combo
+    '* CRN/CRNA=Customers screen - customer Name Combo
+    '* CST=Customers screen seltype in selection of existing customers
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -72,10 +73,16 @@ Module ModMisc
                 tsql = "SELECT UserID FROM Users where active = 1 order by UserID asc"
             ElseIf (callby = "P") Then
                 tsql = "SELECT CompName FROM company where CompActive = 1 order by CompName asc"
-            ElseIf (callby = "CRI") Then
-                tsql = "SELECT ID  FROM Customers where CustActive = 1 order by ID asc"
-            ElseIf (callby = "CRN") Then
-                tsql = "SELECT CustName  FROM Customers where CustActive = 1 order by CustName asc"
+            ElseIf (callby = "CRI" Or callby = "CRIA") Then
+                tsql = "SELECT CustID  FROM Customers"
+                If (callby = "CRIA") Then tsql = tsql & " where CustActive = 1"
+                tsql = tsql & " order by CustID asc"
+            ElseIf (callby = "CRN" Or callby = "CRNA") Then
+                tsql = "Select CustName  FROM Customers"
+                If (callby = "CRNA") Then tsql = tsql & " where CustActive = 1"
+                tsql = tsql & " order by CustName asc"
+            ElseIf (callby = "CST") Then
+                tsql = "Select concat(custtype,' - ',typename) as ctype from custtype where typeactive = 1 order by ID"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -89,9 +96,11 @@ Module ModMisc
                         incombo.Items.Add(New UsersName(myReader.GetString(0)))
                     ElseIf (callby = "P") Then
                         incombo.Items.Add(New CompanyName(myReader.GetString(0)))
-                    ElseIf (callby = "CRI") Then
+                    ElseIf (callby = "CRI" Or callby = "CRIA") Then
                         incombo.Items.Add(myReader.GetString(0))
-                    ElseIf (callby = "CRN") Then
+                    ElseIf (callby = "CRN" Or callby = "CRNA") Then
+                        incombo.Items.Add(myReader.GetString(0))
+                    ElseIf (callby = "CST") Then
                         incombo.Items.Add(myReader.GetString(0))
                     End If
                 Loop

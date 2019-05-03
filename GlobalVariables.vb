@@ -755,7 +755,7 @@ End Class
 
 Public Class Customers
 
-    Private ID As Integer
+    Private CustID As String
     Private CustName As String
     Private custactive As Integer
 
@@ -767,13 +767,13 @@ Public Class Customers
         Console.WriteLine("Class destroyed")
     End Sub
 
-    Public Property MyID() As String
+    Public Property MyCustID() As String
 
         Get
-            Return ID
+            Return CustID
         End Get
         Set(ByVal Value As String)
-            ID = Value
+            CustID = Value
         End Set
 
     End Property
@@ -789,13 +789,13 @@ Public Class Customers
 
     End Property
 
-    Public Property MyCustActive() As String
+    Public Property MyCustActive() As Integer
 
         Get
-            Return CustActive
+            Return custactive
         End Get
-        Set(ByVal Value As String)
-            CustActive = Value
+        Set(ByVal Value As Integer)
+            custactive = Value
         End Set
 
     End Property
