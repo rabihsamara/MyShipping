@@ -46,6 +46,8 @@ Partial Class frmCustomers
         Me.GPCommands = New System.Windows.Forms.GroupBox()
         Me.cmdCanCust = New System.Windows.Forms.Button()
         Me.GBShipToAdd1 = New System.Windows.Forms.GroupBox()
+        Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.cmdSaveShpto = New System.Windows.Forms.Button()
         Me.cmdShpID = New System.Windows.Forms.ComboBox()
         Me.Label25 = New System.Windows.Forms.Label()
@@ -64,6 +66,8 @@ Partial Class frmCustomers
         Me.SHName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.GBcustBillto = New System.Windows.Forms.GroupBox()
+        Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
+        Me.Label27 = New System.Windows.Forms.Label()
         Me.cmdBillCopy = New System.Windows.Forms.Button()
         Me.BLpcode = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -78,6 +82,8 @@ Partial Class frmCustomers
         Me.BLName = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GBcustAdd1 = New System.Windows.Forms.GroupBox()
+        Me.cmbCICountry = New System.Windows.Forms.ComboBox()
+        Me.Label26 = New System.Windows.Forms.Label()
         Me.cmbCustType = New System.Windows.Forms.ComboBox()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.chCIactive = New System.Windows.Forms.CheckBox()
@@ -95,12 +101,7 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.Label26 = New System.Windows.Forms.Label()
-        Me.cmbCICountry = New System.Windows.Forms.ComboBox()
-        Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
-        Me.Label28 = New System.Windows.Forms.Label()
+        Me.cmdSaveCust = New System.Windows.Forms.Button()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -324,6 +325,7 @@ Partial Class frmCustomers
         '
         'GPCommands
         '
+        Me.GPCommands.Controls.Add(Me.cmdSaveCust)
         Me.GPCommands.Controls.Add(Me.cmdCanCust)
         Me.GPCommands.Location = New System.Drawing.Point(6, 557)
         Me.GPCommands.Name = "GPCommands"
@@ -369,6 +371,23 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.TabIndex = 2
         Me.GBShipToAdd1.TabStop = False
         Me.GBShipToAdd1.Text = "Shipping Address"
+        '
+        'cmbSHCountry
+        '
+        Me.cmbSHCountry.FormattingEnabled = True
+        Me.cmbSHCountry.Location = New System.Drawing.Point(257, 140)
+        Me.cmbSHCountry.Name = "cmbSHCountry"
+        Me.cmbSHCountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbSHCountry.TabIndex = 30
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Location = New System.Drawing.Point(207, 143)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(46, 13)
+        Me.Label28.TabIndex = 29
+        Me.Label28.Text = "Country:"
         '
         'cmdSaveShpto
         '
@@ -542,6 +561,23 @@ Partial Class frmCustomers
         Me.GBcustBillto.TabStop = False
         Me.GBcustBillto.Text = "BillTO Address"
         '
+        'cmbBLCountry
+        '
+        Me.cmbBLCountry.FormattingEnabled = True
+        Me.cmbBLCountry.Location = New System.Drawing.Point(251, 116)
+        Me.cmbBLCountry.Name = "cmbBLCountry"
+        Me.cmbBLCountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbBLCountry.TabIndex = 26
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(201, 119)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(46, 13)
+        Me.Label27.TabIndex = 25
+        Me.Label27.Text = "Country:"
+        '
         'cmdBillCopy
         '
         Me.cmdBillCopy.BackColor = System.Drawing.Color.Azure
@@ -676,6 +712,23 @@ Partial Class frmCustomers
         Me.GBcustAdd1.TabIndex = 0
         Me.GBcustAdd1.TabStop = False
         Me.GBcustAdd1.Text = "Customer Information"
+        '
+        'cmbCICountry
+        '
+        Me.cmbCICountry.FormattingEnabled = True
+        Me.cmbCICountry.Location = New System.Drawing.Point(254, 120)
+        Me.cmbCICountry.Name = "cmbCICountry"
+        Me.cmbCICountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbCICountry.TabIndex = 16
+        '
+        'Label26
+        '
+        Me.Label26.AutoSize = True
+        Me.Label26.Location = New System.Drawing.Point(204, 123)
+        Me.Label26.Name = "Label26"
+        Me.Label26.Size = New System.Drawing.Size(46, 13)
+        Me.Label26.TabIndex = 15
+        Me.Label26.Text = "Country:"
         '
         'cmbCustType
         '
@@ -815,56 +868,15 @@ Partial Class frmCustomers
         'Timer1
         '
         '
-        'Label26
+        'cmdSaveCust
         '
-        Me.Label26.AutoSize = True
-        Me.Label26.Location = New System.Drawing.Point(204, 123)
-        Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(46, 13)
-        Me.Label26.TabIndex = 15
-        Me.Label26.Text = "Country:"
-        '
-        'cmbCICountry
-        '
-        Me.cmbCICountry.FormattingEnabled = True
-        Me.cmbCICountry.Location = New System.Drawing.Point(254, 120)
-        Me.cmbCICountry.Name = "cmbCICountry"
-        Me.cmbCICountry.Size = New System.Drawing.Size(100, 21)
-        Me.cmbCICountry.TabIndex = 16
-        '
-        'cmbBLCountry
-        '
-        Me.cmbBLCountry.FormattingEnabled = True
-        Me.cmbBLCountry.Location = New System.Drawing.Point(251, 116)
-        Me.cmbBLCountry.Name = "cmbBLCountry"
-        Me.cmbBLCountry.Size = New System.Drawing.Size(100, 21)
-        Me.cmbBLCountry.TabIndex = 26
-        '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(201, 119)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(46, 13)
-        Me.Label27.TabIndex = 25
-        Me.Label27.Text = "Country:"
-        '
-        'cmbSHCountry
-        '
-        Me.cmbSHCountry.FormattingEnabled = True
-        Me.cmbSHCountry.Location = New System.Drawing.Point(257, 140)
-        Me.cmbSHCountry.Name = "cmbSHCountry"
-        Me.cmbSHCountry.Size = New System.Drawing.Size(100, 21)
-        Me.cmbSHCountry.TabIndex = 30
-        '
-        'Label28
-        '
-        Me.Label28.AutoSize = True
-        Me.Label28.Location = New System.Drawing.Point(207, 143)
-        Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(46, 13)
-        Me.Label28.TabIndex = 29
-        Me.Label28.Text = "Country:"
+        Me.cmdSaveCust.BackColor = System.Drawing.Color.Azure
+        Me.cmdSaveCust.Location = New System.Drawing.Point(6, 19)
+        Me.cmdSaveCust.Name = "cmdSaveCust"
+        Me.cmdSaveCust.Size = New System.Drawing.Size(43, 20)
+        Me.cmdSaveCust.TabIndex = 1
+        Me.cmdSaveCust.Text = "Save"
+        Me.cmdSaveCust.UseVisualStyleBackColor = False
         '
         'frmCustomers
         '
@@ -977,4 +989,5 @@ Partial Class frmCustomers
     Friend WithEvents Label26 As Label
     Friend WithEvents cmbSHCountry As ComboBox
     Friend WithEvents Label28 As Label
+    Friend WithEvents cmdSaveCust As Button
 End Class

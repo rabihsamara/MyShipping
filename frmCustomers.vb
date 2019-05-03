@@ -10,8 +10,21 @@ Public Class frmCustomers
     Private selcustid As String = String.Empty
     Private selcustname As String = String.Empty
     Private seluw As String = "I"
+    Private seluw2 As String = ""
     Private tmsg As String = String.Empty
     Private tstat As Boolean = True
+
+    Private slCICountry As Integer
+    Private slBLCountry As Integer
+    Private slSHCountry As Integer
+
+    Private slCIProv As Integer
+    Private slBLProv As Integer
+    Private slSHProv As Integer
+
+    Private slCICity As Integer
+    Private slBLCity As Integer
+    Private slSHCity As Integer
 
     Private Custrecord As Customers = New Customers()
 
@@ -24,7 +37,7 @@ Public Class frmCustomers
         tstat = ModMisc.FillCBox(cmbSelType, "CST")
         tstat = ModMisc.FillCBox(cmbCustType, "CST")
         LoadData()
-        LoadCombo("ACT")
+
     End Sub
 
     Private Sub LoadData()
@@ -106,6 +119,7 @@ Public Class frmCustomers
             Else
                 'create new customer message
                 seluw = "I"
+                seluw2 = "I"
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
                     'Ok create new cust. load screen to database
@@ -118,6 +132,7 @@ Public Class frmCustomers
                     seluw = "U"
                     CIName.Text = Trim(inCustName.Text)
                     LoadData()
+                    LoadCombCountries("ACT", seluw2)
                 Else
                     inCustID.Text = ""
                     inCustName.Text = ""
@@ -142,6 +157,8 @@ Public Class frmCustomers
             End If
             'load data to screen
             seluw = "U"
+            seluw2 = "U"
+            LoadCombCountries("ACT", seluw2)
 
         End If
 
@@ -264,44 +281,181 @@ EDIT_EXIT:
     End Sub
 
     '************************************************************************************************************
-    'inopt - ACT=All
-    '        CCT=customer info   Combo country
-    '        BCT=Customer bill   Combo country
-    '        SCT=Customer shipto Combo country
+    '* inopt  - ACT=All
+    '*          CCT=customer info   Combo country
+    '*          BCT=Customer bill   Combo country
+    '*          SCT=Customer shipto Combo country
+    '* inmode - I=insert, U=Update
     '************************************************************************************************************
-    Private Sub LoadCombo(ByVal inopt As String)
+    Private Sub LoadCombCountries(ByVal inopt As String, ByVal inmode As String)
 
         If (inopt = "ACT" Or inopt = "CCT") Then
             'Set Customer info combobox: cmbCICountry
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbCICountry)
+            If (inmode = "U") Then
+                'cmbCICountry.Text = userrecord.MyCountry
+                slCICountry = cmbCICountry.SelectedValue
+            End If
         End If
-
-        'cmbUsrCountry.Text = userrecord.MyCountry
-        'slcountryid = cmbUsrCountry.SelectedValue
-
-        'GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
-        'ModMisc.ReadCountries(cmbUsrState)
-        'cmbUsrState.Text = userrecord.MyProvince
-        'slstateid = cmbUsrState.SelectedValue
-
-        'GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
-        'ModMisc.ReadCountries(cmbUsrCity)
-        'cmbUsrCity.Text = userrecord.MyCity
-        'slcityid = cmbUsrCity.SelectedValue
 
         If (inopt = "ACT" Or inopt = "BCT") Then
             'Set Customer Billto combobox: cmbBLCountry
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbBLCountry)
+            If (inmode = "U") Then
+                'cmbBLCountry.Text = userrecord.MyCountry
+                slBLCountry = cmbBLCountry.SelectedValue
+            End If
         End If
-
 
         If (inopt = "ACT" Or inopt = "SCT") Then
             'Set Shipto combobox: cmbSHCountry
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbSHCountry)
+            If (inmode = "U") Then
+                'cmbSHCountry.Text = userrecord.MyCountry
+                slSHCountry = cmbSHCountry.SelectedValue
+            End If
         End If
+
+        If (inmode = "U") Then
+            'Customer info prov,city 
+            If (inopt = "ACT" Or inopt = "CCT") Then
+                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slCICountry & " and active = 1 order by provshort"
+                ModMisc.ReadCountries(cmbCIProv)
+                'cmbCIProv.Text = userrecord.MyCity
+                slCIProv = cmbCIProv.SelectedValue
+
+                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+                ModMisc.ReadCountries(cmbCICity)
+                'cmbCICity.Text = userrecord.MyCity
+                slCICity = cmbCICity.SelectedValue
+            End If
+
+            'Customer Billto prov,city 
+            If (inopt = "ACT" Or inopt = "BCT") Then
+                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slBLCountry & " and active = 1 order by provshort"
+                ModMisc.ReadCountries(cmbBLProv)
+                'cmbBLProv.Text = userrecord.MyCity
+                slBLProv = cmbBLProv.SelectedValue
+
+                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+                ModMisc.ReadCountries(cmbBLcity)
+                'cmbBLCity.Text = userrecord.MyCity
+                slBLCity = cmbBLcity.SelectedValue
+            End If
+
+
+            'Customer Shipto prov,city
+            If (inopt = "ACT" Or inopt = "SCT") Then
+                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slSHCountry & " and active = 1 order by provshort"
+                ModMisc.ReadCountries(cmbSHProv)
+                'cmbSHProv.Text = userrecord.MyCity
+                slSHProv = cmbSHProv.SelectedValue
+
+                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+                ModMisc.ReadCountries(cmbSHCity)
+                'cmbSHCity.Text = userrecord.MyCity
+                slSHCity = cmbSHCity.SelectedValue
+            End If
+
+        End If
+
+    End Sub
+
+    'Customer info country,prov, city changes
+    Private Sub CmbCICountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbCICountry.SelectionChangeCommitted
+        slCIcountry = cmbCICountry.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slCICountry & " and active = 1 order by provshort"
+        ModMisc.ReadCountries(cmbCIProv)
+        cmbCIProv.Text = ""
+        slCIProv = cmbCIProv.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbCICity)
+        cmbCICity.Text = ""
+        slCICity = cmbCICity.SelectedValue
+    End Sub
+
+    Private Sub cmbCIPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbCIProv.SelectionChangeCommitted
+
+        slCIProv = cmbCIProv.SelectedValue
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbCICity)
+        cmbCICity.Text = ""
+        slCICity = cmbCICity.SelectedValue
+
+    End Sub
+
+    Private Sub cmbCICity_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbCICity.SelectionChangeCommitted
+        slCICity = cmbCICity.SelectedValue
+    End Sub
+
+    'Customer Billto country,prov, city changes
+    Private Sub CmbBLCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLCountry.SelectionChangeCommitted
+        slBLCountry = cmbBLCountry.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slBLCountry & " and active = 1 order by provshort"
+        ModMisc.ReadCountries(cmbBLProv)
+        cmbBLProv.Text = ""
+        slBLProv = cmbBLProv.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbBLcity)
+        cmbBLcity.Text = ""
+        slBLCity = cmbBLcity.SelectedValue
+    End Sub
+
+    Private Sub cmbBLPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLProv.SelectionChangeCommitted
+
+        slBLProv = cmbBLProv.SelectedValue
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbBLcity)
+        cmbBLcity.Text = ""
+        slBLCity = cmbBLcity.SelectedValue
+
+    End Sub
+
+    Private Sub cmbBLCity_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLcity.SelectionChangeCommitted
+        slBLCity = cmbBLcity.SelectedValue
+    End Sub
+
+    'Customer Shipto country,prov, city changes
+    Private Sub CmbSHCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCountry.SelectionChangeCommitted
+        slSHCountry = cmbSHCountry.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slSHCountry & " and active = 1 order by provshort"
+        ModMisc.ReadCountries(cmbSHProv)
+        cmbSHProv.Text = ""
+        slSHProv = cmbSHProv.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbSHCity)
+        cmbSHCity.Text = ""
+        slSHCity = cmbSHCity.SelectedValue
+    End Sub
+
+    Private Sub cmbSHPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHProv.SelectionChangeCommitted
+
+        slSHProv = cmbSHProv.SelectedValue
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbSHCity)
+        cmbSHCity.Text = ""
+        slSHCity = cmbSHCity.SelectedValue
+
+    End Sub
+
+    Private Sub cmbSHCity_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCity.SelectionChangeCommitted
+        slSHCity = cmbSHCity.SelectedValue
+    End Sub
+
+    'save customer
+    Private Sub CmdSaveCust_Click(sender As Object, e As EventArgs) Handles cmdSaveCust.Click
+
+
+
 
 
     End Sub
