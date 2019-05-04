@@ -140,7 +140,10 @@ Public Class frmCustomers
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
                     'lock record
-
+                    If (AppLocking.WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+                        terr = "Error Creating Lock Record!"
+                        GoTo EDIT_EXIT
+                    End If
                 Else
                     inCustID.Text = ""
                     inCustName.Text = ""
@@ -255,8 +258,10 @@ EDIT_EXIT:
         'check if new was pressed or update
 
 
-        'release log later
-
+        'release log 
+        If (AppLocking.WriteDelLock("D", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+            MsgBox("Error deting Lock record!")
+        End If
 
         inCustID.Text = ""
         inCustName.Text = ""
@@ -482,7 +487,10 @@ EDIT_EXIT:
 
 
 
-
+        If (AppLocking.WriteDelLock("D", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+            terr = "Error Creating Lock Record!"
+            GoTo EDIT_EXIT
+        End If
     End Sub
 
 End Class

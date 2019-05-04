@@ -132,17 +132,19 @@ Module AppLocking
     'inoper - W=Write, D=Delete log.
     Public Function WriteDelLock(ByVal inoper As String, ByVal infrmName As String, ByVal inctrlName As String, ByVal inctrlval As String, ByVal inwrupd As String) As Boolean
 
-        WriteDelLock = False
+        WriteDelLock = True
         'WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
         If (inoper = "W") Then
-            WriteDelLock = True
             GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','" & infrmName & "','" & inctrlName & "','" & inctrlval & "','" & inwrupd & "','" & Now() & "')"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 WriteDelLock = False
             End If
+        ElseIf (inoper = "D") Then
+            GlobalVariables.Gl_SQLStr = "delete from AppLocks where Userid = '" & GlobalVariables.Gl_LogUserID & "',' and Formname = '" & infrmName & ", and ctrlname = " & inctrlName & "'"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                WriteDelLock = False
+            End If
         End If
-
-        WriteDelLock = True
 
     End Function
 
