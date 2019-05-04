@@ -134,6 +134,7 @@ Module ModMisc
 
     End Function
 
+    '**********************************************************************************************
     'Use to read data only
     'inopt = CUP check user password.
     'fldchk = company record exists but address1 empty
@@ -142,14 +143,13 @@ Module ModMisc
     'MSEC = read security levels for menu show and active. 1 1
     'ALLM = all menus in an array
     'NCST= read count of cust for new custom if exists
-    'APPL=Application lock read
+    '**********************************************************************************************
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
         Dim tsql As String = String.Empty
         Dim fldtext As String = String.Empty
         Dim retint As Integer = 0
         Dim F As Integer = 0
-        Dim AppLockings As AppLocks = New AppLocks()
 
         GlobalVariables.GL_Stat = False
         ReadSQL = Nothing
@@ -194,7 +194,6 @@ Module ModMisc
                         GlobalVariables.Tmpuserrecord.MyusrPassword = myReader.GetString(11)
                         GlobalVariables.Tmpuserrecord.Myusrmode = myReader.GetString(12)
                         GlobalVariables.Tmpuserrecord.Myusrseclvl = myReader.GetValue(13)
-
                         ReadSQL = GlobalVariables.Tmpuserrecord
                         GlobalVariables.GL_Stat = True
                     ElseIf (inopt = "usridcnt" Or inopt = "NCST") Then
@@ -205,16 +204,6 @@ Module ModMisc
                         ModRegSec.tMyMenus(F) = myReader.GetValue(0) & ":" & myReader.GetValue(1) & ":" & myReader.GetValue(2).ToString & ":" & myReader.GetValue(3).ToString
                         F = F + 1
                         ReadSQL = True
-                        GlobalVariables.GL_Stat = True
-                    ElseIf (inopt = "APPL") Then
-                        AppLockings.MyID = myReader.GetValue(0)
-                        AppLockings.MyUserid = myReader.GetString(1)
-                        AppLockings.MyFormname = myReader.GetString(2)
-                        AppLockings.Myctrlname = myReader.GetString(3)
-                        AppLockings.Myctrlvalue = myReader.GetString(4)
-                        AppLockings.Myctrlopert = myReader.GetString(5)
-                        AppLockings.Mylockeddate = myReader.GetDateTime(6)
-                        ReadSQL = AppLockings
                         GlobalVariables.GL_Stat = True
                     End If
                 Loop

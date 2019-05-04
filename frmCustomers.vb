@@ -168,19 +168,16 @@ Public Class frmCustomers
 
             'check if locked
             GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks where FormName = 'Customer' and ctrlname = 'Customer' and ctrlvalue = '" & selcustid & "'"
-            AppCustLocks = ModMisc.ReadSQL("APPL", "")
+            AppCustLocks = AppLocking.GetLockRec("APPL")
             If (GlobalVariables.GL_Stat = False) Then
-                'lock it
-                GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','Customer','Customer','" & selcustid & "','" & seluw2 & "','" & Now() & "')"
-                If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                    MsgBox("Error Creating Lock Record!")
+                If (AppLocking.WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+                    terr = "Error Creating Lock Record!"
                     GoTo EDIT_EXIT
                 End If
             Else
                 'check if same user or another
                 If (AppCustLocks.MyFormname = "Customer" And AppCustLocks.Myctrlname = "Customer" And AppCustLocks.Myctrlvalue = selcustid) Then
-                    MsgBox("record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid)
-                    terr = "X"
+                    terr = "record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid
                     GoTo EDIT_EXIT
                 End If
             End If
@@ -195,8 +192,7 @@ EDIT_EXIT:
         If (terr <> "" And terr <> "X") Then
             txtmsg.Text = terr
             txtmsg.Visible = True
-
-            Timer1.Interval = 3000 'ms
+            Timer1.Interval = 5000 'ms
             Timer1.Start()
         End If
         EditEntry = terr

@@ -121,7 +121,7 @@ Partial Class frmCustomers
         Me.GBSelect.Controls.Add(Me.SplitContainer1)
         Me.GBSelect.Location = New System.Drawing.Point(2, -2)
         Me.GBSelect.Name = "GBSelect"
-        Me.GBSelect.Size = New System.Drawing.Size(1426, 85)
+        Me.GBSelect.Size = New System.Drawing.Size(1426, 104)
         Me.GBSelect.TabIndex = 0
         Me.GBSelect.TabStop = False
         Me.GBSelect.Text = "Select Customer"
@@ -146,7 +146,7 @@ Partial Class frmCustomers
         '
         Me.SplitContainer1.Panel2.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.SplitContainer1.Panel2.Controls.Add(Me.GroupBox1)
-        Me.SplitContainer1.Size = New System.Drawing.Size(1420, 66)
+        Me.SplitContainer1.Size = New System.Drawing.Size(1420, 85)
         Me.SplitContainer1.SplitterDistance = 473
         Me.SplitContainer1.TabIndex = 0
         '
@@ -215,7 +215,7 @@ Partial Class frmCustomers
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Location = New System.Drawing.Point(6, 2)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(933, 64)
+        Me.GroupBox1.Size = New System.Drawing.Size(933, 80)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Existing Customers"
@@ -223,7 +223,7 @@ Partial Class frmCustomers
         'cmbSelType
         '
         Me.cmbSelType.FormattingEnabled = True
-        Me.cmbSelType.Location = New System.Drawing.Point(461, 10)
+        Me.cmbSelType.Location = New System.Drawing.Point(358, 26)
         Me.cmbSelType.Name = "cmbSelType"
         Me.cmbSelType.Size = New System.Drawing.Size(117, 21)
         Me.cmbSelType.TabIndex = 8
@@ -231,7 +231,7 @@ Partial Class frmCustomers
         'Label24
         '
         Me.Label24.AutoSize = True
-        Me.Label24.Location = New System.Drawing.Point(374, 13)
+        Me.Label24.Location = New System.Drawing.Point(278, 31)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(81, 13)
         Me.Label24.TabIndex = 7
@@ -240,7 +240,7 @@ Partial Class frmCustomers
         'chslactonly
         '
         Me.chslactonly.AutoSize = True
-        Me.chslactonly.Location = New System.Drawing.Point(267, 12)
+        Me.chslactonly.Location = New System.Drawing.Point(358, 4)
         Me.chslactonly.Name = "chslactonly"
         Me.chslactonly.Size = New System.Drawing.Size(80, 17)
         Me.chslactonly.TabIndex = 6
@@ -250,17 +250,18 @@ Partial Class frmCustomers
         'txtmsg
         '
         Me.txtmsg.BackColor = System.Drawing.Color.LemonChiffon
-        Me.txtmsg.Location = New System.Drawing.Point(461, 39)
+        Me.txtmsg.Location = New System.Drawing.Point(555, 8)
+        Me.txtmsg.Multiline = True
         Me.txtmsg.Name = "txtmsg"
-        Me.txtmsg.Size = New System.Drawing.Size(361, 20)
+        Me.txtmsg.Size = New System.Drawing.Size(378, 66)
         Me.txtmsg.TabIndex = 5
         '
         'cmdLoadCust
         '
         Me.cmdLoadCust.BackColor = System.Drawing.Color.Azure
-        Me.cmdLoadCust.Location = New System.Drawing.Point(850, 17)
+        Me.cmdLoadCust.Location = New System.Drawing.Point(481, 24)
         Me.cmdLoadCust.Name = "cmdLoadCust"
-        Me.cmdLoadCust.Size = New System.Drawing.Size(68, 34)
+        Me.cmdLoadCust.Size = New System.Drawing.Size(68, 50)
         Me.cmdLoadCust.TabIndex = 4
         Me.cmdLoadCust.Text = "Load Customer"
         Me.cmdLoadCust.UseVisualStyleBackColor = False
@@ -268,15 +269,15 @@ Partial Class frmCustomers
         'cmbCustName
         '
         Me.cmbCustName.FormattingEnabled = True
-        Me.cmbCustName.Location = New System.Drawing.Point(94, 40)
+        Me.cmbCustName.Location = New System.Drawing.Point(94, 53)
         Me.cmbCustName.Name = "cmbCustName"
-        Me.cmbCustName.Size = New System.Drawing.Size(361, 21)
+        Me.cmbCustName.Size = New System.Drawing.Size(381, 21)
         Me.cmbCustName.TabIndex = 3
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(6, 39)
+        Me.Label4.Location = New System.Drawing.Point(6, 56)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(85, 13)
         Me.Label4.TabIndex = 2
@@ -285,15 +286,15 @@ Partial Class frmCustomers
         'cmbCustID
         '
         Me.cmbCustID.FormattingEnabled = True
-        Me.cmbCustID.Location = New System.Drawing.Point(94, 15)
+        Me.cmbCustID.Location = New System.Drawing.Point(94, 23)
         Me.cmbCustID.Name = "cmbCustID"
-        Me.cmbCustID.Size = New System.Drawing.Size(136, 21)
+        Me.cmbCustID.Size = New System.Drawing.Size(120, 21)
         Me.cmbCustID.TabIndex = 1
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(23, 18)
+        Me.Label3.Location = New System.Drawing.Point(23, 26)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(68, 13)
         Me.Label3.TabIndex = 0
@@ -303,10 +304,10 @@ Partial Class frmCustomers
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
-        Me.TabControl1.Location = New System.Drawing.Point(5, 86)
+        Me.TabControl1.Location = New System.Drawing.Point(5, 105)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1420, 733)
+        Me.TabControl1.Size = New System.Drawing.Size(1420, 714)
         Me.TabControl1.TabIndex = 1
         '
         'TabPage1
@@ -319,7 +320,7 @@ Partial Class frmCustomers
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1412, 707)
+        Me.TabPage1.Size = New System.Drawing.Size(1412, 688)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Info"
         '

@@ -1,4 +1,6 @@
-﻿Module AppLocking
+﻿Imports System.Data.SqlClient
+
+Module AppLocking
 
     Public Class AppLocks
 
@@ -82,5 +84,66 @@
         End Property
 
     End Class
+
+    Public Function GetLockRec(ByVal inopt As String) As Object
+
+        Dim myCmd As SqlCommand
+        Dim myReader As SqlDataReader = Nothing
+        Dim AppLockings As AppLocks = New AppLocks()
+
+        GlobalVariables.GL_Stat = False
+        GetLockRec = Nothing
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            Try
+                myCmd = mysqlConn.CreateCommand
+                myCmd.CommandText = GlobalVariables.Gl_SQLStr
+                mysqlConn.Open()
+
+                myReader = myCmd.ExecuteReader()
+                Do While myReader.Read()
+                    If (inopt = "APPL") Then
+                        AppLockings.MyID = myReader.GetValue(0)
+                        AppLockings.MyUserid = myReader.GetString(1)
+                        AppLockings.MyFormname = myReader.GetString(2)
+                        AppLockings.Myctrlname = myReader.GetString(3)
+                        AppLockings.Myctrlvalue = myReader.GetString(4)
+                        AppLockings.Myctrlopert = myReader.GetString(5)
+                        AppLockings.Mylockeddate = myReader.GetDateTime(6)
+                        GetLockRec = AppLockings
+                        GlobalVariables.GL_Stat = True
+                    End If
+                Loop
+
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+            Finally
+                If Not (myReader Is Nothing) Then
+                    myReader.Close()
+                End If
+                If Not (mysqlConn Is Nothing) Then
+                    mysqlConn.Close()
+                End If
+            End Try
+        End Using
+
+    End Function
+
+    'inoper - W=Write, D=Delete log.
+    Public Function WriteDelLock(ByVal inoper As String, ByVal infrmName As String, ByVal inctrlName As String, ByVal inctrlval As String, ByVal inwrupd As String) As Boolean
+
+        WriteDelLock = False
+        'WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+        If (inoper = "W") Then
+            WriteDelLock = True
+            GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','" & infrmName & "','" & inctrlName & "','" & inctrlval & "','" & inwrupd & "','" & Now() & "')"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                WriteDelLock = False
+            End If
+        End If
+
+        WriteDelLock = True
+
+    End Function
 
 End Module
