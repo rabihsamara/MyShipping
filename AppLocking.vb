@@ -117,6 +117,7 @@ Module AppLocking
 
             Catch ex As Exception
                 MsgBox(ex.ToString)
+                GlobalVariables.GL_Stat = False
             Finally
                 If Not (myReader Is Nothing) Then
                     myReader.Close()
@@ -130,17 +131,21 @@ Module AppLocking
     End Function
 
     'inoper - W=Write, D=Delete log.
-    Public Function WriteDelLock(ByVal inoper As String, ByVal infrmName As String, ByVal inctrlName As String, ByVal inctrlval As String, ByVal inwrupd As String) As Boolean
+    Public Function WriteDelLock(ByVal inoper As String, Optional slid As Integer = 0, Optional ByVal infrmName As String = "", Optional ByVal inctrlName As String = "", Optional ByVal inctrlval As String = "", Optional ByVal inwrupd As String = "") As Boolean
 
         WriteDelLock = True
-        'WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+
         If (inoper = "W") Then
             GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','" & infrmName & "','" & inctrlName & "','" & inctrlval & "','" & inwrupd & "','" & Now() & "')"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 WriteDelLock = False
             End If
         ElseIf (inoper = "D") Then
-            GlobalVariables.Gl_SQLStr = "delete from AppLocks where Userid = '" & GlobalVariables.Gl_LogUserID & "',' and Formname = '" & infrmName & ", and ctrlname = " & inctrlName & "'"
+            If (slid <> 0) Then
+                GlobalVariables.Gl_SQLStr = "delete from AppLocks where ID = " & slid
+            Else
+                GlobalVariables.Gl_SQLStr = "delete from AppLocks where Userid = '" & GlobalVariables.Gl_LogUserID & "' and Formname = '" & infrmName & "' and ctrlname = '" & inctrlName & "'"
+            End If
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 WriteDelLock = False
             End If

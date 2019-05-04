@@ -140,7 +140,7 @@ Public Class frmCustomers
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
                     'lock record
-                    If (AppLocking.WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+                    If (AppLocking.WriteDelLock("W", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
                         terr = "Error Creating Lock Record!"
                         GoTo EDIT_EXIT
                     End If
@@ -173,7 +173,7 @@ Public Class frmCustomers
             GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks where FormName = 'Customer' and ctrlname = 'Customer' and ctrlvalue = '" & selcustid & "'"
             AppCustLocks = AppLocking.GetLockRec("APPL")
             If (GlobalVariables.GL_Stat = False) Then
-                If (AppLocking.WriteDelLock("W", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+                If (AppLocking.WriteDelLock("W", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
                     terr = "Error Creating Lock Record!"
                     GoTo EDIT_EXIT
                 End If
@@ -259,7 +259,7 @@ EDIT_EXIT:
 
 
         'release log 
-        If (AppLocking.WriteDelLock("D", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+        If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
             MsgBox("Error deting Lock record!")
         End If
 
@@ -487,10 +487,10 @@ EDIT_EXIT:
 
 
 
-        If (AppLocking.WriteDelLock("D", "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
-            terr = "Error Creating Lock Record!"
-            GoTo EDIT_EXIT
+        If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+            MsgBox("Error Creating Lock Record!")
         End If
+
     End Sub
 
 End Class
