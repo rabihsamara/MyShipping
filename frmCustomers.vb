@@ -186,7 +186,7 @@ Public Class frmCustomers
             End If
 
             'load data to screen
-
+            ModUpdates.UpdateFormData("LCS", Me)
             LoadCombCountries("ACT", seluw2)
 
         End If

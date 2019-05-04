@@ -50,7 +50,7 @@ Partial Class frmCustomers
         Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.cmdSaveShpto = New System.Windows.Forms.Button()
-        Me.cmdShpID = New System.Windows.Forms.ComboBox()
+        Me.cmbShpID = New System.Windows.Forms.ComboBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.cmdSaveshipasinfo = New System.Windows.Forms.Button()
         Me.cmdShSaveBill = New System.Windows.Forms.Button()
@@ -360,7 +360,7 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.Controls.Add(Me.cmbSHCountry)
         Me.GBShipToAdd1.Controls.Add(Me.Label28)
         Me.GBShipToAdd1.Controls.Add(Me.cmdSaveShpto)
-        Me.GBShipToAdd1.Controls.Add(Me.cmdShpID)
+        Me.GBShipToAdd1.Controls.Add(Me.cmbShpID)
         Me.GBShipToAdd1.Controls.Add(Me.Label25)
         Me.GBShipToAdd1.Controls.Add(Me.cmdSaveshipasinfo)
         Me.GBShipToAdd1.Controls.Add(Me.cmdShSaveBill)
@@ -411,13 +411,13 @@ Partial Class frmCustomers
         Me.cmdSaveShpto.Text = "Save Shipto ID"
         Me.cmdSaveShpto.UseVisualStyleBackColor = False
         '
-        'cmdShpID
+        'cmbShpID
         '
-        Me.cmdShpID.FormattingEnabled = True
-        Me.cmdShpID.Location = New System.Drawing.Point(65, 20)
-        Me.cmdShpID.Name = "cmdShpID"
-        Me.cmdShpID.Size = New System.Drawing.Size(117, 21)
-        Me.cmdShpID.TabIndex = 27
+        Me.cmbShpID.FormattingEnabled = True
+        Me.cmbShpID.Location = New System.Drawing.Point(65, 20)
+        Me.cmbShpID.Name = "cmbShpID"
+        Me.cmbShpID.Size = New System.Drawing.Size(117, 21)
+        Me.cmbShpID.TabIndex = 27
         '
         'Label25
         '
@@ -872,7 +872,7 @@ Partial Class frmCustomers
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1412, 707)
+        Me.TabPage2.Size = New System.Drawing.Size(1412, 688)
         Me.TabPage2.TabIndex = 1
         Me.TabPage2.Text = "Details"
         '
@@ -976,7 +976,7 @@ Partial Class frmCustomers
     Friend WithEvents Label23 As Label
     Friend WithEvents cmbSelType As ComboBox
     Friend WithEvents Label24 As Label
-    Friend WithEvents cmdShpID As ComboBox
+    Friend WithEvents cmbShpID As ComboBox
     Friend WithEvents Label25 As Label
     Friend WithEvents cmdSaveshipasinfo As Button
     Friend WithEvents cmdShSaveBill As Button

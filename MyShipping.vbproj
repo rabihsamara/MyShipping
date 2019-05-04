@@ -157,6 +157,7 @@
     </Compile>
     <Compile Include="ModMisc.vb" />
     <Compile Include="ModRegSec.vb" />
+    <Compile Include="ModUpdates.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
