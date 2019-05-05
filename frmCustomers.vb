@@ -129,7 +129,7 @@ Public Class frmCustomers
             Else
                 'create new customer message
                 seluw = "I"
-                seluw2 = "I"
+                seluw2 = "IU"
                 inCustName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(inCustName.Text)
 
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
@@ -141,8 +141,8 @@ Public Class frmCustomers
                         GoTo EDIT_EXIT
                     End If
                     terr = "Customer Created Successfully!"
-                    seluw = "U"
                     CIName.Text = Trim(inCustName.Text)
+                    selcustid = Trim(inCustID.Text)
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
                     'lock record
@@ -193,7 +193,7 @@ Public Class frmCustomers
 
             'load data to screen
             LoadCombCountries("ACT", seluw2)
-
+            ModUpdates.UpdateFormData("LCS", Me, "Customers", selcustid)
         End If
 
 EDIT_EXIT:
@@ -320,7 +320,7 @@ EDIT_EXIT:
     '*          CCT=customer info   Combo country
     '*          BCT=Customer bill   Combo country
     '*          SCT=Customer shipto Combo country
-    '* inmode - I=insert, U=Update
+    '* inmode - IU=insert, U=Update
     '************************************************************************************************************
     Private Sub LoadCombCountries(ByVal inopt As String, ByVal inmode As String)
 
@@ -489,10 +489,14 @@ EDIT_EXIT:
     'save customer
     Private Sub CmdSaveCust_Click(sender As Object, e As EventArgs) Handles cmdSaveCust.Click
 
-        ModUpdates.UpdateFormData("LCS", Me, "Customers")
+        Dim topert As String = "LC" & seluw2
 
+        GlobalVariables.Gl_tmpactive = 0
+        If (chCIactive.Checked = True) Then
+            GlobalVariables.Gl_tmpactive = 1
+        End If
 
-
+        ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid)
         If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
             MsgBox("Error Creating Lock Record!")
         End If

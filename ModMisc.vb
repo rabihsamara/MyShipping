@@ -432,9 +432,9 @@ Exit_Excel:
     End Function
 
     '******************************************************************************************************************
-    ' Procedure: InsertTransData - It will Insert, update Transaction record and adjust balance value.
+    ' Procedure:  not used yet
     '******************************************************************************************************************
-    Public Sub RunProcedure(ByVal mytransRec As mytransRecord)
+    Public Sub RunProcedure()
 
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
@@ -444,26 +444,8 @@ Exit_Excel:
             sqlCmd.CommandText = "InsertTransData"
             sqlCmd.CommandType = CommandType.StoredProcedure
 
-            sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
-            sqlCmd.Parameters.AddWithValue("@ptransentid", mytransRec.Transptransentid)
-            sqlCmd.Parameters.AddWithValue("@ptranstype", mytransRec.Transptranstype)
-            sqlCmd.Parameters.AddWithValue("@ptransmode", mytransRec.Transptransmode)
-            sqlCmd.Parameters.AddWithValue("@ptransFrom", mytransRec.TransptransFrom)
-            sqlCmd.Parameters.AddWithValue("@ptranspayto", mytransRec.Transptranspayto)
-            sqlCmd.Parameters.AddWithValue("@ptranspaytofor", mytransRec.Transptranspaytofor)
-            sqlCmd.Parameters.AddWithValue("@ptranscat", mytransRec.Transptranscat)
-            sqlCmd.Parameters.AddWithValue("@ptranssubcat", mytransRec.Transptranssubcat)
-            sqlCmd.Parameters.AddWithValue("@ptranssubcat2", mytransRec.Transptranssubcat2)
-            sqlCmd.Parameters.AddWithValue("@ptransaentnum", mytransRec.Transptransaentnum)
-            sqlCmd.Parameters.AddWithValue("@ptransdate", mytransRec.Transptransdate)
-            sqlCmd.Parameters.AddWithValue("@ptransstat", mytransRec.Transptransstat)
-            sqlCmd.Parameters.AddWithValue("@ptransamount", mytransRec.Transptransamount)
-            sqlCmd.Parameters.AddWithValue("@ptransowner", mytransRec.Transptransowner)
-            sqlCmd.Parameters.AddWithValue("@ptransinformation", mytransRec.Transptransinformation)
-            sqlCmd.Parameters.AddWithValue("@ptransrecurr", mytransRec.Transptransrecurr)
-            sqlCmd.Parameters.AddWithValue("@Pbalance", mytransRec.TransPbalance)
-            sqlCmd.Parameters.AddWithValue("@Popert", mytransRec.TransPopert)
-            sqlCmd.Parameters.AddWithValue("@Pmyid", mytransRec.TransPmyid)
+            'sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
+
 
             mysqlConn.Open()
             sqlCmd.ExecuteNonQuery()
@@ -501,6 +483,7 @@ Exit_Excel:
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *
     '***********************************************************************************************
+
     Public Sub Closeforms(ByVal infrm As String)
 
         Dim formNames As New List(Of String)
@@ -524,7 +507,7 @@ Exit_Excel:
 
 
     '********************************************************************************************
-    '*                                    Tmp Function                                          *
+    '*                                    Tmp Functions                                         *
     '********************************************************************************************
     ' to get list of all tables Select Myshipping.INFORMATION_SCHEMA.TABLES.TABLE_NAME  from  Myshipping.INFORMATION_SCHEMA.TABLES
     ' to get table columns Select INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME from Myshipping.INFORMATION_SCHEMA.COLUMNS  where table_name = N'cities'

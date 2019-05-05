@@ -83,6 +83,7 @@ Partial Class frmCustomers
         Me.BLName = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GBcustAdd1 = New System.Windows.Forms.GroupBox()
+        Me.chCIactive = New System.Windows.Forms.CheckBox()
         Me.cmbCICountry = New System.Windows.Forms.ComboBox()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.cmbCustType = New System.Windows.Forms.ComboBox()
@@ -101,7 +102,6 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.chCIactive = New System.Windows.Forms.CheckBox()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -724,6 +724,16 @@ Partial Class frmCustomers
         Me.GBcustAdd1.TabStop = False
         Me.GBcustAdd1.Text = "Customer Information"
         '
+        'chCIactive
+        '
+        Me.chCIactive.AutoSize = True
+        Me.chCIactive.Location = New System.Drawing.Point(254, 154)
+        Me.chCIactive.Name = "chCIactive"
+        Me.chCIactive.Size = New System.Drawing.Size(56, 17)
+        Me.chCIactive.TabIndex = 17
+        Me.chCIactive.Text = "Active"
+        Me.chCIactive.UseVisualStyleBackColor = True
+        '
         'cmbCICountry
         '
         Me.cmbCICountry.FormattingEnabled = True
@@ -869,16 +879,6 @@ Partial Class frmCustomers
         'Timer1
         '
         '
-        'chCIactive
-        '
-        Me.chCIactive.AutoSize = True
-        Me.chCIactive.Location = New System.Drawing.Point(254, 154)
-        Me.chCIactive.Name = "chCIactive"
-        Me.chCIactive.Size = New System.Drawing.Size(56, 17)
-        Me.chCIactive.TabIndex = 17
-        Me.chCIactive.Text = "Active"
-        Me.chCIactive.UseVisualStyleBackColor = True
-        '
         'frmCustomers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -886,6 +886,7 @@ Partial Class frmCustomers
         Me.AutoSize = True
         Me.BackColor = System.Drawing.SystemColors.GradientActiveCaption
         Me.ClientSize = New System.Drawing.Size(1440, 821)
+        Me.ControlBox = False
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.GBSelect)
         Me.Name = "frmCustomers"
