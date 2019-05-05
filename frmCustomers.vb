@@ -87,7 +87,13 @@ Public Class frmCustomers
 
     'Exit customer screen
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
+
+        'release log 
+        If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
+            MsgBox("Error deting Lock record!")
+        End If
         Me.Close()
+
     End Sub
 
     'Load existing customer
@@ -129,7 +135,7 @@ Public Class frmCustomers
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
                     'Ok create new cust. load screen to database
-                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CustName, CustType, Custactive) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "','PR',1)"
+                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CIName, cmbCustType, chCIactive) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "','PR',1)"
                     If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                         MsgBox("Error Creating new Customer!")
                         GoTo EDIT_EXIT
@@ -161,7 +167,7 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CustName,CustType,Custactive From customers where CustID = '" & selcustid & "'", "select CustID,CustName, Custtype, Custactive From customers where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT

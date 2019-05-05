@@ -79,18 +79,18 @@ Module ModMisc
                 tsql = "Select concat(custtype,' - ',typename) as ctype from custtype where typeactive = 1 order by ID"
             ElseIf (callby.substring(0, 3) = "CRI") Then
                 tsql = "SELECT CustID  FROM Customers"
-                If (callby = "CRIA" Or callby = "CRIACS" Or callby = "CRIAPR" Or callby = "CRIAAL") Then tsql = tsql & " where CustActive = 1"
+                If (callby = "CRIA" Or callby = "CRIACS" Or callby = "CRIAPR" Or callby = "CRIAAL") Then tsql = tsql & " where chCIactive = 1"
                 If (callby = "CRIACS" Or callby = "CRIAPR") Then
-                    tsql = tsql & " and custtype = '" & callby.Substring(4, 2) & "'"
+                    tsql = tsql & " and cmbCustType = '" & callby.Substring(4, 2) & "'"
                 End If
                 tsql = tsql & " order by CustID asc"
             ElseIf (callby.substring(0, 3) = "CRN") Then
-                tsql = "Select CustName  FROM Customers"
-                If (callby = "CRNA" Or callby = "CRNACS" Or callby = "CRNAPR" Or callby = "CRNAAL") Then tsql = tsql & " where CustActive = 1"
+                tsql = "Select CIName  FROM Customers"
+                If (callby = "CRNA" Or callby = "CRNACS" Or callby = "CRNAPR" Or callby = "CRNAAL") Then tsql = tsql & " where chCIactive = 1"
                 If (callby = "CRNACS" Or callby = "CRNAPR") Then
-                    tsql = tsql & " and Custtype = '" & callby.Substring(4, 2) & "'"
+                    tsql = tsql & " and cmbCustType = '" & callby.Substring(4, 2) & "'"
                 End If
-                tsql = tsql & " order by CustName asc"
+                tsql = tsql & " order by CIName asc"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
