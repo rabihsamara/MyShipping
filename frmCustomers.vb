@@ -199,7 +199,6 @@ Public Class frmCustomers
 
             'load data to screen
             LoadCombCountries("ACT", seluw2)
-            'ModUpdates.UpdateFormData("LCS", Me, "Customers", selcustid)
             LoadCustScreen("Customers")
         End If
 
@@ -233,9 +232,7 @@ EDIT_EXIT:
             sTable = sDs.Tables(crtable)
 
             If sTable.Rows.Count > 0 Then
-
                 ControlsRecr(Me.Controls)
-
                 LoadCustScreen = True
             End If
 
@@ -277,7 +274,6 @@ EDIT_EXIT:
         If (ctrlname.Substring(1, 2) <> "in") Then
             isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)
             If ((isInString = True) Or ctrltype = "RadioButton") Then
-                MsgBox(ctrlname)
                 If (ctrlname = "chCIactive") Then
                     LoadFormControls = If(ctrlvalue = "1", 1, 0)
                 Else
