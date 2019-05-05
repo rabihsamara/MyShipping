@@ -28,6 +28,7 @@ Public Class GlobalVariables
     Public Shared Property GL_SecContcalledBy As String
     Public Shared Property GL_mshow As Integer
     Public Shared Property GL_mactive As Integer
+    Public Shared Property typeAR As String = "CheckBox,CheckedListBox,ComboBox,ListBox,ListView,Radio,Richtextbox,TextBox"
 
 End Class
 

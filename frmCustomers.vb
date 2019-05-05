@@ -29,6 +29,12 @@ Public Class frmCustomers
     Private Custrecord As Customers = New Customers()
     Private AppCustLocks As AppLocks = New AppLocks()
 
+    Dim sCommand As SqlCommand
+    Dim sAdapter As SqlDataAdapter
+    Dim sBuilder As SqlCommandBuilder
+    Dim sDs As DataSet
+    Dim sTable As DataTable
+
     Private Sub FrmCustomers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         RunClassGen() 'tmp
 
@@ -193,7 +199,8 @@ Public Class frmCustomers
 
             'load data to screen
             LoadCombCountries("ACT", seluw2)
-            ModUpdates.UpdateFormData("LCS", Me, "Customers", selcustid)
+            'ModUpdates.UpdateFormData("LCS", Me, "Customers", selcustid)
+            LoadCustScreen("Customers")
         End If
 
 EDIT_EXIT:
@@ -206,6 +213,83 @@ EDIT_EXIT:
         EditEntry = terr
 
     End Function
+
+    '****************************************************************************************
+    '* Load data to screen
+    '****************************************************************************************
+    Private Function LoadCustScreen(ByVal crtable As String) As Boolean
+
+        Dim sql As String = "SELECT * FROM " & crtable & " where Custid = '" & selcustid & "'"
+
+        LoadCustScreen = False
+
+        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            connection.Open()
+            sCommand = New SqlCommand(sql, connection)
+            sAdapter = New SqlDataAdapter(sCommand)
+            sBuilder = New SqlCommandBuilder(sAdapter)
+            sDs = New DataSet()
+            sAdapter.Fill(sDs, crtable)
+            sTable = sDs.Tables(crtable)
+
+            If sTable.Rows.Count > 0 Then
+
+                ControlsRecr(Me.Controls)
+
+                LoadCustScreen = True
+            End If
+
+            connection.Close()
+
+        End Using
+
+    End Function
+
+    Private Sub ControlsRecr(ByVal controls As Control.ControlCollection)
+
+        Dim tmpval As String = ""
+
+        For Each ctrl As Control In controls
+            If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
+                'MsgBox(ctrl.Name & " - " & ctrl.GetType.Name & " - " & ctrl.Text)
+                tmpval = LoadFormControls(ctrl.Name, ctrl.GetType.Name, ctrl.Text)
+                If GlobalVariables.GL_Stat = True Then
+                    If (ctrl.Name = "chCIactive") Then
+                        If (tmpval = "1") Then
+                            chCIactive.Checked = True
+                        End If
+                    Else
+                        ctrl.Text = tmpval
+                    End If
+
+                End If
+                ControlsRecr(ctrl.Controls)
+            End If
+        Next
+
+    End Sub
+
+    Private Function LoadFormControls(ByVal ctrlname As String, ByVal ctrltype As String, ByVal ctrlvalue As String) As Object
+
+        Dim isInString As Boolean = False
+
+        GlobalVariables.GL_Stat = False
+        If (ctrlname.Substring(1, 2) <> "in") Then
+            isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)
+            If ((isInString = True) Or ctrltype = "RadioButton") Then
+                MsgBox(ctrlname)
+                If (ctrlname = "chCIactive") Then
+                    LoadFormControls = If(ctrlvalue = "1", 1, 0)
+                Else
+                    LoadFormControls = sTable.Rows(0)(ctrlname).ToString()
+                End If
+                GlobalVariables.GL_Stat = True
+            End If
+        End If
+
+    End Function
+
+    '*************************************** End of Load data to screen functions ***************************************
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Timer1.Stop()

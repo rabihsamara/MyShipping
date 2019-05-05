@@ -13,6 +13,12 @@ Module ModUpdates
     Private updsql2 As String = ""
     Private updsql3 As String = ""
 
+    Dim sCommand As SqlCommand
+    Dim sAdapter As SqlDataAdapter
+    Dim sBuilder As SqlCommandBuilder
+    Dim sDs As DataSet
+    Dim sTable As DataTable
+
     '************************************************************
     'inopert - LCS  = load customer data
     '        - LCIU = Insert new - update customer data to database
@@ -31,15 +37,9 @@ Module ModUpdates
         ControlsRecr(infrm.Controls) 'Get all controls in a form into arraylist al
 
         If (Left(inopert, 2) = "LC") Then ' customers table
-
             If (inopert = "LCIU" Or inopert = "LCU") Then
                 UpdateFormData = UpdateCustomers()
             End If
-
-            If (inopert = "LCS") Then
-                UpdateFormData = LoadCustScreen(infrm.Controls)
-            End If
-
         End If
 
         DisplayControls() ' debugging
@@ -57,41 +57,6 @@ Module ModUpdates
 
     End Sub
 
-    Private Function LoadCustScreen(ByVal controls As Control.ControlCollection) As Boolean
-
-        Dim sCommand As SqlCommand
-        Dim sAdapter As SqlDataAdapter
-        Dim sBuilder As SqlCommandBuilder
-        Dim sDs As DataSet
-        Dim sTable As DataTable
-        Dim tfvalue As String = ""
-
-        Dim sql As String = "SELECT * FROM " & crtable & " where Custid = '" & crselID & "'"
-
-        LoadCustScreen = False
-
-        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-            connection.Open()
-            sCommand = New SqlCommand(sql, connection)
-            sAdapter = New SqlDataAdapter(sCommand)
-            sBuilder = New SqlCommandBuilder(sAdapter)
-            sDs = New DataSet()
-            sAdapter.Fill(sDs, "users")
-            sTable = sDs.Tables("users")
-
-
-            If sTable.Rows.Count > 0 Then
-                tfvalue = sTable.Rows(0)("CIName").ToString()
-            End If
-
-            MsgBox(tfvalue)
-
-
-            connection.Close()
-            LoadCustScreen = True
-        End Using
-
-    End Function
 
     Private Function UpdateCustomers() As Boolean
 
