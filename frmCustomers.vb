@@ -186,7 +186,6 @@ Public Class frmCustomers
             End If
 
             'load data to screen
-            ModUpdates.UpdateFormData("LCS", Me)
             LoadCombCountries("ACT", seluw2)
 
         End If
@@ -484,6 +483,7 @@ EDIT_EXIT:
     'save customer
     Private Sub CmdSaveCust_Click(sender As Object, e As EventArgs) Handles cmdSaveCust.Click
 
+        ModUpdates.UpdateFormData("LCS", Me, "Customers")
 
 
 
