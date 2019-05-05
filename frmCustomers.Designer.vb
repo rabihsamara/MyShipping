@@ -32,14 +32,14 @@ Partial Class frmCustomers
         Me.inCustName = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.cmbSelType = New System.Windows.Forms.ComboBox()
+        Me.incmbSelType = New System.Windows.Forms.ComboBox()
         Me.Label24 = New System.Windows.Forms.Label()
-        Me.chslactonly = New System.Windows.Forms.CheckBox()
+        Me.inchslactonly = New System.Windows.Forms.CheckBox()
         Me.txtmsg = New System.Windows.Forms.TextBox()
         Me.cmdLoadCust = New System.Windows.Forms.Button()
-        Me.cmbCustName = New System.Windows.Forms.ComboBox()
+        Me.incmbCustName = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.cmbCustID = New System.Windows.Forms.ComboBox()
+        Me.incmbCustID = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -87,7 +87,6 @@ Partial Class frmCustomers
         Me.Label26 = New System.Windows.Forms.Label()
         Me.cmbCustType = New System.Windows.Forms.ComboBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.chCIactive = New System.Windows.Forms.CheckBox()
         Me.CIpcode = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.cmbCIProv = New System.Windows.Forms.ComboBox()
@@ -102,6 +101,7 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.chCIactive = New System.Windows.Forms.CheckBox()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -204,14 +204,14 @@ Partial Class frmCustomers
         '
         'GroupBox1
         '
-        Me.GroupBox1.Controls.Add(Me.cmbSelType)
+        Me.GroupBox1.Controls.Add(Me.incmbSelType)
         Me.GroupBox1.Controls.Add(Me.Label24)
-        Me.GroupBox1.Controls.Add(Me.chslactonly)
+        Me.GroupBox1.Controls.Add(Me.inchslactonly)
         Me.GroupBox1.Controls.Add(Me.txtmsg)
         Me.GroupBox1.Controls.Add(Me.cmdLoadCust)
-        Me.GroupBox1.Controls.Add(Me.cmbCustName)
+        Me.GroupBox1.Controls.Add(Me.incmbCustName)
         Me.GroupBox1.Controls.Add(Me.Label4)
-        Me.GroupBox1.Controls.Add(Me.cmbCustID)
+        Me.GroupBox1.Controls.Add(Me.incmbCustID)
         Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Location = New System.Drawing.Point(6, 2)
         Me.GroupBox1.Name = "GroupBox1"
@@ -220,13 +220,13 @@ Partial Class frmCustomers
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Existing Customers"
         '
-        'cmbSelType
+        'incmbSelType
         '
-        Me.cmbSelType.FormattingEnabled = True
-        Me.cmbSelType.Location = New System.Drawing.Point(358, 26)
-        Me.cmbSelType.Name = "cmbSelType"
-        Me.cmbSelType.Size = New System.Drawing.Size(117, 21)
-        Me.cmbSelType.TabIndex = 8
+        Me.incmbSelType.FormattingEnabled = True
+        Me.incmbSelType.Location = New System.Drawing.Point(358, 26)
+        Me.incmbSelType.Name = "incmbSelType"
+        Me.incmbSelType.Size = New System.Drawing.Size(117, 21)
+        Me.incmbSelType.TabIndex = 8
         '
         'Label24
         '
@@ -237,15 +237,15 @@ Partial Class frmCustomers
         Me.Label24.TabIndex = 7
         Me.Label24.Text = "Customer Type:"
         '
-        'chslactonly
+        'inchslactonly
         '
-        Me.chslactonly.AutoSize = True
-        Me.chslactonly.Location = New System.Drawing.Point(358, 4)
-        Me.chslactonly.Name = "chslactonly"
-        Me.chslactonly.Size = New System.Drawing.Size(80, 17)
-        Me.chslactonly.TabIndex = 6
-        Me.chslactonly.Text = "Active Only"
-        Me.chslactonly.UseVisualStyleBackColor = True
+        Me.inchslactonly.AutoSize = True
+        Me.inchslactonly.Location = New System.Drawing.Point(358, 4)
+        Me.inchslactonly.Name = "inchslactonly"
+        Me.inchslactonly.Size = New System.Drawing.Size(80, 17)
+        Me.inchslactonly.TabIndex = 6
+        Me.inchslactonly.Text = "Active Only"
+        Me.inchslactonly.UseVisualStyleBackColor = True
         '
         'txtmsg
         '
@@ -266,13 +266,13 @@ Partial Class frmCustomers
         Me.cmdLoadCust.Text = "Load Customer"
         Me.cmdLoadCust.UseVisualStyleBackColor = False
         '
-        'cmbCustName
+        'incmbCustName
         '
-        Me.cmbCustName.FormattingEnabled = True
-        Me.cmbCustName.Location = New System.Drawing.Point(94, 53)
-        Me.cmbCustName.Name = "cmbCustName"
-        Me.cmbCustName.Size = New System.Drawing.Size(381, 21)
-        Me.cmbCustName.TabIndex = 3
+        Me.incmbCustName.FormattingEnabled = True
+        Me.incmbCustName.Location = New System.Drawing.Point(94, 53)
+        Me.incmbCustName.Name = "incmbCustName"
+        Me.incmbCustName.Size = New System.Drawing.Size(381, 21)
+        Me.incmbCustName.TabIndex = 3
         '
         'Label4
         '
@@ -283,13 +283,13 @@ Partial Class frmCustomers
         Me.Label4.TabIndex = 2
         Me.Label4.Text = "Customer Name:"
         '
-        'cmbCustID
+        'incmbCustID
         '
-        Me.cmbCustID.FormattingEnabled = True
-        Me.cmbCustID.Location = New System.Drawing.Point(94, 23)
-        Me.cmbCustID.Name = "cmbCustID"
-        Me.cmbCustID.Size = New System.Drawing.Size(120, 21)
-        Me.cmbCustID.TabIndex = 1
+        Me.incmbCustID.FormattingEnabled = True
+        Me.incmbCustID.Location = New System.Drawing.Point(94, 23)
+        Me.incmbCustID.Name = "incmbCustID"
+        Me.incmbCustID.Size = New System.Drawing.Size(120, 21)
+        Me.incmbCustID.TabIndex = 1
         '
         'Label3
         '
@@ -700,11 +700,11 @@ Partial Class frmCustomers
         '
         'GBcustAdd1
         '
+        Me.GBcustAdd1.Controls.Add(Me.chCIactive)
         Me.GBcustAdd1.Controls.Add(Me.cmbCICountry)
         Me.GBcustAdd1.Controls.Add(Me.Label26)
         Me.GBcustAdd1.Controls.Add(Me.cmbCustType)
         Me.GBcustAdd1.Controls.Add(Me.Label23)
-        Me.GBcustAdd1.Controls.Add(Me.chCIactive)
         Me.GBcustAdd1.Controls.Add(Me.CIpcode)
         Me.GBcustAdd1.Controls.Add(Me.Label10)
         Me.GBcustAdd1.Controls.Add(Me.cmbCIProv)
@@ -757,16 +757,6 @@ Partial Class frmCustomers
         Me.Label23.Size = New System.Drawing.Size(34, 13)
         Me.Label23.TabIndex = 13
         Me.Label23.Text = "Type:"
-        '
-        'chCIactive
-        '
-        Me.chCIactive.AutoSize = True
-        Me.chCIactive.Location = New System.Drawing.Point(254, 154)
-        Me.chCIactive.Name = "chCIactive"
-        Me.chCIactive.Size = New System.Drawing.Size(56, 17)
-        Me.chCIactive.TabIndex = 12
-        Me.chCIactive.Text = "Active"
-        Me.chCIactive.UseVisualStyleBackColor = True
         '
         'CIpcode
         '
@@ -879,6 +869,16 @@ Partial Class frmCustomers
         'Timer1
         '
         '
+        'chCIactive
+        '
+        Me.chCIactive.AutoSize = True
+        Me.chCIactive.Location = New System.Drawing.Point(254, 154)
+        Me.chCIactive.Name = "chCIactive"
+        Me.chCIactive.Size = New System.Drawing.Size(56, 17)
+        Me.chCIactive.TabIndex = 17
+        Me.chCIactive.Text = "Active"
+        Me.chCIactive.UseVisualStyleBackColor = True
+        '
         'frmCustomers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -925,9 +925,9 @@ Partial Class frmCustomers
     Friend WithEvents cmdProcess As Button
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents Label3 As Label
-    Friend WithEvents cmbCustID As ComboBox
+    Friend WithEvents incmbCustID As ComboBox
     Friend WithEvents cmdLoadCust As Button
-    Friend WithEvents cmbCustName As ComboBox
+    Friend WithEvents incmbCustName As ComboBox
     Friend WithEvents Label4 As Label
     Friend WithEvents txtmsg As TextBox
     Friend WithEvents Timer1 As Timer
@@ -946,8 +946,7 @@ Partial Class frmCustomers
     Friend WithEvents Label6 As Label
     Friend WithEvents CIName As TextBox
     Friend WithEvents Label5 As Label
-    Friend WithEvents chCIactive As CheckBox
-    Friend WithEvents chslactonly As CheckBox
+    Friend WithEvents inchslactonly As CheckBox
     Friend WithEvents SHPcode As TextBox
     Friend WithEvents Label17 As Label
     Friend WithEvents cmbSHProv As ComboBox
@@ -974,7 +973,7 @@ Partial Class frmCustomers
     Friend WithEvents Label16 As Label
     Friend WithEvents cmbCustType As ComboBox
     Friend WithEvents Label23 As Label
-    Friend WithEvents cmbSelType As ComboBox
+    Friend WithEvents incmbSelType As ComboBox
     Friend WithEvents Label24 As Label
     Friend WithEvents cmbShpID As ComboBox
     Friend WithEvents Label25 As Label
@@ -991,4 +990,5 @@ Partial Class frmCustomers
     Friend WithEvents cmbSHCountry As ComboBox
     Friend WithEvents Label28 As Label
     Friend WithEvents cmdSaveCust As Button
+    Friend WithEvents chCIactive As CheckBox
 End Class

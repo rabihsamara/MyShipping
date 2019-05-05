@@ -4,8 +4,7 @@ Imports System.IO
 Module ModUpdates
 
     Private al As ArrayList = New ArrayList()
-    'Private typeAR As String = "Checkbox,CheckedListBox,ComboBox,ListBox,ListView,RadioButton,Richtextbox,TextBox"
-    Private typeAR As String = "Checkbox,CheckedListBox,ComboBox,ListBox,ListView,Radio,Richtextbox,TextBox"
+    Private typeAR As String = "CheckBox,CheckedListBox,ComboBox,ListBox,ListView,Radio,Richtextbox,TextBox"
 
     '************************************************************
     'inopert - LCS= load customer data
@@ -13,11 +12,8 @@ Module ModUpdates
     '************************************************************
     Public Function UpdateFormData(ByVal inopert As String, ByVal infrm As Form) As Boolean
 
-        Dim frm As New Form
-        frm = infrm
-        Dim tfname As String = frm.Name
-        ControlsRecr(frm.Controls, tfname)
-
+        Dim tfname As String = infrm.Name
+        ControlsRecr(infrm.Controls, tfname)
 
         DisplayControls(tfname)
         UpdateFormData = True
@@ -25,9 +21,6 @@ Module ModUpdates
     End Function
 
     Private Sub ControlsRecr(ByVal controls As Control.ControlCollection, ByVal inform As String)
-
-        Dim tstval As String = ""
-        Dim t As Integer
 
         For Each ctrl As Control In controls
             If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
@@ -45,18 +38,21 @@ Module ModUpdates
         Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & infname & ".txt")
 
         Dim arval(2) As String
-        Dim tstval As String = 0
+        Dim chval As String
+        Dim ctrlname As String
+        Dim ctrltype As String = 0
         Dim isInString As Boolean
 
         For Each currentElement As String In al
 
-            tstval = currentElement.ToString
-            arval = Split(tstval, " - ")
-            tstval = Trim(arval(1))
+            chval = currentElement.ToString
+            arval = Split(chval, " - ")
+            ctrlname = Trim(arval(0))
+            ctrltype = Trim(arval(1))
 
-            isInString = (typeAR.IndexOf(tstval) > -1)
+            isInString = (typeAR.IndexOf(ctrltype) > -1)
 
-            If (isInString = True Or tstval = "RadioButton") Then
+            If ((isInString = True And Left(ctrlname, 2) <> "in") Or ctrltype = "RadioButton") Then
                 theWriter.WriteLine(currentElement)
             End If
 

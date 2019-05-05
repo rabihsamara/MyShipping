@@ -33,10 +33,10 @@ Public Class frmCustomers
         RunClassGen() 'tmp
 
         txtmsg.Visible = False
-        chslactonly.Checked = True
+        inchslactonly.Checked = True
         TabControl1.Visible = False
 
-        tstat = ModMisc.FillCBox(cmbSelType, "CST")
+        tstat = ModMisc.FillCBox(incmbSelType, "CST")
         tstat = ModMisc.FillCBox(cmbCustType, "CST")
         LoadData()
 
@@ -46,16 +46,16 @@ Public Class frmCustomers
 
         Dim climode As String = "CRI"
         Dim clnmode As String = "CRN"
-        If (chslactonly.Checked = True) Then climode = "CRIA"
-        If (chslactonly.Checked = True) Then clnmode = "CRNA"
+        If (inchslactonly.Checked = True) Then climode = "CRIA"
+        If (inchslactonly.Checked = True) Then clnmode = "CRNA"
         '
-        If (Trim(cmbSelType.Text) <> "") Then climode = climode & Trim(cmbSelType.Text).Substring(0, 2) 'CRI or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL
-        If (Trim(cmbSelType.Text) <> "") Then clnmode = clnmode & Trim(cmbSelType.Text).Substring(0, 2) 'CRN or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL
+        If (Trim(incmbSelType.Text) <> "") Then climode = climode & Trim(incmbSelType.Text).Substring(0, 2) 'CRI or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL
+        If (Trim(incmbSelType.Text) <> "") Then clnmode = clnmode & Trim(incmbSelType.Text).Substring(0, 2) 'CRN or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL
         '
-        cmbCustID.Items.Clear()
-        cmbCustName.Items.Clear()
-        tstat = ModMisc.FillCBox(cmbCustID, climode)
-        tstat = ModMisc.FillCBox(cmbCustName, clnmode)
+        incmbCustID.Items.Clear()
+        incmbCustName.Items.Clear()
+        tstat = ModMisc.FillCBox(incmbCustID, climode)
+        tstat = ModMisc.FillCBox(incmbCustName, clnmode)
 
     End Sub
 
@@ -154,8 +154,8 @@ Public Class frmCustomers
         End If
 
         If (inedit = "E") Then
-            selcustid = Trim(cmbCustID.Text)
-            selcustname = Trim(cmbCustName.Text)
+            selcustid = Trim(incmbCustID.Text)
+            selcustname = Trim(incmbCustName.Text)
             If (selcustid = "" And selcustname = "") Then
                 terr = "Must Select Customer ID Or Name!"
                 GoTo EDIT_EXIT
@@ -209,11 +209,11 @@ EDIT_EXIT:
     End Sub
 
     'Reload existing customer filters custtype.
-    Private Sub cmbSelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbSelType.SelectedIndexChanged
-        cmbCustID.Text = ""
-        cmbCustID.Items.Clear()
-        cmbCustName.Text = ""
-        cmbCustName.Items.Clear()
+    Private Sub cmbSelType_SelectedIndexChanged(sender As Object, e As EventArgs) Handles incmbSelType.SelectedIndexChanged
+        incmbCustID.Text = ""
+        incmbCustID.Items.Clear()
+        incmbCustName.Text = ""
+        incmbCustName.Items.Clear()
         LoadData()
     End Sub
 
@@ -265,8 +265,8 @@ EDIT_EXIT:
 
         inCustID.Text = ""
         inCustName.Text = ""
-        cmbCustID.Text = ""
-        cmbCustName.Text = ""
+        incmbCustID.Text = ""
+        incmbCustName.Text = ""
         LoadData() ' inacse new 
         TabControl1.Visible = False
 
