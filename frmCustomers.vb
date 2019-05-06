@@ -252,7 +252,7 @@ EDIT_EXIT:
                 tmpval = LoadFormControls(ctrl.Name, ctrl.GetType.Name, ctrl.Text)
                 If GlobalVariables.GL_Stat = True Then
                     If (ctrl.Name = "chCIactive") Then
-                        If (tmpval = "1") Then
+                        If (tmpval = 1) Then
                             chCIactive.Checked = True
                         End If
                     Else
@@ -275,7 +275,7 @@ EDIT_EXIT:
             isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)
             If ((isInString = True) Or ctrltype = "RadioButton") Then
                 If (ctrlname = "chCIactive") Then
-                    LoadFormControls = If(ctrlvalue = "1", 1, 0)
+                    LoadFormControls = If(sTable.Rows(0)(ctrlname).ToString = "1", 1, 0)
                 Else
                     LoadFormControls = sTable.Rows(0)(ctrlname).ToString()
                 End If
