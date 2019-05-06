@@ -431,29 +431,6 @@ Exit_Excel:
 
     End Function
 
-    '******************************************************************************************************************
-    ' Procedure:  not used yet
-    '******************************************************************************************************************
-    Public Sub RunProcedure()
-
-        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-
-            Dim sqlCmd As New SqlCommand()
-
-            sqlCmd.Connection = mysqlConn
-            sqlCmd.CommandText = "InsertTransData"
-            sqlCmd.CommandType = CommandType.StoredProcedure
-
-            'sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
-
-
-            mysqlConn.Open()
-            sqlCmd.ExecuteNonQuery()
-
-        End Using
-
-    End Sub
-
     Public Sub ReadCountries(ByVal cbo As ComboBox)
 
         GlobalVariables.GL_Stat = False
@@ -479,6 +456,56 @@ Exit_Excel:
         End Using
 
     End Sub
+
+    Public Function GetShiptoRec(ByVal inshiptoID As String) As Object
+
+        Dim myCmd As SqlCommand
+        Dim myReader As SqlDataReader = Nothing
+        Dim custshipto As shipto = New shipto()
+        Dim SQLStr = "SELECT ID,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active FROM shipto where shiptoID = '" & inshiptoID & "'"
+
+        GlobalVariables.GL_Stat = False
+        GetShiptoRec = Nothing
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            Try
+                myCmd = mysqlConn.CreateCommand
+                myCmd.CommandText = SQLStr
+                mysqlConn.Open()
+
+                myReader = myCmd.ExecuteReader()
+                Do While myReader.Read()
+
+                    custshipto.MyID = myReader.GetValue(0)
+                    custshipto.MyShiptoID = myReader.GetString(1)
+                    custshipto.MyShipName = myReader.GetString(2)
+                    custshipto.MyShipadd1 = myReader.GetString(3)
+                    custshipto.MyShipadd2 = myReader.GetString(4)
+                    custshipto.MyShipcity = myReader.GetString(5)
+                    custshipto.MyShipprov = myReader.GetString(6)
+                    custshipto.MyShippcode = myReader.GetString(7)
+                    custshipto.MyShipcountry = myReader.GetString(8)
+                    custshipto.MyShipDflt = myReader.GetString(9)
+                    custshipto.Myactive = myReader.GetValue(10)
+
+                    GetShiptoRec = custshipto
+                    GlobalVariables.GL_Stat = True
+                Loop
+
+            Catch ex As Exception
+                MsgBox(ex.ToString)
+                GlobalVariables.GL_Stat = False
+            Finally
+                If Not (myReader Is Nothing) Then
+                    myReader.Close()
+                End If
+                If Not (mysqlConn Is Nothing) Then
+                    mysqlConn.Close()
+                End If
+            End Try
+        End Using
+
+    End Function
 
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *
@@ -513,11 +540,11 @@ Exit_Excel:
     ' to get table columns Select INFORMATION_SCHEMA.COLUMNS.COLUMN_NAME from Myshipping.INFORMATION_SCHEMA.COLUMNS  where table_name = N'cities'
     '
 
-    Public Sub RunClassGen()
+    Public Sub RunClassGen(ByVal inTable As String)
 
-        Dim myarlist As ArrayList = ModMisc.createClass("Applocks")
+        Dim myarlist As ArrayList = ModMisc.createClass(inTable)
 
-        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\applockclass.txt")
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & inTable & "_class.txt")
 
         For Each currentElement As String In myarlist
             theWriter.WriteLine(currentElement)
@@ -599,4 +626,28 @@ Exit_Excel:
 
     End Function
     '********************************************END OF TMP FUNCTIONS *******************************************
+
+    '************************************************************************************************************
+    ' Procedure:  not used yet
+    '************************************************************************************************************
+    Public Sub RunProcedure()
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+
+            Dim sqlCmd As New SqlCommand()
+
+            sqlCmd.Connection = mysqlConn
+            sqlCmd.CommandText = "InsertTransData"
+            sqlCmd.CommandType = CommandType.StoredProcedure
+
+            'sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
+
+
+            mysqlConn.Open()
+            sqlCmd.ExecuteNonQuery()
+
+        End Using
+
+    End Sub
+
 End Module

@@ -76,13 +76,22 @@
 
     End Sub
 
+
     '*********************************************************************
     'Event handlers for items listed under Menu Reports
     '*********************************************************************
 
 
 
+    '*          tmp function
 
+    Private Sub CmdTmp_Click(sender As Object, e As EventArgs) Handles cmdTmp.Click
 
+        Dim ttable As String = InputBox("Enter Table", "Table", "", 100, 100)
+        RunClassGen(ttable)
+
+    End Sub
+
+    '*          tmp function
 
 End Class

@@ -24,8 +24,10 @@ Partial Class MainMenu
     Private Sub InitializeComponent()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.cmdTmp = New System.Windows.Forms.Button()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
+        Me.SplitContainer1.Panel2.SuspendLayout()
         Me.SplitContainer1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -39,6 +41,10 @@ Partial Class MainMenu
         'SplitContainer1.Panel1
         '
         Me.SplitContainer1.Panel1.Controls.Add(Me.MenuStrip1)
+        '
+        'SplitContainer1.Panel2
+        '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTmp)
         Me.SplitContainer1.Size = New System.Drawing.Size(1480, 830)
         Me.SplitContainer1.SplitterDistance = 32
         Me.SplitContainer1.TabIndex = 0
@@ -50,6 +56,15 @@ Partial Class MainMenu
         Me.MenuStrip1.Size = New System.Drawing.Size(1480, 24)
         Me.MenuStrip1.TabIndex = 0
         Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'cmdTmp
+        '
+        Me.cmdTmp.Location = New System.Drawing.Point(500, 49)
+        Me.cmdTmp.Name = "cmdTmp"
+        Me.cmdTmp.Size = New System.Drawing.Size(101, 32)
+        Me.cmdTmp.TabIndex = 0
+        Me.cmdTmp.Text = "Create class(tmp)"
+        Me.cmdTmp.UseVisualStyleBackColor = True
         '
         'MainMenu
         '
@@ -64,6 +79,7 @@ Partial Class MainMenu
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel1.PerformLayout()
+        Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SplitContainer1.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -72,4 +88,5 @@ Partial Class MainMenu
 
     Friend WithEvents SplitContainer1 As SplitContainer
     Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents cmdTmp As Button
 End Class

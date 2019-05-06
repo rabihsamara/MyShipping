@@ -9,6 +9,8 @@ Public Class frmCustomers
     Private results As String
     Private selcustid As String = String.Empty
     Private selcustname As String = String.Empty
+    Private selShipToid As String = String.Empty
+
     Private seluw As String = "I"
     Private seluw2 As String = ""
     Private tmsg As String = String.Empty
@@ -36,7 +38,6 @@ Public Class frmCustomers
     Dim sTable As DataTable
 
     Private Sub FrmCustomers_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        RunClassGen() 'tmp
 
         txtmsg.Visible = False
         inchslactonly.Checked = True
@@ -109,8 +110,6 @@ Public Class frmCustomers
 
         TabControl1.Visible = True
 
-
-
     End Sub
 
     Private Function EditEntry(ByVal inedit As String) As String
@@ -136,6 +135,7 @@ Public Class frmCustomers
                 'create new customer message
                 seluw = "I"
                 seluw2 = "IU"
+                selShipToid = ""
                 inCustName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(inCustName.Text)
 
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
@@ -173,13 +173,14 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive,cmbShpID From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
             End If
             seluw = "U"
             seluw2 = "U"
+            selShipToid = Custrecord.MyCustShipToid
 
             'check if locked
             GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks where FormName = 'Customer' and ctrlname = 'Customer' and ctrlvalue = '" & selcustid & "'"
@@ -200,6 +201,7 @@ Public Class frmCustomers
             'load data to screen
             LoadCombCountries("ACT", seluw2)
             LoadCustScreen("Customers")
+
         End If
 
 EDIT_EXIT:
@@ -252,9 +254,7 @@ EDIT_EXIT:
                 tmpval = LoadFormControls(ctrl.Name, ctrl.GetType.Name, ctrl.Text)
                 If GlobalVariables.GL_Stat = True Then
                     If (ctrl.Name = "chCIactive") Then
-                        If (tmpval = 1) Then
-                            chCIactive.Checked = True
-                        End If
+                        chCIactive.Checked = If(tmpval = 1, True, False)
                     Else
                         ctrl.Text = tmpval
                     End If
@@ -320,7 +320,7 @@ EDIT_EXIT:
                     Custrecord.MyCustName = myReader.GetString(1).ToString
                     Custrecord.MyCustType = myReader.GetString(2).ToString
                     Custrecord.MyCustActive = myReader.GetValue(3)
-
+                    Custrecord.MyCustShipToid = myReader.GetString(4).ToString
                     ReadCustomer = True
                 Loop
 
@@ -341,7 +341,6 @@ EDIT_EXIT:
 
     Private Sub CmdCanCust_Click(sender As Object, e As EventArgs) Handles cmdCanCust.Click
         'check if new was pressed or update
-
 
         'release log 
         If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
@@ -370,6 +369,26 @@ EDIT_EXIT:
 
     'shipto save it
     Private Sub CmdSaveShpto_Click(sender As Object, e As EventArgs) Handles cmdSaveShpto.Click
+
+        SHName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(SHName.Text)
+
+        If (seluw2 = "I" Or seluw2 = "IU") Then
+            If (selShipToid = "") Then
+
+                Dim result As DialogResult = MessageBox.Show("Create New Ship-to ID?", "Confirm add new ship-to ID", MessageBoxButtons.YesNo)
+                If (result = DialogResult.Yes) Then
+                    If (cmbShpID.Text = "") Then
+
+
+                    End If
+
+
+                Else
+                    Exit Sub
+                End If
+
+            End If
+        End If
 
     End Sub
 
@@ -580,6 +599,11 @@ EDIT_EXIT:
         If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
             MsgBox("Error Creating Lock Record!")
         End If
+
+        txtmsg.Text = "Customer Saved!"
+        txtmsg.Visible = True
+        Timer1.Interval = 5000 'ms
+        Timer1.Start()
 
     End Sub
 

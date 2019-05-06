@@ -512,6 +512,7 @@ Public Class Customers
     Private CustName As String
     Private CustType As String
     Private custActive As Integer
+    Private CustShipToid As String
 
     Public Sub New() 'parameterised constructor
         Console.WriteLine("Class created")
@@ -565,4 +566,165 @@ Public Class Customers
 
     End Property
 
+    Public Property MyCustShipToid() As String
+
+        Get
+            Return CustShipToid
+        End Get
+        Set(ByVal Value As String)
+            CustShipToid = Value
+        End Set
+
+    End Property
+
 End Class
+
+Public Class shipto
+
+    Private ID As Integer
+    Private ShiptoID As String
+    Private ShipName As String
+    Private Shipadd1 As String
+    Private Shipadd2 As String
+    Private Shipcity As String
+    Private Shipprov As String
+    Private Shippcode As String
+    Private Shipcountry As String
+    Private ShipDflt As String
+    Private active As Integer
+
+    Public Sub New() 'parameterised constructor
+
+        Console.WriteLine("Class Created")
+
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+
+        Console.WriteLine("Class destroyed")
+
+    End Sub
+
+    Public Property MyID() As Integer
+        Get
+            Return ID
+        End Get
+        Set(ByVal Value As Integer)
+            ID = Value
+        End Set
+
+    End Property
+
+    Public Property MyShiptoID() As String
+
+        Get
+            Return ShiptoID
+        End Get
+        Set(ByVal Value As String)
+            ShiptoID = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipName() As String
+
+        Get
+            Return ShipName
+        End Get
+        Set(ByVal Value As String)
+            ShipName = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipadd1() As String
+
+        Get
+            Return Shipadd1
+        End Get
+        Set(ByVal Value As String)
+            Shipadd1 = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipadd2() As String
+
+        Get
+            Return Shipadd2
+        End Get
+        Set(ByVal Value As String)
+            Shipadd2 = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipcity() As String
+
+        Get
+            Return Shipcity
+        End Get
+        Set(ByVal Value As String)
+            Shipcity = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipprov() As String
+
+        Get
+            Return Shipprov
+        End Get
+
+        Set(ByVal Value As String)
+            Shipprov = Value
+        End Set
+
+    End Property
+
+    Public Property MyShippcode() As String
+
+        Get
+            Return Shippcode
+        End Get
+        Set(ByVal Value As String)
+            Shippcode = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipcountry() As String
+
+        Get
+            Return Shipcountry
+        End Get
+        Set(ByVal Value As String)
+            Shipcountry = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipDflt() As String
+
+        Get
+            Return ShipDflt
+        End Get
+        Set(ByVal Value As String)
+            ShipDflt = Value
+        End Set
+
+    End Property
+
+    Public Property Myactive() As String
+
+        Get
+            Return active
+        End Get
+        Set(ByVal Value As String)
+            active = Value
+        End Set
+
+    End Property
+
+End Class
+
