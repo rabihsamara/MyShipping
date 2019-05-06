@@ -30,6 +30,7 @@ Public Class frmCustomers
 
     Private Custrecord As Customers = New Customers()
     Private AppCustLocks As AppLocks = New AppLocks()
+    Private CIcustshipto As shipto = New shipto()
 
     Dim sCommand As SqlCommand
     Dim sAdapter As SqlDataAdapter
@@ -374,6 +375,8 @@ EDIT_EXIT:
 
         If (seluw2 = "I" Or seluw2 = "IU") Then
             If (selShipToid = "") Then
+                CIcustshipto = GetShiptoRec(selcustid, selShipToid)
+
 
                 Dim result As DialogResult = MessageBox.Show("Create New Ship-to ID?", "Confirm add new ship-to ID", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then

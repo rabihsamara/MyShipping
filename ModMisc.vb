@@ -457,12 +457,12 @@ Exit_Excel:
 
     End Sub
 
-    Public Function GetShiptoRec(ByVal inshiptoID As String) As Object
+    Public Function GetShiptoRec(ByVal shcustid As String, ByVal inshiptoID As String) As Object
 
         Dim myCmd As SqlCommand
         Dim myReader As SqlDataReader = Nothing
         Dim custshipto As shipto = New shipto()
-        Dim SQLStr = "SELECT ID,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active FROM shipto where shiptoID = '" & inshiptoID & "'"
+        Dim SQLStr = "SELECT ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active FROM shipto where custid = '" & shcustid & "' and shiptoID = '" & inshiptoID & "'"
 
         GlobalVariables.GL_Stat = False
         GetShiptoRec = Nothing
@@ -477,16 +477,17 @@ Exit_Excel:
                 Do While myReader.Read()
 
                     custshipto.MyID = myReader.GetValue(0)
-                    custshipto.MyShiptoID = myReader.GetString(1)
-                    custshipto.MyShipName = myReader.GetString(2)
-                    custshipto.MyShipadd1 = myReader.GetString(3)
-                    custshipto.MyShipadd2 = myReader.GetString(4)
-                    custshipto.MyShipcity = myReader.GetString(5)
-                    custshipto.MyShipprov = myReader.GetString(6)
-                    custshipto.MyShippcode = myReader.GetString(7)
-                    custshipto.MyShipcountry = myReader.GetString(8)
-                    custshipto.MyShipDflt = myReader.GetString(9)
-                    custshipto.Myactive = myReader.GetValue(10)
+                    custshipto.MyShipCustID = myReader.GetString(1)
+                    custshipto.MyShiptoID = myReader.GetString(2)
+                    custshipto.MyShipName = myReader.GetString(3)
+                    custshipto.MyShipadd1 = myReader.GetString(4)
+                    custshipto.MyShipadd2 = myReader.GetString(5)
+                    custshipto.MyShipcity = myReader.GetString(6)
+                    custshipto.MyShipprov = myReader.GetString(7)
+                    custshipto.MyShippcode = myReader.GetString(8)
+                    custshipto.MyShipcountry = myReader.GetString(9)
+                    custshipto.MyShipDflt = myReader.GetString(10)
+                    custshipto.Myactive = myReader.GetValue(11)
 
                     GetShiptoRec = custshipto
                     GlobalVariables.GL_Stat = True
@@ -504,6 +505,28 @@ Exit_Excel:
                 End If
             End Try
         End Using
+
+    End Function
+
+    'inmode = I=Insert, U=update
+    Public Function UpdateCSShipTo(ByVal custshipto As shipto, inmode As String) As Object
+
+        UpdateCSShipTo = False
+
+        If (inmode = "I" Or "IU") Then
+            GlobalVariables.Gl_SQLStr = "If not exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active) values ('"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipCustID & "','" & custshipto.MyShiptoID & "','" & custshipto.MyShipName & "','" & custshipto.MyShipadd1 & "','"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipadd2 & "','" & custshipto.MyShipcity & "','" & custshipto.MyShipprov & "','" & custshipto.MyShippcode & "','"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & ",'" & custshipto.Myactive & ") End"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                Exit Function
+            End If
+
+        Else
+
+        End If
+        UpdateCSShipTo = True
 
     End Function
 

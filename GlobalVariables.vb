@@ -582,6 +582,7 @@ End Class
 Public Class shipto
 
     Private ID As Integer
+    Private ShipCustID As String
     Private ShiptoID As String
     Private ShipName As String
     Private Shipadd1 As String
@@ -611,6 +612,17 @@ Public Class shipto
         End Get
         Set(ByVal Value As Integer)
             ID = Value
+        End Set
+
+    End Property
+
+    Public Property MyShipCustID() As String
+
+        Get
+            Return ShipCustID
+        End Get
+        Set(ByVal Value As String)
+            ShipCustID = Value
         End Set
 
     End Property
