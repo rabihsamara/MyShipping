@@ -143,6 +143,7 @@ Module ModMisc
     'MSEC = read security levels for menu show and active. 1 1
     'ALLM = all menus in an array
     'NCST= read count of cust for new custom if exists
+    'SHPC= count of shipto id by customer
     '**********************************************************************************************
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
@@ -196,7 +197,7 @@ Module ModMisc
                         GlobalVariables.Tmpuserrecord.Myusrseclvl = myReader.GetValue(13)
                         ReadSQL = GlobalVariables.Tmpuserrecord
                         GlobalVariables.GL_Stat = True
-                    ElseIf (inopt = "usridcnt" Or inopt = "NCST") Then
+                    ElseIf (inopt = "usridcnt" Or inopt = "NCST" Or inopt = "SHPC") Then
                         ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
                     ElseIf (inopt = "ALLM") Then
@@ -457,6 +458,32 @@ Exit_Excel:
 
     End Sub
 
+    'Get id from shname
+    Public Function GetLastShipto(ByVal inCustID As String, ByVal inshname As String) As String
+
+        Dim cnt As Integer = 0
+        Dim tchr As String = ""
+
+        Dim strArr() As String
+        Dim count As Integer
+
+        'Get up to 3 characters from ship name
+        strArr = inshname.Split(" ")
+        For count = 0 To strArr.Length - 1
+            tchr = tchr & Left(strArr(count), 1)
+        Next
+        If (tchr.Length < 3) Then
+            tchr = tchr & Left(inCustID, 1)
+        End If
+
+        GlobalVariables.Gl_SQLStr = "select count(*) + 1 as cnt from shipto where custid = '" & inCustID & "'"
+        cnt = ReadSQL("SHPC", "")
+        tchr = tchr & cnt.ToString
+
+        GetLastShipto = tchr
+
+    End Function
+
     Public Function GetShiptoRec(ByVal shcustid As String, ByVal inshiptoID As String) As Object
 
         Dim myCmd As SqlCommand
@@ -513,18 +540,25 @@ Exit_Excel:
 
         UpdateCSShipTo = False
 
-        If (inmode = "I" Or "IU") Then
+        If (inmode = "I" Or inmode = "IU") Then
             GlobalVariables.Gl_SQLStr = "If not exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active) values ('"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipCustID & "','" & custshipto.MyShiptoID & "','" & custshipto.MyShipName & "','" & custshipto.MyShipadd1 & "','"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipadd2 & "','" & custshipto.MyShipcity & "','" & custshipto.MyShipprov & "','" & custshipto.MyShippcode & "','"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & ",'" & custshipto.Myactive & ") End"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ") End"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 Exit Function
             End If
 
         Else
-
+            GlobalVariables.Gl_SQLStr = "If exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "update shipto set ShipName = '" & custshipto.MyShipName & "',Shipadd1 = '" & custshipto.MyShipadd1 & "',Shipadd2 = '" & custshipto.MyShipadd2
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcity = '" & custshipto.MyShipcity & "',Shipprov = '" & custshipto.MyShipprov & "',Shippcode = '" & custshipto.MyShippcode
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcountry = '" & custshipto.MyShipcountry & "',ShipDflt = " & custshipto.MyShipDflt & ",active = " & custshipto.Myactive
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where custid = '" & custshipto.MyShipCustID & "' and ShiptoID = '" & custshipto.MyShiptoID & "') End"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                Exit Function
+            End If
         End If
         UpdateCSShipTo = True
 

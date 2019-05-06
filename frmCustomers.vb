@@ -81,6 +81,22 @@ Public Class frmCustomers
             inCustID.Text = ""
         End If
 
+        'Dim strArr() As String
+        'Dim tchr As String = ""
+        'Dim tmpt As String = ""
+
+        'If (inCustName.Text <> "" And L > 3 And InStr(inCustName.Text, " ") > 0) Then
+        '    strArr = inCustName.Text.Split(" ")
+        '    For count = 0 To strArr.Length - 1
+        '        tmpt = strArr(count)
+        '        tchr = tchr & If(tmpt <> "", tmpt.Substring(1, 1), "")
+        '    Next
+        'Else
+        '    inCustID.Text = If(inCustName.Text.Length > 3, inCustID.Text, "")
+        'End If
+
+        'inCustID.Text = tchr
+
     End Sub
 
     'Process new customer
@@ -174,7 +190,7 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive,cmbShpID From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive,ISNULL(cmbshpid, '') From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
@@ -588,7 +604,9 @@ EDIT_EXIT:
         slSHCity = cmbSHCity.SelectedValue
     End Sub
 
-    'save customer
+    '*****************************************************************************************
+    '* save customer
+    '*****************************************************************************************
     Private Sub CmdSaveCust_Click(sender As Object, e As EventArgs) Handles cmdSaveCust.Click
 
         Dim topert As String = "LC" & seluw2
@@ -596,6 +614,37 @@ EDIT_EXIT:
         GlobalVariables.Gl_tmpactive = 0
         If (chCIactive.Checked = True) Then
             GlobalVariables.Gl_tmpactive = 1
+        End If
+
+        'update first shipto
+        selShipToid = GetLastShipto(selcustid, Trim(SHName.Text))
+        Dim result As String = InputBox("Use/Change Ship-to code!", "Accept Ship-to code", selShipToid, 100, 100)
+        If (result = "") Then
+            txtmsg.Text = "Must accept or enter new shipto code!"
+            txtmsg.Visible = True
+            Timer1.Interval = 5000 'ms
+            Timer1.Start()
+            Exit Sub
+        End If
+
+
+        CIcustshipto.MyShipCustID = selcustid
+        CIcustshipto.MyShiptoID = selShipToid
+        CIcustshipto.MyShipName = Trim(SHName.Text)
+        CIcustshipto.MyShipadd1 = Trim(SHadd1.Text)
+        CIcustshipto.MyShipadd2 = Trim(SHadd2.Text)
+        CIcustshipto.MyShipcity = Trim(cmbSHCity.Text)
+        CIcustshipto.MyShippcode = Trim(SHPcode.Text)
+        CIcustshipto.MyShipprov = Trim(cmbSHProv.Text)
+        CIcustshipto.MyShipcountry = Trim(cmbSHCountry.Text)
+        CIcustshipto.MyShipDflt = 1
+        CIcustshipto.Myactive = 1
+        If (UpdateCSShipTo(CIcustshipto, seluw2) = False) Then
+            txtmsg.Text = "Error saving shipto info.!"
+            txtmsg.Visible = True
+            Timer1.Interval = 5000 'ms
+            Timer1.Start()
+            Exit Sub
         End If
 
         ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid)
