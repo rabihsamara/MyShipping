@@ -26,7 +26,6 @@ Module ModUpdates
     '************************************************************
     Public Function UpdateFormData(ByVal inopert As String, ByVal infrm As Form, ByVal inTable As String, ByVal selID As String) As Boolean
 
-        al.Clear()
         UpdateFormData = False
 
         crmode = inopert
@@ -34,6 +33,7 @@ Module ModUpdates
         crtable = inTable
         crselID = selID
 
+        al.Clear()
         ControlsRecr(infrm.Controls) 'Get all controls in a form into arraylist al
         DisplayControls() ' debugging
 
@@ -64,10 +64,12 @@ Module ModUpdates
         Dim ctrltype As String = ""
         Dim ctrlvalue As String = ""
         Dim isInString As Boolean = False
-
+        Dim tskip As Boolean = False
         UpdateCustomers = False
 
         updsql = "update " & crtable & " set "
+        updsql2 = ""
+        updsql3 = ""
 
         For Each currentElement As String In al
 
@@ -79,17 +81,22 @@ Module ModUpdates
 
             isInString = (typeAR.IndexOf(ctrltype) > -1)
             If ((isInString = True And Left(ctrlname, 2) <> "in") Or ctrltype = "RadioButton") Then
-                If (updsql2 <> "") Then
+                If (updsql2 <> "" And tskip = False) Then
                     updsql2 = updsql2 & ","
                 End If
                 If (ctrlname = "chCIactive") Then
                     updsql2 = updsql2 & ctrlname & " = " & GlobalVariables.Gl_tmpactive
-                ElseIf (ctrlname <> "cmbShpID") Then
+                ElseIf (ctrlname = "cmbShpID") Then
+                    tskip = True
+                Else
+                    If (ctrlname = "cmbCustType") Then ctrlvalue = ctrlvalue.Substring(0, 2)
                     updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
+                    tskip = False
                 End If
 
             End If
         Next
+
         updsql3 = " where custid = '" & crselID & "'"
         GlobalVariables.Gl_SQLStr = updsql & updsql2 + updsql3
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
