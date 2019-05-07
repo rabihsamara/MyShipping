@@ -88,8 +88,7 @@ Public Class frmCustomers
         Else
             inCustID.Text = If(inCustName.Text.Length > 3, inCustID.Text, "")
         End If
-
-        inCustID.Text = tchr & "01"
+        If (inCustName.Text <> "") Then inCustID.Text = tchr & "01"
 
     End Sub
 
@@ -98,7 +97,7 @@ Public Class frmCustomers
 
         tmsg = EditEntry("N")
         If (tmsg = "X" Or tmsg <> "Customer Created Successfully!") Then Exit Sub ' user cancelled creating 
-
+        EnableFields("S", False)
         TabControl1.Visible = True
 
     End Sub
@@ -119,6 +118,7 @@ Public Class frmCustomers
         tmsg = EditEntry("E")
         If (tmsg <> "") Then Exit Sub
         cmdSaveShpto.Enabled = True
+        EnableFields("S", False)
         TabControl1.Visible = True
 
     End Sub
@@ -394,15 +394,9 @@ EDIT_EXIT:
             MsgBox("Error deleting Lock record!")
         End If
 
-        inCustID.Text = ""
-        inCustName.Text = ""
-        incmbCustID.Text = ""
-        incmbCustName.Text = ""
-        selcustid = ""
-        selcustname = ""
-        LoadData() ' inacse new 
+        clrFields("A")
         cmdSaveShpto.Enabled = False
-        clrFields(Me)
+        EnableFields("S", True)
         TabControl1.Visible = False
 
     End Sub
@@ -692,22 +686,71 @@ EDIT_EXIT:
         Timer1.Interval = 5000 'ms
         Timer1.Start()
 
-        inCustID.Text = ""
-        inCustName.Text = ""
-        incmbCustID.Text = ""
-        incmbCustName.Text = ""
-        LoadData() ' incase new 
-        seluw = "I"
-        seluw2 = ""
-        clrFields(Me)
+        clrFields("A")
+
         cmdSaveShpto.Enabled = False
+        EnableFields("S", True)
         TabControl1.Visible = False
 
     End Sub
 
-    Private Sub clrFields(frm As Form, Optional All As Boolean = True)
+    'A=all, S=selection top
+    Private Sub EnableFields(ByVal inopt As String, ByVal instat As Boolean)
 
+        If (inopt = "A" Or inopt = "S") Then
+            cmdProcess.Enabled = instat
+            inCustID.Enabled = instat
+            inCustName.Enabled = instat
+            cmdLoadCust.Enabled = instat
+            incmbCustID.Enabled = instat
+            incmbCustName.Enabled = instat
+            cmdExit.Enabled = instat
+        End If
 
+    End Sub
+
+    'inopt - A= All , S=selection or new or existing customer top, F=tabcontrol data entry fields
+    Private Sub clrFields(ByVal inopt As String)
+
+        If (inopt = "A" Or inopt = "S") Then
+            seluw = "I"
+            seluw2 = ""
+            selcustid = ""
+            selcustname = ""
+            selShipToid = ""
+            inCustID.Text = ""
+            inCustName.Text = ""
+            incmbCustID.Text = ""
+            incmbCustName.Text = ""
+        End If
+
+        If (inopt = "A" Or inopt = "F") Then
+            CIName.Text = ""
+            CIadd1.Text = ""
+            CIAdd2.Text = ""
+            cmbCICity.Text = ""
+            CIpcode.Text = ""
+            cmbCIProv.Text = ""
+            cmbCICountry.Text = ""
+            cmbCustType.Text = ""
+            chCIactive.Checked = False
+
+            BLName.Text = ""
+            BLadd1.Text = ""
+            BLadd2.Text = ""
+            cmbBLcity.Text = ""
+            BLpcode.Text = ""
+            cmbBLProv.Text = ""
+            cmbBLCountry.Text = ""
+
+            SHName.Text = ""
+            SHadd1.Text = ""
+            SHadd2.Text = ""
+            cmbSHCity.Text = ""
+            SHPcode.Text = ""
+            cmbSHProv.Text = ""
+            cmbSHCountry.Text = ""
+        End If
 
     End Sub
 
