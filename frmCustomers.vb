@@ -42,6 +42,7 @@ Public Class frmCustomers
 
         txtmsg.Visible = False
         inchslactonly.Checked = True
+        cmdSaveShpto.Enabled = False
         TabControl1.Visible = False
 
         tstat = ModMisc.FillCBox(incmbSelType, "CST")
@@ -74,28 +75,21 @@ Public Class frmCustomers
     Private Sub CreateCustID()
 
         Dim L As Integer = inCustName.Text.Length
+        Dim strArr() As String
+        Dim tchr As String = ""
+        Dim tmpt As String = ""
 
-        If (inCustName.Text <> "" And L < 7) Then
-            inCustID.Text = inCustName.Text.Substring(0, L)
-        ElseIf (inCustName.Text = "") Then
-            inCustID.Text = ""
+        If (inCustName.Text <> "" And L > 3 And InStr(inCustName.Text, " ") > 0) Then
+            strArr = inCustName.Text.Split(" ")
+            For count = 0 To strArr.Length - 1
+                tmpt = Trim(strArr(count))
+                tchr = tchr & If(tmpt <> "", tmpt.Substring(0, 1), "")
+            Next
+        Else
+            inCustID.Text = If(inCustName.Text.Length > 3, inCustID.Text, "")
         End If
 
-        'Dim strArr() As String
-        'Dim tchr As String = ""
-        'Dim tmpt As String = ""
-
-        'If (inCustName.Text <> "" And L > 3 And InStr(inCustName.Text, " ") > 0) Then
-        '    strArr = inCustName.Text.Split(" ")
-        '    For count = 0 To strArr.Length - 1
-        '        tmpt = strArr(count)
-        '        tchr = tchr & If(tmpt <> "", tmpt.Substring(1, 1), "")
-        '    Next
-        'Else
-        '    inCustID.Text = If(inCustName.Text.Length > 3, inCustID.Text, "")
-        'End If
-
-        'inCustID.Text = tchr
+        inCustID.Text = tchr & "01"
 
     End Sub
 
@@ -124,7 +118,7 @@ Public Class frmCustomers
     Private Sub cmdLoadCust_Click(sender As Object, e As EventArgs) Handles cmdLoadCust.Click
         tmsg = EditEntry("E")
         If (tmsg <> "") Then Exit Sub
-
+        cmdSaveShpto.Enabled = True
         TabControl1.Visible = True
 
     End Sub
@@ -137,16 +131,19 @@ Public Class frmCustomers
         terr = ""
 
         If (inedit = "N") Then
-            If (inCustID.Text = "") Then
-                terr = "Must Enter Customer ID!"
-                GoTo EDIT_EXIT
-            ElseIf (inCustName.Text = "") Then
+            If (inCustName.Text = "") Then
                 terr = "Must Enter Customer Name!"
                 GoTo EDIT_EXIT
+            ElseIf (inCustID.Text = "") Then
+                terr = "Must Enter Customer ID!"
+                GoTo EDIT_EXIT
             End If
-            GlobalVariables.Gl_SQLStr = "select count(*) as cnt from customers where CustID = '" & Trim(inCustID.Text) & "'"
+
+            inCustName.Text = Trim(inCustName.Text)
+            inCustID.Text = Trim(inCustID.Text)
+            GlobalVariables.Gl_SQLStr = "select count(*) as cnt from customers where CustID = '" & inCustID.Text & "' or CIName = '" & inCustName.Text & "'"
             If (ModMisc.ReadSQL("NCST", "") > 0) Then
-                terr = "New Customer ID Exists!"
+                terr = "New Customer Exists!"
                 GoTo EDIT_EXIT
             Else
                 'create new customer message
@@ -154,6 +151,8 @@ Public Class frmCustomers
                 seluw2 = "IU"
                 selShipToid = ""
                 inCustName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(inCustName.Text)
+                selcustid = inCustID.Text
+                selcustname = inCustName.Text
 
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
@@ -164,10 +163,11 @@ Public Class frmCustomers
                         GoTo EDIT_EXIT
                     End If
                     terr = "Customer Created Successfully!"
-                    CIName.Text = Trim(inCustName.Text)
-                    selcustid = Trim(inCustID.Text)
+
+                    CIName.Text = inCustName.Text
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
+                    tstat = ModMisc.FillCBox(incmbCustName, "CSHT") ' load shipto combobox
                     'lock record
                     If (AppLocking.WriteDelLock("W", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
                         terr = "Error Creating Lock Record!"
@@ -190,14 +190,18 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = If(selcustid <> "", "select CustID,CIName,cmbCustType,chCIactive,ISNULL(cmbshpid, '') From customers where CustID = '" & selcustid & "'", "select CustID,CIName, cmbCustType, chCIactive From customers where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = "SELECT CustID,CIName,ISNULL(CIadd1,'') as CIadd1,ISNULL(CIAdd2,'') as CIadd2,ISNULL(cmbCICity,'') as cmbCICity,ISNULL(CIpcode,'') as CIpcode ,ISNULL(cmbCIProv,'') as cmbCIProv ,ISNULL(cmbCICountry,'') as cmbCICountry,cmbCustType,chCIactive,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(BLName,'') as BLName, ISNULL(BLadd1,'') as BLadd1, ISNULL(BLadd2,'') as BLAdd2, ISNULL(cmbBLcity,'') as cmbBLcity, ISNULL(BLpcode,'') as BLpcode, ISNULL(cmbBLProv,'') as cmbBLProv, ISNULL(cmbBLCountry,'') as cmbBLCountry,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbShpID,'') as cmbShpID, ISNULL(SHName,'') as SHName, ISNULL(SHadd1,'') as SHadd1, ISNULL(SHadd2,'') as SHAdd2,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry FROM Customers  "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where Custname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
             End If
             seluw = "U"
             seluw2 = "U"
-            selShipToid = Custrecord.MyCustShipToid
+            selShipToid = Custrecord.MycmbShpID
 
             'check if locked
             GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks where FormName = 'Customer' and ctrlname = 'Customer' and ctrlvalue = '" & selcustid & "'"
@@ -216,6 +220,8 @@ Public Class frmCustomers
             End If
 
             'load data to screen
+            cmbShpID.Items.Clear()
+            tstat = ModMisc.FillCBox(cmbShpID, "CSHT")
             LoadCombCountries("ACT", seluw2)
             LoadCustScreen("Customers")
 
@@ -333,11 +339,35 @@ EDIT_EXIT:
 
                 myReader = myCmd.ExecuteReader()
                 Do While myReader.Read()
+
                     Custrecord.MyCustID = myReader.GetString(0).ToString
-                    Custrecord.MyCustName = myReader.GetString(1).ToString
-                    Custrecord.MyCustType = myReader.GetString(2).ToString
-                    Custrecord.MyCustActive = myReader.GetValue(3)
-                    Custrecord.MyCustShipToid = myReader.GetString(4).ToString
+                    Custrecord.MyCIName = myReader.GetString(1).ToString
+                    Custrecord.MyCIadd1 = myReader.GetString(2).ToString
+                    Custrecord.MyCIAdd2 = myReader.GetString(3).ToString
+                    Custrecord.MycmbCICity = myReader.GetString(4).ToString
+                    Custrecord.MyCIpcode = myReader.GetString(5).ToString
+                    Custrecord.MycmbCIProv = myReader.GetString(6).ToString
+                    Custrecord.MycmbCICountry = myReader.GetString(7).ToString
+                    Custrecord.MycmbCustType = myReader.GetString(8).ToString
+                    Custrecord.MychCIactive = myReader.GetValue(9)
+
+                    Custrecord.MyBLName = myReader.GetString(10).ToString
+                    Custrecord.MyBLadd1 = myReader.GetString(11).ToString
+                    Custrecord.MyBLadd2 = myReader.GetString(12).ToString
+                    Custrecord.MycmbBLcity = myReader.GetString(13).ToString
+                    Custrecord.MyBLpcode = myReader.GetString(14).ToString
+                    Custrecord.MycmbBLProv = myReader.GetString(15).ToString
+                    Custrecord.MycmbBLCountry = myReader.GetString(16).ToString
+
+                    Custrecord.MycmbShpID = myReader.GetString(17).ToString
+                    Custrecord.MySHName = myReader.GetString(18).ToString
+                    Custrecord.MySHadd1 = myReader.GetString(19).ToString
+                    Custrecord.MySHadd2 = myReader.GetString(20).ToString
+                    Custrecord.MycmbSHCity = myReader.GetString(21).ToString
+                    Custrecord.MySHPcode = myReader.GetString(22).ToString
+                    Custrecord.MycmbSHProv = myReader.GetString(23).ToString
+                    Custrecord.MycmbSHCountry = myReader.GetString(24).ToString
+
                     ReadCustomer = True
                 Loop
 
@@ -360,15 +390,19 @@ EDIT_EXIT:
         'check if new was pressed or update
 
         'release log 
-        If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
-            MsgBox("Error deting Lock record!")
+        If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then
+            MsgBox("Error deleting Lock record!")
         End If
 
         inCustID.Text = ""
         inCustName.Text = ""
         incmbCustID.Text = ""
         incmbCustName.Text = ""
+        selcustid = ""
+        selcustname = ""
         LoadData() ' inacse new 
+        cmdSaveShpto.Enabled = False
+        clrFields(Me)
         TabControl1.Visible = False
 
     End Sub
@@ -400,7 +434,6 @@ EDIT_EXIT:
 
 
                     End If
-
 
                 Else
                     Exit Sub
@@ -616,46 +649,65 @@ EDIT_EXIT:
             GlobalVariables.Gl_tmpactive = 1
         End If
 
-        'update first shipto
-        selShipToid = GetLastShipto(selcustid, Trim(SHName.Text))
-        Dim result As String = InputBox("Use/Change Ship-to code!", "Accept Ship-to code", selShipToid, 100, 100)
-        If (result = "") Then
-            txtmsg.Text = "Must accept or enter new shipto code!"
-            txtmsg.Visible = True
-            Timer1.Interval = 5000 'ms
-            Timer1.Start()
-            Exit Sub
-        End If
-
-
-        CIcustshipto.MyShipCustID = selcustid
-        CIcustshipto.MyShiptoID = selShipToid
-        CIcustshipto.MyShipName = Trim(SHName.Text)
-        CIcustshipto.MyShipadd1 = Trim(SHadd1.Text)
-        CIcustshipto.MyShipadd2 = Trim(SHadd2.Text)
-        CIcustshipto.MyShipcity = Trim(cmbSHCity.Text)
-        CIcustshipto.MyShippcode = Trim(SHPcode.Text)
-        CIcustshipto.MyShipprov = Trim(cmbSHProv.Text)
-        CIcustshipto.MyShipcountry = Trim(cmbSHCountry.Text)
-        CIcustshipto.MyShipDflt = 1
-        CIcustshipto.Myactive = 1
-        If (UpdateCSShipTo(CIcustshipto, seluw2) = False) Then
-            txtmsg.Text = "Error saving shipto info.!"
-            txtmsg.Visible = True
-            Timer1.Interval = 5000 'ms
-            Timer1.Start()
-            Exit Sub
-        End If
-
         ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid)
+
+        'New customer - save ship To
+        If (topert = "LCIU") Then
+            selShipToid = GetLastShipto(selcustid, Trim(SHName.Text))
+            Dim result As String = InputBox("Use/Change Ship-to code!", "Accept Ship-to code", selShipToid, 100, 100)
+            If (result = "") Then
+                txtmsg.Text = "Must accept or enter a new shipto code!"
+                txtmsg.Visible = True
+                Timer1.Interval = 5000 'ms
+                Timer1.Start()
+                Exit Sub
+            End If
+
+            CIcustshipto.MyShipCustID = selcustid
+            CIcustshipto.MyShiptoID = selShipToid
+            CIcustshipto.MyShipName = Trim(SHName.Text)
+            CIcustshipto.MyShipadd1 = Trim(SHadd1.Text)
+            CIcustshipto.MyShipadd2 = Trim(SHadd2.Text)
+            CIcustshipto.MyShipcity = Trim(cmbSHCity.Text)
+            CIcustshipto.MyShippcode = Trim(SHPcode.Text)
+            CIcustshipto.MyShipprov = Trim(cmbSHProv.Text)
+            CIcustshipto.MyShipcountry = Trim(cmbSHCountry.Text)
+            CIcustshipto.MyShipDflt = 1
+            CIcustshipto.Myactive = 1
+            If (UpdateCSShipTo(CIcustshipto, seluw2) = False) Then
+                txtmsg.Text = "Error saving shipto info.!"
+                txtmsg.Visible = True
+                Timer1.Interval = 5000 'ms
+                Timer1.Start()
+                Exit Sub
+            End If
+        End If
+
         If (AppLocking.WriteDelLock("D", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
-            MsgBox("Error Creating Lock Record!")
+            MsgBox("Error Deleting Lock Record!")
         End If
 
         txtmsg.Text = "Customer Saved!"
         txtmsg.Visible = True
         Timer1.Interval = 5000 'ms
         Timer1.Start()
+
+        inCustID.Text = ""
+        inCustName.Text = ""
+        incmbCustID.Text = ""
+        incmbCustName.Text = ""
+        LoadData() ' incase new 
+        seluw = "I"
+        seluw2 = ""
+        clrFields(Me)
+        cmdSaveShpto.Enabled = False
+        TabControl1.Visible = False
+
+    End Sub
+
+    Private Sub clrFields(frm As Form, Optional All As Boolean = True)
+
+
 
     End Sub
 

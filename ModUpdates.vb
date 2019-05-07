@@ -35,6 +35,7 @@ Module ModUpdates
         crselID = selID
 
         ControlsRecr(infrm.Controls) 'Get all controls in a form into arraylist al
+        DisplayControls() ' debugging
 
         If (Left(inopert, 2) = "LC") Then ' customers table
             If (inopert = "LCIU" Or inopert = "LCU") Then
@@ -42,25 +43,22 @@ Module ModUpdates
             End If
         End If
 
-        DisplayControls() ' debugging
-
     End Function
 
     Private Sub ControlsRecr(ByVal controls As Control.ControlCollection)
 
         For Each ctrl As Control In controls
             If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
-                al.Add(ctrl.Name & " - " & ctrl.GetType.Name & " - " & ctrl.Text)
+                al.Add(ctrl.Name & " # " & ctrl.GetType.Name & " # " & ctrl.Text)
                 ControlsRecr(ctrl.Controls)
             End If
         Next
 
     End Sub
 
-
     Private Function UpdateCustomers() As Boolean
 
-        Dim arval(2) As String
+        Dim arval(3) As String
         Dim chval As String = ""
         Dim ctrlname As String = ""
         Dim ctrltype As String = ""
@@ -74,7 +72,7 @@ Module ModUpdates
         For Each currentElement As String In al
 
             chval = currentElement.ToString
-            arval = Split(chval, " - ")
+            arval = Split(chval, " # ")
             ctrlname = Trim(arval(0))
             ctrltype = Trim(arval(1))
             ctrlvalue = Trim(arval(2))
@@ -86,7 +84,7 @@ Module ModUpdates
                 End If
                 If (ctrlname = "chCIactive") Then
                     updsql2 = updsql2 & ctrlname & " = " & GlobalVariables.Gl_tmpactive
-                Else
+                ElseIf (ctrlname <> "cmbShpID") Then
                     updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
                 End If
 
@@ -117,7 +115,7 @@ Module ModUpdates
         For Each currentElement As String In al
 
             chval = currentElement.ToString
-            arval = Split(chval, " - ")
+            arval = Split(chval, " # ")
             ctrlname = Trim(arval(0))
             ctrltype = Trim(arval(1))
             ctrlvlaue = Trim(arval(2))

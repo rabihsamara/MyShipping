@@ -328,9 +328,9 @@ Partial Class frmCustomers
         '
         Me.GPCommands.Controls.Add(Me.cmdSaveCust)
         Me.GPCommands.Controls.Add(Me.cmdCanCust)
-        Me.GPCommands.Location = New System.Drawing.Point(6, 557)
+        Me.GPCommands.Location = New System.Drawing.Point(3, 557)
         Me.GPCommands.Name = "GPCommands"
-        Me.GPCommands.Size = New System.Drawing.Size(411, 76)
+        Me.GPCommands.Size = New System.Drawing.Size(414, 76)
         Me.GPCommands.TabIndex = 3
         Me.GPCommands.TabStop = False
         Me.GPCommands.Text = "Commands"

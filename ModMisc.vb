@@ -62,8 +62,8 @@ Module ModMisc
     '* CST=Customers screen seltype in selection of existing customers- 
     '* CRI CRIA or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL = Customers screen - customer ID Combo
     '* CRN CRNA or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL = Customers screen - customer Name Combo
+    '* CSHT= Combo shiptoid in customer screen
     '*
-
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -91,6 +91,8 @@ Module ModMisc
                     tsql = tsql & " and cmbCustType = '" & callby.Substring(4, 2) & "'"
                 End If
                 tsql = tsql & " order by CIName asc"
+            ElseIf (callby = "CSHT") Then
+                tsql = "select custid FROM  shipto order by custid asc"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -113,6 +115,9 @@ Module ModMisc
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     ElseIf (callby.substring(0, 3) = "CRN") Then
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
+                    ElseIf (callby = "CSHT") Then
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     End If
@@ -461,25 +466,27 @@ Exit_Excel:
     'Get id from shname
     Public Function GetLastShipto(ByVal inCustID As String, ByVal inshname As String) As String
 
-        Dim cnt As Integer = 0
-        Dim tchr As String = ""
-
+        Dim L As Integer = inshname.Length
         Dim strArr() As String
+        Dim tchr As String = ""
+        Dim tmpt As String = ""
         Dim count As Integer
+        Dim cnt As Integer = 0
 
-        'Get up to 3 characters from ship name
-        strArr = inshname.Split(" ")
-        For count = 0 To strArr.Length - 1
-            tchr = tchr & Left(strArr(count), 1)
-        Next
-        If (tchr.Length < 3) Then
-            tchr = tchr & Left(inCustID, 1)
+        If (inshname <> "" And L > 3 And InStr(inshname, " ") > 0) Then
+            strArr = inshname.Split(" ")
+            For count = 0 To strArr.Length - 1
+                tmpt = Trim(strArr(count))
+                tchr = tchr & If(tmpt <> "", tmpt.Substring(0, 1), "")
+            Next
+        Else
+            tchr = inshname.Substring(0, 3)
         End If
+        tchr = tchr & "0"
 
         GlobalVariables.Gl_SQLStr = "select count(*) + 1 as cnt from shipto where custid = '" & inCustID & "'"
         cnt = ReadSQL("SHPC", "")
         tchr = tchr & cnt.ToString
-
         GetLastShipto = tchr
 
     End Function
@@ -546,17 +553,24 @@ Exit_Excel:
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipCustID & "','" & custshipto.MyShiptoID & "','" & custshipto.MyShipName & "','" & custshipto.MyShipadd1 & "','"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipadd2 & "','" & custshipto.MyShipcity & "','" & custshipto.MyShipprov & "','" & custshipto.MyShippcode & "','"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ") End"
-            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error creating shipto record!")
                 Exit Function
             End If
-
+            'update table customer of new customer shipto id.
+            GlobalVariables.Gl_SQLStr = "update customers set cmbShpID = '" & Trim(custshipto.MyShiptoID) & "' where CustID = '" & Trim(custshipto.MyShipCustID) & "'"
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error updating Customer record with new shipto ID!")
+                Exit Function
+            End If
         Else
             GlobalVariables.Gl_SQLStr = "If exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "update shipto set ShipName = '" & custshipto.MyShipName & "',Shipadd1 = '" & custshipto.MyShipadd1 & "',Shipadd2 = '" & custshipto.MyShipadd2
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcity = '" & custshipto.MyShipcity & "',Shipprov = '" & custshipto.MyShipprov & "',Shippcode = '" & custshipto.MyShippcode
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcountry = '" & custshipto.MyShipcountry & "',ShipDflt = " & custshipto.MyShipDflt & ",active = " & custshipto.Myactive
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where custid = '" & custshipto.MyShipCustID & "' and ShiptoID = '" & custshipto.MyShiptoID & "') End"
-            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error Updating shipto record!")
                 Exit Function
             End If
         End If
