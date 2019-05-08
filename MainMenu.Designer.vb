@@ -65,6 +65,7 @@ Partial Class MainMenu
         Me.cmdTmp.TabIndex = 0
         Me.cmdTmp.Text = "Create class(tmp)"
         Me.cmdTmp.UseVisualStyleBackColor = True
+        Me.cmdTmp.Visible = False
         '
         'MainMenu
         '

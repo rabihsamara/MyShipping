@@ -25,6 +25,7 @@ Public Class frmsettings
         If Not (Me.Tag = "appstart") Then
             Initialize_DatGridMaster()
             Initiiaze_DataGridCompany()
+            DataGridCompany.Visible = True
         End If
 
     End Sub
@@ -226,7 +227,6 @@ Public Class frmsettings
         sDs = New DataSet()
         sAdapter.Fill(sDs, "company")
         sTable = sDs.Tables("company")
-        connection.Close()
         DataGridCompany.DataSource = sDs.Tables("company")
         DataGridCompany.ReadOnly = False
         DataGridCompany.SelectionMode = DataGridViewSelectionMode.FullRowSelect

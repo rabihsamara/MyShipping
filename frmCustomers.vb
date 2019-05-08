@@ -192,7 +192,7 @@ Public Class frmCustomers
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(BLName,'') as BLName, ISNULL(BLadd1,'') as BLadd1, ISNULL(BLadd2,'') as BLAdd2, ISNULL(cmbBLcity,'') as cmbBLcity, ISNULL(BLpcode,'') as BLpcode, ISNULL(cmbBLProv,'') as cmbBLProv, ISNULL(cmbBLCountry,'') as cmbBLCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbShpID,'') as cmbShpID, ISNULL(SHName,'') as SHName, ISNULL(SHadd1,'') as SHadd1, ISNULL(SHadd2,'') as SHAdd2,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry FROM Customers  "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where Custname = '" & selcustname & "'")
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where CIname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
                 GoTo EDIT_EXIT
@@ -337,6 +337,8 @@ EDIT_EXIT:
 
                 myReader = myCmd.ExecuteReader()
                 Do While myReader.Read()
+                    selcustid = myReader.GetString(0).ToString
+                    selcustname = myReader.GetString(1).ToString
 
                     Custrecord.MyCustID = myReader.GetString(0).ToString
                     Custrecord.MyCIName = myReader.GetString(1).ToString
@@ -399,9 +401,9 @@ EDIT_EXIT:
 
     End Sub
 
-    'Billto copy aaddres from customer nfo address
+    'Billto copy address from customer nfo address
     Private Sub cmdBillCopy_Click(sender As Object, e As EventArgs) Handles cmdBillCopy.Click
-        BLName.Text = CIName.Text
+        BLName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CIName.Text)
         BLadd1.Text = CIadd1.Text
         BLadd2.Text = CIAdd2.Text
         cmbBLcity.Text = cmbCICity.Text
@@ -413,32 +415,17 @@ EDIT_EXIT:
     'shipto save it
     Private Sub CmdSaveShpto_Click(sender As Object, e As EventArgs) Handles cmdSaveShpto.Click
 
-        SHName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(SHName.Text)
+        GlobalVariables.Gl_tmpcustid = selcustid
+        GlobalVariables.Gl_tmpcustname = selcustname
 
-        If (seluw2 = "I" Or seluw2 = "IU") Then
-            If (selShipToid = "") Then
-                CIcustshipto = GetShiptoRec(selcustid, selShipToid)
-
-
-                Dim result As DialogResult = MessageBox.Show("Create New Ship-to ID?", "Confirm add new ship-to ID", MessageBoxButtons.YesNo)
-                If (result = DialogResult.Yes) Then
-                    If (cmbShpID.Text = "") Then
-
-
-                    End If
-
-                Else
-                    Exit Sub
-                End If
-
-            End If
-        End If
+        Dim frm As New frmShippingadd()
+        frm.ShowDialog()
 
     End Sub
 
     'shipto section copy from customer info
     Private Sub CmdSaveshipasinfo_Click(sender As Object, e As EventArgs) Handles cmdSaveshipasinfo.Click
-        SHName.Text = CIName.Text
+        SHName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CIName.Text)
         SHadd1.Text = CIadd1.Text
         SHadd2.Text = CIAdd2.Text
         cmbSHCity.Text = cmbCICity.Text
@@ -449,7 +436,7 @@ EDIT_EXIT:
 
     'shipto section copy from billto
     Private Sub CmdShSaveBill_Click(sender As Object, e As EventArgs) Handles cmdShSaveBill.Click
-        SHName.Text = BLName.Text
+        SHName.Text = Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(BLName.Text)
         SHadd1.Text = BLadd1.Text
         SHadd2.Text = BLadd2.Text
         cmbSHCity.Text = cmbBLcity.Text
@@ -641,7 +628,10 @@ EDIT_EXIT:
             GlobalVariables.Gl_tmpactive = 1
         End If
 
-        ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid)
+        If (ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid) = False) Then
+            MsgBox("Error updating Customer table!")
+            Exit Sub
+        End If
 
         'New customer - save ship To
         If (topert = "LCIU") Then

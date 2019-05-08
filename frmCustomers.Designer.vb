@@ -340,7 +340,7 @@ Partial Class frmCustomers
         Me.cmdSaveCust.BackColor = System.Drawing.Color.Azure
         Me.cmdSaveCust.Location = New System.Drawing.Point(6, 19)
         Me.cmdSaveCust.Name = "cmdSaveCust"
-        Me.cmdSaveCust.Size = New System.Drawing.Size(43, 20)
+        Me.cmdSaveCust.Size = New System.Drawing.Size(43, 28)
         Me.cmdSaveCust.TabIndex = 1
         Me.cmdSaveCust.Text = "Save"
         Me.cmdSaveCust.UseVisualStyleBackColor = False
@@ -350,7 +350,7 @@ Partial Class frmCustomers
         Me.cmdCanCust.BackColor = System.Drawing.Color.Azure
         Me.cmdCanCust.Location = New System.Drawing.Point(346, 19)
         Me.cmdCanCust.Name = "cmdCanCust"
-        Me.cmdCanCust.Size = New System.Drawing.Size(51, 20)
+        Me.cmdCanCust.Size = New System.Drawing.Size(51, 28)
         Me.cmdCanCust.TabIndex = 0
         Me.cmdCanCust.Text = "Cancel"
         Me.cmdCanCust.UseVisualStyleBackColor = False
@@ -378,7 +378,7 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.Controls.Add(Me.Label22)
         Me.GBShipToAdd1.Location = New System.Drawing.Point(423, 6)
         Me.GBShipToAdd1.Name = "GBShipToAdd1"
-        Me.GBShipToAdd1.Size = New System.Drawing.Size(415, 262)
+        Me.GBShipToAdd1.Size = New System.Drawing.Size(367, 262)
         Me.GBShipToAdd1.TabIndex = 2
         Me.GBShipToAdd1.TabStop = False
         Me.GBShipToAdd1.Text = "Shipping Address"
@@ -404,11 +404,11 @@ Partial Class frmCustomers
         '
         Me.cmdSaveShpto.BackColor = System.Drawing.Color.Azure
         Me.cmdSaveShpto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdSaveShpto.Location = New System.Drawing.Point(234, 19)
+        Me.cmdSaveShpto.Location = New System.Drawing.Point(259, 19)
         Me.cmdSaveShpto.Name = "cmdSaveShpto"
-        Me.cmdSaveShpto.Size = New System.Drawing.Size(123, 21)
+        Me.cmdSaveShpto.Size = New System.Drawing.Size(98, 21)
         Me.cmdSaveShpto.TabIndex = 28
-        Me.cmdSaveShpto.Text = "Save Shipto ID"
+        Me.cmdSaveShpto.Text = "ADD Ship To"
         Me.cmdSaveShpto.UseVisualStyleBackColor = False
         '
         'cmbShpID
@@ -432,11 +432,11 @@ Partial Class frmCustomers
         '
         Me.cmdSaveshipasinfo.BackColor = System.Drawing.Color.Azure
         Me.cmdSaveshipasinfo.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdSaveshipasinfo.Location = New System.Drawing.Point(56, 167)
+        Me.cmdSaveshipasinfo.Location = New System.Drawing.Point(65, 166)
         Me.cmdSaveshipasinfo.Name = "cmdSaveshipasinfo"
-        Me.cmdSaveshipasinfo.Size = New System.Drawing.Size(126, 21)
+        Me.cmdSaveshipasinfo.Size = New System.Drawing.Size(141, 27)
         Me.cmdSaveshipasinfo.TabIndex = 25
-        Me.cmdSaveshipasinfo.Text = "<<<<Same as Address"
+        Me.cmdSaveshipasinfo.Text = "Copy Customer Address"
         Me.cmdSaveshipasinfo.UseVisualStyleBackColor = False
         '
         'cmdShSaveBill
@@ -445,9 +445,9 @@ Partial Class frmCustomers
         Me.cmdShSaveBill.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.cmdShSaveBill.Location = New System.Drawing.Point(231, 167)
         Me.cmdShSaveBill.Name = "cmdShSaveBill"
-        Me.cmdShSaveBill.Size = New System.Drawing.Size(126, 19)
+        Me.cmdShSaveBill.Size = New System.Drawing.Size(126, 26)
         Me.cmdShSaveBill.TabIndex = 24
-        Me.cmdShSaveBill.Text = "Same as Bill Address"
+        Me.cmdShSaveBill.Text = "Copy Billing Address"
         Me.cmdShSaveBill.UseVisualStyleBackColor = False
         '
         'SHPcode
@@ -593,11 +593,11 @@ Partial Class frmCustomers
         '
         Me.cmdBillCopy.BackColor = System.Drawing.Color.Azure
         Me.cmdBillCopy.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdBillCopy.Location = New System.Drawing.Point(251, 140)
+        Me.cmdBillCopy.Location = New System.Drawing.Point(204, 140)
         Me.cmdBillCopy.Name = "cmdBillCopy"
-        Me.cmdBillCopy.Size = New System.Drawing.Size(100, 19)
+        Me.cmdBillCopy.Size = New System.Drawing.Size(147, 24)
         Me.cmdBillCopy.TabIndex = 24
-        Me.cmdBillCopy.Text = "Same as Above"
+        Me.cmdBillCopy.Text = "Copy Customer Address"
         Me.cmdBillCopy.UseVisualStyleBackColor = False
         '
         'BLpcode

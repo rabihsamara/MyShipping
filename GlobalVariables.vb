@@ -30,6 +30,9 @@ Public Class GlobalVariables
     Public Shared Property GL_mactive As Integer
     Public Shared Property typeAR As String = "CheckBox,CheckedListBox,ComboBox,ListBox,ListView,Radio,Richtextbox,TextBox"
 
+    Public Shared Property Gl_tmpcustid As String
+    Public Shared Property Gl_tmpcustname As String
+
 End Class
 
 Public Class masterconnrec

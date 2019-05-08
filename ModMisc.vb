@@ -578,6 +578,28 @@ Exit_Excel:
 
     End Function
 
+    Public Sub LoadDataGrids(ByVal inGrid As DataGridView, ByVal tsql As String, ByVal intable As String)
+
+        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            connection.Open()
+            sCommand = New SqlCommand(tsql, connection)
+            sAdapter = New SqlDataAdapter(sCommand)
+            sBuilder = New SqlCommandBuilder(sAdapter)
+            sDs = New DataSet()
+            sAdapter.Fill(sDs, intable)
+            sTable = sDs.Tables(intable)
+            inGrid.DataSource = sDs.Tables(intable)
+            inGrid.ReadOnly = True
+            inGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+            inGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+            connection.Close()
+
+
+
+        End Using
+
+    End Sub
+
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *
     '***********************************************************************************************

@@ -100,7 +100,6 @@ Module ModUpdates
         updsql3 = " where custid = '" & crselID & "'"
         GlobalVariables.Gl_SQLStr = updsql & updsql2 + updsql3
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-            MsgBox("Error updating Customer table!" & crformname)
             UpdateCustomers = False
             Exit Function
         End If
