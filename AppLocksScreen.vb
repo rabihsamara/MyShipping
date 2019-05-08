@@ -22,21 +22,9 @@ Public Class AppLocksScreen
     End Sub
 
     Private Sub LoadAppLocks()
-        Dim sql As String = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks order by Userid asc,Formname asc,ctrlname asc"
-        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-            connection.Open()
-            sCommand = New SqlCommand(sql, connection)
-            sAdapter = New SqlDataAdapter(sCommand)
-            sBuilder = New SqlCommandBuilder(sAdapter)
-            sDs = New DataSet()
-            sAdapter.Fill(sDs, "AppLocks")
-            sTable = sDs.Tables("AppLocks")
-            connection.Close()
-            DataGridLocks.DataSource = sDs.Tables("AppLocks")
-            DataGridLocks.ReadOnly = True
-            DataGridLocks.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            DataGridLocks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-        End Using
+
+        Dim tsql As String = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks order by Userid asc,Formname asc,ctrlname asc"
+        ModMisc.LoadDataGrids(DataGridLocks, tsql, "AppLocks")
 
     End Sub
 

@@ -6,9 +6,15 @@
     Private selcustid As String = ""
     Private selmode As String = "I"
 
+    Private slcountryid As Integer
+    Private slstateid As Integer
+
     Private Sub FrmShippingadd_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         LoadShipTos()
+
+        GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+        ModMisc.ReadCountries(cmbSHCountry)
 
     End Sub
 
@@ -152,5 +158,22 @@
         chactive.Checked = False
 
     End Sub
+
+    Private Sub cmbSHCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCountry.SelectionChangeCommitted
+        slcountryid = cmbSHCountry.SelectedValue
+
+        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slcountryid & " and active = 1 order by provshort"
+        ModMisc.ReadCountries(cmbSHProv)
+
+    End Sub
+
+    Private Sub cmbSHProv_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHProv.SelectionChangeCommitted
+
+        slstateid = cmbSHProv.SelectedValue
+        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slcountryid & " and provid = " & slstateid & " and cityactive = 1 order by cityname"
+        ModMisc.ReadCountries(cmbSHCity)
+
+    End Sub
+
 
 End Class

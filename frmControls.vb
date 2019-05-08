@@ -78,22 +78,9 @@ Public Class frmControls
     End Sub
 
     Private Sub LoadUsrControls(ByVal inuser As String, ByVal inform As String)
-        'DataGridusrCont
-        Dim sql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & inuser & "' and Formname = '" & inform & "' order by controlname asc, controltype asc"
-        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-            connection.Open()
-            sCommand = New SqlCommand(sql, connection)
-            sAdapter = New SqlDataAdapter(sCommand)
-            sBuilder = New SqlCommandBuilder(sAdapter)
-            sDs = New DataSet()
-            sAdapter.Fill(sDs, "frmUsercontrols")
-            sTable = sDs.Tables("frmUsercontrols")
-            connection.Close()
-            DataGridusrCont.DataSource = sDs.Tables("frmUsercontrols")
-            DataGridusrCont.ReadOnly = True
-            DataGridusrCont.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            DataGridusrCont.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-        End Using
+
+        Dim tsql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & inuser & "' and Formname = '" & inform & "' order by controlname asc, controltype asc"
+        ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmUsercontrols")
 
     End Sub
 
@@ -217,22 +204,9 @@ Public Class frmControls
     End Sub
 
     Private Sub LoadDfltControls(ByVal inform As String)
-        'DataGridusrCont
-        Dim sql As String = "SELECT ID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDFLTcontrols where Formname = '" & inform & "' order by controlname asc, controltype asc"
-        Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-            connection.Open()
-            sCommand = New SqlCommand(sql, connection)
-            sAdapter = New SqlDataAdapter(sCommand)
-            sBuilder = New SqlCommandBuilder(sAdapter)
-            sDs = New DataSet()
-            sAdapter.Fill(sDs, "frmDFLTcontrols")
-            sTable = sDs.Tables("frmDFLTcontrols")
-            connection.Close()
-            DataGridusrCont.DataSource = sDs.Tables("frmDFLTcontrols")
-            DataGridusrCont.ReadOnly = True
-            DataGridusrCont.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            DataGridusrCont.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-        End Using
+
+        Dim tsql As String = "SELECT ID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDFLTcontrols where Formname = '" & inform & "' order by controlname asc, controltype asc"
+        ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmDFLTcontrols")
 
     End Sub
 

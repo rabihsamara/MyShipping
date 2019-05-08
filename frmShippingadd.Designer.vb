@@ -22,6 +22,7 @@ Partial Class frmShippingadd
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim lblinfo As System.Windows.Forms.Label
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dspidname = New System.Windows.Forms.TextBox()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
@@ -48,6 +49,7 @@ Partial Class frmShippingadd
         Me.Label21 = New System.Windows.Forms.Label()
         Me.SHName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
+        lblinfo = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GPshpAdd.SuspendLayout()
         Me.SuspendLayout()
@@ -99,6 +101,7 @@ Partial Class frmShippingadd
         '
         'GPshpAdd
         '
+        Me.GPshpAdd.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.GPshpAdd.Controls.Add(Me.cmdCancel)
         Me.GPshpAdd.Controls.Add(Me.cmdSave)
         Me.GPshpAdd.Controls.Add(Me.chactive)
@@ -121,7 +124,7 @@ Partial Class frmShippingadd
         Me.GPshpAdd.Controls.Add(Me.Label22)
         Me.GPshpAdd.Location = New System.Drawing.Point(3, 248)
         Me.GPshpAdd.Name = "GPshpAdd"
-        Me.GPshpAdd.Size = New System.Drawing.Size(1176, 183)
+        Me.GPshpAdd.Size = New System.Drawing.Size(475, 183)
         Me.GPshpAdd.TabIndex = 51
         Me.GPshpAdd.TabStop = False
         Me.GPshpAdd.Text = "ShipTo Address"
@@ -295,11 +298,24 @@ Partial Class frmShippingadd
         Me.Label22.TabIndex = 49
         Me.Label22.Text = "Name:"
         '
+        'lblinfo
+        '
+        lblinfo.AutoSize = True
+        lblinfo.BackColor = System.Drawing.Color.Yellow
+        lblinfo.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        lblinfo.Location = New System.Drawing.Point(501, 248)
+        lblinfo.Name = "lblinfo"
+        lblinfo.Size = New System.Drawing.Size(399, 18)
+        lblinfo.TabIndex = 70
+        lblinfo.Text = "Click On Data View to edit existing shipping address"
+        '
         'frmShippingadd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.ClientSize = New System.Drawing.Size(1182, 438)
+        Me.Controls.Add(lblinfo)
         Me.Controls.Add(Me.GPshpAdd)
         Me.Controls.Add(Me.cmdExit)
         Me.Controls.Add(Me.cmdNew)
@@ -307,7 +323,7 @@ Partial Class frmShippingadd
         Me.Controls.Add(Me.dspidname)
         Me.Controls.Add(Me.Label1)
         Me.Name = "frmShippingadd"
-        Me.Text = "frmShippingadd"
+        Me.Text = "Shipping Addresses"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GPshpAdd.ResumeLayout(False)
         Me.GPshpAdd.PerformLayout()
