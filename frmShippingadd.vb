@@ -124,6 +124,10 @@
             MsgBox("Error updating Shipto address!")
         End If
         LoadShipTos()
+        GPshpAdd.Visible = False
+        cmdNew.Enabled = True
+        cmdExit.Enabled = True
+        clearfields()
 
     End Sub
 
