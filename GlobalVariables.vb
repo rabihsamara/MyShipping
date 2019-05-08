@@ -839,6 +839,8 @@ Public Class shipto
     Private Shipcountry As String
     Private ShipDflt As String
     Private active As Integer
+    Private dtcreated As DateTime
+    Private dtupdated As DateTime
 
     Public Sub New() 'parameterised constructor
 
@@ -980,6 +982,28 @@ Public Class shipto
         End Get
         Set(ByVal Value As String)
             active = Value
+        End Set
+
+    End Property
+
+    Public Property Mydatecreated() As DateTime
+
+        Get
+            Return dtcreated
+        End Get
+        Set(ByVal Value As DateTime)
+            dtcreated = Value
+        End Set
+
+    End Property
+
+    Public Property Mydateupdated() As DateTime
+
+        Get
+            Return dtupdated
+        End Get
+        Set(ByVal Value As DateTime)
+            dtupdated = Value
         End Set
 
     End Property

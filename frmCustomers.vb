@@ -656,6 +656,8 @@ EDIT_EXIT:
             CIcustshipto.MyShipcountry = Trim(cmbSHCountry.Text)
             CIcustshipto.MyShipDflt = 1
             CIcustshipto.Myactive = 1
+            CIcustshipto.Mydatecreated = Now()
+            CIcustshipto.Mydateupdated = Now()
             If (UpdateCSShipTo(CIcustshipto, seluw2) = False) Then
                 txtmsg.Text = "Error saving shipto info.!"
                 txtmsg.Visible = True

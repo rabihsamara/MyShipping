@@ -217,20 +217,8 @@ Public Class frmsettings
 
     Private Sub Initiiaze_DataGridCompany()
 
-        Dim sql As String = "SELECT * FROM company order by compname asc"
-        connection = New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-
-        connection.Open()
-        sCommand = New SqlCommand(sql, connection)
-        sAdapter = New SqlDataAdapter(sCommand)
-        sBuilder = New SqlCommandBuilder(sAdapter)
-        sDs = New DataSet()
-        sAdapter.Fill(sDs, "company")
-        sTable = sDs.Tables("company")
-        DataGridCompany.DataSource = sDs.Tables("company")
-        DataGridCompany.ReadOnly = False
-        DataGridCompany.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-        connection.Close()
+        Dim tsql As String = "SELECT * FROM company order by compname asc"
+        ModMisc.LoadDataGrids(DataGridCompany, tsql, "company")
 
     End Sub
 

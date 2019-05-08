@@ -549,10 +549,10 @@ Exit_Excel:
 
         If (inmode = "I" Or inmode = "IU") Then
             GlobalVariables.Gl_SQLStr = "If not exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active) values ('"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active, datecreated,dateupdated) values ('"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipCustID & "','" & custshipto.MyShiptoID & "','" & custshipto.MyShipName & "','" & custshipto.MyShipadd1 & "','"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipadd2 & "','" & custshipto.MyShipcity & "','" & custshipto.MyShipprov & "','" & custshipto.MyShippcode & "','"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ") End"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ",'" & custshipto.Mydatecreated & "','" & custshipto.Mydateupdated & "') End"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error creating shipto record!")
                 Exit Function
@@ -567,8 +567,8 @@ Exit_Excel:
             GlobalVariables.Gl_SQLStr = "If exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "update shipto set ShipName = '" & custshipto.MyShipName & "',Shipadd1 = '" & custshipto.MyShipadd1 & "',Shipadd2 = '" & custshipto.MyShipadd2
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcity = '" & custshipto.MyShipcity & "',Shipprov = '" & custshipto.MyShipprov & "',Shippcode = '" & custshipto.MyShippcode
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcountry = '" & custshipto.MyShipcountry & "',ShipDflt = " & custshipto.MyShipDflt & ",active = " & custshipto.Myactive
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where custid = '" & custshipto.MyShipCustID & "' and ShiptoID = '" & custshipto.MyShiptoID & "') End"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "',Shipcountry = '" & custshipto.MyShipcountry & "',ShipDflt = " & custshipto.MyShipDflt & ",active = " & custshipto.Myactive & ", dateupdated = '" & custshipto.Mydateupdated
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "' where custid = '" & custshipto.MyShipCustID & "' and ShiptoID = '" & custshipto.MyShiptoID & "') End"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error Updating shipto record!")
                 Exit Function
@@ -593,9 +593,6 @@ Exit_Excel:
             inGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect
             inGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
             connection.Close()
-
-
-
         End Using
 
     End Sub
