@@ -762,24 +762,24 @@ EDIT_EXIT:
     Private Sub LoadAccts()
 
         GBAccounts.Text = "Accounts for Customer: " & CIName.Text
-        Dim tsql As String = "SELECT ID,AccountNo,datecreated,dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
+        Dim tsql As String = "SELECT ID,AccountNo,IIF(active = 1,'Y','N') as active, CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
         ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
 
-        'change header text
-        Me.DataGridAccts.Columns(0).HeaderText = "ID"
-        Me.DataGridAccts.Columns(1).HeaderText = "Account#"
-        Me.DataGridAccts.Columns(2).HeaderText = "Created On"
-        Me.DataGridAccts.Columns(3).HeaderText = "Update On"
-        Me.DataGridAccts.Columns(4).HeaderText = "Created By"
+        With DataGridAccts
+            .Columns(0).HeaderText = "ID"
+            .Columns(1).HeaderText = "Account"
+            .Columns(2).HeaderText = "Active"
+            .Columns(3).HeaderText = "Created On"
+            .Columns(4).HeaderText = "Update On"
+            .Columns(5).HeaderText = "Created By"
 
-        DataGridAccts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-
-        'disable sorting
-        DataGridAccts.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridAccts.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridAccts.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridAccts.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridAccts.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+        End With
 
     End Sub
 

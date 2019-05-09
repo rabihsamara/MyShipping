@@ -590,10 +590,13 @@ Exit_Excel:
             sDs = New DataSet()
             sAdapter.Fill(sDs, intable)
             sTable = sDs.Tables(intable)
-            inGrid.DataSource = sDs.Tables(intable)
-            inGrid.ReadOnly = True
-            inGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect
-            inGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+            With inGrid
+                .DataSource = sDs.Tables(intable)
+                .ReadOnly = True
+                .SelectionMode = DataGridViewSelectionMode.FullRowSelect
+                .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+                .AutoResizeColumns()
+            End With
             connection.Close()
         End Using
 
