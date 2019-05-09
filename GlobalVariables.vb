@@ -469,7 +469,7 @@ Public Class userrec
         Me.MyPcode = tPcode
         Me.MyCountry = tCountry
         Me.MyActive = tActive
-        Me.MyusrPassword = tusrPassword
+        'Me.MyusrPassword = tusrPassword
         Me.Myusrmode = tusrmode
         Me.Myusrseclvl = tusrseclvl
 

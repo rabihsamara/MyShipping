@@ -35,6 +35,7 @@ Public Class frmUsers
         GBFormSec.Visible = False
         GBEditSecForm.Visible = False
         LoadUsers()
+
     End Sub
 
     Private Sub LoadUsers()
@@ -123,8 +124,8 @@ Public Class frmUsers
         If (upmode = "I") Then
             'Create default user (admin) in table users
             GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from users where UserID = '" & usrID.Text & "') Begin "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,country,Active,usrPassword,usrmode,usrseclvl) "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & usrID.Text & "','" & Trim(usrfname.Text) & "','" & Trim(usrlname.Text) & "','" & DateOfBirth.Value & "','" & Trim(usradd1.Text) & "','" & Trim(usradd2.Text) & "','" & Trim(cmbUsrCity.Text) & "','" & Trim(cmbUsrState.Text) & "','" & Trim(usrpcode.Text) & "','" & Trim(cmbUsrCountry.Text) & "'," & tactive & ",'" & Trim(usrpassword.Text) & "','" & Trim(cmbUsrMode.Text).Substring(0, 1) & "','" & Trim(cmbUsrSecLvl.Text) & "') End"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,country,Active,usrPassword,usrmode,usrseclvl,EncryptedPassword) "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & usrID.Text & "','" & Trim(usrfname.Text) & "','" & Trim(usrlname.Text) & "','" & DateOfBirth.Value & "','" & Trim(usradd1.Text) & "','" & Trim(usradd2.Text) & "','" & Trim(cmbUsrCity.Text) & "','" & Trim(cmbUsrState.Text) & "','" & Trim(usrpcode.Text) & "','" & Trim(cmbUsrCountry.Text) & "'," & tactive & ",'" & Trim(usrpassword.Text) & "','" & Trim(cmbUsrMode.Text).Substring(0, 1) & "','" & Trim(cmbUsrSecLvl.Text) & "',HashBytes('SHA2_512', '" & Trim(usrpassword.Text) & "')) End"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error Creating default user Record!")
                 Exit Sub
@@ -163,7 +164,8 @@ Public Class frmUsers
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Province = '" & Trim(cmbUsrState.Text) & "', Pcode = '" & Trim(usrpcode.Text) & "', "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Country = '" & Trim(cmbUsrCountry.Text) & "', Active = " & tactive & ", "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "usrPassword = '" & Trim(usrpassword.Text) & "', usrmode = '" & Trim(cmbUsrMode.Text).Substring(0, 1) & "', "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "usrseclvl = '" & Trim(cmbUsrSecLvl.Text) & "'"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "usrseclvl = '" & Trim(cmbUsrSecLvl.Text) & "',"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "EncryptedPassword = HashBytes('SHA2_512','" & Trim(usrpassword.Text) & "')"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " WHERE userID = '" & usrID.Text & "'"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error Updating user!")

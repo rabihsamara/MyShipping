@@ -291,6 +291,8 @@ EDIT_EXIT:
 
         Dim isInString As Boolean = False
 
+        LoadFormControls = Nothing
+
         GlobalVariables.GL_Stat = False
         If (ctrlname.Substring(1, 2) <> "in") Then
             isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)

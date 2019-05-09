@@ -26,7 +26,7 @@
     Private Sub cmdLogin_Click(sender As Object, e As EventArgs) Handles cmdLogin.Click
 
         Dim frm As Form = New Form()
-        Dim tpasswd As String
+        Dim tpasswd As String = String.Empty
 
         'frmMysetings.Tag = "Login" 'change wherever you called form frmMysetings
 

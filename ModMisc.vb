@@ -163,7 +163,8 @@ Module ModMisc
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             Try
                 If (inopt = "CUP") Then
-                    tsql = "SELECT usrpassword,usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 "
+                    'tsql = "SELECT usrpassword,usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 "
+                    tsql = "SELECT usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 and  Encryptedpassword = HashBytes('SHA2_512','" & criteria & "')"
                 Else
                     tsql = GlobalVariables.Gl_SQLStr
                 End If
@@ -176,10 +177,17 @@ Module ModMisc
                 myReader = myCmd.ExecuteReader()
                 Do While myReader.Read()
                     If (inopt = "CUP") Then 'Check user password option
-                        If (myReader.GetString(0).ToString = criteria) Then
+                        If (myReader.GetString(0).ToString <> "") Then
                             ReadSQL = True
-                            GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
+                            GlobalVariables.Gl_UserIDLevel = myReader.GetString(0).ToString 'U=User or A=admin
+                        Else
+                            ReadSQL = False
                         End If
+                        'If (myReader.GetString(0).ToString = criteria) Then
+                        '    ReadSQL = True
+                        '    GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
+                        'End If
+
                     ElseIf (inopt = "fldchk") Then
                         fldtext = myReader.GetString(0)
                         GlobalVariables.GL_Stat = True

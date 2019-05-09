@@ -133,8 +133,8 @@ Public Class frmsettings
                 End If
                 'Create default user (admin) in table users
                 GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from users where UserID = '" & My.Settings.DFLTuserID & "') Begin "
-                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,country,Active,usrPassword,usrmode,usrseclvl) "
-                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & My.Settings.DFLTuserID & "','Rabih','Samara','','','','','','','',1,'" & My.Settings.DFLTUserpwd & "','A',0) End"
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into users (UserID,Fname,Lname,DateOfBirth,Address1,Address2,City,Province,Pcode,country,Active,usrPassword,usrmode,usrseclvl,EncryptedPassword) "
+                GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "Values ('" & My.Settings.DFLTuserID & "','Rabih','Samara','','','','','','','',1,'" & My.Settings.DFLTUserpwd & "','A',0,HashBytes('SHA2_512', '" & Trim(My.Settings.DFLTUserpwd) & "')) End"
                 If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                     MsgBox("Error Creating default user Record!")
                     Exit Function
