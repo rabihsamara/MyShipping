@@ -102,6 +102,9 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.DataGridAccts = New System.Windows.Forms.DataGridView()
+        Me.cmdNewAcct = New System.Windows.Forms.Button()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -114,6 +117,8 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.SuspendLayout()
         Me.GBcustBillto.SuspendLayout()
         Me.GBcustAdd1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GBSelect
@@ -313,6 +318,7 @@ Partial Class frmCustomers
         'TabPage1
         '
         Me.TabPage1.BackColor = System.Drawing.SystemColors.InactiveCaption
+        Me.TabPage1.Controls.Add(Me.GroupBox2)
         Me.TabPage1.Controls.Add(Me.GPCommands)
         Me.TabPage1.Controls.Add(Me.GBShipToAdd1)
         Me.TabPage1.Controls.Add(Me.GBcustBillto)
@@ -328,9 +334,9 @@ Partial Class frmCustomers
         '
         Me.GPCommands.Controls.Add(Me.cmdSaveCust)
         Me.GPCommands.Controls.Add(Me.cmdCanCust)
-        Me.GPCommands.Location = New System.Drawing.Point(3, 557)
+        Me.GPCommands.Location = New System.Drawing.Point(3, 533)
         Me.GPCommands.Name = "GPCommands"
-        Me.GPCommands.Size = New System.Drawing.Size(414, 76)
+        Me.GPCommands.Size = New System.Drawing.Size(354, 76)
         Me.GPCommands.TabIndex = 3
         Me.GPCommands.TabStop = False
         Me.GPCommands.Text = "Commands"
@@ -348,7 +354,7 @@ Partial Class frmCustomers
         'cmdCanCust
         '
         Me.cmdCanCust.BackColor = System.Drawing.Color.Azure
-        Me.cmdCanCust.Location = New System.Drawing.Point(346, 19)
+        Me.cmdCanCust.Location = New System.Drawing.Point(297, 19)
         Me.cmdCanCust.Name = "cmdCanCust"
         Me.cmdCanCust.Size = New System.Drawing.Size(51, 28)
         Me.cmdCanCust.TabIndex = 0
@@ -376,9 +382,9 @@ Partial Class frmCustomers
         Me.GBShipToAdd1.Controls.Add(Me.Label21)
         Me.GBShipToAdd1.Controls.Add(Me.SHName)
         Me.GBShipToAdd1.Controls.Add(Me.Label22)
-        Me.GBShipToAdd1.Location = New System.Drawing.Point(423, 6)
+        Me.GBShipToAdd1.Location = New System.Drawing.Point(363, 6)
         Me.GBShipToAdd1.Name = "GBShipToAdd1"
-        Me.GBShipToAdd1.Size = New System.Drawing.Size(367, 262)
+        Me.GBShipToAdd1.Size = New System.Drawing.Size(427, 262)
         Me.GBShipToAdd1.TabIndex = 2
         Me.GBShipToAdd1.TabStop = False
         Me.GBShipToAdd1.Text = "Shipping Address"
@@ -567,7 +573,7 @@ Partial Class frmCustomers
         Me.GBcustBillto.Controls.Add(Me.Label16)
         Me.GBcustBillto.Location = New System.Drawing.Point(3, 274)
         Me.GBcustBillto.Name = "GBcustBillto"
-        Me.GBcustBillto.Size = New System.Drawing.Size(414, 277)
+        Me.GBcustBillto.Size = New System.Drawing.Size(354, 253)
         Me.GBcustBillto.TabIndex = 1
         Me.GBcustBillto.TabStop = False
         Me.GBcustBillto.Text = "BillTO Address"
@@ -719,7 +725,7 @@ Partial Class frmCustomers
         Me.GBcustAdd1.Controls.Add(Me.Label5)
         Me.GBcustAdd1.Location = New System.Drawing.Point(3, 6)
         Me.GBcustAdd1.Name = "GBcustAdd1"
-        Me.GBcustAdd1.Size = New System.Drawing.Size(414, 262)
+        Me.GBcustAdd1.Size = New System.Drawing.Size(354, 262)
         Me.GBcustAdd1.TabIndex = 0
         Me.GBcustAdd1.TabStop = False
         Me.GBcustAdd1.Text = "Customer Information"
@@ -879,6 +885,35 @@ Partial Class frmCustomers
         'Timer1
         '
         '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.cmdNewAcct)
+        Me.GroupBox2.Controls.Add(Me.DataGridAccts)
+        Me.GroupBox2.Location = New System.Drawing.Point(363, 274)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(426, 253)
+        Me.GroupBox2.TabIndex = 4
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "GBAccounts"
+        '
+        'DataGridAccts
+        '
+        Me.DataGridAccts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridAccts.Location = New System.Drawing.Point(6, 31)
+        Me.DataGridAccts.Name = "DataGridAccts"
+        Me.DataGridAccts.Size = New System.Drawing.Size(414, 216)
+        Me.DataGridAccts.TabIndex = 0
+        '
+        'cmdNewAcct
+        '
+        Me.cmdNewAcct.BackColor = System.Drawing.Color.Azure
+        Me.cmdNewAcct.Location = New System.Drawing.Point(257, 9)
+        Me.cmdNewAcct.Name = "cmdNewAcct"
+        Me.cmdNewAcct.Size = New System.Drawing.Size(80, 21)
+        Me.cmdNewAcct.TabIndex = 1
+        Me.cmdNewAcct.Text = "New Account"
+        Me.cmdNewAcct.UseVisualStyleBackColor = False
+        '
         'frmCustomers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -909,6 +944,8 @@ Partial Class frmCustomers
         Me.GBcustBillto.PerformLayout()
         Me.GBcustAdd1.ResumeLayout(False)
         Me.GBcustAdd1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -992,4 +1029,7 @@ Partial Class frmCustomers
     Friend WithEvents Label28 As Label
     Friend WithEvents cmdSaveCust As Button
     Friend WithEvents chCIactive As CheckBox
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents cmdNewAcct As Button
+    Friend WithEvents DataGridAccts As DataGridView
 End Class

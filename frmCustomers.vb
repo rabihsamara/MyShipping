@@ -222,7 +222,7 @@ Public Class frmCustomers
             tstat = ModMisc.FillCBox(cmbShpID, "CSHT")
             LoadCombCountries("ACT", seluw2)
             LoadCustScreen("Customers")
-
+            LoadAccts()
         End If
 
 EDIT_EXIT:
@@ -489,12 +489,10 @@ EDIT_EXIT:
             If (inopt = "ACT" Or inopt = "CCT") Then
                 GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slCICountry & " and active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbCIProv)
-                'cmbCIProv.Text = userrecord.MyCity
                 slCIProv = cmbCIProv.SelectedValue
 
                 GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbCICity)
-                'cmbCICity.Text = userrecord.MyCity
                 slCICity = cmbCICity.SelectedValue
             End If
 
@@ -502,12 +500,10 @@ EDIT_EXIT:
             If (inopt = "ACT" Or inopt = "BCT") Then
                 GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slBLCountry & " and active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbBLProv)
-                'cmbBLProv.Text = userrecord.MyCity
                 slBLProv = cmbBLProv.SelectedValue
 
                 GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbBLcity)
-                'cmbBLCity.Text = userrecord.MyCity
                 slBLCity = cmbBLcity.SelectedValue
             End If
 
@@ -741,6 +737,33 @@ EDIT_EXIT:
             cmbSHProv.Text = ""
             cmbSHCountry.Text = ""
         End If
+
+    End Sub
+
+    Private Sub CmdNewAcct_Click(sender As Object, e As EventArgs) Handles cmdNewAcct.Click
+
+    End Sub
+
+    Private Sub LoadAccts()
+
+        Dim tsql As String = "SELECT ID,AccountNo,CustoNo,datecreated,dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
+        ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
+
+        'change header text
+        Me.DataGridAccts.Columns(0).HeaderText = "ID"
+        Me.DataGridAccts.Columns(1).HeaderText = "Account#"
+        Me.DataGridAccts.Columns(2).HeaderText = "Created On"
+        Me.DataGridAccts.Columns(3).HeaderText = "Update On"
+        Me.DataGridAccts.Columns(4).HeaderText = "Created By"
+
+        DataGridAccts.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
+
+        'disable sorting
+        DataGridAccts.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+        DataGridAccts.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+        DataGridAccts.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+        DataGridAccts.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+        DataGridAccts.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
 
     End Sub
 
