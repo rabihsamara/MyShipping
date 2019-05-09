@@ -496,7 +496,7 @@ Exit_Excel:
         Dim myCmd As SqlCommand
         Dim myReader As SqlDataReader = Nothing
         Dim custshipto As shipto = New shipto()
-        Dim SQLStr = "SELECT ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active FROM shipto where custid = '" & shcustid & "' and shiptoID = '" & inshiptoID & "'"
+        Dim SQLStr = "SELECT ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active,datecreated,dateupdate,createdby FROM shipto where custid = '" & shcustid & "' and shiptoID = '" & inshiptoID & "'"
 
         GlobalVariables.GL_Stat = False
         GetShiptoRec = Nothing
@@ -522,7 +522,9 @@ Exit_Excel:
                     custshipto.MyShipcountry = myReader.GetString(9)
                     custshipto.MyShipDflt = myReader.GetString(10)
                     custshipto.Myactive = myReader.GetValue(11)
-
+                    custshipto.Mydatecreated = myReader.GetDateTime(12)
+                    custshipto.Mydateupdated = myReader.GetDateTime(13)
+                    custshipto.MyShcreatedby = myReader.GetString(14)
                     GetShiptoRec = custshipto
                     GlobalVariables.GL_Stat = True
                 Loop
@@ -549,10 +551,10 @@ Exit_Excel:
 
         If (inmode = "I" Or inmode = "IU") Then
             GlobalVariables.Gl_SQLStr = "If not exists(select 1 from shipto where custid = '" & custshipto.MyShipCustID & "' and shiptoID = '" & custshipto.MyShiptoID & "') Begin "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active, datecreated,dateupdated) values ('"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "insert into shipto (custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active, datecreated,dateupdated,createdby) values ('"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipCustID & "','" & custshipto.MyShiptoID & "','" & custshipto.MyShipName & "','" & custshipto.MyShipadd1 & "','"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipadd2 & "','" & custshipto.MyShipcity & "','" & custshipto.MyShipprov & "','" & custshipto.MyShippcode & "','"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ",'" & custshipto.Mydatecreated & "','" & custshipto.Mydateupdated & "') End"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & custshipto.MyShipcountry & "'," & custshipto.MyShipDflt & "," & custshipto.Myactive & ",'" & custshipto.Mydatecreated & "','" & custshipto.Mydateupdated & "','" & GlobalVariables.Gl_LogUserID & "') End"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error creating shipto record!")
                 Exit Function

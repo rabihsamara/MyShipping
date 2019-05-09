@@ -43,6 +43,9 @@ Partial Class frmCustomers
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.cmdNewAcct = New System.Windows.Forms.Button()
+        Me.DataGridAccts = New System.Windows.Forms.DataGridView()
         Me.GPCommands = New System.Windows.Forms.GroupBox()
         Me.cmdSaveCust = New System.Windows.Forms.Button()
         Me.cmdCanCust = New System.Windows.Forms.Button()
@@ -83,6 +86,12 @@ Partial Class frmCustomers
         Me.BLName = New System.Windows.Forms.TextBox()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.GBcustAdd1 = New System.Windows.Forms.GroupBox()
+        Me.createdby = New System.Windows.Forms.TextBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.dateupdate = New System.Windows.Forms.TextBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.datecreated = New System.Windows.Forms.TextBox()
+        Me.Label29 = New System.Windows.Forms.Label()
         Me.chCIactive = New System.Windows.Forms.CheckBox()
         Me.cmbCICountry = New System.Windows.Forms.ComboBox()
         Me.Label26 = New System.Windows.Forms.Label()
@@ -102,9 +111,6 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.DataGridAccts = New System.Windows.Forms.DataGridView()
-        Me.cmdNewAcct = New System.Windows.Forms.Button()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -113,12 +119,12 @@ Partial Class frmCustomers
         Me.GroupBox1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GPCommands.SuspendLayout()
         Me.GBShipToAdd1.SuspendLayout()
         Me.GBcustBillto.SuspendLayout()
         Me.GBcustAdd1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
-        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GBSelect
@@ -329,6 +335,35 @@ Partial Class frmCustomers
         Me.TabPage1.Size = New System.Drawing.Size(1412, 688)
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Info"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.cmdNewAcct)
+        Me.GroupBox2.Controls.Add(Me.DataGridAccts)
+        Me.GroupBox2.Location = New System.Drawing.Point(363, 274)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(426, 253)
+        Me.GroupBox2.TabIndex = 4
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "GBAccounts"
+        '
+        'cmdNewAcct
+        '
+        Me.cmdNewAcct.BackColor = System.Drawing.Color.Azure
+        Me.cmdNewAcct.Location = New System.Drawing.Point(257, 9)
+        Me.cmdNewAcct.Name = "cmdNewAcct"
+        Me.cmdNewAcct.Size = New System.Drawing.Size(80, 21)
+        Me.cmdNewAcct.TabIndex = 1
+        Me.cmdNewAcct.Text = "New Account"
+        Me.cmdNewAcct.UseVisualStyleBackColor = False
+        '
+        'DataGridAccts
+        '
+        Me.DataGridAccts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.DataGridAccts.Location = New System.Drawing.Point(6, 31)
+        Me.DataGridAccts.Name = "DataGridAccts"
+        Me.DataGridAccts.Size = New System.Drawing.Size(414, 216)
+        Me.DataGridAccts.TabIndex = 0
         '
         'GPCommands
         '
@@ -706,6 +741,12 @@ Partial Class frmCustomers
         '
         'GBcustAdd1
         '
+        Me.GBcustAdd1.Controls.Add(Me.createdby)
+        Me.GBcustAdd1.Controls.Add(Me.Label31)
+        Me.GBcustAdd1.Controls.Add(Me.dateupdate)
+        Me.GBcustAdd1.Controls.Add(Me.Label30)
+        Me.GBcustAdd1.Controls.Add(Me.datecreated)
+        Me.GBcustAdd1.Controls.Add(Me.Label29)
         Me.GBcustAdd1.Controls.Add(Me.chCIactive)
         Me.GBcustAdd1.Controls.Add(Me.cmbCICountry)
         Me.GBcustAdd1.Controls.Add(Me.Label26)
@@ -729,6 +770,60 @@ Partial Class frmCustomers
         Me.GBcustAdd1.TabIndex = 0
         Me.GBcustAdd1.TabStop = False
         Me.GBcustAdd1.Text = "Customer Information"
+        '
+        'createdby
+        '
+        Me.createdby.BackColor = System.Drawing.SystemColors.Info
+        Me.createdby.Enabled = False
+        Me.createdby.Location = New System.Drawing.Point(256, 236)
+        Me.createdby.Name = "createdby"
+        Me.createdby.Size = New System.Drawing.Size(94, 20)
+        Me.createdby.TabIndex = 23
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(199, 239)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(62, 13)
+        Me.Label31.TabIndex = 22
+        Me.Label31.Text = "Created By:"
+        '
+        'dateupdate
+        '
+        Me.dateupdate.BackColor = System.Drawing.SystemColors.Info
+        Me.dateupdate.Enabled = False
+        Me.dateupdate.Location = New System.Drawing.Point(80, 236)
+        Me.dateupdate.Name = "dateupdate"
+        Me.dateupdate.Size = New System.Drawing.Size(120, 20)
+        Me.dateupdate.TabIndex = 21
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(3, 238)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(77, 13)
+        Me.Label30.TabIndex = 20
+        Me.Label30.Text = "Date Updated:"
+        '
+        'datecreated
+        '
+        Me.datecreated.BackColor = System.Drawing.SystemColors.Info
+        Me.datecreated.Enabled = False
+        Me.datecreated.Location = New System.Drawing.Point(80, 215)
+        Me.datecreated.Name = "datecreated"
+        Me.datecreated.Size = New System.Drawing.Size(120, 20)
+        Me.datecreated.TabIndex = 19
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(8, 218)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(73, 13)
+        Me.Label29.TabIndex = 18
+        Me.Label29.Text = "Date Created:"
         '
         'chCIactive
         '
@@ -885,35 +980,6 @@ Partial Class frmCustomers
         'Timer1
         '
         '
-        'GroupBox2
-        '
-        Me.GroupBox2.Controls.Add(Me.cmdNewAcct)
-        Me.GroupBox2.Controls.Add(Me.DataGridAccts)
-        Me.GroupBox2.Location = New System.Drawing.Point(363, 274)
-        Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(426, 253)
-        Me.GroupBox2.TabIndex = 4
-        Me.GroupBox2.TabStop = False
-        Me.GroupBox2.Text = "GBAccounts"
-        '
-        'DataGridAccts
-        '
-        Me.DataGridAccts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridAccts.Location = New System.Drawing.Point(6, 31)
-        Me.DataGridAccts.Name = "DataGridAccts"
-        Me.DataGridAccts.Size = New System.Drawing.Size(414, 216)
-        Me.DataGridAccts.TabIndex = 0
-        '
-        'cmdNewAcct
-        '
-        Me.cmdNewAcct.BackColor = System.Drawing.Color.Azure
-        Me.cmdNewAcct.Location = New System.Drawing.Point(257, 9)
-        Me.cmdNewAcct.Name = "cmdNewAcct"
-        Me.cmdNewAcct.Size = New System.Drawing.Size(80, 21)
-        Me.cmdNewAcct.TabIndex = 1
-        Me.cmdNewAcct.Text = "New Account"
-        Me.cmdNewAcct.UseVisualStyleBackColor = False
-        '
         'frmCustomers
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -937,6 +1003,8 @@ Partial Class frmCustomers
         Me.GroupBox1.PerformLayout()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
+        Me.GroupBox2.ResumeLayout(False)
+        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GPCommands.ResumeLayout(False)
         Me.GBShipToAdd1.ResumeLayout(False)
         Me.GBShipToAdd1.PerformLayout()
@@ -944,8 +1012,6 @@ Partial Class frmCustomers
         Me.GBcustBillto.PerformLayout()
         Me.GBcustAdd1.ResumeLayout(False)
         Me.GBcustAdd1.PerformLayout()
-        Me.GroupBox2.ResumeLayout(False)
-        CType(Me.DataGridAccts, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1032,4 +1098,10 @@ Partial Class frmCustomers
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents cmdNewAcct As Button
     Friend WithEvents DataGridAccts As DataGridView
+    Friend WithEvents createdby As TextBox
+    Friend WithEvents Label31 As Label
+    Friend WithEvents dateupdate As TextBox
+    Friend WithEvents Label30 As Label
+    Friend WithEvents datecreated As TextBox
+    Friend WithEvents Label29 As Label
 End Class

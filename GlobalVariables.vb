@@ -538,6 +538,9 @@ Public Class Customers
     Private SHPcode As String
     Private cmbSHProv As String
     Private cmbSHCountry As String
+    Private dtcreated As DateTime
+    Private dtupdated As DateTime
+    Private CScreatedby As String
 
     Public Sub New() 'parameterised constructor
         Console.WriteLine("Class created")
@@ -823,6 +826,39 @@ Public Class Customers
 
     End Property
 
+    Public Property Mydatecreated() As DateTime
+
+        Get
+            Return dtcreated
+        End Get
+        Set(ByVal Value As DateTime)
+            dtcreated = Value
+        End Set
+
+    End Property
+
+    Public Property Mydateupdated() As DateTime
+
+        Get
+            Return dtupdated
+        End Get
+        Set(ByVal Value As DateTime)
+            dtupdated = Value
+        End Set
+
+    End Property
+
+    Public Property MyCScreatedby() As String
+
+        Get
+            Return CScreatedby
+        End Get
+        Set(ByVal Value As String)
+            CScreatedby = Value
+        End Set
+
+    End Property
+
 End Class
 
 Public Class shipto
@@ -841,6 +877,7 @@ Public Class shipto
     Private active As Integer
     Private dtcreated As DateTime
     Private dtupdated As DateTime
+    Private Shcreatedby As String
 
     Public Sub New() 'parameterised constructor
 
@@ -1007,6 +1044,18 @@ Public Class shipto
         End Set
 
     End Property
+
+    Public Property MyShcreatedby() As String
+
+        Get
+            Return Shcreatedby
+        End Get
+        Set(ByVal Value As String)
+            Shcreatedby = Value
+        End Set
+
+    End Property
+
 
 End Class
 

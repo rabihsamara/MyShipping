@@ -154,8 +154,8 @@ Public Class frmCustomers
 
                 Dim result As DialogResult = MessageBox.Show("Create New Customer?", "Confirm adding new customer", MessageBoxButtons.YesNo)
                 If (result = DialogResult.Yes) Then
-                    'Ok create new cust. load screen to database
-                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CIName, cmbCustType, chCIactive) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "','PR',1)"
+                    'Ok create new cust. load screen to 
+                    GlobalVariables.Gl_SQLStr = "Insert into customers (CustID, CIName, cmbCustType, chCIactive,datecreated,dateupdate,createdby) Values ('" & Trim(inCustID.Text) & "','" & inCustName.Text & "','PR',1,'" & Now() & "','" & Now() & "','" & GlobalVariables.Gl_LogUserID & "')"
                     If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                         MsgBox("Error Creating new Customer!")
                         GoTo EDIT_EXIT
@@ -191,7 +191,7 @@ Public Class frmCustomers
             GlobalVariables.Gl_SQLStr = "SELECT CustID,CIName,ISNULL(CIadd1,'') as CIadd1,ISNULL(CIAdd2,'') as CIadd2,ISNULL(cmbCICity,'') as cmbCICity,ISNULL(CIpcode,'') as CIpcode ,ISNULL(cmbCIProv,'') as cmbCIProv ,ISNULL(cmbCICountry,'') as cmbCICountry,cmbCustType,chCIactive,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(BLName,'') as BLName, ISNULL(BLadd1,'') as BLadd1, ISNULL(BLadd2,'') as BLAdd2, ISNULL(cmbBLcity,'') as cmbBLcity, ISNULL(BLpcode,'') as BLpcode, ISNULL(cmbBLProv,'') as cmbBLProv, ISNULL(cmbBLCountry,'') as cmbBLCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbShpID,'') as cmbShpID, ISNULL(SHName,'') as SHName, ISNULL(SHadd1,'') as SHadd1, ISNULL(SHadd2,'') as SHAdd2,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry FROM Customers  "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry, datecreated,dateupdate,createdby FROM Customers  "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where CIname = '" & selcustname & "'")
             If (ReadCustomer("C") = False) Then
                 terr = "Error reading customer !"
@@ -367,7 +367,9 @@ EDIT_EXIT:
                     Custrecord.MySHPcode = myReader.GetString(22).ToString
                     Custrecord.MycmbSHProv = myReader.GetString(23).ToString
                     Custrecord.MycmbSHCountry = myReader.GetString(24).ToString
-
+                    Custrecord.Mydatecreated = myReader.GetDateTime(25)
+                    Custrecord.Mydateupdated = myReader.GetDateTime(26)
+                    Custrecord.MyCScreatedby = myReader.GetString(27).ToString
                     ReadCustomer = True
                 Loop
 
@@ -627,6 +629,16 @@ EDIT_EXIT:
         If (ModUpdates.UpdateFormData(topert, Me, "Customers", selcustid) = False) Then
             MsgBox("Error updating Customer table!")
             Exit Sub
+        Else
+            If (seluw2 = "U") Then
+                GlobalVariables.Gl_SQLStr = "update Customer set updatedby = '" & GlobalVariables.Gl_LogUserID & "' where custid = '" & selcustid & "'"
+                If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error updating Custed Createdby!")
+                    Exit Sub
+                End If
+            End If
+
+
         End If
 
         'New customer - save ship To
@@ -654,6 +666,7 @@ EDIT_EXIT:
             CIcustshipto.Myactive = 1
             CIcustshipto.Mydatecreated = Now()
             CIcustshipto.Mydateupdated = Now()
+            CIcustshipto.MyShcreatedby = GlobalVariables.Gl_LogUserID
             If (UpdateCSShipTo(CIcustshipto, seluw2) = False) Then
                 txtmsg.Text = "Error saving shipto info.!"
                 txtmsg.Visible = True
