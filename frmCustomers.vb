@@ -10,6 +10,9 @@ Public Class frmCustomers
     Private selcustid As String = String.Empty
     Private selcustname As String = String.Empty
     Private selShipToid As String = String.Empty
+    Private selacctrow As Integer = 0
+    Private selacctID As Integer = 0
+
 
     Private seluw As String = "I"
     Private seluw2 As String = ""
@@ -754,6 +757,7 @@ EDIT_EXIT:
     End Sub
 
     Private Sub CmdNewAcct_Click(sender As Object, e As EventArgs) Handles cmdNewAcct.Click
+        GlobalVariables.Gl_tmpacctID = 0
         GlobalVariables.Gl_tmpcustid = selcustid
         GlobalVariables.Gl_tmpcustname = selcustname
 
@@ -764,24 +768,42 @@ EDIT_EXIT:
     Private Sub LoadAccts()
 
         GBAccounts.Text = "Accounts for Customer: " & CIName.Text
-        Dim tsql As String = "SELECT ID,AccountNo,IIF(active = 1,'Y','N') as active, CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
+        Dim tsql As String = "SELECT ID,AccountNo,AccountName,IIF(active = 1,'Y','N') as active, CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from accounts where CustNo = '" & selcustid & "'"
         ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
 
         With DataGridAccts
             .Columns(0).HeaderText = "ID"
             .Columns(1).HeaderText = "Account"
-            .Columns(2).HeaderText = "Active"
-            .Columns(3).HeaderText = "Created On"
-            .Columns(4).HeaderText = "Update On"
-            .Columns(5).HeaderText = "Created By"
+            .Columns(2).HeaderText = "Name"
+            .Columns(3).HeaderText = "Active"
+            .Columns(4).HeaderText = "Created On"
+            .Columns(5).HeaderText = "Update On"
+            .Columns(6).HeaderText = "Created By"
 
             .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
             .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
             .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
             .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
             .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
         End With
+
+    End Sub
+
+    Private Sub DataGridAccts_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseClick
+
+        If (DataGridAccts.Rows.Count >= 1) Then
+            selacctrow = DataGridAccts.CurrentRow.Index
+            selacctID = DataGridAccts.Item(0, selacctrow).Value
+            GlobalVariables.Gl_tmpacctID = selacctID
+            GlobalVariables.Gl_tmpcustid = selcustid
+            GlobalVariables.Gl_tmpcustname = selcustname
+
+            Dim frm As New frmAccounts()
+            frm.ShowDialog()
+
+        End If
 
     End Sub
 

@@ -11,6 +11,7 @@ Public Class GlobalVariables
     Public Shared Property Gl_LogUserID As String
     Public Shared Property Gl_UserIDLevel As String
     Public Shared Tmpuserrecord As userrec = New userrec()
+    Public Shared TmpCusAcct As Accounts = New Accounts()
 
     Public Shared Property Gl_Company As String
     Public Shared Property Gl_SQLStr As String
@@ -32,6 +33,7 @@ Public Class GlobalVariables
 
     Public Shared Property Gl_tmpcustid As String
     Public Shared Property Gl_tmpcustname As String
+    Public Shared Property Gl_tmpacctID As Integer
 
 End Class
 
@@ -1056,6 +1058,117 @@ Public Class shipto
 
     End Property
 
-
 End Class
 
+Public Class Accounts
+
+    Private ID As Integer
+    Private CustNo As String
+    Private AccountNo As String
+    Private AccountName As String
+    Private active As Integer
+    Private datecreated As DateTime
+    Private dateupdated As DateTime
+    Private CreatedBy As String
+
+    Public Sub New() 'parameterised constructor
+
+        Console.WriteLine("")
+
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+
+        Console.WriteLine("")
+
+    End Sub
+
+    Public Property MyID() As Integer
+
+        Get
+            Return ID
+        End Get
+        Set(ByVal Value As Integer)
+            ID = Value
+        End Set
+
+    End Property
+
+    Public Property MyCustNo() As String
+
+        Get
+            Return CustNo
+        End Get
+        Set(ByVal Value As String)
+            CustNo = Value
+        End Set
+
+    End Property
+
+    Public Property MyAccountNo() As String
+
+        Get
+            Return AccountNo
+        End Get
+        Set(ByVal Value As String)
+            AccountNo = Value
+        End Set
+
+    End Property
+
+    Public Property MyAccountName() As String
+
+        Get
+            Return AccountName
+        End Get
+        Set(ByVal Value As String)
+            AccountName = Value
+        End Set
+
+    End Property
+
+    Public Property Myactive() As Integer
+
+        Get
+            Return active
+        End Get
+        Set(ByVal Value As Integer)
+            active = Value
+        End Set
+
+    End Property
+
+    Public Property Mydatecreated() As DateTime
+
+        Get
+            Return datecreated
+        End Get
+        Set(ByVal Value As DateTime)
+            datecreated = Value
+        End Set
+
+    End Property
+
+    Public Property Mydateupdated() As DateTime
+
+        Get
+            Return dateupdated
+        End Get
+        Set(ByVal Value As DateTime)
+            dateupdated = Value
+        End Set
+
+    End Property
+
+    Public Property MyCreatedBy() As String
+
+        Get
+            Return CreatedBy
+        End Get
+        Set(ByVal Value As String)
+            CreatedBy = Value
+        End Set
+
+    End Property
+
+End Class

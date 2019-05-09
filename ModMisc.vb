@@ -149,6 +149,7 @@ Module ModMisc
     'ALLM = all menus in an array
     'NCST= read count of cust for new custom if exists
     'SHPC= count of shipto id by customer
+    'CACCT = account per customer
     '**********************************************************************************************
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
@@ -219,6 +220,17 @@ Module ModMisc
                         F = F + 1
                         ReadSQL = True
                         GlobalVariables.GL_Stat = True
+                    ElseIf (inopt = "CACCT") Then
+                        'ID,custno,AccountNo,AccountName, active, CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy
+                        GlobalVariables.TmpCusAcct.MyID = myReader.GetValue(0)
+                        GlobalVariables.TmpCusAcct.MyCustNo = myReader.GetString(1)
+                        GlobalVariables.TmpCusAcct.MyAccountNo = myReader.GetString(2)
+                        GlobalVariables.TmpCusAcct.MyAccountName = myReader.GetString(3)
+                        GlobalVariables.TmpCusAcct.Myactive = myReader.GetValue(4)
+                        GlobalVariables.TmpCusAcct.Mydatecreated = myReader.GetDateTime(5)
+                        GlobalVariables.TmpCusAcct.Mydateupdated = myReader.GetDateTime(6)
+                        GlobalVariables.TmpCusAcct.MyCreatedBy = myReader.GetString(7)
+                        ReadSQL = True
                     End If
                 Loop
 
