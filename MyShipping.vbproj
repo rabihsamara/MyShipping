@@ -117,6 +117,12 @@
     <Compile Include="AppLocksScreen.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmAccounts.Designer.vb">
+      <DependentUpon>frmAccounts.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmAccounts.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmCustomers.Designer.vb">
       <DependentUpon>frmCustomers.vb</DependentUpon>
     </Compile>
@@ -191,6 +197,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AppLocksScreen.resx">
       <DependentUpon>AppLocksScreen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAccounts.resx">
+      <DependentUpon>frmAccounts.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Frmchkadpwd.resx">
       <DependentUpon>Frmchkadpwd.vb</DependentUpon>

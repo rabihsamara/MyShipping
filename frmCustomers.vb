@@ -631,14 +631,12 @@ EDIT_EXIT:
             Exit Sub
         Else
             If (seluw2 = "U") Then
-                GlobalVariables.Gl_SQLStr = "update Customer set updatedby = '" & GlobalVariables.Gl_LogUserID & "' where custid = '" & selcustid & "'"
+                GlobalVariables.Gl_SQLStr = "update Customers set dateupdate = '" & Now() & "' where custid = '" & selcustid & "'"
                 If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-                    MsgBox("Error updating Custed Createdby!")
+                    MsgBox("Error updating Customer update date!")
                     Exit Sub
                 End If
             End If
-
-
         End If
 
         'New customer - save ship To
@@ -754,12 +752,17 @@ EDIT_EXIT:
     End Sub
 
     Private Sub CmdNewAcct_Click(sender As Object, e As EventArgs) Handles cmdNewAcct.Click
+        GlobalVariables.Gl_tmpcustid = selcustid
+        GlobalVariables.Gl_tmpcustname = selcustname
 
+        Dim frm As New frmAccounts()
+        frm.ShowDialog()
     End Sub
 
     Private Sub LoadAccts()
 
-        Dim tsql As String = "SELECT ID,AccountNo,CustoNo,datecreated,dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
+        GBAccounts.Text = "Accounts for Customer: " & CIName.Text
+        Dim tsql As String = "SELECT ID,AccountNo,datecreated,dateupdated,CreatedBy from accounts where CustoNo = '" & selcustid & "'"
         ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
 
         'change header text
