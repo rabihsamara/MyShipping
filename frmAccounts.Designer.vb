@@ -42,12 +42,14 @@ Partial Class frmAccounts
         Me.accountNO = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtmsg = New System.Windows.Forms.TextBox()
+        Me.cmdExit = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GroupBox1.Controls.Add(Me.cmdExit)
         Me.GroupBox1.Controls.Add(Me.txtmsg)
         Me.GroupBox1.Controls.Add(Me.CustName)
         Me.GroupBox1.Controls.Add(Me.CustNO)
@@ -116,7 +118,7 @@ Partial Class frmAccounts
         'cmdSave
         '
         Me.cmdSave.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.cmdSave.Location = New System.Drawing.Point(591, 11)
+        Me.cmdSave.Location = New System.Drawing.Point(496, 21)
         Me.cmdSave.Name = "cmdSave"
         Me.cmdSave.Size = New System.Drawing.Size(47, 20)
         Me.cmdSave.TabIndex = 31
@@ -126,7 +128,7 @@ Partial Class frmAccounts
         'cmdNew
         '
         Me.cmdNew.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.cmdNew.Location = New System.Drawing.Point(507, 11)
+        Me.cmdNew.Location = New System.Drawing.Point(622, 22)
         Me.cmdNew.Name = "cmdNew"
         Me.cmdNew.Size = New System.Drawing.Size(65, 20)
         Me.cmdNew.TabIndex = 30
@@ -237,6 +239,15 @@ Partial Class frmAccounts
         Me.txtmsg.Size = New System.Drawing.Size(297, 20)
         Me.txtmsg.TabIndex = 37
         '
+        'cmdExit
+        '
+        Me.cmdExit.Location = New System.Drawing.Point(560, 22)
+        Me.cmdExit.Name = "cmdExit"
+        Me.cmdExit.Size = New System.Drawing.Size(46, 19)
+        Me.cmdExit.TabIndex = 38
+        Me.cmdExit.Text = "Exit"
+        Me.cmdExit.UseVisualStyleBackColor = True
+        '
         'frmAccounts
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -271,4 +282,5 @@ Partial Class frmAccounts
     Friend WithEvents cmbCustNO As ComboBox
     Friend WithEvents CustName As TextBox
     Friend WithEvents txtmsg As TextBox
+    Friend WithEvents cmdExit As Button
 End Class

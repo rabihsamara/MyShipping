@@ -12,7 +12,7 @@ Public Class frmCustomers
     Private selShipToid As String = String.Empty
     Private selacctrow As Integer = 0
     Private selacctID As Integer = 0
-
+    Private selacctNO As String = ""
 
     Private seluw As String = "I"
     Private seluw2 As String = ""
@@ -793,11 +793,11 @@ EDIT_EXIT:
 
     End Sub
 
-    Private Sub DataGridAccts_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseClick
-
+    Private Sub DataGridAccts_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseDoubleClick
         If (DataGridAccts.Rows.Count >= 1) Then
             selacctrow = DataGridAccts.CurrentRow.Index
             selacctID = DataGridAccts.Item(0, selacctrow).Value
+            selacctNO = DataGridAccts.Item(1, selacctrow).Value
             GlobalVariables.Gl_tmpacctID = selacctID
             GlobalVariables.Gl_tmpcustid = selcustid
             GlobalVariables.Gl_tmpcustname = selcustname
@@ -807,6 +807,42 @@ EDIT_EXIT:
             LoadAccts()
         End If
 
+    End Sub
+
+    Private Sub DataGridAccts_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseClick
+
+        If (DataGridAccts.Rows.Count >= 1) Then
+            selacctrow = DataGridAccts.CurrentRow.Index
+            selacctID = DataGridAccts.Item(0, selacctrow).Value
+            selacctNO = DataGridAccts.Item(1, selacctrow).Value
+            GlobalVariables.Gl_tmpacctID = selacctID
+            GlobalVariables.Gl_tmpcustid = selcustid
+            GlobalVariables.Gl_tmpcustname = selcustname
+            LoadOrders()
+        End If
+
+    End Sub
+
+    'DataGridOrders
+    Private Sub LoadOrders()
+        Dim tsql As String = "SELECT ID,OrderNo,IIF(active = 1,'Y','N') as active, "
+        tsql = tsql & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
+        ModMisc.LoadDataGrids(DataGridOrders, tsql, "accounts")
+        With DataGridOrders
+            .Columns(0).HeaderText = "ID"
+            .Columns(1).HeaderText = "OrderNO"
+            .Columns(2).HeaderText = "Active"
+            .Columns(3).HeaderText = "Created On"
+            .Columns(4).HeaderText = "Update On"
+            .Columns(5).HeaderText = "Created By"
+
+            .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+        End With
     End Sub
 
 End Class

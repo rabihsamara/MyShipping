@@ -88,7 +88,7 @@
     Private Sub CmdTmp_Click(sender As Object, e As EventArgs) Handles cmdTmp.Click
 
         Dim ttable As String = InputBox("Enter Table", "Table", "", 100, 100)
-        RunClassGen(ttable)
+        ModTmp.RunClassGen(ttable)
 
     End Sub
 

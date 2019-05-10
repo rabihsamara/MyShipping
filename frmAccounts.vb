@@ -89,4 +89,8 @@
 
     End Sub
 
+    Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
+        Me.Close()
+    End Sub
+
 End Class
