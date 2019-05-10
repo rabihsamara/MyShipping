@@ -23,6 +23,11 @@ Partial Class frmAccounts
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.CustName = New System.Windows.Forms.TextBox()
+        Me.CustNO = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.cmbAccountNo = New System.Windows.Forms.ComboBox()
+        Me.cmbCustNO = New System.Windows.Forms.ComboBox()
         Me.cmdSave = New System.Windows.Forms.Button()
         Me.cmdNew = New System.Windows.Forms.Button()
         Me.createdby = New System.Windows.Forms.TextBox()
@@ -36,17 +41,14 @@ Partial Class frmAccounts
         Me.Label2 = New System.Windows.Forms.Label()
         Me.accountNO = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.cmbCustNO = New System.Windows.Forms.ComboBox()
-        Me.cmbAccountNo = New System.Windows.Forms.ComboBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.CustNO = New System.Windows.Forms.TextBox()
-        Me.CustName = New System.Windows.Forms.TextBox()
+        Me.txtmsg = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GroupBox1.Controls.Add(Me.txtmsg)
         Me.GroupBox1.Controls.Add(Me.CustName)
         Me.GroupBox1.Controls.Add(Me.CustNO)
         Me.GroupBox1.Controls.Add(Me.Label3)
@@ -71,6 +73,45 @@ Partial Class frmAccounts
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Account Info"
+        '
+        'CustName
+        '
+        Me.CustName.Location = New System.Drawing.Point(186, 21)
+        Me.CustName.Name = "CustName"
+        Me.CustName.Size = New System.Drawing.Size(304, 20)
+        Me.CustName.TabIndex = 36
+        '
+        'CustNO
+        '
+        Me.CustNO.Location = New System.Drawing.Point(61, 20)
+        Me.CustNO.Name = "CustNO"
+        Me.CustNO.Size = New System.Drawing.Size(119, 20)
+        Me.CustNO.TabIndex = 35
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(5, 22)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.TabIndex = 34
+        Me.Label3.Text = "Customer#:"
+        '
+        'cmbAccountNo
+        '
+        Me.cmbAccountNo.FormattingEnabled = True
+        Me.cmbAccountNo.Location = New System.Drawing.Point(61, 46)
+        Me.cmbAccountNo.Name = "cmbAccountNo"
+        Me.cmbAccountNo.Size = New System.Drawing.Size(119, 21)
+        Me.cmbAccountNo.TabIndex = 33
+        '
+        'cmbCustNO
+        '
+        Me.cmbCustNO.FormattingEnabled = True
+        Me.cmbCustNO.Location = New System.Drawing.Point(61, 20)
+        Me.cmbCustNO.Name = "cmbCustNO"
+        Me.cmbCustNO.Size = New System.Drawing.Size(119, 21)
+        Me.cmbCustNO.TabIndex = 32
         '
         'cmdSave
         '
@@ -188,44 +229,13 @@ Partial Class frmAccounts
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Account:"
         '
-        'cmbCustNO
+        'txtmsg
         '
-        Me.cmbCustNO.FormattingEnabled = True
-        Me.cmbCustNO.Location = New System.Drawing.Point(61, 20)
-        Me.cmbCustNO.Name = "cmbCustNO"
-        Me.cmbCustNO.Size = New System.Drawing.Size(119, 21)
-        Me.cmbCustNO.TabIndex = 32
-        '
-        'cmbAccountNo
-        '
-        Me.cmbAccountNo.FormattingEnabled = True
-        Me.cmbAccountNo.Location = New System.Drawing.Point(61, 46)
-        Me.cmbAccountNo.Name = "cmbAccountNo"
-        Me.cmbAccountNo.Size = New System.Drawing.Size(119, 21)
-        Me.cmbAccountNo.TabIndex = 33
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(5, 22)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(61, 13)
-        Me.Label3.TabIndex = 34
-        Me.Label3.Text = "Customer#:"
-        '
-        'CustNO
-        '
-        Me.CustNO.Location = New System.Drawing.Point(61, 20)
-        Me.CustNO.Name = "CustNO"
-        Me.CustNO.Size = New System.Drawing.Size(119, 20)
-        Me.CustNO.TabIndex = 35
-        '
-        'CustName
-        '
-        Me.CustName.Location = New System.Drawing.Point(186, 21)
-        Me.CustName.Name = "CustName"
-        Me.CustName.Size = New System.Drawing.Size(304, 20)
-        Me.CustName.TabIndex = 36
+        Me.txtmsg.BackColor = System.Drawing.SystemColors.Info
+        Me.txtmsg.Location = New System.Drawing.Point(374, 205)
+        Me.txtmsg.Name = "txtmsg"
+        Me.txtmsg.Size = New System.Drawing.Size(297, 20)
+        Me.txtmsg.TabIndex = 37
         '
         'frmAccounts
         '
@@ -260,4 +270,5 @@ Partial Class frmAccounts
     Friend WithEvents cmbAccountNo As ComboBox
     Friend WithEvents cmbCustNO As ComboBox
     Friend WithEvents CustName As TextBox
+    Friend WithEvents txtmsg As TextBox
 End Class

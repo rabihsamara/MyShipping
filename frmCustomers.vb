@@ -763,6 +763,8 @@ EDIT_EXIT:
         GlobalVariables.Gl_acctCallFrmID = "CN"
         Dim frm As New frmAccounts()
         frm.ShowDialog()
+        LoadAccts()
+
     End Sub
 
     Private Sub LoadAccts()
@@ -802,7 +804,7 @@ EDIT_EXIT:
             GlobalVariables.Gl_acctCallFrmID = "CE"
             Dim frm As New frmAccounts()
             frm.ShowDialog()
-
+            LoadAccts()
         End If
 
     End Sub

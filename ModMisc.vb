@@ -96,6 +96,8 @@ Module ModMisc
                 tsql = "select custid FROM  shipto order by custid asc"
             ElseIf (callby = "CSINA") Then
                 tsql = "select Concat(custid,' - ',CIname) from Customers where chCIactive = 1 order by CIName asc"
+            ElseIf (callby = "CANOA") Then
+                tsql = "select concat(AccountNo,' - ',AccountName) from accounts order by AccountName"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -124,6 +126,9 @@ Module ModMisc
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     ElseIf (callby = "CSINA") Then
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
+                    ElseIf (callby = "CANOA") Then
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     End If
