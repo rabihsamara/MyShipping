@@ -5,12 +5,13 @@ Public Class frmsettings
     Private myCmd As SqlCommand
     Private myReader As SqlDataReader
     Private tcompid As Integer = 0
-    Dim connection As SqlConnection
-    Dim sCommand As SqlCommand
-    Dim sAdapter As SqlDataAdapter
-    Dim sBuilder As SqlCommandBuilder
-    Dim sDs As DataSet
-    Dim sTable As DataTable
+    Private tDGCnt As Integer = 0
+    Private connection As SqlConnection
+    Private sCommand As SqlCommand
+    Private sAdapter As SqlDataAdapter
+    Private sBuilder As SqlCommandBuilder
+    Private sDs As DataSet
+    Private sTable As DataTable
 
     Private Sub frmSettings_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -218,7 +219,7 @@ Public Class frmsettings
     Private Sub Initiiaze_DataGridCompany()
 
         Dim tsql As String = "SELECT * FROM company order by compname asc"
-        ModMisc.LoadDataGrids(DataGridCompany, tsql, "company")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridCompany, tsql, "company")
 
     End Sub
 

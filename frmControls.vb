@@ -8,6 +8,7 @@ Public Class frmControls
 
     Private sltreeform As String = String.Empty
     Private selmode As String = "U"
+    Private tDGCnt As Integer = 0
 
     Private sCommand As SqlCommand
     Private sAdapter As SqlDataAdapter
@@ -80,7 +81,7 @@ Public Class frmControls
     Private Sub LoadUsrControls(ByVal inuser As String, ByVal inform As String)
 
         Dim tsql As String = "SELECT ID,UserID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmUsercontrols where UserID = '" & inuser & "' and Formname = '" & inform & "' order by controlname asc, controltype asc"
-        ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmUsercontrols")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmUsercontrols")
 
     End Sub
 
@@ -206,7 +207,7 @@ Public Class frmControls
     Private Sub LoadDfltControls(ByVal inform As String)
 
         Dim tsql As String = "SELECT ID,FormName,controlname,controltype,contvisible,contenabled,conteditable FROM frmDFLTcontrols where Formname = '" & inform & "' order by controlname asc, controltype asc"
-        ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmDFLTcontrols")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridusrCont, tsql, "frmDFLTcontrols")
 
     End Sub
 

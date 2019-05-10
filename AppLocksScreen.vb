@@ -10,6 +10,7 @@ Public Class AppLocksScreen
 
     Private selrow As Integer = 0
     Private selid As Integer = 0
+    Private tDGCnt As Integer = 0
 
     Private Sub AppLocksScreen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -24,7 +25,7 @@ Public Class AppLocksScreen
     Private Sub LoadAppLocks()
 
         Dim tsql As String = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate FROM AppLocks order by Userid asc,Formname asc,ctrlname asc"
-        ModMisc.LoadDataGrids(DataGridLocks, tsql, "AppLocks")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridLocks, tsql, "AppLocks")
 
     End Sub
 

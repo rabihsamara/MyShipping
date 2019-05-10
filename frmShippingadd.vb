@@ -21,23 +21,22 @@
     Private Sub LoadShipTos()
 
         Dim tsql As String = "select ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active,datecreated,dateupdated from shipto order by ID asc"
-        ModMisc.LoadDataGrids(DataGridView1, tsql, "shipto")
-
-        'change header text
-        Me.DataGridView1.Columns(0).HeaderText = "ID"
-        Me.DataGridView1.Columns(1).HeaderText = "CustomerID"
-        Me.DataGridView1.Columns(2).HeaderText = "ShiptoID"
-        Me.DataGridView1.Columns(3).HeaderText = "Name"
-        Me.DataGridView1.Columns(4).HeaderText = "Address1"
-        Me.DataGridView1.Columns(5).HeaderText = "Address2"
-        Me.DataGridView1.Columns(6).HeaderText = "City"
-        Me.DataGridView1.Columns(7).HeaderText = "Province"
-        Me.DataGridView1.Columns(8).HeaderText = "Pcode"
-        Me.DataGridView1.Columns(9).HeaderText = "Country"
-        Me.DataGridView1.Columns(10).HeaderText = "Default"
-        Me.DataGridView1.Columns(11).HeaderText = "Active"
-        Me.DataGridView1.Columns(12).HeaderText = "Created On"
-        Me.DataGridView1.Columns(13).HeaderText = "Updated On"
+        If (ModMisc.LoadDataGrids(DataGridView1, tsql, "shipto") > 0) Then
+            Me.DataGridView1.Columns(0).HeaderText = "ID"
+            Me.DataGridView1.Columns(1).HeaderText = "CustomerID"
+            Me.DataGridView1.Columns(2).HeaderText = "ShiptoID"
+            Me.DataGridView1.Columns(3).HeaderText = "Name"
+            Me.DataGridView1.Columns(4).HeaderText = "Address1"
+            Me.DataGridView1.Columns(5).HeaderText = "Address2"
+            Me.DataGridView1.Columns(6).HeaderText = "City"
+            Me.DataGridView1.Columns(7).HeaderText = "Province"
+            Me.DataGridView1.Columns(8).HeaderText = "Pcode"
+            Me.DataGridView1.Columns(9).HeaderText = "Country"
+            Me.DataGridView1.Columns(10).HeaderText = "Default"
+            Me.DataGridView1.Columns(11).HeaderText = "Active"
+            Me.DataGridView1.Columns(12).HeaderText = "Created On"
+            Me.DataGridView1.Columns(13).HeaderText = "Updated On"
+        End If
 
         dspidname.Text = GlobalVariables.Gl_tmpcustid & " - " & GlobalVariables.Gl_tmpcustname
         selcustid = GlobalVariables.Gl_tmpcustid

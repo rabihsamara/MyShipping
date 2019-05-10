@@ -36,7 +36,15 @@ Public Class GlobalVariables
     Public Shared Property Gl_tmpcustname As String
     Public Shared Property Gl_tmpacctID As Integer
     Public Shared Property Gl_acctCallFrmID As String 'CE=customer existing account, CN=Customer New account, MM=menu call
+    Public Shared Property Gl_SelOrder As Integer
+    Public Shared Property Gl_SelOrderID As Integer
 
+    '**************Datagrid rows per screen*********************************
+    '* 1) Customers
+    '*    
+    Public Shared Property GL_CSAcctsGridCNT As Integer
+    Public Shared Property GL_CSOrdsGridCNT As Integer
+    '***********************************************************************
 End Class
 #End Region
 

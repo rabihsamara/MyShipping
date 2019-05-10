@@ -13,6 +13,7 @@ Public Class frmCustomers
     Private selacctrow As Integer = 0
     Private selacctID As Integer = 0
     Private selacctNO As String = ""
+    Private selOrdrow As Integer = 0
 
     Private seluw As String = "I"
     Private seluw2 As String = ""
@@ -771,54 +772,60 @@ EDIT_EXIT:
 
         GBAccounts.Text = "Accounts for Customer: " & CIName.Text
         Dim tsql As String = "SELECT ID,AccountNo,AccountName,IIF(active = 1,'Y','N') as active, CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from accounts where CustNo = '" & selcustid & "'"
-        ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
+        GlobalVariables.GL_CSAcctsGridCNT = ModMisc.LoadDataGrids(DataGridAccts, tsql, "accounts")
+        If (GlobalVariables.GL_CSAcctsGridCNT > 0) Then
+            With DataGridAccts
+                .Columns(0).HeaderText = "ID"
+                .Columns(1).HeaderText = "Account"
+                .Columns(2).HeaderText = "Name"
+                .Columns(3).HeaderText = "Active"
+                .Columns(4).HeaderText = "Created On"
+                .Columns(5).HeaderText = "Update On"
+                .Columns(6).HeaderText = "Created By"
 
-        With DataGridAccts
-            .Columns(0).HeaderText = "ID"
-            .Columns(1).HeaderText = "Account"
-            .Columns(2).HeaderText = "Name"
-            .Columns(3).HeaderText = "Active"
-            .Columns(4).HeaderText = "Created On"
-            .Columns(5).HeaderText = "Update On"
-            .Columns(6).HeaderText = "Created By"
-
-            .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
-        End With
+                .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+            End With
+        End If
 
     End Sub
 
     Private Sub DataGridAccts_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseDoubleClick
-        If (DataGridAccts.Rows.Count >= 1) Then
+
+        If (GlobalVariables.GL_CSAcctsGridCNT > 0) Then
             selacctrow = DataGridAccts.CurrentRow.Index
-            selacctID = DataGridAccts.Item(0, selacctrow).Value
-            selacctNO = DataGridAccts.Item(1, selacctrow).Value
-            GlobalVariables.Gl_tmpacctID = selacctID
-            GlobalVariables.Gl_tmpcustid = selcustid
-            GlobalVariables.Gl_tmpcustname = selcustname
-            GlobalVariables.Gl_acctCallFrmID = "CE"
-            Dim frm As New frmAccounts()
-            frm.ShowDialog()
-            LoadAccts()
+            If (selacctrow < GlobalVariables.GL_CSAcctsGridCNT) Then
+                selacctID = DataGridAccts.Item(0, selacctrow).Value
+                selacctNO = DataGridAccts.Item(1, selacctrow).Value
+                GlobalVariables.Gl_tmpacctID = selacctID
+                GlobalVariables.Gl_tmpcustid = selcustid
+                GlobalVariables.Gl_tmpcustname = selcustname
+                GlobalVariables.Gl_acctCallFrmID = "CE"
+                Dim frm As New frmAccounts()
+                frm.ShowDialog()
+                LoadAccts()
+            End If
         End If
 
     End Sub
 
     Private Sub DataGridAccts_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridAccts.MouseClick
 
-        If (DataGridAccts.Rows.Count >= 1) Then
+        If (GlobalVariables.GL_CSAcctsGridCNT > 0) Then
             selacctrow = DataGridAccts.CurrentRow.Index
-            selacctID = DataGridAccts.Item(0, selacctrow).Value
-            selacctNO = DataGridAccts.Item(1, selacctrow).Value
-            GlobalVariables.Gl_tmpacctID = selacctID
-            GlobalVariables.Gl_tmpcustid = selcustid
-            GlobalVariables.Gl_tmpcustname = selcustname
-            LoadOrders()
+            If (selacctrow < GlobalVariables.GL_CSAcctsGridCNT) Then
+                selacctID = DataGridAccts.Item(0, selacctrow).Value
+                selacctNO = DataGridAccts.Item(1, selacctrow).Value
+                GlobalVariables.Gl_tmpacctID = selacctID
+                GlobalVariables.Gl_tmpcustid = selcustid
+                GlobalVariables.Gl_tmpcustname = selcustname
+                LoadOrders()
+            End If
         End If
 
     End Sub
@@ -827,22 +834,42 @@ EDIT_EXIT:
     Private Sub LoadOrders()
         Dim tsql As String = "SELECT ID,OrderNo,IIF(active = 1,'Y','N') as active, "
         tsql = tsql & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
-        ModMisc.LoadDataGrids(DataGridOrders, tsql, "accounts")
-        With DataGridOrders
-            .Columns(0).HeaderText = "ID"
-            .Columns(1).HeaderText = "OrderNO"
-            .Columns(2).HeaderText = "Active"
-            .Columns(3).HeaderText = "Created On"
-            .Columns(4).HeaderText = "Update On"
-            .Columns(5).HeaderText = "Created By"
 
-            .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-            .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
-        End With
+        GlobalVariables.GL_CSOrdsGridCNT = ModMisc.LoadDataGrids(DataGridOrders, tsql, "orders")
+        If (GlobalVariables.GL_CSOrdsGridCNT > 0) Then
+            With DataGridOrders
+                .Columns(0).HeaderText = "ID"
+                .Columns(1).HeaderText = "OrderNO"
+                .Columns(2).HeaderText = "Active"
+                .Columns(3).HeaderText = "Created On"
+                .Columns(4).HeaderText = "Update On"
+                .Columns(5).HeaderText = "Created By"
+
+                .Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+                .Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            End With
+        End If
+
+    End Sub
+
+    Private Sub DataGridOrders_MouseClick(sender As Object, e As MouseEventArgs) Handles DataGridOrders.MouseClick
+
+        If (GlobalVariables.GL_CSOrdsGridCNT > 0) Then
+            selOrdrow = DataGridOrders.CurrentRow.Index
+            If (selOrdrow < GlobalVariables.GL_CSOrdsGridCNT) Then
+                GlobalVariables.Gl_SelOrderID = DataGridAccts.Item(0, selOrdrow).Value
+                GlobalVariables.Gl_SelOrder = DataGridAccts.Item(1, selOrdrow).Value
+
+                Dim frm As New frmOrders()
+                frm.ShowDialog()
+            End If
+
+        End If
+
     End Sub
 
 End Class

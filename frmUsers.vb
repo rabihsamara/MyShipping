@@ -20,6 +20,7 @@ Public Class frmUsers
 
     Private selformrow As Integer
     Private selformNId As Integer
+    Private tDGCnt As Integer = 0
 
     Private selrow As Integer
     Private userrecord As userrec = New userrec()
@@ -41,7 +42,7 @@ Public Class frmUsers
     Private Sub LoadUsers()
 
         Dim tsql As String = "SELECT UserID,Fname,Lname,usrmode,usrseclvl,active FROM users"
-        ModMisc.LoadDataGrids(DataGridVWUsers, tsql, "users")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridVWUsers, tsql, "users")
 
     End Sub
 
@@ -297,55 +298,51 @@ Public Class frmUsers
     Private Sub LoadUsersMenSec()
 
         Dim tsql As String = "SELECT ID,UserID,MenuMItem,MenuSitem,MenuS2Item,MenuShow,MenuActive FROM MenuUserSecurity where UserID = '" & selusrid & "'"
-        ModMisc.LoadDataGrids(DataGridUsrMsec, tsql, "MenuUserSecurity")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridUsrMsec, tsql, "MenuUserSecurity")
 
-        'change header text
-        Me.DataGridUsrMsec.Columns(0).HeaderText = "ID"
-        Me.DataGridUsrMsec.Columns(1).HeaderText = "UserID"
-        Me.DataGridUsrMsec.Columns(2).HeaderText = "MItem"
-        Me.DataGridUsrMsec.Columns(3).HeaderText = "SubItem1"
-        Me.DataGridUsrMsec.Columns(4).HeaderText = "SubItem2"
-        Me.DataGridUsrMsec.Columns(5).HeaderText = "ShowMenu"
-        Me.DataGridUsrMsec.Columns(6).HeaderText = "Active"
+        If (tDGCnt > 0) Then
+            Me.DataGridUsrMsec.Columns(0).HeaderText = "ID"
+            Me.DataGridUsrMsec.Columns(1).HeaderText = "UserID"
+            Me.DataGridUsrMsec.Columns(2).HeaderText = "MItem"
+            Me.DataGridUsrMsec.Columns(3).HeaderText = "SubItem1"
+            Me.DataGridUsrMsec.Columns(4).HeaderText = "SubItem2"
+            Me.DataGridUsrMsec.Columns(5).HeaderText = "ShowMenu"
+            Me.DataGridUsrMsec.Columns(6).HeaderText = "Active"
 
-        DataGridUsrMsec.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-
-        'disable sorting
-        DataGridUsrMsec.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridUsrMsec.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridUsrMsec.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+        End If
 
     End Sub
 
     Private Sub LoadUsersFormsSec()
 
         Dim tsql As String = "SELECT ID,UserID,FormName,FormType,FormMenuName,FormShow,Formenabled,FormControls FROM FormUserSecurity where UserID = '" & selusrid & "'"
-        ModMisc.LoadDataGrids(DataGridForms, tsql, "FormUserSecurity")
+        tDGCnt = ModMisc.LoadDataGrids(DataGridForms, tsql, "FormUserSecurity")
 
-        'change header text
-        Me.DataGridForms.Columns(0).HeaderText = "ID"
-        Me.DataGridForms.Columns(1).HeaderText = "UserID"
-        Me.DataGridForms.Columns(2).HeaderText = "FormName"
-        Me.DataGridForms.Columns(3).HeaderText = "Type"
-        Me.DataGridForms.Columns(4).HeaderText = "MenuName"
-        Me.DataGridForms.Columns(5).HeaderText = "Show"
-        Me.DataGridForms.Columns(6).HeaderText = "Enabled"
-        Me.DataGridForms.Columns(7).HeaderText = "Controls"
+        If (tDGCnt > 0) Then
+            Me.DataGridForms.Columns(0).HeaderText = "ID"
+            Me.DataGridForms.Columns(1).HeaderText = "UserID"
+            Me.DataGridForms.Columns(2).HeaderText = "FormName"
+            Me.DataGridForms.Columns(3).HeaderText = "Type"
+            Me.DataGridForms.Columns(4).HeaderText = "MenuName"
+            Me.DataGridForms.Columns(5).HeaderText = "Show"
+            Me.DataGridForms.Columns(6).HeaderText = "Enabled"
+            Me.DataGridForms.Columns(7).HeaderText = "Controls"
 
-        DataGridForms.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells
-
-        'disable sorting
-        DataGridForms.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
-        DataGridForms.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(0).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(1).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(2).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(3).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(4).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(5).SortMode = DataGridViewColumnSortMode.NotSortable
+            DataGridForms.Columns(6).SortMode = DataGridViewColumnSortMode.NotSortable
+        End If
 
     End Sub
 

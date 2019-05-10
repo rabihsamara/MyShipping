@@ -611,8 +611,9 @@ Exit_Excel:
 
     End Function
 
-    Public Sub LoadDataGrids(ByVal inGrid As DataGridView, ByVal tsql As String, ByVal intable As String)
+    Public Function LoadDataGrids(ByVal inGrid As DataGridView, ByVal tsql As String, ByVal intable As String) As Integer
 
+        LoadDataGrids = 0
         Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             connection.Open()
             sCommand = New SqlCommand(tsql, connection)
@@ -621,6 +622,7 @@ Exit_Excel:
             sDs = New DataSet()
             sAdapter.Fill(sDs, intable)
             sTable = sDs.Tables(intable)
+            LoadDataGrids = sTable.Rows.Count
             With inGrid
                 .DataSource = sDs.Tables(intable)
                 .ReadOnly = True
@@ -631,7 +633,7 @@ Exit_Excel:
             connection.Close()
         End Using
 
-    End Sub
+    End Function
 
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *

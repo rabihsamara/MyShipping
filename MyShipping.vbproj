@@ -141,6 +141,12 @@
     <Compile Include="frmControls.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmOrders.Designer.vb">
+      <DependentUpon>frmOrders.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrders.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmSettings.Designer.vb">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </Compile>
