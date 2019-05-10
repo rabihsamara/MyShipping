@@ -23,24 +23,36 @@ Partial Class frmAccounts
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.accountNO = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.accountName = New System.Windows.Forms.TextBox()
-        Me.active = New System.Windows.Forms.CheckBox()
+        Me.cmdSave = New System.Windows.Forms.Button()
+        Me.cmdNew = New System.Windows.Forms.Button()
         Me.createdby = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.dateupdated = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.datecreated = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.cmdNew = New System.Windows.Forms.Button()
+        Me.active = New System.Windows.Forms.CheckBox()
+        Me.accountName = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.accountNO = New System.Windows.Forms.TextBox()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.cmbCustNO = New System.Windows.Forms.ComboBox()
+        Me.cmbAccountNo = New System.Windows.Forms.ComboBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.CustNO = New System.Windows.Forms.TextBox()
+        Me.CustName = New System.Windows.Forms.TextBox()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.GroupBox1.Controls.Add(Me.CustName)
+        Me.GroupBox1.Controls.Add(Me.CustNO)
+        Me.GroupBox1.Controls.Add(Me.Label3)
+        Me.GroupBox1.Controls.Add(Me.cmbAccountNo)
+        Me.GroupBox1.Controls.Add(Me.cmbCustNO)
+        Me.GroupBox1.Controls.Add(Me.cmdSave)
         Me.GroupBox1.Controls.Add(Me.cmdNew)
         Me.GroupBox1.Controls.Add(Me.createdby)
         Me.GroupBox1.Controls.Add(Me.Label31)
@@ -60,47 +72,25 @@ Partial Class frmAccounts
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Account Info"
         '
-        'Label1
+        'cmdSave
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(5, 22)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(50, 13)
-        Me.Label1.TabIndex = 0
-        Me.Label1.Text = "Account:"
+        Me.cmdSave.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.cmdSave.Location = New System.Drawing.Point(591, 11)
+        Me.cmdSave.Name = "cmdSave"
+        Me.cmdSave.Size = New System.Drawing.Size(47, 20)
+        Me.cmdSave.TabIndex = 31
+        Me.cmdSave.Text = "Save"
+        Me.cmdSave.UseVisualStyleBackColor = False
         '
-        'accountNO
+        'cmdNew
         '
-        Me.accountNO.Location = New System.Drawing.Point(51, 19)
-        Me.accountNO.Name = "accountNO"
-        Me.accountNO.Size = New System.Drawing.Size(111, 20)
-        Me.accountNO.TabIndex = 1
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(10, 49)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(38, 13)
-        Me.Label2.TabIndex = 2
-        Me.Label2.Text = "Name:"
-        '
-        'accountName
-        '
-        Me.accountName.Location = New System.Drawing.Point(51, 45)
-        Me.accountName.Name = "accountName"
-        Me.accountName.Size = New System.Drawing.Size(252, 20)
-        Me.accountName.TabIndex = 3
-        '
-        'active
-        '
-        Me.active.AutoSize = True
-        Me.active.Location = New System.Drawing.Point(320, 46)
-        Me.active.Name = "active"
-        Me.active.Size = New System.Drawing.Size(56, 17)
-        Me.active.TabIndex = 4
-        Me.active.Text = "Active"
-        Me.active.UseVisualStyleBackColor = True
+        Me.cmdNew.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.cmdNew.Location = New System.Drawing.Point(507, 11)
+        Me.cmdNew.Name = "cmdNew"
+        Me.cmdNew.Size = New System.Drawing.Size(65, 20)
+        Me.cmdNew.TabIndex = 30
+        Me.cmdNew.Text = "New"
+        Me.cmdNew.UseVisualStyleBackColor = False
         '
         'createdby
         '
@@ -156,15 +146,86 @@ Partial Class frmAccounts
         Me.Label29.TabIndex = 24
         Me.Label29.Text = "Date Created:"
         '
-        'cmdNew
+        'active
         '
-        Me.cmdNew.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.cmdNew.Location = New System.Drawing.Point(238, 15)
-        Me.cmdNew.Name = "cmdNew"
-        Me.cmdNew.Size = New System.Drawing.Size(65, 20)
-        Me.cmdNew.TabIndex = 30
-        Me.cmdNew.Text = "New"
-        Me.cmdNew.UseVisualStyleBackColor = False
+        Me.active.AutoSize = True
+        Me.active.Location = New System.Drawing.Point(202, 46)
+        Me.active.Name = "active"
+        Me.active.Size = New System.Drawing.Size(56, 17)
+        Me.active.TabIndex = 4
+        Me.active.Text = "Active"
+        Me.active.UseVisualStyleBackColor = True
+        '
+        'accountName
+        '
+        Me.accountName.Location = New System.Drawing.Point(61, 72)
+        Me.accountName.Name = "accountName"
+        Me.accountName.Size = New System.Drawing.Size(252, 20)
+        Me.accountName.TabIndex = 3
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(10, 75)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(38, 13)
+        Me.Label2.TabIndex = 2
+        Me.Label2.Text = "Name:"
+        '
+        'accountNO
+        '
+        Me.accountNO.Location = New System.Drawing.Point(61, 46)
+        Me.accountNO.Name = "accountNO"
+        Me.accountNO.Size = New System.Drawing.Size(119, 20)
+        Me.accountNO.TabIndex = 1
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(5, 48)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(50, 13)
+        Me.Label1.TabIndex = 0
+        Me.Label1.Text = "Account:"
+        '
+        'cmbCustNO
+        '
+        Me.cmbCustNO.FormattingEnabled = True
+        Me.cmbCustNO.Location = New System.Drawing.Point(61, 20)
+        Me.cmbCustNO.Name = "cmbCustNO"
+        Me.cmbCustNO.Size = New System.Drawing.Size(119, 21)
+        Me.cmbCustNO.TabIndex = 32
+        '
+        'cmbAccountNo
+        '
+        Me.cmbAccountNo.FormattingEnabled = True
+        Me.cmbAccountNo.Location = New System.Drawing.Point(61, 46)
+        Me.cmbAccountNo.Name = "cmbAccountNo"
+        Me.cmbAccountNo.Size = New System.Drawing.Size(119, 21)
+        Me.cmbAccountNo.TabIndex = 33
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(5, 22)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(61, 13)
+        Me.Label3.TabIndex = 34
+        Me.Label3.Text = "Customer#:"
+        '
+        'CustNO
+        '
+        Me.CustNO.Location = New System.Drawing.Point(61, 20)
+        Me.CustNO.Name = "CustNO"
+        Me.CustNO.Size = New System.Drawing.Size(119, 20)
+        Me.CustNO.TabIndex = 35
+        '
+        'CustName
+        '
+        Me.CustName.Location = New System.Drawing.Point(186, 21)
+        Me.CustName.Name = "CustName"
+        Me.CustName.Size = New System.Drawing.Size(304, 20)
+        Me.CustName.TabIndex = 36
         '
         'frmAccounts
         '
@@ -193,4 +254,10 @@ Partial Class frmAccounts
     Friend WithEvents datecreated As TextBox
     Friend WithEvents Label29 As Label
     Friend WithEvents cmdNew As Button
+    Friend WithEvents cmdSave As Button
+    Friend WithEvents CustNO As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents cmbAccountNo As ComboBox
+    Friend WithEvents cmbCustNO As ComboBox
+    Friend WithEvents CustName As TextBox
 End Class

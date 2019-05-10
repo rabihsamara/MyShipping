@@ -760,7 +760,7 @@ EDIT_EXIT:
         GlobalVariables.Gl_tmpacctID = 0
         GlobalVariables.Gl_tmpcustid = selcustid
         GlobalVariables.Gl_tmpcustname = selcustname
-
+        GlobalVariables.Gl_acctCallFrmID = "CN"
         Dim frm As New frmAccounts()
         frm.ShowDialog()
     End Sub
@@ -799,7 +799,7 @@ EDIT_EXIT:
             GlobalVariables.Gl_tmpacctID = selacctID
             GlobalVariables.Gl_tmpcustid = selcustid
             GlobalVariables.Gl_tmpcustname = selcustname
-
+            GlobalVariables.Gl_acctCallFrmID = "CE"
             Dim frm As New frmAccounts()
             frm.ShowDialog()
 

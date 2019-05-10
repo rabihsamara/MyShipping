@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 
+#Region "GLVARS"
 Public Class GlobalVariables
 
     Public Shared Property Gl_ConnectionSTR As String
@@ -34,9 +35,12 @@ Public Class GlobalVariables
     Public Shared Property Gl_tmpcustid As String
     Public Shared Property Gl_tmpcustname As String
     Public Shared Property Gl_tmpacctID As Integer
+    Public Shared Property Gl_acctCallFrmID As String 'CE=customer existing account, CN=Customer New account, MM=menu call
 
 End Class
+#End Region
 
+#Region "TableClasses"
 Public Class masterconnrec
 
     'Table: appconnmaster (companyID,sqlodbcdriver,sqlserver,sqldbase,sqluser,sqlpassword,sqltrusted,dfltconn,appfirstrun,active)
@@ -1172,3 +1176,5 @@ Public Class Accounts
     End Property
 
 End Class
+
+#End Region

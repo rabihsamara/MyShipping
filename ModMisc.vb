@@ -62,8 +62,9 @@ Module ModMisc
     '* CST=Customers screen seltype in selection of existing customers- 
     '* CRI CRIA or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL = Customers screen - customer ID Combo
     '* CRN CRNA or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL = Customers screen - customer Name Combo
-    '* CSHT= Combo shiptoid in customer screen
-    '*
+    '* CSHT  = Combo shiptoid in customer screen
+    '* CSINA = Customer id/name active only
+    '* CANOA = Customer accounts per customer.
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -93,6 +94,8 @@ Module ModMisc
                 tsql = tsql & " order by CIName asc"
             ElseIf (callby = "CSHT") Then
                 tsql = "select custid FROM  shipto order by custid asc"
+            ElseIf (callby = "CSINA") Then
+                tsql = "select Concat(custid,' - ',CIname) from Customers where chCIactive = 1 order by CIName asc"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -118,6 +121,9 @@ Module ModMisc
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     ElseIf (callby = "CSHT") Then
+                        incombo.Items.Add(Trim(myReader.GetString(0)))
+                        FillCBox = True
+                    ElseIf (callby = "CSINA") Then
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     End If
