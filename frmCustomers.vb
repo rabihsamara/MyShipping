@@ -861,8 +861,8 @@ EDIT_EXIT:
         If (GlobalVariables.GL_CSOrdsGridCNT > 0) Then
             selOrdrow = DataGridOrders.CurrentRow.Index
             If (selOrdrow < GlobalVariables.GL_CSOrdsGridCNT) Then
-                GlobalVariables.Gl_SelOrderID = DataGridAccts.Item(0, selOrdrow).Value
-                GlobalVariables.Gl_SelOrder = DataGridAccts.Item(1, selOrdrow).Value
+                GlobalVariables.Gl_SelOrderID = DataGridOrders.Item(0, selOrdrow).Value
+                GlobalVariables.Gl_SelOrder = DataGridOrders.Item(1, selOrdrow).Value
 
                 Dim frm As New frmOrders()
                 frm.ShowDialog()
