@@ -405,6 +405,7 @@ EDIT_EXIT:
         clrFields("A")
         cmdSaveShpto.Enabled = False
         EnableFields("S", True)
+        GBorders.Text = "Orders per Account"
         TabControl1.Visible = False
 
     End Sub
@@ -824,6 +825,7 @@ EDIT_EXIT:
                 GlobalVariables.Gl_tmpacctID = selacctID
                 GlobalVariables.Gl_tmpcustid = selcustid
                 GlobalVariables.Gl_tmpcustname = selcustname
+                GBorders.Text = "Orders for Account " & selacctNO
                 LoadOrders()
             End If
         End If
@@ -867,7 +869,19 @@ EDIT_EXIT:
                 Dim frm As New frmOrders()
                 frm.ShowDialog()
             End If
+        End If
 
+    End Sub
+
+    Private Sub CmdNewOrder_Click(sender As Object, e As EventArgs) Handles cmdNewOrder.Click
+
+        If GBorders.Text.ToString.Contains("for") Then
+            GlobalVariables.Gl_SelOrderID = 0
+            GlobalVariables.Gl_SelOrder = 0
+
+
+            Dim frm As New frmOrders()
+            frm.ShowDialog()
         End If
 
     End Sub
