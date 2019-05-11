@@ -20,9 +20,11 @@ Module ModUpdates
     Dim sTable As DataTable
 
     '************************************************************
-    'inopert - LCS  = load customer data
-    '        - LCIU = Insert new - update customer data to database
-    '        - LCU  = update customer data to database
+    'inopert - LCS  = load customer data - NOT USED
+    '        - LCIU = Insert new - update customer data to database - OK
+    '        - LCU  = update customer data to database  - OK
+    '        - LCIO  = Insert new update - working on
+    '        - LCUO  = Update customer orders - working on
     '************************************************************
     Public Function UpdateFormData(ByVal inopert As String, ByVal infrm As Form, ByVal inTable As String, ByVal selID As String) As Boolean
 

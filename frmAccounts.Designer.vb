@@ -23,6 +23,8 @@ Partial Class frmAccounts
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.cmdExit = New System.Windows.Forms.Button()
+        Me.txtmsg = New System.Windows.Forms.TextBox()
         Me.CustName = New System.Windows.Forms.TextBox()
         Me.CustNO = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -41,8 +43,6 @@ Partial Class frmAccounts
         Me.Label2 = New System.Windows.Forms.Label()
         Me.accountNO = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtmsg = New System.Windows.Forms.TextBox()
-        Me.cmdExit = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -75,6 +75,23 @@ Partial Class frmAccounts
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Account Info"
+        '
+        'cmdExit
+        '
+        Me.cmdExit.Location = New System.Drawing.Point(560, 22)
+        Me.cmdExit.Name = "cmdExit"
+        Me.cmdExit.Size = New System.Drawing.Size(46, 19)
+        Me.cmdExit.TabIndex = 38
+        Me.cmdExit.Text = "Exit"
+        Me.cmdExit.UseVisualStyleBackColor = True
+        '
+        'txtmsg
+        '
+        Me.txtmsg.BackColor = System.Drawing.SystemColors.Info
+        Me.txtmsg.Location = New System.Drawing.Point(374, 205)
+        Me.txtmsg.Name = "txtmsg"
+        Me.txtmsg.Size = New System.Drawing.Size(297, 20)
+        Me.txtmsg.TabIndex = 37
         '
         'CustName
         '
@@ -183,7 +200,7 @@ Partial Class frmAccounts
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(5, 190)
+        Me.Label29.Location = New System.Drawing.Point(5, 186)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(73, 13)
         Me.Label29.TabIndex = 24
@@ -230,23 +247,6 @@ Partial Class frmAccounts
         Me.Label1.Size = New System.Drawing.Size(50, 13)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "Account:"
-        '
-        'txtmsg
-        '
-        Me.txtmsg.BackColor = System.Drawing.SystemColors.Info
-        Me.txtmsg.Location = New System.Drawing.Point(374, 205)
-        Me.txtmsg.Name = "txtmsg"
-        Me.txtmsg.Size = New System.Drawing.Size(297, 20)
-        Me.txtmsg.TabIndex = 37
-        '
-        'cmdExit
-        '
-        Me.cmdExit.Location = New System.Drawing.Point(560, 22)
-        Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(46, 19)
-        Me.cmdExit.TabIndex = 38
-        Me.cmdExit.Text = "Exit"
-        Me.cmdExit.UseVisualStyleBackColor = True
         '
         'frmAccounts
         '

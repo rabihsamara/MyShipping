@@ -27,10 +27,22 @@ Partial Class frmOrders
         Me.Label2 = New System.Windows.Forms.Label()
         Me.inacctNO = New System.Windows.Forms.TextBox()
         Me.GBOrdersIN = New System.Windows.Forms.GroupBox()
+        Me.cmdSave = New System.Windows.Forms.Button()
+        Me.cmdExit = New System.Windows.Forms.Button()
         Me.cmdNew = New System.Windows.Forms.Button()
         Me.GBSearch = New System.Windows.Forms.GroupBox()
-        Me.cmdExit = New System.Windows.Forms.Button()
+        Me.GBOrdInfo = New System.Windows.Forms.GroupBox()
+        Me.createdby = New System.Windows.Forms.TextBox()
+        Me.Label31 = New System.Windows.Forms.Label()
+        Me.dateupdated = New System.Windows.Forms.TextBox()
+        Me.Label30 = New System.Windows.Forms.Label()
+        Me.datecreated = New System.Windows.Forms.TextBox()
+        Me.Label29 = New System.Windows.Forms.Label()
+        Me.OrderNO = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.active = New System.Windows.Forms.CheckBox()
         Me.GBOrdersIN.SuspendLayout()
+        Me.GBOrdInfo.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -68,6 +80,7 @@ Partial Class frmOrders
         'GBOrdersIN
         '
         Me.GBOrdersIN.BackColor = System.Drawing.SystemColors.Control
+        Me.GBOrdersIN.Controls.Add(Me.cmdSave)
         Me.GBOrdersIN.Controls.Add(Me.cmdExit)
         Me.GBOrdersIN.Controls.Add(Me.cmdNew)
         Me.GBOrdersIN.Controls.Add(Me.inCustIdName)
@@ -81,11 +94,29 @@ Partial Class frmOrders
         Me.GBOrdersIN.TabStop = False
         Me.GBOrdersIN.Text = "Orders"
         '
+        'cmdSave
+        '
+        Me.cmdSave.Location = New System.Drawing.Point(283, 45)
+        Me.cmdSave.Name = "cmdSave"
+        Me.cmdSave.Size = New System.Drawing.Size(73, 22)
+        Me.cmdSave.TabIndex = 6
+        Me.cmdSave.Text = "Save"
+        Me.cmdSave.UseVisualStyleBackColor = True
+        '
+        'cmdExit
+        '
+        Me.cmdExit.Location = New System.Drawing.Point(391, 43)
+        Me.cmdExit.Name = "cmdExit"
+        Me.cmdExit.Size = New System.Drawing.Size(74, 24)
+        Me.cmdExit.TabIndex = 5
+        Me.cmdExit.Text = "Exit"
+        Me.cmdExit.UseVisualStyleBackColor = True
+        '
         'cmdNew
         '
-        Me.cmdNew.Location = New System.Drawing.Point(401, 19)
+        Me.cmdNew.Location = New System.Drawing.Point(391, 19)
         Me.cmdNew.Name = "cmdNew"
-        Me.cmdNew.Size = New System.Drawing.Size(49, 19)
+        Me.cmdNew.Size = New System.Drawing.Size(74, 19)
         Me.cmdNew.TabIndex = 4
         Me.cmdNew.Text = "New"
         Me.cmdNew.UseVisualStyleBackColor = True
@@ -100,14 +131,103 @@ Partial Class frmOrders
         Me.GBSearch.TabStop = False
         Me.GBSearch.Text = "Search By"
         '
-        'cmdExit
+        'GBOrdInfo
         '
-        Me.cmdExit.Location = New System.Drawing.Point(402, 53)
-        Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(47, 24)
-        Me.cmdExit.TabIndex = 5
-        Me.cmdExit.Text = "Exit"
-        Me.cmdExit.UseVisualStyleBackColor = True
+        Me.GBOrdInfo.Controls.Add(Me.active)
+        Me.GBOrdInfo.Controls.Add(Me.createdby)
+        Me.GBOrdInfo.Controls.Add(Me.Label31)
+        Me.GBOrdInfo.Controls.Add(Me.dateupdated)
+        Me.GBOrdInfo.Controls.Add(Me.Label30)
+        Me.GBOrdInfo.Controls.Add(Me.datecreated)
+        Me.GBOrdInfo.Controls.Add(Me.Label29)
+        Me.GBOrdInfo.Controls.Add(Me.OrderNO)
+        Me.GBOrdInfo.Controls.Add(Me.Label3)
+        Me.GBOrdInfo.Location = New System.Drawing.Point(1, 94)
+        Me.GBOrdInfo.Name = "GBOrdInfo"
+        Me.GBOrdInfo.Size = New System.Drawing.Size(508, 165)
+        Me.GBOrdInfo.TabIndex = 6
+        Me.GBOrdInfo.TabStop = False
+        Me.GBOrdInfo.Text = "Order Information"
+        '
+        'createdby
+        '
+        Me.createdby.BackColor = System.Drawing.SystemColors.Info
+        Me.createdby.Enabled = False
+        Me.createdby.Location = New System.Drawing.Point(262, 136)
+        Me.createdby.Name = "createdby"
+        Me.createdby.Size = New System.Drawing.Size(94, 20)
+        Me.createdby.TabIndex = 35
+        '
+        'Label31
+        '
+        Me.Label31.AutoSize = True
+        Me.Label31.Location = New System.Drawing.Point(205, 139)
+        Me.Label31.Name = "Label31"
+        Me.Label31.Size = New System.Drawing.Size(62, 13)
+        Me.Label31.TabIndex = 34
+        Me.Label31.Text = "Created By:"
+        '
+        'dateupdated
+        '
+        Me.dateupdated.BackColor = System.Drawing.SystemColors.Info
+        Me.dateupdated.Enabled = False
+        Me.dateupdated.Location = New System.Drawing.Point(81, 136)
+        Me.dateupdated.Name = "dateupdated"
+        Me.dateupdated.Size = New System.Drawing.Size(120, 20)
+        Me.dateupdated.TabIndex = 33
+        '
+        'Label30
+        '
+        Me.Label30.AutoSize = True
+        Me.Label30.Location = New System.Drawing.Point(6, 143)
+        Me.Label30.Name = "Label30"
+        Me.Label30.Size = New System.Drawing.Size(77, 13)
+        Me.Label30.TabIndex = 32
+        Me.Label30.Text = "Date Updated:"
+        '
+        'datecreated
+        '
+        Me.datecreated.BackColor = System.Drawing.SystemColors.Info
+        Me.datecreated.Enabled = False
+        Me.datecreated.Location = New System.Drawing.Point(81, 115)
+        Me.datecreated.Name = "datecreated"
+        Me.datecreated.Size = New System.Drawing.Size(120, 20)
+        Me.datecreated.TabIndex = 31
+        '
+        'Label29
+        '
+        Me.Label29.AutoSize = True
+        Me.Label29.Location = New System.Drawing.Point(11, 119)
+        Me.Label29.Name = "Label29"
+        Me.Label29.Size = New System.Drawing.Size(73, 13)
+        Me.Label29.TabIndex = 30
+        Me.Label29.Text = "Date Created:"
+        '
+        'OrderNO
+        '
+        Me.OrderNO.Location = New System.Drawing.Point(61, 17)
+        Me.OrderNO.Name = "OrderNO"
+        Me.OrderNO.Size = New System.Drawing.Size(135, 20)
+        Me.OrderNO.TabIndex = 1
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(5, 20)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(55, 13)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Order NO:"
+        '
+        'active
+        '
+        Me.active.AutoSize = True
+        Me.active.Location = New System.Drawing.Point(208, 19)
+        Me.active.Name = "active"
+        Me.active.Size = New System.Drawing.Size(56, 17)
+        Me.active.TabIndex = 36
+        Me.active.Text = "Active"
+        Me.active.UseVisualStyleBackColor = True
         '
         'frmOrders
         '
@@ -115,12 +235,15 @@ Partial Class frmOrders
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.ClientSize = New System.Drawing.Size(1421, 807)
+        Me.Controls.Add(Me.GBOrdInfo)
         Me.Controls.Add(Me.GBSearch)
         Me.Controls.Add(Me.GBOrdersIN)
         Me.Name = "frmOrders"
         Me.Text = "frmOrders"
         Me.GBOrdersIN.ResumeLayout(False)
         Me.GBOrdersIN.PerformLayout()
+        Me.GBOrdInfo.ResumeLayout(False)
+        Me.GBOrdInfo.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -133,4 +256,15 @@ Partial Class frmOrders
     Friend WithEvents cmdNew As Button
     Friend WithEvents GBSearch As GroupBox
     Friend WithEvents cmdExit As Button
+    Friend WithEvents GBOrdInfo As GroupBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents OrderNO As TextBox
+    Friend WithEvents createdby As TextBox
+    Friend WithEvents Label31 As Label
+    Friend WithEvents dateupdated As TextBox
+    Friend WithEvents Label30 As Label
+    Friend WithEvents datecreated As TextBox
+    Friend WithEvents Label29 As Label
+    Friend WithEvents cmdSave As Button
+    Friend WithEvents active As CheckBox
 End Class

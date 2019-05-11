@@ -104,7 +104,6 @@ Public Class frmCustomers
 
     End Sub
 
-    'Exit customer screen
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
 
         'release log 
@@ -216,6 +215,7 @@ Public Class frmCustomers
             Else
                 'check if same user or another
                 If (AppCustLocks.MyFormname = "Customer" And AppCustLocks.Myctrlname = "Customer" And AppCustLocks.Myctrlvalue = selcustid) Then
+                    'check if same user ! delete and continue or just continue ?
                     terr = "record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid
                     GoTo EDIT_EXIT
                 End If
@@ -298,7 +298,7 @@ EDIT_EXIT:
         LoadFormControls = Nothing
 
         GlobalVariables.GL_Stat = False
-        If (ctrlname.Substring(1, 2) <> "in") Then
+        If (ctrlname.Substring(0, 2) <> "in" And ctrlname.Substring(0, 2) <> "GB") Then
             isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)
             If ((isInString = True) Or ctrltype = "RadioButton") Then
                 If (ctrlname = "chCIactive") Then
