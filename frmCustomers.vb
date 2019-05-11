@@ -804,6 +804,7 @@ EDIT_EXIT:
                 selacctID = DataGridAccts.Item(0, selacctrow).Value
                 selacctNO = DataGridAccts.Item(1, selacctrow).Value
                 GlobalVariables.Gl_tmpacctID = selacctID
+                GlobalVariables.Gl_tmpacctname = selacctNO
                 GlobalVariables.Gl_tmpcustid = selcustid
                 GlobalVariables.Gl_tmpcustname = selcustname
                 GlobalVariables.Gl_acctCallFrmID = "CE"
@@ -823,6 +824,7 @@ EDIT_EXIT:
                 selacctID = DataGridAccts.Item(0, selacctrow).Value
                 selacctNO = DataGridAccts.Item(1, selacctrow).Value
                 GlobalVariables.Gl_tmpacctID = selacctID
+                GlobalVariables.Gl_tmpacctname = selacctNO
                 GlobalVariables.Gl_tmpcustid = selcustid
                 GlobalVariables.Gl_tmpcustname = selcustname
                 GBorders.Text = "Orders for Account " & selacctNO
@@ -832,7 +834,6 @@ EDIT_EXIT:
 
     End Sub
 
-    'DataGridOrders
     Private Sub LoadOrders()
         Dim tsql As String = "SELECT ID,OrderNo,IIF(active = 1,'Y','N') as active, "
         tsql = tsql & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
@@ -863,6 +864,7 @@ EDIT_EXIT:
         If (GlobalVariables.GL_CSOrdsGridCNT > 0) Then
             selOrdrow = DataGridOrders.CurrentRow.Index
             If (selOrdrow < GlobalVariables.GL_CSOrdsGridCNT) Then
+                GlobalVariables.Gl_OrdCallFrmID = "COE"
                 GlobalVariables.Gl_SelOrderID = DataGridOrders.Item(0, selOrdrow).Value
                 GlobalVariables.Gl_SelOrder = DataGridOrders.Item(1, selOrdrow).Value
 
@@ -876,6 +878,7 @@ EDIT_EXIT:
     Private Sub CmdNewOrder_Click(sender As Object, e As EventArgs) Handles cmdNewOrder.Click
 
         If GBorders.Text.ToString.Contains("for") Then
+            GlobalVariables.Gl_OrdCallFrmID = "CON"
             GlobalVariables.Gl_SelOrderID = 0
             GlobalVariables.Gl_SelOrder = 0
 

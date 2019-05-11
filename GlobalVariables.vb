@@ -35,15 +35,21 @@ Public Class GlobalVariables
     Public Shared Property Gl_tmpcustid As String
     Public Shared Property Gl_tmpcustname As String
     Public Shared Property Gl_tmpacctID As Integer
+    Public Shared Property Gl_tmpacctname As String
+    'Customer screen
     Public Shared Property Gl_acctCallFrmID As String 'CE=customer existing account, CN=Customer New account, MM=menu call
+    Public Shared Property Gl_OrdCallFrmID As String 'COE=customer existing Order, CN=Customer New Order, MM=menu call
     Public Shared Property Gl_SelOrder As Integer
     Public Shared Property Gl_SelOrderID As Integer
 
     '**************Datagrid rows per screen*********************************
     '* 1) Customers
-    '*    
+    '* 2) Orders
+    '*
     Public Shared Property GL_CSAcctsGridCNT As Integer
     Public Shared Property GL_CSOrdsGridCNT As Integer
+
+
     '***********************************************************************
 End Class
 #End Region
@@ -1184,5 +1190,119 @@ Public Class Accounts
     End Property
 
 End Class
+
+Public Class Orders
+
+    Private ID As Integer
+    Private CustNo As String
+    Private AccountNo As String
+    Private OrderNO As Integer
+    Private active As Integer
+    Private datecreated As DateTime
+    Private dateupdated As DateTime
+    Private CreatedBy As String
+
+    Public Sub New() 'parameterised constructor
+
+        Console.WriteLine("Class Created")
+
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+
+        Console.WriteLine("Class Destructed")
+
+    End Sub
+
+    Public Property MyID() As Integer
+
+        Get
+            Return ID
+        End Get
+        Set(ByVal Value As Integer)
+            ID = Value
+        End Set
+
+    End Property
+
+    Public Property MyCustNo() As String
+
+        Get
+            Return CustNo
+        End Get
+        Set(ByVal Value As String)
+            CustNo = Value
+        End Set
+
+    End Property
+
+    Public Property MyAccountNo() As String
+
+        Get
+            Return AccountNo
+        End Get
+        Set(ByVal Value As String)
+            AccountNo = Value
+        End Set
+
+    End Property
+
+    Public Property MyOrderNO() As Integer
+
+        Get
+            Return OrderNO
+        End Get
+        Set(ByVal Value As Integer)
+            OrderNO = Value
+        End Set
+
+    End Property
+
+    Public Property Myactive() As Integer
+
+        Get
+            Return active
+        End Get
+        Set(ByVal Value As Integer)
+            active = Value
+        End Set
+
+    End Property
+
+    Public Property Mydatecreated() As DateTime
+
+        Get
+            Return datecreated
+        End Get
+        Set(ByVal Value As DateTime)
+            datecreated = Value
+        End Set
+
+    End Property
+
+    Public Property Mydateupdated() As DateTime
+
+        Get
+            Return dateupdated
+        End Get
+        Set(ByVal Value As DateTime)
+            dateupdated = Value
+        End Set
+
+    End Property
+
+    Public Property MyCreatedBy() As String
+
+        Get
+            Return CreatedBy
+        End Get
+        Set(ByVal Value As String)
+            CreatedBy = Value
+        End Set
+
+    End Property
+
+End Class
+
 
 #End Region

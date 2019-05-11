@@ -217,6 +217,9 @@
     <EmbeddedResource Include="frmCustomers.resx">
       <DependentUpon>frmCustomers.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmOrders.resx">
+      <DependentUpon>frmOrders.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmSettings.resx">
       <DependentUpon>frmSettings.vb</DependentUpon>
     </EmbeddedResource>
