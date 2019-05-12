@@ -240,6 +240,9 @@ EDIT_EXIT:
 
     End Function
 
+#Region "loadDTToSCR"
+
+
     '****************************************************************************************
     '* Load data to screen
     '****************************************************************************************
@@ -313,6 +316,7 @@ EDIT_EXIT:
     End Function
 
     '*************************************** End of Load data to screen functions ***************************************
+#End Region
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer1.Tick
         Timer1.Stop()
@@ -521,12 +525,10 @@ EDIT_EXIT:
             If (inopt = "ACT" Or inopt = "SCT") Then
                 GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slSHCountry & " and active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbSHProv)
-                'cmbSHProv.Text = userrecord.MyCity
                 slSHProv = cmbSHProv.SelectedValue
 
                 GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbSHCity)
-                'cmbSHCity.Text = userrecord.MyCity
                 slSHCity = cmbSHCity.SelectedValue
             End If
 
@@ -624,6 +626,7 @@ EDIT_EXIT:
     '*****************************************************************************************
     '* save customer
     '*****************************************************************************************
+
     Private Sub CmdSaveCust_Click(sender As Object, e As EventArgs) Handles cmdSaveCust.Click
 
         Dim topert As String = "LC" & seluw2
@@ -754,6 +757,9 @@ EDIT_EXIT:
             SHPcode.Text = ""
             cmbSHProv.Text = ""
             cmbSHCountry.Text = ""
+
+            DataGridOrders.DataSource = Nothing
+            DataGridAccts.DataSource = Nothing
         End If
 
     End Sub
@@ -837,7 +843,7 @@ EDIT_EXIT:
     Private Sub LoadOrders()
 
         Dim tsql As String
-        tsql = "SELECT ID,OrderNo,ordstat,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+        tsql = "SELECT ID,OrderNo,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
         tsql = tsql & " from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
 
         GlobalVariables.GL_CSOrdsGridCNT = ModMisc.LoadDataGrids(DataGridOrders, tsql, "orders")

@@ -37,7 +37,7 @@ Public Class frmOrders
         tstat = ModMisc.FillCBox(ordshipID, "CSHT")
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
-            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,ordStat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
+            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "BLName,BLadd1,BLadd2,cmbBLcity,BLpcode,cmbBLProv,cmbBLCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
@@ -61,6 +61,7 @@ Public Class frmOrders
             inCustIdName.Visible = False
             inacctNO.Visible = False
 
+
         End If
 
     End Sub
@@ -68,6 +69,7 @@ Public Class frmOrders
 #Region "Commands"
 
     Private Sub CmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
+        'later
 
     End Sub
 
@@ -78,6 +80,7 @@ Public Class frmOrders
     Private Sub CmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
 
     End Sub
+
 #End Region
 
 #Region "ReadORDintoObject"
