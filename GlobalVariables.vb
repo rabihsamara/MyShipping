@@ -1197,7 +1197,23 @@ Public Class Orders
     Private CustNo As String
     Private AccountNo As String
     Private OrderNO As Integer
-    Private active As Integer
+    Private ordStat As String
+    Private orshipID As String
+    Private cmbShpID As String
+    Private SHName As String
+    Private SHadd1 As String
+    Private SHadd2 As String
+    Private cmbSHCity As String
+    Private SHPcode As String
+    Private cmbSHProv As String
+    Private cmbSHCountry As String
+    Private BLName As String
+    Private BLadd1 As String
+    Private BLadd2 As String
+    Private cmbBLcity As String
+    Private BLpcode As String
+    Private cmbBLProv As String
+    Private cmbBLCountry As String
     Private datecreated As DateTime
     Private dateupdated As DateTime
     Private CreatedBy As String
@@ -1258,13 +1274,183 @@ Public Class Orders
 
     End Property
 
-    Public Property Myactive() As Integer
+    Public Property MyordStat() As String
 
         Get
-            Return active
+            Return ordStat
         End Get
-        Set(ByVal Value As Integer)
-            active = Value
+        Set(ByVal Value As String)
+            ordStat = Value
+        End Set
+
+    End Property
+
+    Public Property MyorshipID() As String
+
+        Get
+            Return orshipID
+        End Get
+        Set(ByVal Value As String)
+            orshipID = Value
+        End Set
+
+    End Property
+
+    Public Property MySHName() As String
+
+        Get
+            Return SHName
+        End Get
+        Set(ByVal Value As String)
+            SHName = Value
+        End Set
+
+    End Property
+
+    Public Property MySHadd1() As String
+
+        Get
+            Return SHadd1
+        End Get
+        Set(ByVal Value As String)
+            SHadd1 = Value
+        End Set
+
+    End Property
+
+    Public Property MySHadd2() As String
+
+        Get
+            Return SHadd2
+        End Get
+
+        Set(ByVal Value As String)
+            SHadd2 = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbSHCity() As String
+
+        Get
+            Return cmbSHCity
+        End Get
+        Set(ByVal Value As String)
+            cmbSHCity = Value
+        End Set
+
+    End Property
+
+    Public Property MySHPcode() As String
+
+        Get
+            Return SHPcode
+        End Get
+        Set(ByVal Value As String)
+            SHPcode = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbSHProv() As String
+
+        Get
+            Return cmbSHProv
+        End Get
+        Set(ByVal Value As String)
+            cmbSHProv = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbSHCountry() As String
+
+        Get
+            Return cmbSHCountry
+        End Get
+        Set(ByVal Value As String)
+            cmbSHCountry = Value
+        End Set
+
+    End Property
+
+    Public Property MyBLName() As String
+
+        Get
+            Return BLName
+        End Get
+        Set(ByVal Value As String)
+            BLName = Value
+        End Set
+
+    End Property
+
+    Public Property MyBLadd1() As String
+
+        Get
+            Return BLadd1
+        End Get
+        Set(ByVal Value As String)
+            BLadd1 = Value
+        End Set
+
+    End Property
+
+    Public Property MyBLadd2() As String
+
+        Get
+
+            Return BLadd2
+
+        End Get
+
+        Set(ByVal Value As String)
+
+            BLadd2 = Value
+
+        End Set
+
+    End Property
+
+    Public Property MycmbBLcity() As String
+
+        Get
+            Return cmbBLcity
+        End Get
+        Set(ByVal Value As String)
+            cmbBLcity = Value
+        End Set
+
+    End Property
+
+    Public Property MyBLpcode() As String
+        Get
+            Return BLpcode
+        End Get
+        Set(ByVal Value As String)
+            BLpcode = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbBLProv() As String
+        Get
+
+            Return cmbBLProv
+        End Get
+        Set(ByVal Value As String)
+            cmbBLProv = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbBLCountry() As String
+
+        Get
+            Return cmbBLCountry
+        End Get
+        Set(ByVal Value As String)
+            cmbBLCountry = Value
         End Set
 
     End Property
@@ -1304,5 +1490,57 @@ Public Class Orders
 
 End Class
 
+Public Class ordstatus
+
+    Private ID As String
+    Private ordstatshort As String
+    Private ordstatfull As String
+
+    Public Sub New() 'parameterised constructor
+
+        Console.WriteLine("Class Created")
+
+    End Sub
+
+    Protected Overrides Sub Finalize()  ' destructor
+
+        Console.WriteLine("Class destroyed")
+
+    End Sub
+
+    Public Property MyID() As String
+
+        Get
+            Return ID
+        End Get
+        Set(ByVal Value As String)
+            ID = Value
+        End Set
+
+    End Property
+
+    Public Property Myordstatshort() As String
+
+        Get
+            Return ordstatshort
+        End Get
+        Set(ByVal Value As String)
+            ordstatshort = Value
+        End Set
+
+    End Property
+
+    Public Property Myordstatfull() As String
+
+        Get
+            Return ordstatfull
+        End Get
+        Set(ByVal Value As String)
+            ordstatfull = Value
+        End Set
+
+    End Property
+
+End Class
 
 #End Region

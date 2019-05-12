@@ -51,6 +51,7 @@ Partial Class frmCustomers
         Me.dateupdate = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.GBorders = New System.Windows.Forms.GroupBox()
+        Me.cmdNewOrder = New System.Windows.Forms.Button()
         Me.DataGridOrders = New System.Windows.Forms.DataGridView()
         Me.GBAccounts = New System.Windows.Forms.GroupBox()
         Me.cmdNewAcct = New System.Windows.Forms.Button()
@@ -114,7 +115,6 @@ Partial Class frmCustomers
         Me.Label5 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.cmdNewOrder = New System.Windows.Forms.Button()
         Me.GBSelect.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -425,6 +425,16 @@ Partial Class frmCustomers
         Me.GBorders.TabStop = False
         Me.GBorders.Text = "Orders per Account"
         '
+        'cmdNewOrder
+        '
+        Me.cmdNewOrder.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        Me.cmdNewOrder.Location = New System.Drawing.Point(522, 11)
+        Me.cmdNewOrder.Name = "cmdNewOrder"
+        Me.cmdNewOrder.Size = New System.Drawing.Size(69, 25)
+        Me.cmdNewOrder.TabIndex = 1
+        Me.cmdNewOrder.Text = "New Order"
+        Me.cmdNewOrder.UseVisualStyleBackColor = False
+        '
         'DataGridOrders
         '
         Me.DataGridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -636,12 +646,14 @@ Partial Class frmCustomers
         '
         'Label18
         '
+        Me.Label18.AllowDrop = True
         Me.Label18.AutoSize = True
         Me.Label18.Location = New System.Drawing.Point(13, 143)
         Me.Label18.Name = "Label18"
         Me.Label18.Size = New System.Drawing.Size(52, 13)
         Me.Label18.TabIndex = 17
         Me.Label18.Text = "Province:"
+        Me.Label18.UseMnemonic = False
         '
         'Label19
         '
@@ -1017,16 +1029,6 @@ Partial Class frmCustomers
         '
         'Timer1
         '
-        '
-        'cmdNewOrder
-        '
-        Me.cmdNewOrder.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        Me.cmdNewOrder.Location = New System.Drawing.Point(522, 11)
-        Me.cmdNewOrder.Name = "cmdNewOrder"
-        Me.cmdNewOrder.Size = New System.Drawing.Size(69, 25)
-        Me.cmdNewOrder.TabIndex = 1
-        Me.cmdNewOrder.Text = "New Order"
-        Me.cmdNewOrder.UseVisualStyleBackColor = False
         '
         'frmCustomers
         '

@@ -835,15 +835,17 @@ EDIT_EXIT:
     End Sub
 
     Private Sub LoadOrders()
-        Dim tsql As String = "SELECT ID,OrderNo,IIF(active = 1,'Y','N') as active, "
-        tsql = tsql & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
+
+        Dim tsql As String
+        tsql = "SELECT ID,OrderNo,ordstat,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+        tsql = tsql & " from orders where CustNo = '" & selcustid & "' and AccountNO = '" & selacctNO & "'"
 
         GlobalVariables.GL_CSOrdsGridCNT = ModMisc.LoadDataGrids(DataGridOrders, tsql, "orders")
         If (GlobalVariables.GL_CSOrdsGridCNT > 0) Then
             With DataGridOrders
                 .Columns(0).HeaderText = "ID"
                 .Columns(1).HeaderText = "OrderNO"
-                .Columns(2).HeaderText = "Active"
+                .Columns(2).HeaderText = "Status"
                 .Columns(3).HeaderText = "Created On"
                 .Columns(4).HeaderText = "Update On"
                 .Columns(5).HeaderText = "Created By"

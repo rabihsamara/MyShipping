@@ -31,9 +31,9 @@ Public Class frmOrders
 
         End If
 
-
-
     End Sub
+
+#Region "Commands"
 
     Private Sub CmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
 
@@ -46,6 +46,7 @@ Public Class frmOrders
     Private Sub CmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
 
     End Sub
+#End Region
 
 #Region "ReadOrdinfotoscreen"
 
@@ -54,8 +55,10 @@ Public Class frmOrders
     '****************************************************************************************
     Private Function LoadOrdToScreen(ByVal crtable As String) As Boolean
 
-        Dim sql As String = "SELECT * FROM " & crtable & " where  CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
-
+        Dim sql As String
+        sql = "SELECT ID,CustNo,AccountNo,OrderNO,ordStat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
+        sql = sql & "BLName,BLadd1,BLadd2,cmbBLcity,BLpcode,cmbBLProv,cmbBLCountry,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+        sql = sql & " FROM " & crtable & " where  CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
         LoadOrdToScreen = False
 
         Using connection As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -87,12 +90,7 @@ Public Class frmOrders
                 'MsgBox(ctrl.Name & " - " & ctrl.GetType.Name & " - " & ctrl.Text)
                 tmpval = LoadFormControls(ctrl.Name, ctrl.GetType.Name, ctrl.Text)
                 If GlobalVariables.GL_Stat = True Then
-                    If (ctrl.Name = "active") Then
-                        Me.active.Checked = If(tmpval = 1, True, False)
-                    Else
-                        ctrl.Text = tmpval
-                    End If
-
+                    ctrl.Text = tmpval
                 End If
                 ControlsRecr(ctrl.Controls)
             End If
@@ -105,22 +103,17 @@ Public Class frmOrders
         Dim isInString As Boolean = False
 
         LoadFormControls = Nothing
-
         GlobalVariables.GL_Stat = False
+
         If (ctrlname.Substring(0, 2) <> "in" And ctrlname.Substring(0, 2) <> "GB") Then
             isInString = (GlobalVariables.typeAR.IndexOf(ctrltype) > -1)
             If ((isInString = True) Or ctrltype = "RadioButton") Then
-                If (ctrlname = "chCIactive") Then
-                    LoadFormControls = If(sTable.Rows(0)(ctrlname).ToString = "1", 1, 0)
-                Else
-                    LoadFormControls = sTable.Rows(0)(ctrlname).ToString()
-                End If
+                LoadFormControls = sTable.Rows(0)(ctrlname).ToString()
                 GlobalVariables.GL_Stat = True
             End If
         End If
 
     End Function
-
 
 #End Region
 
