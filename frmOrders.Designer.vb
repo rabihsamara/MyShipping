@@ -187,7 +187,7 @@ Partial Class frmOrders
         'OrdStat
         '
         Me.OrdStat.FormattingEnabled = True
-        Me.OrdStat.Location = New System.Drawing.Point(293, 16)
+        Me.OrdStat.Location = New System.Drawing.Point(273, 16)
         Me.OrdStat.Name = "OrdStat"
         Me.OrdStat.Size = New System.Drawing.Size(92, 21)
         Me.OrdStat.TabIndex = 37
@@ -195,7 +195,7 @@ Partial Class frmOrders
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(218, 20)
+        Me.Label4.Location = New System.Drawing.Point(203, 20)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(69, 13)
         Me.Label4.TabIndex = 36
@@ -205,7 +205,7 @@ Partial Class frmOrders
         '
         Me.createdby.BackColor = System.Drawing.SystemColors.Info
         Me.createdby.Enabled = False
-        Me.createdby.Location = New System.Drawing.Point(257, 74)
+        Me.createdby.Location = New System.Drawing.Point(261, 74)
         Me.createdby.Name = "createdby"
         Me.createdby.Size = New System.Drawing.Size(94, 20)
         Me.createdby.TabIndex = 35
@@ -257,15 +257,15 @@ Partial Class frmOrders
         '
         'OrderNO
         '
-        Me.OrderNO.Location = New System.Drawing.Point(61, 17)
+        Me.OrderNO.Location = New System.Drawing.Point(76, 17)
         Me.OrderNO.Name = "OrderNO"
-        Me.OrderNO.Size = New System.Drawing.Size(135, 20)
+        Me.OrderNO.Size = New System.Drawing.Size(120, 20)
         Me.OrderNO.TabIndex = 1
         '
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(5, 20)
+        Me.Label3.Location = New System.Drawing.Point(19, 20)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(55, 13)
         Me.Label3.TabIndex = 0

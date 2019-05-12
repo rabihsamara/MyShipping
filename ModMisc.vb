@@ -139,21 +139,37 @@ Module ModMisc
     '******************************************************************************************************
     '* 1) Fill combbox using object to get value dor displayed value
     '* ORST = Order status drom order entry screen'
-    '* 
+    '* ORSC = order screen shipping country
+    '* ORSP = order screen shipping Province
+    '* ORSY = order screen shipping City
+    '* ORBC = order screen Billing country
+    '*  
     '******************************************************************************************************
     '*
-    Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String) As Boolean
+    Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0) As Boolean
 
         Dim tsql As String = ""
         Dim vlname As String = ""
-        Dim dpname As String
+        Dim dspname As String
 
         FillCBoxBytable = False
 
         If (callby = "ORST") Then
             tsql = "SELECT  ordstatshort,ordstatfull FROM ordstatus order by ordstatfull"
             vlname = "ordstatshort"
-            dpname = "ordstatfull"
+            dspname = "ordstatfull"
+        ElseIf (callby = "ORSC") Then
+            tsql = "SELECT  ID,countryname FROM countries where active = 1 order by countryname"
+            vlname = "ID"
+            dspname = "countryname"
+        ElseIf (callby = "ORSP") Then
+            tsql = "SELECT  ID,Concat(provshort,' - ',provname) as Provname FROM provinces where active = 1 and countryid = " & invalue & " order by provname"
+            vlname = "ID"
+            dspname = "Provname"
+        ElseIf (callby = "ORSY") Then
+            tsql = "SELECT  ID, cityname FROM cities where cityactive = 1 and countryid = " & invalue & " and provid = " & invalue2 & "  order by cityname"
+            vlname = "ID"
+            dspname = "cityname"
         Else
             Exit Function
         End If
@@ -166,7 +182,7 @@ Module ModMisc
                 Dim dt As DataTable = New DataTable
                 dt.Load(rs)
                 incombo.DataSource = dt
-                incombo.DisplayMember = dpname
+                incombo.DisplayMember = dspname
                 incombo.ValueMember = vlname
                 FillCBoxBytable = True
             Catch ex As Exception

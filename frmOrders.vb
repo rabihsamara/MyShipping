@@ -11,6 +11,12 @@ Public Class frmOrders
     Private Ordrecord As Orders = New Orders()
     Private tstat As Boolean = False
     Private selordstatshort As String = ""
+    Private selSordShCountryID As Integer = 0
+    Private selSordShProvID As Integer = 0
+    Private selSordShCityID As Integer = 0
+    Private selSordBLCountryID As Integer = 0
+    Private selSordBLProvID As Integer = 0
+    Private selSordBLCityID As Integer = 0
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -25,6 +31,10 @@ Public Class frmOrders
         OrderNO.Enabled = False
 
         tstat = ModMisc.FillCBoxBytable(OrdStat, "ORST")
+        tstat = ModMisc.FillCBoxBytable(cmbSHCountry, "ORSC")
+        tstat = ModMisc.FillCBoxBytable(cmbBLCountry, "ORSC")
+        ordshipID.Items.Clear()
+        tstat = ModMisc.FillCBox(ordshipID, "CSHT")
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,ordStat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
@@ -45,10 +55,7 @@ Public Class frmOrders
                 Exit Sub
             End If
             OrderNO.Text = GlobalVariables.Gl_SelOrder
-
-
-
-
+            OrdStat.Text = "New"
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COM") Then 'menu
             cmdNew.Visible = True
             inCustIdName.Visible = False
@@ -195,11 +202,53 @@ Public Class frmOrders
         End If
 
     End Function
+#End Region
+
+#Region "ComboboxShpcommit"
 
     Private Sub OrdStat_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles OrdStat.SelectionChangeCommitted
-
         selordstatshort = OrdStat.SelectedValue.ToString ' NW for new etc
+    End Sub
 
+    Private Sub cmbSHCountry_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCountry.SelectionChangeCommitted
+        selSordShCountryID = cmbSHCountry.SelectedValue
+        'change prov bycountry id
+        FIllSHProv()
+    End Sub
+
+    Private Sub cmbSHProv_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHProv.SelectionChangeCommitted
+        selSordShProvID = cmbSHProv.SelectedValue
+        tstat = ModMisc.FillCBoxBytable(cmbSHCity, "ORSY", selSordShCountryID, selSordShProvID)
+    End Sub
+
+    Private Sub FIllSHProv()
+        tstat = ModMisc.FillCBoxBytable(cmbSHProv, "ORSP", selSordShCountryID)
+    End Sub
+
+    Private Sub cmbSHcity_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCity.SelectionChangeCommitted
+        selSordShCityID = cmbSHCity.SelectedValue
+    End Sub
+
+#End Region
+
+#Region "ComboboxBillcommit"
+    Private Sub cmbBLCountry_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLCountry.SelectionChangeCommitted
+        selSordBLCountryID = cmbBLCountry.SelectedValue
+        'change prov bycountry id
+        FIllBLProv()
+    End Sub
+
+    Private Sub cmbBLProv_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLProv.SelectionChangeCommitted
+        selSordBLProvID = cmbBLProv.SelectedValue
+        tstat = ModMisc.FillCBoxBytable(cmbBLcity, "ORSY", selSordBLCountryID, selSordBLProvID)
+    End Sub
+
+    Private Sub FIllBLProv()
+        tstat = ModMisc.FillCBoxBytable(cmbBLProv, "ORSP", selSordBLCountryID)
+    End Sub
+
+    Private Sub cmbBLcity_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLcity.SelectionChangeCommitted
+        selSordBLCityID = cmbBLcity.SelectedValue
     End Sub
 
 #End Region
