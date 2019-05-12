@@ -32,6 +32,8 @@ Partial Class frmOrders
         Me.cmdNew = New System.Windows.Forms.Button()
         Me.GBSearch = New System.Windows.Forms.GroupBox()
         Me.GBOrdInfo = New System.Windows.Forms.GroupBox()
+        Me.OrdStat = New System.Windows.Forms.ComboBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.createdby = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.dateupdated = New System.Windows.Forms.TextBox()
@@ -40,9 +42,22 @@ Partial Class frmOrders
         Me.Label29 = New System.Windows.Forms.Label()
         Me.OrderNO = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.OrdStat = New System.Windows.Forms.ComboBox()
         Me.GBSHBLInfo = New System.Windows.Forms.GroupBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
+        Me.Label27 = New System.Windows.Forms.Label()
+        Me.BLpcode = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.cmbBLProv = New System.Windows.Forms.ComboBox()
+        Me.cmbBLcity = New System.Windows.Forms.ComboBox()
+        Me.BLadd2 = New System.Windows.Forms.TextBox()
+        Me.BLadd1 = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.BLName = New System.Windows.Forms.TextBox()
+        Me.Label16 = New System.Windows.Forms.Label()
         Me.cmbSHCountry = New System.Windows.Forms.ComboBox()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.ordshipID = New System.Windows.Forms.ComboBox()
@@ -59,21 +74,6 @@ Partial Class frmOrders
         Me.Label21 = New System.Windows.Forms.Label()
         Me.SHName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
-        Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
-        Me.Label27 = New System.Windows.Forms.Label()
-        Me.BLpcode = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.cmbBLProv = New System.Windows.Forms.ComboBox()
-        Me.cmbBLcity = New System.Windows.Forms.ComboBox()
-        Me.BLadd2 = New System.Windows.Forms.TextBox()
-        Me.BLadd1 = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.BLName = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
         Me.GBOrdersIN.SuspendLayout()
         Me.GBOrdInfo.SuspendLayout()
         Me.GBSHBLInfo.SuspendLayout()
@@ -184,6 +184,23 @@ Partial Class frmOrders
         Me.GBOrdInfo.TabStop = False
         Me.GBOrdInfo.Text = "Order Information"
         '
+        'OrdStat
+        '
+        Me.OrdStat.FormattingEnabled = True
+        Me.OrdStat.Location = New System.Drawing.Point(293, 16)
+        Me.OrdStat.Name = "OrdStat"
+        Me.OrdStat.Size = New System.Drawing.Size(92, 21)
+        Me.OrdStat.TabIndex = 37
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(218, 20)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(69, 13)
+        Me.Label4.TabIndex = 36
+        Me.Label4.Text = "Order Status:"
+        '
         'createdby
         '
         Me.createdby.BackColor = System.Drawing.SystemColors.Info
@@ -254,23 +271,6 @@ Partial Class frmOrders
         Me.Label3.TabIndex = 0
         Me.Label3.Text = "Order NO:"
         '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(218, 20)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(69, 13)
-        Me.Label4.TabIndex = 36
-        Me.Label4.Text = "Order Status:"
-        '
-        'OrdStat
-        '
-        Me.OrdStat.FormattingEnabled = True
-        Me.OrdStat.Location = New System.Drawing.Point(293, 16)
-        Me.OrdStat.Name = "OrdStat"
-        Me.OrdStat.Size = New System.Drawing.Size(92, 21)
-        Me.OrdStat.TabIndex = 37
-        '
         'GBSHBLInfo
         '
         Me.GBSHBLInfo.Controls.Add(Me.Label5)
@@ -310,6 +310,131 @@ Partial Class frmOrders
         Me.GBSHBLInfo.TabIndex = 7
         Me.GBSHBLInfo.TabStop = False
         Me.GBSHBLInfo.Text = "Shipping/Billing Information"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Location = New System.Drawing.Point(6, 168)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(89, 13)
+        Me.Label5.TabIndex = 61
+        Me.Label5.Text = "Billing Information"
+        '
+        'cmbBLCountry
+        '
+        Me.cmbBLCountry.FormattingEnabled = True
+        Me.cmbBLCountry.Location = New System.Drawing.Point(251, 292)
+        Me.cmbBLCountry.Name = "cmbBLCountry"
+        Me.cmbBLCountry.Size = New System.Drawing.Size(100, 21)
+        Me.cmbBLCountry.TabIndex = 60
+        Me.cmbBLCountry.TabStop = False
+        '
+        'Label27
+        '
+        Me.Label27.AutoSize = True
+        Me.Label27.Location = New System.Drawing.Point(201, 295)
+        Me.Label27.Name = "Label27"
+        Me.Label27.Size = New System.Drawing.Size(46, 13)
+        Me.Label27.TabIndex = 59
+        Me.Label27.Text = "Country:"
+        '
+        'BLpcode
+        '
+        Me.BLpcode.Location = New System.Drawing.Point(251, 266)
+        Me.BLpcode.Name = "BLpcode"
+        Me.BLpcode.Size = New System.Drawing.Size(100, 20)
+        Me.BLpcode.TabIndex = 58
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Location = New System.Drawing.Point(180, 268)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(67, 13)
+        Me.Label11.TabIndex = 57
+        Me.Label11.Text = "Postal Code:"
+        '
+        'cmbBLProv
+        '
+        Me.cmbBLProv.FormattingEnabled = True
+        Me.cmbBLProv.Location = New System.Drawing.Point(57, 292)
+        Me.cmbBLProv.Name = "cmbBLProv"
+        Me.cmbBLProv.Size = New System.Drawing.Size(117, 21)
+        Me.cmbBLProv.TabIndex = 56
+        '
+        'cmbBLcity
+        '
+        Me.cmbBLcity.FormattingEnabled = True
+        Me.cmbBLcity.Location = New System.Drawing.Point(57, 265)
+        Me.cmbBLcity.Name = "cmbBLcity"
+        Me.cmbBLcity.Size = New System.Drawing.Size(117, 21)
+        Me.cmbBLcity.TabIndex = 55
+        '
+        'BLadd2
+        '
+        Me.BLadd2.Location = New System.Drawing.Point(57, 243)
+        Me.BLadd2.Name = "BLadd2"
+        Me.BLadd2.Size = New System.Drawing.Size(294, 20)
+        Me.BLadd2.TabIndex = 54
+        '
+        'BLadd1
+        '
+        Me.BLadd1.Location = New System.Drawing.Point(57, 220)
+        Me.BLadd1.Name = "BLadd1"
+        Me.BLadd1.Size = New System.Drawing.Size(294, 20)
+        Me.BLadd1.TabIndex = 53
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Location = New System.Drawing.Point(5, 295)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(52, 13)
+        Me.Label12.TabIndex = 52
+        Me.Label12.Text = "Province:"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Location = New System.Drawing.Point(30, 265)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(27, 13)
+        Me.Label13.TabIndex = 51
+        Me.Label13.Text = "City:"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Location = New System.Drawing.Point(3, 243)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(54, 13)
+        Me.Label14.TabIndex = 50
+        Me.Label14.Text = "Address2:"
+        '
+        'Label15
+        '
+        Me.Label15.AutoSize = True
+        Me.Label15.Location = New System.Drawing.Point(3, 223)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(54, 13)
+        Me.Label15.TabIndex = 49
+        Me.Label15.Text = "Address1:"
+        '
+        'BLName
+        '
+        Me.BLName.Location = New System.Drawing.Point(57, 195)
+        Me.BLName.Name = "BLName"
+        Me.BLName.Size = New System.Drawing.Size(294, 20)
+        Me.BLName.TabIndex = 48
+        '
+        'Label16
+        '
+        Me.Label16.AutoSize = True
+        Me.Label16.Location = New System.Drawing.Point(19, 198)
+        Me.Label16.Name = "Label16"
+        Me.Label16.Size = New System.Drawing.Size(38, 13)
+        Me.Label16.TabIndex = 47
+        Me.Label16.Text = "Name:"
         '
         'cmbSHCountry
         '
@@ -444,131 +569,6 @@ Partial Class frmOrders
         Me.Label22.Size = New System.Drawing.Size(38, 13)
         Me.Label22.TabIndex = 31
         Me.Label22.Text = "Name:"
-        '
-        'cmbBLCountry
-        '
-        Me.cmbBLCountry.FormattingEnabled = True
-        Me.cmbBLCountry.Location = New System.Drawing.Point(251, 292)
-        Me.cmbBLCountry.Name = "cmbBLCountry"
-        Me.cmbBLCountry.Size = New System.Drawing.Size(100, 21)
-        Me.cmbBLCountry.TabIndex = 60
-        Me.cmbBLCountry.TabStop = False
-        '
-        'Label27
-        '
-        Me.Label27.AutoSize = True
-        Me.Label27.Location = New System.Drawing.Point(201, 295)
-        Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(46, 13)
-        Me.Label27.TabIndex = 59
-        Me.Label27.Text = "Country:"
-        '
-        'BLpcode
-        '
-        Me.BLpcode.Location = New System.Drawing.Point(251, 266)
-        Me.BLpcode.Name = "BLpcode"
-        Me.BLpcode.Size = New System.Drawing.Size(100, 20)
-        Me.BLpcode.TabIndex = 58
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Location = New System.Drawing.Point(180, 268)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(67, 13)
-        Me.Label11.TabIndex = 57
-        Me.Label11.Text = "Postal Code:"
-        '
-        'cmbBLProv
-        '
-        Me.cmbBLProv.FormattingEnabled = True
-        Me.cmbBLProv.Location = New System.Drawing.Point(57, 292)
-        Me.cmbBLProv.Name = "cmbBLProv"
-        Me.cmbBLProv.Size = New System.Drawing.Size(117, 21)
-        Me.cmbBLProv.TabIndex = 56
-        '
-        'cmbBLcity
-        '
-        Me.cmbBLcity.FormattingEnabled = True
-        Me.cmbBLcity.Location = New System.Drawing.Point(57, 265)
-        Me.cmbBLcity.Name = "cmbBLcity"
-        Me.cmbBLcity.Size = New System.Drawing.Size(117, 21)
-        Me.cmbBLcity.TabIndex = 55
-        '
-        'BLadd2
-        '
-        Me.BLadd2.Location = New System.Drawing.Point(57, 243)
-        Me.BLadd2.Name = "BLadd2"
-        Me.BLadd2.Size = New System.Drawing.Size(294, 20)
-        Me.BLadd2.TabIndex = 54
-        '
-        'BLadd1
-        '
-        Me.BLadd1.Location = New System.Drawing.Point(57, 220)
-        Me.BLadd1.Name = "BLadd1"
-        Me.BLadd1.Size = New System.Drawing.Size(294, 20)
-        Me.BLadd1.TabIndex = 53
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Location = New System.Drawing.Point(5, 295)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(52, 13)
-        Me.Label12.TabIndex = 52
-        Me.Label12.Text = "Province:"
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Location = New System.Drawing.Point(30, 265)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(27, 13)
-        Me.Label13.TabIndex = 51
-        Me.Label13.Text = "City:"
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Location = New System.Drawing.Point(3, 243)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(54, 13)
-        Me.Label14.TabIndex = 50
-        Me.Label14.Text = "Address2:"
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.Location = New System.Drawing.Point(3, 223)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(54, 13)
-        Me.Label15.TabIndex = 49
-        Me.Label15.Text = "Address1:"
-        '
-        'BLName
-        '
-        Me.BLName.Location = New System.Drawing.Point(57, 195)
-        Me.BLName.Name = "BLName"
-        Me.BLName.Size = New System.Drawing.Size(294, 20)
-        Me.BLName.TabIndex = 48
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.Location = New System.Drawing.Point(19, 198)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(38, 13)
-        Me.Label16.TabIndex = 47
-        Me.Label16.Text = "Name:"
-        '
-        'Label5
-        '
-        Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(6, 168)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(89, 13)
-        Me.Label5.TabIndex = 61
-        Me.Label5.Text = "Billing Information"
         '
         'frmOrders
         '

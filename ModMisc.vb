@@ -56,6 +56,7 @@ Module ModMisc
     End Class
 
     '******************************************************************************************************
+    '* 1) Fill combbox using query 
     '* L=login             - 
     '* C=Control screen    - 
     '* P=company
@@ -65,7 +66,6 @@ Module ModMisc
     '* CSHT  = Combo shiptoid in customer screen
     '* CSINA = Customer id/name active only
     '* CANOA = Customer accounts per customer.
-    '* ORST = order status
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -99,8 +99,6 @@ Module ModMisc
                 tsql = "select Concat(custid,' - ',CIname) from Customers where chCIactive = 1 order by CIName asc"
             ElseIf (callby = "CANOA") Then
                 tsql = "select concat(AccountNo,' - ',AccountName) from accounts order by AccountName"
-            ElseIf (callby = "ORST") Then
-                tsql = "SELECT  concat(ordstatshort,' - ',ordstatfull) FROM ordstatus order by ordstatfull"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -135,6 +133,51 @@ Module ModMisc
                 mysqlConn.Close()
             End If
         End Try
+
+    End Function
+
+    '******************************************************************************************************
+    '* 1) Fill combbox using object to get value dor displayed value
+    '* ORST = Order status drom order entry screen'
+    '* 
+    '******************************************************************************************************
+    '*
+    Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String) As Boolean
+
+        Dim tsql As String = ""
+        Dim vlname As String = ""
+        Dim dpname As String
+
+        FillCBoxBytable = False
+
+        If (callby = "ORST") Then
+            tsql = "SELECT  ordstatshort,ordstatfull FROM ordstatus order by ordstatfull"
+            vlname = "ordstatshort"
+            dpname = "ordstatfull"
+        Else
+            Exit Function
+        End If
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+            Try
+                mysqlConn.Open()
+                Dim Command = New SqlCommand(tsql, mysqlConn)
+                Dim rs As SqlDataReader = Command.ExecuteReader
+                Dim dt As DataTable = New DataTable
+                dt.Load(rs)
+                incombo.DataSource = dt
+                incombo.DisplayMember = dpname
+                incombo.ValueMember = vlname
+                FillCBoxBytable = True
+            Catch ex As Exception
+                MsgBox(Err.Description)
+            Finally
+                If Not (mysqlConn Is Nothing) Then
+                    mysqlConn.Close()
+                End If
+            End Try
+
+        End Using
 
     End Function
 
@@ -465,12 +508,15 @@ Exit_Excel:
                     cbo.DataSource = dt
                     cbo.DisplayMember = "countryname"
                     cbo.ValueMember = "ID"
-                    mysqlConn.Close()
                     GlobalVariables.GL_Stat = True
                 End Using 'comm
 
             Catch ex As Exception
                 MsgBox("Error Reading countries!")
+            Finally
+                If Not (mysqlConn Is Nothing) Then
+                    mysqlConn.Close()
+                End If
             End Try
 
         End Using

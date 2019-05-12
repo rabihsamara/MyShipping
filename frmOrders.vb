@@ -10,6 +10,7 @@ Public Class frmOrders
     Private myReader As SqlDataReader
     Private Ordrecord As Orders = New Orders()
     Private tstat As Boolean = False
+    Private selordstatshort As String = ""
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -23,7 +24,7 @@ Public Class frmOrders
         OrderNO.Text = GlobalVariables.Gl_SelOrder
         OrderNO.Enabled = False
 
-        tstat = ModMisc.FillCBox(OrdStat, "ORST")
+        tstat = ModMisc.FillCBoxBytable(OrdStat, "ORST")
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,ordStat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
@@ -194,6 +195,12 @@ Public Class frmOrders
         End If
 
     End Function
+
+    Private Sub OrdStat_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles OrdStat.SelectionChangeCommitted
+
+        selordstatshort = OrdStat.SelectedValue.ToString ' NW for new etc
+
+    End Sub
 
 #End Region
 
