@@ -9,6 +9,7 @@ Public Class frmOrders
     Private sTable As DataTable
     Private myReader As SqlDataReader
     Private Ordrecord As Orders = New Orders()
+    Private tstat As Boolean = False
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -22,16 +23,30 @@ Public Class frmOrders
         OrderNO.Text = GlobalVariables.Gl_SelOrder
         OrderNO.Enabled = False
 
+        tstat = ModMisc.FillCBox(OrdStat, "ORST")
+
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,ordStat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "BLName,BLadd1,BLadd2,cmbBLcity,BLpcode,cmbBLProv,cmbBLCountry,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where  CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "BLName,BLadd1,BLadd2,cmbBLcity,BLpcode,cmbBLProv,cmbBLCountry,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
             If (ReadOrder() = False) Then
                 MsgBox("Error reading Order !")
                 Exit Sub
             End If
             LoadOrdToScreen()
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "CON") Then 'customer screen new order
+            GlobalVariables.Gl_SQLStr = "select max(orderno) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
+            GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
+            If (GlobalVariables.GL_Stat = False) Then
+                MsgBox("error getting next order#!")
+                Exit Sub
+            End If
+            OrderNO.Text = GlobalVariables.Gl_SelOrder
+
+
+
 
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COM") Then 'menu
             cmdNew.Visible = True
@@ -153,7 +168,6 @@ Public Class frmOrders
 
         For Each ctrl As Control In controls
             If ctrl.Name <> String.Empty And ctrl.GetType.Name <> "Label" Then
-                'MsgBox(ctrl.Name & " - " & ctrl.GetType.Name & " - " & ctrl.Text)
                 tmpval = LoadFormControls(ctrl.Name, ctrl.GetType.Name, ctrl.Text)
                 If GlobalVariables.GL_Stat = True Then
                     ctrl.Text = tmpval

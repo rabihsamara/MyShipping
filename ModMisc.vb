@@ -65,6 +65,7 @@ Module ModMisc
     '* CSHT  = Combo shiptoid in customer screen
     '* CSINA = Customer id/name active only
     '* CANOA = Customer accounts per customer.
+    '* ORST = order status
     '******************************************************************************************************
     Public Function FillCBox(incombo As ComboBox, ByVal callby As String) As Boolean
 
@@ -98,6 +99,8 @@ Module ModMisc
                 tsql = "select Concat(custid,' - ',CIname) from Customers where chCIactive = 1 order by CIName asc"
             ElseIf (callby = "CANOA") Then
                 tsql = "select concat(AccountNo,' - ',AccountName) from accounts order by AccountName"
+            ElseIf (callby = "ORST") Then
+                tsql = "SELECT  concat(ordstatshort,' - ',ordstatfull) FROM ordstatus order by ordstatfull"
             End If
 
             Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
@@ -113,22 +116,7 @@ Module ModMisc
                     ElseIf (callby = "P") Then
                         incombo.Items.Add(New CompanyName(myReader.GetString(0)))
                         FillCBox = True
-                    ElseIf (callby = "CST") Then
-                        incombo.Items.Add(Trim(myReader.GetString(0)))
-                        FillCBox = True
-                    ElseIf (callby.substring(0, 3) = "CRI") Then
-                        incombo.Items.Add(Trim(myReader.GetString(0)))
-                        FillCBox = True
-                    ElseIf (callby.substring(0, 3) = "CRN") Then
-                        incombo.Items.Add(Trim(myReader.GetString(0)))
-                        FillCBox = True
-                    ElseIf (callby = "CSHT") Then
-                        incombo.Items.Add(Trim(myReader.GetString(0)))
-                        FillCBox = True
-                    ElseIf (callby = "CSINA") Then
-                        incombo.Items.Add(Trim(myReader.GetString(0)))
-                        FillCBox = True
-                    ElseIf (callby = "CANOA") Then
+                    Else
                         incombo.Items.Add(Trim(myReader.GetString(0)))
                         FillCBox = True
                     End If
@@ -161,6 +149,7 @@ Module ModMisc
     'NCST= read count of cust for new custom if exists
     'SHPC= count of shipto id by customer
     'CACCT = account per customer
+    'MXONO = maximum order number by custono and accountNo
     '**********************************************************************************************
     Public Function ReadSQL(ByVal inopt As String, Optional ByVal criteria As String = "") As Object
 
@@ -175,7 +164,6 @@ Module ModMisc
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             Try
                 If (inopt = "CUP") Then
-                    'tsql = "SELECT usrpassword,usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 "
                     tsql = "SELECT usrmode From Users where Userid = '" & GlobalVariables.Gl_LogUserID & "' and active = 1 and  Encryptedpassword = HashBytes('SHA2_512','" & criteria & "')"
                 Else
                     tsql = GlobalVariables.Gl_SQLStr
@@ -195,11 +183,6 @@ Module ModMisc
                         Else
                             ReadSQL = False
                         End If
-                        'If (myReader.GetString(0).ToString = criteria) Then
-                        '    ReadSQL = True
-                        '    GlobalVariables.Gl_UserIDLevel = myReader.GetString(1).ToString 'U=User or A=admin
-                        'End If
-
                     ElseIf (inopt = "fldchk") Then
                         fldtext = myReader.GetString(0)
                         GlobalVariables.GL_Stat = True
@@ -222,7 +205,7 @@ Module ModMisc
                         GlobalVariables.Tmpuserrecord.Myusrseclvl = myReader.GetValue(13)
                         ReadSQL = GlobalVariables.Tmpuserrecord
                         GlobalVariables.GL_Stat = True
-                    ElseIf (inopt = "usridcnt" Or inopt = "NCST" Or inopt = "SHPC") Then
+                    ElseIf (inopt = "usridcnt" Or inopt = "NCST" Or inopt = "SHPC" Or inopt = "MXONO") Then
                         ReadSQL = myReader.GetValue(0)
                         GlobalVariables.GL_Stat = True
                     ElseIf (inopt = "ALLM") Then
