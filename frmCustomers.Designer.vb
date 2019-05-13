@@ -552,7 +552,7 @@ Partial Class frmCustomers
         '
         Me.cmdSaveShpto.BackColor = System.Drawing.Color.Azure
         Me.cmdSaveShpto.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.cmdSaveShpto.Location = New System.Drawing.Point(339, 18)
+        Me.cmdSaveShpto.Location = New System.Drawing.Point(277, 16)
         Me.cmdSaveShpto.Name = "cmdSaveShpto"
         Me.cmdSaveShpto.Size = New System.Drawing.Size(82, 21)
         Me.cmdSaveShpto.TabIndex = 28

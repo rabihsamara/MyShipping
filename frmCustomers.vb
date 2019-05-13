@@ -216,12 +216,15 @@ Public Class frmCustomers
                 'check if same user or another
                 If (AppCustLocks.MyFormname = "Customer" And AppCustLocks.Myctrlname = "Customer" And AppCustLocks.Myctrlvalue = selcustid) Then
                     'check if same user ! delete and continue or just continue ?
-                    terr = "record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid
-                    GoTo EDIT_EXIT
+                    If (AppCustLocks.MyUserid <> GlobalVariables.Gl_LogUserID) Then
+                        terr = "record for cust " & selcustid & " is locked by user " & AppCustLocks.MyUserid
+                        GoTo EDIT_EXIT
+                    End If
                 End If
             End If
 
             'load data to screen
+            cmbShpID.DataSource = Nothing
             cmbShpID.Items.Clear()
             tstat = ModMisc.FillCBoxBytable(cmbShpID, "CSHT", , , selcustid)
 
@@ -399,6 +402,8 @@ EDIT_EXIT:
 
     End Function
 
+#Region "Commands"
+
     Private Sub CmdCanCust_Click(sender As Object, e As EventArgs) Handles cmdCanCust.Click
         'check if new was pressed or update
 
@@ -458,6 +463,7 @@ EDIT_EXIT:
         cmbSHProv.Text = cmbBLProv.Text
         cmbSHCountry.Text = cmbBLCountry.Text
     End Sub
+#End Region
 
     '************************************************************************************************************
     '* inopt  - ACT=All
@@ -473,7 +479,6 @@ EDIT_EXIT:
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbCICountry)
             If (inmode = "U") Then
-                'cmbCICountry.Text = userrecord.MyCountry
                 slCICountry = cmbCICountry.SelectedValue
             End If
         End If
@@ -483,7 +488,6 @@ EDIT_EXIT:
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbBLCountry)
             If (inmode = "U") Then
-                'cmbBLCountry.Text = userrecord.MyCountry
                 slBLCountry = cmbBLCountry.SelectedValue
             End If
         End If
@@ -493,7 +497,6 @@ EDIT_EXIT:
             GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbSHCountry)
             If (inmode = "U") Then
-                'cmbSHCountry.Text = userrecord.MyCountry
                 slSHCountry = cmbSHCountry.SelectedValue
             End If
         End If
