@@ -18,15 +18,16 @@ Module ModUpdates
     Dim sDs As DataSet
     Dim sTable As DataTable
 
-    '************************************************************
-    'inopert:
-    '        *** Customer screen ***
-    '        - LCIU = Insert new - update customer data to database - OK
-    '        - LCU  = update customer data to database  - OK
-    '        *** Order screen ***
-    '        - LCOI  = Insert new update - working on
-    '        - LCOU  = Update customer orders - working on
-    '************************************************************
+    '*********************************************************************
+    '*inopert:
+    '*1) *** Customer screen ***
+    '*        - LCIU = Insert new - update customer data to database - OK
+    '*        - LCU  = update customer data to database  - OK
+    '*
+    '*2) *** Order screen ***
+    '*        - LCOI  = Insert new update - working on
+    '*        - LCOU  = Update customer orders - working on
+    '*********************************************************************
     Public Function UpdateFormData(ByVal inopert As String, ByVal infrm As Form, ByVal inTable As String, ByVal selID As String) As Boolean
 
         UpdateFormData = False
@@ -39,7 +40,7 @@ Module ModUpdates
         ControlsRecr(infrm.Controls) 'Get all controls in a form into arraylist al
         DisplayControls(inTable) ' debugging
 
-        UpdateFormData = UpdateCustomers(inTable, inopert)
+        UpdateFormData = UpdateTables(inTable, inopert)
 
     End Function
 
@@ -54,7 +55,7 @@ Module ModUpdates
 
     End Sub
 
-    Private Function UpdateCustomers(ByVal seltable As String, ByVal inopert As String) As Boolean
+    Private Function UpdateTables(ByVal seltable As String, ByVal inopert As String) As Boolean
 
         Dim arval(3) As String
         Dim chval As String = ""
@@ -65,7 +66,7 @@ Module ModUpdates
         Dim tskip As Boolean = False
         Dim tsql As String = ""
 
-        UpdateCustomers = False
+        UpdateTables = False
 
         updsql = "update " & seltable & " set "
         updsql2 = ""
@@ -114,6 +115,7 @@ Module ModUpdates
                 End If
             End If
         Next
+
         If (inopert = "LCIU" Or inopert = "LCU") Then
             updsql3 = " where custid = '" & crselID & "'"
         Else
@@ -122,10 +124,10 @@ Module ModUpdates
 
         GlobalVariables.Gl_SQLStr = updsql & updsql2 + updsql3
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
-            UpdateCustomers = False
+            UpdateTables = False
             Exit Function
         End If
-        UpdateCustomers = True
+        UpdateTables = True
 
     End Function
 

@@ -8,6 +8,7 @@ Public Class frmOrders
     Private sDs As DataSet
     Private sTable As DataTable
     Private myReader As SqlDataReader
+
     Private Ordrecord As Orders = New Orders()
     Private tstat As Boolean = False
     Private selordstatshort As String = ""
@@ -53,7 +54,7 @@ Public Class frmOrders
             GlobalVariables.Gl_SQLStr = "select max(orderno) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
             GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
             If (GlobalVariables.GL_Stat = False) Then
-                MsgBox("error getting next order#!")
+                MsgBox("Error getting next order#!")
                 Exit Sub
             End If
             OrderNO.Text = GlobalVariables.Gl_SelOrder
@@ -279,7 +280,7 @@ Public Class frmOrders
         selSordBLCityID = cmbBLcity.SelectedValue
     End Sub
 
-#End Region
+
 
     Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
 
@@ -296,5 +297,6 @@ Public Class frmOrders
 
     End Sub
 
+#End Region
 
 End Class
