@@ -43,6 +43,7 @@ Partial Class frmOrders
         Me.OrderNO = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.GBSHBLInfo = New System.Windows.Forms.GroupBox()
+        Me.cmdCopyshp = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.cmbBLCountry = New System.Windows.Forms.ComboBox()
         Me.Label27 = New System.Windows.Forms.Label()
@@ -139,9 +140,9 @@ Partial Class frmOrders
         '
         'cmdExit
         '
-        Me.cmdExit.Location = New System.Drawing.Point(391, 43)
+        Me.cmdExit.Location = New System.Drawing.Point(391, 44)
         Me.cmdExit.Name = "cmdExit"
-        Me.cmdExit.Size = New System.Drawing.Size(74, 24)
+        Me.cmdExit.Size = New System.Drawing.Size(74, 23)
         Me.cmdExit.TabIndex = 5
         Me.cmdExit.Text = "Exit"
         Me.cmdExit.UseVisualStyleBackColor = True
@@ -158,9 +159,9 @@ Partial Class frmOrders
         'GBSearch
         '
         Me.GBSearch.BackColor = System.Drawing.SystemColors.Control
-        Me.GBSearch.Location = New System.Drawing.Point(510, 1)
+        Me.GBSearch.Location = New System.Drawing.Point(509, 1)
         Me.GBSearch.Name = "GBSearch"
-        Me.GBSearch.Size = New System.Drawing.Size(892, 87)
+        Me.GBSearch.Size = New System.Drawing.Size(893, 87)
         Me.GBSearch.TabIndex = 5
         Me.GBSearch.TabStop = False
         Me.GBSearch.Text = "Search By"
@@ -273,6 +274,7 @@ Partial Class frmOrders
         '
         'GBSHBLInfo
         '
+        Me.GBSHBLInfo.Controls.Add(Me.cmdCopyshp)
         Me.GBSHBLInfo.Controls.Add(Me.Label5)
         Me.GBSHBLInfo.Controls.Add(Me.cmbBLCountry)
         Me.GBSHBLInfo.Controls.Add(Me.Label27)
@@ -310,6 +312,16 @@ Partial Class frmOrders
         Me.GBSHBLInfo.TabIndex = 7
         Me.GBSHBLInfo.TabStop = False
         Me.GBSHBLInfo.Text = "Shipping/Billing Information"
+        '
+        'cmdCopyshp
+        '
+        Me.cmdCopyshp.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.cmdCopyshp.Location = New System.Drawing.Point(268, 169)
+        Me.cmdCopyshp.Name = "cmdCopyshp"
+        Me.cmdCopyshp.Size = New System.Drawing.Size(83, 20)
+        Me.cmdCopyshp.TabIndex = 62
+        Me.cmdCopyshp.Text = "Copy ShipTo"
+        Me.cmdCopyshp.UseVisualStyleBackColor = False
         '
         'Label5
         '
@@ -644,4 +656,5 @@ Partial Class frmOrders
     Friend WithEvents Label15 As Label
     Friend WithEvents BLName As TextBox
     Friend WithEvents Label16 As Label
+    Friend WithEvents cmdCopyshp As Button
 End Class

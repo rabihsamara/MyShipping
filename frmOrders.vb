@@ -297,6 +297,18 @@ Public Class frmOrders
 
     End Sub
 
+    Private Sub cmdCopyshp_Click(sender As Object, e As EventArgs) Handles cmdCopyshp.Click
+
+        BLName.Text = SHName.Text
+        BLadd1.Text = SHadd1.Text
+        BLadd2.Text = SHadd2.Text
+        cmbBLcity.Text = cmbSHCity.Text
+        cmbBLProv.Text = cmbSHProv.Text
+        BLpcode.Text = SHPcode.Text
+        cmbBLCountry.Text = cmbSHCountry.Text
+
+    End Sub
+
 #End Region
 
 End Class
