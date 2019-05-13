@@ -11,12 +11,14 @@ Public Class frmOrders
     Private Ordrecord As Orders = New Orders()
     Private tstat As Boolean = False
     Private selordstatshort As String = ""
+    Private selordshptoID As String = ""
     Private selSordShCountryID As Integer = 0
     Private selSordShProvID As Integer = 0
     Private selSordShCityID As Integer = 0
     Private selSordBLCountryID As Integer = 0
     Private selSordBLProvID As Integer = 0
     Private selSordBLCityID As Integer = 0
+    Private ordshipto As shipto = New shipto()
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -34,7 +36,7 @@ Public Class frmOrders
         tstat = ModMisc.FillCBoxBytable(cmbSHCountry, "ORSC")
         tstat = ModMisc.FillCBoxBytable(cmbBLCountry, "ORSC")
         ordshipID.Items.Clear()
-        tstat = ModMisc.FillCBox(ordshipID, "CSHT")
+        tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
@@ -255,5 +257,21 @@ Public Class frmOrders
     End Sub
 
 #End Region
+
+    Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
+
+        selordshptoID = ordshipID.SelectedValue
+        ordshipto = ModMisc.GetShiptoRec(GlobalVariables.Gl_tmpcustid, selordshptoID)
+
+        SHName.Text = ordshipto.MyShipName
+        SHadd1.Text = ordshipto.MyShipadd1
+        SHadd2.Text = ordshipto.MyShipadd2
+        cmbSHCity.Text = ordshipto.MyShipcity
+        cmbSHProv.Text = ordshipto.MyShipprov
+        SHPcode.Text = ordshipto.MyShippcode
+        cmbSHCountry.Text = ordshipto.MyShipcountry
+
+    End Sub
+
 
 End Class

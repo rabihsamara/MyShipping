@@ -458,7 +458,7 @@ Partial Class frmOrders
         Me.ordshipID.FormattingEnabled = True
         Me.ordshipID.Location = New System.Drawing.Point(61, 19)
         Me.ordshipID.Name = "ordshipID"
-        Me.ordshipID.Size = New System.Drawing.Size(117, 21)
+        Me.ordshipID.Size = New System.Drawing.Size(295, 21)
         Me.ordshipID.TabIndex = 44
         '
         'Label25

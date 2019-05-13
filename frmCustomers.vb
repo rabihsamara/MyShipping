@@ -168,7 +168,7 @@ Public Class frmCustomers
                     CIName.Text = inCustName.Text
                     LoadData()
                     LoadCombCountries("ACT", seluw2)
-                    tstat = ModMisc.FillCBox(incmbCustName, "CSHT") ' load shipto combobox
+                    tstat = ModMisc.FillCBoxBytable(cmbShpID, "CSHT", , , Trim(inCustID.Text)) ' load shipto combobox
                     'lock record
                     If (AppLocking.WriteDelLock("W", 0, "Customer", "Customer", selcustid, seluw2) = False) Then 'lock it
                         terr = "Error Creating Lock Record!"
@@ -223,7 +223,8 @@ Public Class frmCustomers
 
             'load data to screen
             cmbShpID.Items.Clear()
-            tstat = ModMisc.FillCBox(cmbShpID, "CSHT")
+            tstat = ModMisc.FillCBoxBytable(cmbShpID, "CSHT", , , selcustid)
+
             LoadCombCountries("ACT", seluw2)
             LoadCustScreen("Customers")
             LoadAccts()

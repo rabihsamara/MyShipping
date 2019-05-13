@@ -63,7 +63,6 @@ Module ModMisc
     '* CST=Customers screen seltype in selection of existing customers- 
     '* CRI CRIA or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL = Customers screen - customer ID Combo
     '* CRN CRNA or CRNCS CRNPR CRNAL or CRNACS CRNAPR CRNAAL = Customers screen - customer Name Combo
-    '* CSHT  = Combo shiptoid in customer screen
     '* CSINA = Customer id/name active only
     '* CANOA = Customer accounts per customer.
     '******************************************************************************************************
@@ -93,8 +92,6 @@ Module ModMisc
                     tsql = tsql & " and cmbCustType = '" & callby.Substring(4, 2) & "'"
                 End If
                 tsql = tsql & " order by CIName asc"
-            ElseIf (callby = "CSHT") Then
-                tsql = "select custid FROM  shipto order by custid asc"
             ElseIf (callby = "CSINA") Then
                 tsql = "select Concat(custid,' - ',CIname) from Customers where chCIactive = 1 order by CIName asc"
             ElseIf (callby = "CANOA") Then
@@ -143,10 +140,10 @@ Module ModMisc
     '* ORSP = order screen shipping Province
     '* ORSY = order screen shipping City
     '* ORBC = order screen Billing country
-    '*  
+    '* ORSHT = order screen dhipto id's by customer
     '******************************************************************************************************
     '*
-    Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0) As Boolean
+    Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0, Optional ByVal invalue3 As String = "") As Boolean
 
         Dim tsql As String = ""
         Dim vlname As String = ""
@@ -170,6 +167,14 @@ Module ModMisc
             tsql = "SELECT  ID, cityname FROM cities where cityactive = 1 and countryid = " & invalue & " and provid = " & invalue2 & "  order by cityname"
             vlname = "ID"
             dspname = "cityname"
+        ElseIf (callby = "ORSHT") Then
+            tsql = "select ShiptoID, Concat(shiptoID,' - ',shipname) as shpname from shipto where custid = '" & invalue3 & "'"
+            vlname = "ShiptoID"
+            dspname = "shpname"
+        ElseIf (callby = "CSHT") Then
+            tsql = "select ShiptoID from shipto where custid = '" & invalue3 & "'"
+            vlname = "ShiptoID"
+            dspname = "ShiptoID"
         Else
             Exit Function
         End If
@@ -572,7 +577,7 @@ Exit_Excel:
         Dim myCmd As SqlCommand
         Dim myReader As SqlDataReader = Nothing
         Dim custshipto As shipto = New shipto()
-        Dim SQLStr = "SELECT ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active,datecreated,dateupdate,createdby FROM shipto where custid = '" & shcustid & "' and shiptoID = '" & inshiptoID & "'"
+        Dim SQLStr = "SELECT ID,custid,ShiptoID,ShipName,Shipadd1,Shipadd2,Shipcity,Shipprov,Shippcode,Shipcountry,ShipDflt,active,datecreated,dateupdated,createdby FROM shipto where custid = '" & shcustid & "' and shiptoID = '" & inshiptoID & "'"
 
         GlobalVariables.GL_Stat = False
         GetShiptoRec = Nothing
@@ -596,7 +601,7 @@ Exit_Excel:
                     custshipto.MyShipprov = myReader.GetString(7)
                     custshipto.MyShippcode = myReader.GetString(8)
                     custshipto.MyShipcountry = myReader.GetString(9)
-                    custshipto.MyShipDflt = myReader.GetString(10)
+                    custshipto.MyShipDflt = myReader.GetValue(10)
                     custshipto.Myactive = myReader.GetValue(11)
                     custshipto.Mydatecreated = myReader.GetDateTime(12)
                     custshipto.Mydateupdated = myReader.GetDateTime(13)
