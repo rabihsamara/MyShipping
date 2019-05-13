@@ -140,7 +140,9 @@ Module ModMisc
     '* ORSP = order screen shipping Province
     '* ORSY = order screen shipping City
     '* ORBC = order screen Billing country
-    '* ORSHT = order screen dhipto id's by customer
+    '* ORSHT = order screen shipto id's by customer
+    '* ORSTY = order screen shipping type
+    '* ORSM = order screen shipping method
     '******************************************************************************************************
     '*
     Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0, Optional ByVal invalue3 As String = "") As Boolean
@@ -175,6 +177,14 @@ Module ModMisc
             tsql = "select ShiptoID from shipto where custid = '" & invalue3 & "'"
             vlname = "ShiptoID"
             dspname = "ShiptoID"
+        ElseIf (callby = "ORSTY") Then
+            tsql = "SELECT isnull(shptype,'') as shtype, ID FROM ordtypes order by shpdspord asc"
+            vlname = "ID"
+            dspname = "shtype"
+        ElseIf (callby = "ORSM") Then
+            tsql = "select shpmshort,shpmfull from shpmethods"
+            vlname = "shpmshort"
+            dspname = "shpmfull"
         Else
             Exit Function
         End If

@@ -75,9 +75,19 @@ Partial Class frmOrders
         Me.Label21 = New System.Windows.Forms.Label()
         Me.SHName = New System.Windows.Forms.TextBox()
         Me.Label22 = New System.Windows.Forms.Label()
+        Me.TabContord = New System.Windows.Forms.TabControl()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.GBModInfo = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmbShpType = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cmbshpmethod = New System.Windows.Forms.ComboBox()
         Me.GBOrdersIN.SuspendLayout()
         Me.GBOrdInfo.SuspendLayout()
         Me.GBSHBLInfo.SuspendLayout()
+        Me.TabContord.SuspendLayout()
+        Me.GBModInfo.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
@@ -168,19 +178,17 @@ Partial Class frmOrders
         '
         'GBOrdInfo
         '
+        Me.GBOrdInfo.Controls.Add(Me.cmbshpmethod)
+        Me.GBOrdInfo.Controls.Add(Me.Label7)
+        Me.GBOrdInfo.Controls.Add(Me.cmbShpType)
+        Me.GBOrdInfo.Controls.Add(Me.Label6)
         Me.GBOrdInfo.Controls.Add(Me.OrdStat)
         Me.GBOrdInfo.Controls.Add(Me.Label4)
-        Me.GBOrdInfo.Controls.Add(Me.createdby)
-        Me.GBOrdInfo.Controls.Add(Me.Label31)
-        Me.GBOrdInfo.Controls.Add(Me.dateupdated)
-        Me.GBOrdInfo.Controls.Add(Me.Label30)
-        Me.GBOrdInfo.Controls.Add(Me.datecreated)
-        Me.GBOrdInfo.Controls.Add(Me.Label29)
         Me.GBOrdInfo.Controls.Add(Me.OrderNO)
         Me.GBOrdInfo.Controls.Add(Me.Label3)
         Me.GBOrdInfo.Location = New System.Drawing.Point(1, 94)
         Me.GBOrdInfo.Name = "GBOrdInfo"
-        Me.GBOrdInfo.Size = New System.Drawing.Size(508, 109)
+        Me.GBOrdInfo.Size = New System.Drawing.Size(385, 109)
         Me.GBOrdInfo.TabIndex = 6
         Me.GBOrdInfo.TabStop = False
         Me.GBOrdInfo.Text = "Order Information"
@@ -188,7 +196,7 @@ Partial Class frmOrders
         'OrdStat
         '
         Me.OrdStat.FormattingEnabled = True
-        Me.OrdStat.Location = New System.Drawing.Point(273, 16)
+        Me.OrdStat.Location = New System.Drawing.Point(268, 16)
         Me.OrdStat.Name = "OrdStat"
         Me.OrdStat.Size = New System.Drawing.Size(92, 21)
         Me.OrdStat.TabIndex = 37
@@ -196,7 +204,7 @@ Partial Class frmOrders
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(203, 20)
+        Me.Label4.Location = New System.Drawing.Point(200, 20)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(69, 13)
         Me.Label4.TabIndex = 36
@@ -206,7 +214,7 @@ Partial Class frmOrders
         '
         Me.createdby.BackColor = System.Drawing.SystemColors.Info
         Me.createdby.Enabled = False
-        Me.createdby.Location = New System.Drawing.Point(261, 74)
+        Me.createdby.Location = New System.Drawing.Point(279, 37)
         Me.createdby.Name = "createdby"
         Me.createdby.Size = New System.Drawing.Size(94, 20)
         Me.createdby.TabIndex = 35
@@ -214,7 +222,7 @@ Partial Class frmOrders
         'Label31
         '
         Me.Label31.AutoSize = True
-        Me.Label31.Location = New System.Drawing.Point(200, 77)
+        Me.Label31.Location = New System.Drawing.Point(212, 40)
         Me.Label31.Name = "Label31"
         Me.Label31.Size = New System.Drawing.Size(62, 13)
         Me.Label31.TabIndex = 34
@@ -224,7 +232,7 @@ Partial Class frmOrders
         '
         Me.dateupdated.BackColor = System.Drawing.SystemColors.Info
         Me.dateupdated.Enabled = False
-        Me.dateupdated.Location = New System.Drawing.Point(76, 74)
+        Me.dateupdated.Location = New System.Drawing.Point(87, 37)
         Me.dateupdated.Name = "dateupdated"
         Me.dateupdated.Size = New System.Drawing.Size(120, 20)
         Me.dateupdated.TabIndex = 33
@@ -232,7 +240,7 @@ Partial Class frmOrders
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(1, 81)
+        Me.Label30.Location = New System.Drawing.Point(12, 44)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(77, 13)
         Me.Label30.TabIndex = 32
@@ -242,7 +250,7 @@ Partial Class frmOrders
         '
         Me.datecreated.BackColor = System.Drawing.SystemColors.Info
         Me.datecreated.Enabled = False
-        Me.datecreated.Location = New System.Drawing.Point(76, 53)
+        Me.datecreated.Location = New System.Drawing.Point(87, 16)
         Me.datecreated.Name = "datecreated"
         Me.datecreated.Size = New System.Drawing.Size(120, 20)
         Me.datecreated.TabIndex = 31
@@ -250,7 +258,7 @@ Partial Class frmOrders
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(6, 57)
+        Me.Label29.Location = New System.Drawing.Point(17, 20)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(73, 13)
         Me.Label29.TabIndex = 30
@@ -266,7 +274,7 @@ Partial Class frmOrders
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(19, 20)
+        Me.Label3.Location = New System.Drawing.Point(22, 20)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(55, 13)
         Me.Label3.TabIndex = 0
@@ -308,7 +316,7 @@ Partial Class frmOrders
         Me.GBSHBLInfo.Controls.Add(Me.Label22)
         Me.GBSHBLInfo.Location = New System.Drawing.Point(1, 209)
         Me.GBSHBLInfo.Name = "GBSHBLInfo"
-        Me.GBSHBLInfo.Size = New System.Drawing.Size(508, 325)
+        Me.GBSHBLInfo.Size = New System.Drawing.Size(385, 325)
         Me.GBSHBLInfo.TabIndex = 7
         Me.GBSHBLInfo.TabStop = False
         Me.GBSHBLInfo.Text = "Shipping/Billing Information"
@@ -316,9 +324,9 @@ Partial Class frmOrders
         'cmdCopyshp
         '
         Me.cmdCopyshp.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.cmdCopyshp.Location = New System.Drawing.Point(268, 169)
+        Me.cmdCopyshp.Location = New System.Drawing.Point(268, 161)
         Me.cmdCopyshp.Name = "cmdCopyshp"
-        Me.cmdCopyshp.Size = New System.Drawing.Size(83, 20)
+        Me.cmdCopyshp.Size = New System.Drawing.Size(83, 30)
         Me.cmdCopyshp.TabIndex = 62
         Me.cmdCopyshp.Text = "Copy ShipTo"
         Me.cmdCopyshp.UseVisualStyleBackColor = False
@@ -582,12 +590,93 @@ Partial Class frmOrders
         Me.Label22.TabIndex = 31
         Me.Label22.Text = "Name:"
         '
+        'TabContord
+        '
+        Me.TabContord.Controls.Add(Me.TabPage1)
+        Me.TabContord.Controls.Add(Me.TabPage2)
+        Me.TabContord.Location = New System.Drawing.Point(393, 105)
+        Me.TabContord.Name = "TabContord"
+        Me.TabContord.SelectedIndex = 0
+        Me.TabContord.Size = New System.Drawing.Size(1009, 501)
+        Me.TabContord.TabIndex = 8
+        '
+        'TabPage1
+        '
+        Me.TabPage1.BackColor = System.Drawing.Color.FloralWhite
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage1.Size = New System.Drawing.Size(1001, 475)
+        Me.TabPage1.TabIndex = 0
+        Me.TabPage1.Text = "TabPage1"
+        '
+        'TabPage2
+        '
+        Me.TabPage2.BackColor = System.Drawing.Color.FloralWhite
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(1001, 475)
+        Me.TabPage2.TabIndex = 1
+        Me.TabPage2.Text = "TabPage2"
+        '
+        'GBModInfo
+        '
+        Me.GBModInfo.Controls.Add(Me.Label31)
+        Me.GBModInfo.Controls.Add(Me.Label29)
+        Me.GBModInfo.Controls.Add(Me.createdby)
+        Me.GBModInfo.Controls.Add(Me.datecreated)
+        Me.GBModInfo.Controls.Add(Me.Label30)
+        Me.GBModInfo.Controls.Add(Me.dateupdated)
+        Me.GBModInfo.Location = New System.Drawing.Point(5, 540)
+        Me.GBModInfo.Name = "GBModInfo"
+        Me.GBModInfo.Size = New System.Drawing.Size(381, 66)
+        Me.GBModInfo.TabIndex = 9
+        Me.GBModInfo.TabStop = False
+        Me.GBModInfo.Text = "Update Information"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(18, 45)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(58, 13)
+        Me.Label6.TabIndex = 38
+        Me.Label6.Text = "Ship Type:"
+        '
+        'cmbShpType
+        '
+        Me.cmbShpType.FormattingEnabled = True
+        Me.cmbShpType.Location = New System.Drawing.Point(76, 43)
+        Me.cmbShpType.Name = "cmbShpType"
+        Me.cmbShpType.Size = New System.Drawing.Size(193, 21)
+        Me.cmbShpType.TabIndex = 39
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(5, 72)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(70, 13)
+        Me.Label7.TabIndex = 40
+        Me.Label7.Text = "Ship Method:"
+        '
+        'cmbshpmethod
+        '
+        Me.cmbshpmethod.FormattingEnabled = True
+        Me.cmbshpmethod.Location = New System.Drawing.Point(76, 70)
+        Me.cmbshpmethod.Name = "cmbshpmethod"
+        Me.cmbshpmethod.Size = New System.Drawing.Size(284, 21)
+        Me.cmbshpmethod.TabIndex = 41
+        '
         'frmOrders
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.GradientInactiveCaption
         Me.ClientSize = New System.Drawing.Size(1421, 807)
+        Me.Controls.Add(Me.GBModInfo)
+        Me.Controls.Add(Me.TabContord)
         Me.Controls.Add(Me.GBSHBLInfo)
         Me.Controls.Add(Me.GBOrdInfo)
         Me.Controls.Add(Me.GBSearch)
@@ -600,6 +689,9 @@ Partial Class frmOrders
         Me.GBOrdInfo.PerformLayout()
         Me.GBSHBLInfo.ResumeLayout(False)
         Me.GBSHBLInfo.PerformLayout()
+        Me.TabContord.ResumeLayout(False)
+        Me.GBModInfo.ResumeLayout(False)
+        Me.GBModInfo.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -657,4 +749,12 @@ Partial Class frmOrders
     Friend WithEvents BLName As TextBox
     Friend WithEvents Label16 As Label
     Friend WithEvents cmdCopyshp As Button
+    Friend WithEvents TabContord As TabControl
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents GBModInfo As GroupBox
+    Friend WithEvents cmbShpType As ComboBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents cmbshpmethod As ComboBox
+    Friend WithEvents Label7 As Label
 End Class

@@ -19,6 +19,9 @@ Public Class frmOrders
     Private selSordBLCountryID As Integer = 0
     Private selSordBLProvID As Integer = 0
     Private selSordBLCityID As Integer = 0
+
+    Private selshpmethod As String = ""
+
     Private ordshipto As shipto = New shipto()
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -34,15 +37,22 @@ Public Class frmOrders
         OrderNO.Enabled = False
 
         tstat = ModMisc.FillCBoxBytable(OrdStat, "ORST")
+
+        tstat = ModMisc.FillCBoxBytable(cmbShpType, "ORSTY")
+        tstat = ModMisc.FillCBoxBytable(cmbshpmethod, "ORSM")
+
         tstat = ModMisc.FillCBoxBytable(cmbSHCountry, "ORSC")
         tstat = ModMisc.FillCBoxBytable(cmbBLCountry, "ORSC")
         ordshipID.Items.Clear()
         tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
 
+
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
-            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,ordshipID,SHName,SHadd1,SHadd2,cmbSHCity,SHPcode,cmbSHProv,cmbSHCountry,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "BLName,BLadd1,BLadd2,cmbBLcity,BLpcode,cmbBLProv,cmbBLCountry,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,isnull(cmbShpType,'') as cmbShpType,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbshpmethod,'') as cmbshpmethod,isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
             If (ReadOrder() = False) Then
@@ -51,7 +61,7 @@ Public Class frmOrders
             End If
             LoadOrdToScreen()
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "CON") Then 'customer screen new order
-            GlobalVariables.Gl_SQLStr = "select max(orderno) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
+            GlobalVariables.Gl_SQLStr = "select isnull(max(orderNO),0) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
             GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
             If (GlobalVariables.GL_Stat = False) Then
                 MsgBox("Error getting next order#!")
@@ -61,8 +71,8 @@ Public Class frmOrders
             OrdStat.Text = "New"
 
             GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,datecreated,dateupdated,CreatedBy) VALUES "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & GlobalVariables.Gl_tmpcustid & "','" & GlobalVariables.Gl_tmpacctname & "'," & GlobalVariables.Gl_SelOrder & ",'NW','','" & Now() & "','" & Now() & "','" & GlobalVariables.Gl_LogUserID & "') END"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,cmbShpType,cmbshpmethod,datecreated,dateupdated,CreatedBy) VALUES "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & GlobalVariables.Gl_tmpcustid & "','" & GlobalVariables.Gl_tmpacctname & "'," & GlobalVariables.Gl_SelOrder & ",'NW','','','','" & Now() & "','" & Now() & "','" & GlobalVariables.Gl_LogUserID & "') END"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 MsgBox("Error Creating new Order!")
                 Exit Sub
@@ -280,7 +290,11 @@ Public Class frmOrders
         selSordBLCityID = cmbBLcity.SelectedValue
     End Sub
 
+    Private Sub cmbshpmethod_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbshpmethod.SelectionChangeCommitted
 
+        selshpmethod = ""
+
+    End Sub
 
     Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
 
