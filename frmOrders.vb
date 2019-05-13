@@ -81,6 +81,21 @@ Public Class frmOrders
 
     Private Sub CmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
 
+        Dim topert As String = If(GlobalVariables.Gl_OrdCallFrmID = "CON", "LCOI", "LCOU")
+        If (ModUpdates.UpdateFormData(topert, Me, "Orders", GlobalVariables.Gl_tmpacctname) = False) Then
+            MsgBox("Error updating Orders table!")
+            Exit Sub
+        Else
+            If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then
+                GlobalVariables.Gl_SQLStr = "update Orders set dateupdated = '" & Now() & "' where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
+                If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    MsgBox("Error updating Customer order update date!")
+                    Exit Sub
+                End If
+            End If
+        End If
+        MsgBox("Orders Updated OK!")
+
     End Sub
 
 #End Region

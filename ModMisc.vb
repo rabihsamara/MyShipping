@@ -248,7 +248,7 @@ Module ModMisc
                             ReadSQL = False
                         End If
                     ElseIf (inopt = "fldchk") Then
-                        fldtext = myReader.GetString(0)
+                        fldtext = myReader.GetString(0).ToString
                         GlobalVariables.GL_Stat = True
                         ReadSQL = fldtext
                     ElseIf (inopt = "userr") Then

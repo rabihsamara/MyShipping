@@ -7,7 +7,6 @@ Module ModUpdates
     Private typeAR As String = "CheckBox,CheckedListBox,ComboBox,ListBox,ListView,Radio,Richtextbox,TextBox"
     Private crmode As String = ""
     Private crformname As String = ""
-    Private crtable As String = ""
     Private crselID As String = ""
     Private updsql As String = ""
     Private updsql2 As String = ""
@@ -20,11 +19,13 @@ Module ModUpdates
     Dim sTable As DataTable
 
     '************************************************************
-    'inopert - LCS  = load customer data - NOT USED
+    'inopert:
+    '        *** Customer screen ***
     '        - LCIU = Insert new - update customer data to database - OK
     '        - LCU  = update customer data to database  - OK
-    '        - LCIO  = Insert new update - working on
-    '        - LCUO  = Update customer orders - working on
+    '        *** Order screen ***
+    '        - LCOI  = Insert new update - working on
+    '        - LCOU  = Update customer orders - working on
     '************************************************************
     Public Function UpdateFormData(ByVal inopert As String, ByVal infrm As Form, ByVal inTable As String, ByVal selID As String) As Boolean
 
@@ -32,18 +33,13 @@ Module ModUpdates
 
         crmode = inopert
         crformname = infrm.Name
-        crtable = inTable
         crselID = selID
 
         al.Clear()
         ControlsRecr(infrm.Controls) 'Get all controls in a form into arraylist al
-        DisplayControls() ' debugging
+        DisplayControls(inTable) ' debugging
 
-        If (Left(inopert, 2) = "LC") Then ' customers table
-            If (inopert = "LCIU" Or inopert = "LCU") Then
-                UpdateFormData = UpdateCustomers()
-            End If
-        End If
+        UpdateFormData = UpdateCustomers(inTable, inopert)
 
     End Function
 
@@ -58,7 +54,7 @@ Module ModUpdates
 
     End Sub
 
-    Private Function UpdateCustomers() As Boolean
+    Private Function UpdateCustomers(ByVal seltable As String, ByVal inopert As String) As Boolean
 
         Dim arval(3) As String
         Dim chval As String = ""
@@ -67,9 +63,11 @@ Module ModUpdates
         Dim ctrlvalue As String = ""
         Dim isInString As Boolean = False
         Dim tskip As Boolean = False
+        Dim tsql As String = ""
+
         UpdateCustomers = False
 
-        updsql = "update " & crtable & " set "
+        updsql = "update " & seltable & " set "
         updsql2 = ""
         updsql3 = ""
 
@@ -86,20 +84,36 @@ Module ModUpdates
                 If (updsql2 <> "" And tskip = False) Then
                     updsql2 = updsql2 & ","
                 End If
-                If (ctrlname = "chCIactive") Then
-                    updsql2 = updsql2 & ctrlname & " = " & GlobalVariables.Gl_tmpactive
-                ElseIf (ctrlname = "cmbShpID") Then
-                    tskip = True
-                Else
-                    If (ctrlname = "cmbCustType") Then ctrlvalue = ctrlvalue.Substring(0, 2)
+
+                If (inopert = "LCIU" Or inopert = "LCU") Then
+                    If (ctrlname = "chCIactive") Then
+                        updsql2 = updsql2 & ctrlname & " = " & GlobalVariables.Gl_tmpactive
+                    ElseIf (ctrlname = "cmbShpID") Then
+                        tskip = True
+                    Else
+                        If (ctrlname = "cmbCustType") Then ctrlvalue = ctrlvalue.Substring(0, 2)
+                        updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
+                        tskip = False
+                    End If
+                Else ' order screen
+                    If (ctrlname = "OrdStat") Then
+                        GlobalVariables.Gl_SQLStr = "select ordstatshort  from ordstatus where  ordstatfull =  '" & Trim(ctrlvalue) & "'"
+                        ctrlvalue = ModMisc.ReadSQL("fldchk")
+                    End If
                     updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
                     tskip = False
+
                 End If
+
 
             End If
         Next
+        If (inopert = "LCIU" Or inopert = "LCU") Then
+            updsql3 = " where custid = '" & crselID & "'"
+        Else
+            updsql3 = " where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & crselID & "'"
+        End If
 
-        updsql3 = " where custid = '" & crselID & "'"
         GlobalVariables.Gl_SQLStr = updsql & updsql2 + updsql3
         If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
             UpdateCustomers = False
@@ -109,9 +123,9 @@ Module ModUpdates
 
     End Function
 
-    Public Sub DisplayControls()
+    Public Sub DisplayControls(ByVal sltable As String)
 
-        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & crtable & ".txt")
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & sltable & ".txt")
 
         Dim arval(2) As String
         Dim chval As String = ""
