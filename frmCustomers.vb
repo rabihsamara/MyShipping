@@ -882,6 +882,7 @@ EDIT_EXIT:
 
                 Dim frm As New frmOrders()
                 frm.ShowDialog()
+                LoadOrders()
             End If
         End If
 
@@ -894,9 +895,9 @@ EDIT_EXIT:
             GlobalVariables.Gl_SelOrderID = 0
             GlobalVariables.Gl_SelOrder = 0
 
-
             Dim frm As New frmOrders()
             frm.ShowDialog()
+            LoadOrders()
         End If
 
     End Sub

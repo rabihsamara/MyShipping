@@ -58,6 +58,14 @@ Public Class frmOrders
             End If
             OrderNO.Text = GlobalVariables.Gl_SelOrder
             OrdStat.Text = "New"
+
+            GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,datecreated,dateupdated,CreatedBy) VALUES "
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & GlobalVariables.Gl_tmpcustid & "','" & GlobalVariables.Gl_tmpacctname & "'," & GlobalVariables.Gl_SelOrder & ",'NW','','" & Now() & "','" & Now() & "','" & GlobalVariables.Gl_LogUserID & "') END"
+            If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                MsgBox("Error Creating new Order!")
+                Exit Sub
+            End If
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COM") Then 'menu
             cmdNew.Visible = True
             inCustIdName.Visible = False

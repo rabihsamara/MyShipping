@@ -100,18 +100,24 @@ Module ModUpdates
                         GlobalVariables.Gl_SQLStr = "select ordstatshort  from ordstatus where  ordstatfull =  '" & Trim(ctrlvalue) & "'"
                         ctrlvalue = ModMisc.ReadSQL("fldchk")
                     End If
-                    updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
-                    tskip = False
 
+                    If (ctrlname = "dateupdated") Then
+                        ctrlvalue = Now()
+                    End If
+
+                    If (ctrlname = "datecreated" Or ctrlname = "createdby") Then
+                        tskip = True
+                    Else
+                        updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
+                        tskip = False
+                    End If
                 End If
-
-
             End If
         Next
         If (inopert = "LCIU" Or inopert = "LCU") Then
             updsql3 = " where custid = '" & crselID & "'"
         Else
-            updsql3 = " where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & crselID & "'"
+            updsql3 = " where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & crselID & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
         End If
 
         GlobalVariables.Gl_SQLStr = updsql & updsql2 + updsql3
