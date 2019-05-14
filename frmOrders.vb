@@ -46,8 +46,10 @@ Public Class frmOrders
 
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
-            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,isnull(cmbShpType,'') as cmbShpType,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbshpmethod,'') as cmbshpmethod,isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
+            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,datecreated,dateupdated,CreatedBy"
@@ -67,6 +69,10 @@ Public Class frmOrders
             End If
             OrderNO.Text = GlobalVariables.Gl_SelOrder
             OrdStat.Text = "New"
+
+            cmbShpType.SelectedItem = Nothing
+            cmbshpmethod.SelectedItem = Nothing
+            ordshipID.SelectedItem = Nothing
 
             GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,cmbShpType,cmbshpmethod,datecreated,dateupdated,CreatedBy) VALUES "
@@ -296,6 +302,7 @@ Public Class frmOrders
         GlobalVariables.GL_cmbShpType = cmbShpType.SelectedValue
 
     End Sub
+
     Private Sub cmbshpmethod_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbshpmethod.SelectionChangeCommitted
 
         GlobalVariables.GL_selshpmethod = cmbshpmethod.SelectedValue

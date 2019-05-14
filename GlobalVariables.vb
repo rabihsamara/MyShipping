@@ -49,8 +49,8 @@ Public Class GlobalVariables
     Public Shared Property GL_CSAcctsGridCNT As Integer
     Public Shared Property GL_CSOrdsGridCNT As Integer
     Public Shared Property GL_selOrdShipID As String
-    Public Shared Property GL_selshpmethod As String
-    Public Shared Property GL_cmbShpType As String
+    Public Shared Property GL_selshpmethod As Integer
+    Public Shared Property GL_cmbShpType As Integer
 
     '***********************************************************************
 End Class

@@ -178,12 +178,12 @@ Module ModMisc
             vlname = "ShiptoID"
             dspname = "ShiptoID"
         ElseIf (callby = "ORSTY") Then
-            tsql = "SELECT isnull(shptype,'') as shtype, ID FROM ordtypes order by shpdspord asc"
+            tsql = "SELECT Concat(shptype,' - ',shptime) as shtype, ID FROM ordtypes order by shpdspord asc"
             vlname = "ID"
             dspname = "shtype"
         ElseIf (callby = "ORSM") Then
-            tsql = "select shpmshort,shpmfull from shpmethods"
-            vlname = "shpmshort"
+            tsql = "select Concat(shpmshort,' - ',shpmfull) as shpmfull,ID from shpmethods"
+            vlname = "ID"
             dspname = "shpmfull"
         Else
             Exit Function
