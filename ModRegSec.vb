@@ -9,6 +9,9 @@ Module ModRegSec
         GetALLMenuSecLevel(GlobalVariables.Gl_LogUserID)
 
         ms.Parent = MainMenu
+#Region "MFile"
+
+
         '***********************************************************************************************
         'File Menu
         '***********************************************************************************************
@@ -43,12 +46,18 @@ Module ModRegSec
             ms.Items.Add(fileItem)
         End If
 
+#End Region
+
+#Region "MEDIT"
+
+
         '***********************************************************************************************
         'Edit Menu
         '***********************************************************************************************
         Dim EditItem As New ToolStripMenuItem("E&dit")
 
         '---- sub items of Edit ----
+        'Customers
         Dim CustomerItem As New ToolStripMenuItem("&Customers", Nothing, New EventHandler(AddressOf MainMenu.frmCustomers))
         If (inopt = "M") Then
             If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Edit", "", "") = True) Then
@@ -79,6 +88,45 @@ Module ModRegSec
             EditItem.DropDownItems.Add(CustomerItem)
             ms.Items.Add(EditItem)
         End If
+
+        'ORDERS
+        Dim OrderItem As New ToolStripMenuItem("&Orders", Nothing, New EventHandler(AddressOf MainMenu.frmOrders))
+        If (inopt = "M") Then
+            If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Edit", "", "") = True) Then
+                If (GlobalVariables.GL_mshow = 1) Then
+                    ms.Items.Add(EditItem)
+                    If (GlobalVariables.GL_mactive = 0) Then
+                        EditItem.Enabled = False
+                    Else
+                        If (GetMenuSecLevel(GlobalVariables.Gl_LogUserID, "Edit", "Orders", "") = True) Then
+                            If (GlobalVariables.GL_mshow = 1) Then
+                                OrderItem.ShortcutKeys = Keys.Control Or Keys.U
+                                EditItem.DropDownItems.Add(OrderItem)
+                                If (GlobalVariables.GL_mactive = 0) Then
+                                    OrderItem.Enabled = False
+                                End If
+                            End If
+                        End If
+                    End If
+                End If
+            Else
+                OrderItem.ShortcutKeys = Keys.Control Or Keys.U
+                EditItem.DropDownItems.Add(OrderItem)
+                ms.Items.Add(EditItem)
+            End If
+        Else 'not M
+
+            CustomerItem.ShortcutKeys = Keys.Control Or Keys.U
+            EditItem.DropDownItems.Add(CustomerItem)
+            ms.Items.Add(EditItem)
+        End If
+
+
+
+#End Region
+
+#Region "MUtilities"
+
 
         '***********************************************************************************************
         'Utilities Menu
@@ -159,6 +207,9 @@ Module ModRegSec
             UtilItem.DropDownItems.Add(myLockscrItem)
             ms.Items.Add(UtilItem)
         End If
+#End Region
+
+#Region "MReports"
 
         '***********************************************************************************************
         'Reports menu
@@ -175,8 +226,11 @@ Module ModRegSec
             ms.Items.Add(RepItem)
         End If
 
+#End Region
+
         '***********************************************************************************************
-        'delete MenuDfltSecurity to - recreate
+        'delete MenuDfltSecurity to - recreate                                                         *
+        '***********************************************************************************************
         If (inopt = "R") Then
             GlobalVariables.Gl_SQLStr = "delete from MenuDfltSecurity"
             If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then

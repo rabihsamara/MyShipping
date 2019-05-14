@@ -25,6 +25,8 @@
 
     End Sub
 
+#Region "MnuEdit"
+
     '*********************************************************************
     'Event handlers for items listed under Menu Edit
     '*********************************************************************
@@ -35,6 +37,18 @@
         SplitContainer1.Panel2.Controls.Add(frm)
         frm.Show()
     End Sub
+
+    Public Sub frmOrders(ByVal sender As Object, ByVal e As EventArgs)
+        Dim frm As New frmOrders()
+        frm.TopLevel = False
+        frm.TopMost = True
+        GlobalVariables.Gl_OrdCallFrmID = "COM"
+        SplitContainer1.Panel2.Controls.Add(frm)
+        frm.Show()
+    End Sub
+#End Region
+
+#Region "MUtilities"
 
     '*********************************************************************
     'Event handlers for items listed under Menu Utilities
@@ -76,14 +90,18 @@
 
     End Sub
 
+#End Region
+
+#Region "MReports"
 
     '*********************************************************************
     'Event handlers for items listed under Menu Reports
     '*********************************************************************
 
+#End Region
 
 
-    '*          tmp function
+    '************************* tmp function *************************
 
     Private Sub CmdTmp_Click(sender As Object, e As EventArgs) Handles cmdTmp.Click
 
@@ -92,6 +110,6 @@
 
     End Sub
 
-    '*          tmp function
+    '**********************End tmp function *************************
 
 End Class

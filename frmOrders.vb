@@ -12,7 +12,7 @@ Public Class frmOrders
     Private Ordrecord As Orders = New Orders()
     Private tstat As Boolean = False
     Private selordstatshort As String = ""
-    Private selordshptoID As String = ""
+
     Private selSordShCountryID As Integer = 0
     Private selSordShProvID As Integer = 0
     Private selSordShCityID As Integer = 0
@@ -70,9 +70,12 @@ Public Class frmOrders
             OrderNO.Text = GlobalVariables.Gl_SelOrder
             OrdStat.Text = "New"
 
+            OrdStat.SelectedItem = Nothing
             cmbShpType.SelectedItem = Nothing
             cmbshpmethod.SelectedItem = Nothing
             ordshipID.SelectedItem = Nothing
+            cmbSHCountry.SelectedItem = Nothing
+            cmbBLCountry.SelectedItem = Nothing
 
             GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,cmbShpType,cmbshpmethod,datecreated,dateupdated,CreatedBy) VALUES "
@@ -83,8 +86,20 @@ Public Class frmOrders
             End If
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COM") Then 'menu
             cmdNew.Visible = True
+            cmdSave.Enabled = False
             inCustIdName.Visible = False
             inacctNO.Visible = False
+            OrdStat.SelectedItem = Nothing
+            cmbShpType.SelectedItem = Nothing
+            cmbshpmethod.SelectedItem = Nothing
+            ordshipID.SelectedItem = Nothing
+            cmbSHCountry.SelectedItem = Nothing
+            cmbBLCountry.SelectedItem = Nothing
+            GBOrdInfo.Enabled = False
+            GBSHBLInfo.Enabled = False
+            GBModInfo.Enabled = False
+            TabContord.Enabled = False
+
 
 
         End If
@@ -148,6 +163,7 @@ Public Class frmOrders
                     Ordrecord.Mycmbshpmethod = myReader.GetString(6).ToString
 
                     Ordrecord.MyorshipID = myReader.GetString(7).ToString
+                    GlobalVariables.GL_selOrdShipID = Ordrecord.MyorshipID
                     Ordrecord.MySHName = myReader.GetString(8).ToString
                     Ordrecord.MySHadd1 = myReader.GetString(9).ToString
                     Ordrecord.MySHadd2 = myReader.GetString(10).ToString
@@ -311,9 +327,8 @@ Public Class frmOrders
 
     Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
 
-        selordshptoID = ordshipID.SelectedValue
-        GlobalVariables.GL_selOrdShipID = selordshptoID
-        ordshipto = ModMisc.GetShiptoRec(GlobalVariables.Gl_tmpcustid, selordshptoID)
+        GlobalVariables.GL_selOrdShipID = ordshipID.SelectedValue
+        ordshipto = ModMisc.GetShiptoRec(GlobalVariables.Gl_tmpcustid, GlobalVariables.GL_selOrdShipID)
 
         SHName.Text = ordshipto.MyShipName
         SHadd1.Text = ordshipto.MyShipadd1
