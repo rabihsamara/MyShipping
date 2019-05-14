@@ -79,7 +79,7 @@ Module ModMisc
             ElseIf (callby = "CST") Then
                 tsql = "Select concat(custtype,' - ',typename) as ctype from custtype where typeactive = 1 order by ID"
             ElseIf (callby.substring(0, 3) = "CRI") Then
-                tsql = "SELECT CustID  FROM Customers"
+                tsql = "SELECT CustID FROM Customers"
                 If (callby = "CRIA" Or callby = "CRIACS" Or callby = "CRIAPR" Or callby = "CRIAAL") Then tsql = tsql & " where chCIactive = 1"
                 If (callby = "CRIACS" Or callby = "CRIAPR") Then
                     tsql = tsql & " and cmbCustType = '" & callby.Substring(4, 2) & "'"
@@ -143,6 +143,8 @@ Module ModMisc
     '* ORSHT = order screen shipto id's by customer
     '* ORSTY = order screen shipping type
     '* ORSM = order screen shipping method
+    '* ORCI = order screen customer id
+    '* CANOA = Customer accounts per customer.
     '******************************************************************************************************
     '*
     Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0, Optional ByVal invalue3 As String = "") As Boolean
@@ -185,6 +187,14 @@ Module ModMisc
             tsql = "select Concat(shpmshort,' - ',shpmfull) as shpmfull,ID from shpmethods"
             vlname = "ID"
             dspname = "shpmfull"
+        ElseIf (callby = "CANOA") Then
+            tsql = "select concat(AccountNo,' - ',AccountName) as accountname,AccountNo from accounts where CustNO ='" & invalue3 & "' order by AccountName"
+            vlname = "AccountNo"
+            dspname = "accountname"
+        ElseIf (callby = "ORCI") Then
+            tsql = "select CustID, concat(CustID, ' - ',CIName) as CIName from customers where chCIactive = 1 order by CIName"
+            vlname = "CustID"
+            dspname = "CIName"
         Else
             Exit Function
         End If

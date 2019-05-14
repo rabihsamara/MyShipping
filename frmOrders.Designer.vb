@@ -27,6 +27,8 @@ Partial Class frmOrders
         Me.Label2 = New System.Windows.Forms.Label()
         Me.inacctNO = New System.Windows.Forms.TextBox()
         Me.GBOrdersIN = New System.Windows.Forms.GroupBox()
+        Me.incmbMCustAcctID = New System.Windows.Forms.ComboBox()
+        Me.incmbMcustID = New System.Windows.Forms.ComboBox()
         Me.cmdSave = New System.Windows.Forms.Button()
         Me.cmdExit = New System.Windows.Forms.Button()
         Me.cmdNew = New System.Windows.Forms.Button()
@@ -83,6 +85,7 @@ Partial Class frmOrders
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.GBModInfo = New System.Windows.Forms.GroupBox()
+        Me.cmdCancel = New System.Windows.Forms.Button()
         Me.GBOrdersIN.SuspendLayout()
         Me.GBOrdInfo.SuspendLayout()
         Me.GBSHBLInfo.SuspendLayout()
@@ -125,6 +128,9 @@ Partial Class frmOrders
         'GBOrdersIN
         '
         Me.GBOrdersIN.BackColor = System.Drawing.SystemColors.Control
+        Me.GBOrdersIN.Controls.Add(Me.cmdCancel)
+        Me.GBOrdersIN.Controls.Add(Me.incmbMCustAcctID)
+        Me.GBOrdersIN.Controls.Add(Me.incmbMcustID)
         Me.GBOrdersIN.Controls.Add(Me.cmdSave)
         Me.GBOrdersIN.Controls.Add(Me.cmdExit)
         Me.GBOrdersIN.Controls.Add(Me.cmdNew)
@@ -138,6 +144,22 @@ Partial Class frmOrders
         Me.GBOrdersIN.TabIndex = 4
         Me.GBOrdersIN.TabStop = False
         Me.GBOrdersIN.Text = "Orders"
+        '
+        'incmbMCustAcctID
+        '
+        Me.incmbMCustAcctID.FormattingEnabled = True
+        Me.incmbMCustAcctID.Location = New System.Drawing.Point(103, 44)
+        Me.incmbMCustAcctID.Name = "incmbMCustAcctID"
+        Me.incmbMCustAcctID.Size = New System.Drawing.Size(175, 21)
+        Me.incmbMCustAcctID.TabIndex = 0
+        '
+        'incmbMcustID
+        '
+        Me.incmbMcustID.FormattingEnabled = True
+        Me.incmbMcustID.Location = New System.Drawing.Point(103, 19)
+        Me.incmbMcustID.Name = "incmbMcustID"
+        Me.incmbMcustID.Size = New System.Drawing.Size(282, 21)
+        Me.incmbMcustID.TabIndex = 0
         '
         'cmdSave
         '
@@ -669,6 +691,15 @@ Partial Class frmOrders
         Me.GBModInfo.TabStop = False
         Me.GBModInfo.Text = "Update Information"
         '
+        'cmdCancel
+        '
+        Me.cmdCancel.Location = New System.Drawing.Point(392, 43)
+        Me.cmdCancel.Name = "cmdCancel"
+        Me.cmdCancel.Size = New System.Drawing.Size(73, 22)
+        Me.cmdCancel.TabIndex = 0
+        Me.cmdCancel.Text = "Cancel"
+        Me.cmdCancel.UseVisualStyleBackColor = True
+        '
         'frmOrders
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -757,4 +788,7 @@ Partial Class frmOrders
     Friend WithEvents Label6 As Label
     Friend WithEvents cmbshpmethod As ComboBox
     Friend WithEvents Label7 As Label
+    Friend WithEvents incmbMcustID As ComboBox
+    Friend WithEvents incmbMCustAcctID As ComboBox
+    Friend WithEvents cmdCancel As Button
 End Class

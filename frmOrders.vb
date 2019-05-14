@@ -25,6 +25,9 @@ Public Class frmOrders
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         cmdNew.Visible = False
+        cmdCancel.Visible = False
+        incmbMcustID.Visible = False
+        incmbMCustAcctID.Visible = False
 
         inCustIdName.Text = GlobalVariables.Gl_tmpcustid & " - " & GlobalVariables.Gl_tmpcustname
         inacctNO.Text = GlobalVariables.Gl_tmpacctname
@@ -70,12 +73,18 @@ Public Class frmOrders
             OrderNO.Text = GlobalVariables.Gl_SelOrder
             OrdStat.Text = "New"
 
-            OrdStat.SelectedItem = Nothing
-            cmbShpType.SelectedItem = Nothing
-            cmbshpmethod.SelectedItem = Nothing
-            ordshipID.SelectedItem = Nothing
-            cmbSHCountry.SelectedItem = Nothing
-            cmbBLCountry.SelectedItem = Nothing
+            OrdStat.SelectedItem = ""
+            OrdStat.SelectedIndex = -1
+            cmbShpType.SelectedItem = ""
+            cmbShpType.SelectedIndex = -1
+            cmbshpmethod.SelectedItem = ""
+            cmbshpmethod.SelectedIndex = -1
+            ordshipID.SelectedItem = ""
+            ordshipID.SelectedIndex = -1
+            cmbSHCountry.SelectedItem = ""
+            cmbSHCountry.SelectedIndex = -1
+            cmbBLCountry.SelectedItem = ""
+            cmbBLCountry.SelectedIndex = -1
 
             GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,cmbShpType,cmbshpmethod,datecreated,dateupdated,CreatedBy) VALUES "
@@ -89,19 +98,30 @@ Public Class frmOrders
             cmdSave.Enabled = False
             inCustIdName.Visible = False
             inacctNO.Visible = False
-            OrdStat.SelectedItem = Nothing
-            cmbShpType.SelectedItem = Nothing
-            cmbshpmethod.SelectedItem = Nothing
-            ordshipID.SelectedItem = Nothing
-            cmbSHCountry.SelectedItem = Nothing
-            cmbBLCountry.SelectedItem = Nothing
+            incmbMcustID.Visible = True
+            incmbMCustAcctID.Visible = True
+
+            OrdStat.SelectedItem = ""
+            OrdStat.SelectedIndex = -1
+            cmbShpType.SelectedItem = ""
+            cmbShpType.SelectedIndex = -1
+            cmbshpmethod.SelectedItem = ""
+            cmbshpmethod.SelectedIndex = -1
+            ordshipID.SelectedItem = ""
+            ordshipID.SelectedIndex = -1
+            cmbSHCountry.SelectedItem = ""
+            cmbSHCountry.SelectedIndex = -1
+            cmbBLCountry.SelectedItem = ""
+            cmbBLCountry.SelectedIndex = -1
+
             GBOrdInfo.Enabled = False
             GBSHBLInfo.Enabled = False
             GBModInfo.Enabled = False
             TabContord.Enabled = False
 
-
-
+            tstat = ModMisc.FillCBoxBytable(incmbMcustID, "ORCI")
+            incmbMcustID.SelectedItem = ""
+            incmbMcustID.SelectedIndex = -1
         End If
 
     End Sub
@@ -109,7 +129,25 @@ Public Class frmOrders
 #Region "Commands"
 
     Private Sub CmdNew_Click(sender As Object, e As EventArgs) Handles cmdNew.Click
-        'later
+        If (incmbMcustID.Text = "") Then
+            MsgBox("Must select customer ID!")
+            Exit sub
+        End If
+        If (incmbMCustAcctID.Text = "") Then
+            MsgBox("Must select customer Account!")
+            Exit Sub
+        End If
+
+        cmdCancel.Visible = True
+        GBOrdInfo.Enabled = True
+        GBSHBLInfo.Enabled = True
+        GBModInfo.Enabled = True
+        TabContord.Enabled = True
+        cmdNew.Enabled = False
+        cmdExit.Enabled = False
+        MsgBox(GlobalVariables.Gl_tmpcustid)
+        MsgBox(GlobalVariables.Gl_tmpacctname)
+
 
     End Sub
 
@@ -325,6 +363,17 @@ Public Class frmOrders
 
     End Sub
 
+    Private Sub incmbMcustID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles incmbMcustID.SelectionChangeCommitted
+        GlobalVariables.Gl_tmpcustid = incmbMcustID.SelectedValue
+        tstat = ModMisc.FillCBoxBytable(incmbMCustAcctID, "CANOA", , , GlobalVariables.Gl_tmpcustid)
+        incmbMCustAcctID.SelectedItem = ""
+        incmbMCustAcctID.SelectedIndex = -1
+    End Sub
+
+    Private Sub incmbMCustAcctID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles incmbMCustAcctID.SelectionChangeCommitted
+        GlobalVariables.Gl_tmpacctname = incmbMCustAcctID.SelectedValue
+    End Sub
+
     Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
 
         GlobalVariables.GL_selOrdShipID = ordshipID.SelectedValue
@@ -349,6 +398,22 @@ Public Class frmOrders
         cmbBLProv.Text = cmbSHProv.Text
         BLpcode.Text = SHPcode.Text
         cmbBLCountry.Text = cmbSHCountry.Text
+
+    End Sub
+
+    Private Sub CmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
+
+        cmdCancel.Visible = False
+        GBOrdInfo.Enabled = False
+        GBSHBLInfo.Enabled = False
+        GBModInfo.Enabled = False
+        TabContord.Enabled = False
+        cmdNew.Enabled = True
+        cmdExit.Enabled = True
+        incmbMcustID.SelectedItem = ""
+        incmbMcustID.SelectedIndex = -1
+        incmbMCustAcctID.SelectedItem = ""
+        incmbMCustAcctID.SelectedIndex = -1
 
     End Sub
 

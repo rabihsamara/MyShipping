@@ -62,7 +62,7 @@ Public Class frmCustomers
         If (inchslactonly.Checked = True) Then climode = "CRIA"
         If (inchslactonly.Checked = True) Then clnmode = "CRNA"
         If (Trim(incmbSelType.Text) <> "") Then climode = climode & Trim(incmbSelType.Text).Substring(0, 2) 'CRI or CRICS CRIPR CRIAL or CRIACS CRIAPR CRIAAL
-        '
+
         incmbCustID.Items.Clear()
         incmbCustName.Items.Clear()
         tstat = ModMisc.FillCBox(incmbCustID, climode)
