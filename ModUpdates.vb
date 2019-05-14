@@ -104,9 +104,15 @@ Module ModUpdates
 
                     If (ctrlname = "dateupdated") Then
                         ctrlvalue = Now()
+                    ElseIf (ctrlname = "ordshipID") Then
+                        ctrlvalue = GlobalVariables.GL_selOrdShipID
+                    ElseIf (ctrlname = "cmbShpType") Then
+                        ctrlvalue = GlobalVariables.GL_cmbShpType
+                    ElseIf (ctrlname = "cmbshpmethod") Then
+                        ctrlvalue = Trim(GlobalVariables.GL_selshpmethod)
                     End If
 
-                    If (ctrlname = "datecreated" Or ctrlname = "createdby") Then
+                    If (ctrlname = "datecreated" Or ctrlname = "createdby" Or ctrlname = "OrderNO") Then
                         tskip = True
                     Else
                         updsql2 = updsql2 & ctrlname & " = '" & ctrlvalue & "'"
@@ -115,6 +121,10 @@ Module ModUpdates
                 End If
             End If
         Next
+
+        If (Right(updsql2, 1) = ",") Then
+            updsql2 = Left(updsql2, (Len(updsql2) - 1))
+        End If
 
         If (inopert = "LCIU" Or inopert = "LCU") Then
             updsql3 = " where custid = '" & crselID & "'"

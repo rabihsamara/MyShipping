@@ -20,8 +20,6 @@ Public Class frmOrders
     Private selSordBLProvID As Integer = 0
     Private selSordBLCityID As Integer = 0
 
-    Private selshpmethod As String = ""
-
     Private ordshipto As shipto = New shipto()
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -52,7 +50,7 @@ Public Class frmOrders
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbshpmethod,'') as cmbshpmethod,isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,CONVERT(date,datecreated) as datecreated,CONVERT(date,dateupdated) as dateupdated,CreatedBy"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,datecreated,dateupdated,CreatedBy"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
             If (ReadOrder() = False) Then
@@ -140,26 +138,29 @@ Public Class frmOrders
                     Ordrecord.MyAccountNo = myReader.GetString(2).ToString
                     Ordrecord.MyOrderNO = myReader.GetValue(3)
                     Ordrecord.MyordStat = myReader.GetString(4).ToString
-                    Ordrecord.MyorshipID = myReader.GetString(5).ToString
-                    Ordrecord.MySHName = myReader.GetString(6).ToString
-                    Ordrecord.MySHadd1 = myReader.GetString(7).ToString
-                    Ordrecord.MySHadd2 = myReader.GetString(8).ToString
-                    Ordrecord.MycmbSHCity = myReader.GetString(9).ToString
+                    Ordrecord.MycmbShpType = myReader.GetString(5).ToString
+                    Ordrecord.Mycmbshpmethod = myReader.GetString(6).ToString
 
-                    Ordrecord.MySHPcode = myReader.GetString(10).ToString
-                    Ordrecord.MycmbSHProv = myReader.GetString(11).ToString
-                    Ordrecord.MycmbSHCountry = myReader.GetString(12).ToString
-                    Ordrecord.MyBLName = myReader.GetString(13).ToString
-                    Ordrecord.MyBLadd1 = myReader.GetString(14).ToString
-                    Ordrecord.MyBLadd2 = myReader.GetString(15).ToString
-                    Ordrecord.MycmbBLcity = myReader.GetString(16).ToString
+                    Ordrecord.MyorshipID = myReader.GetString(7).ToString
+                    Ordrecord.MySHName = myReader.GetString(8).ToString
+                    Ordrecord.MySHadd1 = myReader.GetString(9).ToString
+                    Ordrecord.MySHadd2 = myReader.GetString(10).ToString
+                    Ordrecord.MycmbSHCity = myReader.GetString(11).ToString
 
-                    Ordrecord.MyBLpcode = myReader.GetString(17).ToString
-                    Ordrecord.MycmbBLProv = myReader.GetString(18).ToString
-                    Ordrecord.MycmbBLCountry = myReader.GetString(19).ToString
-                    Ordrecord.Mydatecreated = myReader.GetDateTime(20)
-                    Ordrecord.Mydateupdated = myReader.GetDateTime(21)
-                    Ordrecord.MyCreatedBy = myReader.GetString(22).ToString
+                    Ordrecord.MySHPcode = myReader.GetString(12).ToString
+                    Ordrecord.MycmbSHProv = myReader.GetString(13).ToString
+                    Ordrecord.MycmbSHCountry = myReader.GetString(14).ToString
+                    Ordrecord.MyBLName = myReader.GetString(15).ToString
+                    Ordrecord.MyBLadd1 = myReader.GetString(16).ToString
+                    Ordrecord.MyBLadd2 = myReader.GetString(17).ToString
+                    Ordrecord.MycmbBLcity = myReader.GetString(18).ToString
+
+                    Ordrecord.MyBLpcode = myReader.GetString(19).ToString
+                    Ordrecord.MycmbBLProv = myReader.GetString(20).ToString
+                    Ordrecord.MycmbBLCountry = myReader.GetString(21).ToString
+                    Ordrecord.Mydatecreated = myReader.GetDateTime(22)
+                    Ordrecord.Mydateupdated = myReader.GetDateTime(23)
+                    Ordrecord.MyCreatedBy = myReader.GetString(24).ToString
                     ReadOrder = True
                 Loop
 
@@ -290,15 +291,21 @@ Public Class frmOrders
         selSordBLCityID = cmbBLcity.SelectedValue
     End Sub
 
+    Private Sub cmbShpType_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbShpType.SelectionChangeCommitted
+
+        GlobalVariables.GL_cmbShpType = cmbShpType.SelectedValue
+
+    End Sub
     Private Sub cmbshpmethod_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbshpmethod.SelectionChangeCommitted
 
-        selshpmethod = ""
+        GlobalVariables.GL_selshpmethod = cmbshpmethod.SelectedValue
 
     End Sub
 
     Private Sub ordshipID_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles ordshipID.SelectionChangeCommitted
 
         selordshptoID = ordshipID.SelectedValue
+        GlobalVariables.GL_selOrdShipID = selordshptoID
         ordshipto = ModMisc.GetShiptoRec(GlobalVariables.Gl_tmpcustid, selordshptoID)
 
         SHName.Text = ordshipto.MyShipName

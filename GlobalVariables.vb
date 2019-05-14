@@ -48,7 +48,9 @@ Public Class GlobalVariables
     '*
     Public Shared Property GL_CSAcctsGridCNT As Integer
     Public Shared Property GL_CSOrdsGridCNT As Integer
-
+    Public Shared Property GL_selOrdShipID As String
+    Public Shared Property GL_selshpmethod As String
+    Public Shared Property GL_cmbShpType As String
 
     '***********************************************************************
 End Class
@@ -1198,6 +1200,8 @@ Public Class Orders
     Private AccountNo As String
     Private OrderNO As Integer
     Private ordStat As String
+    Private cmbShpType As String
+    Private cmbshpmethod As String
     Private orshipID As String
     Private cmbShpID As String
     Private SHName As String
@@ -1281,6 +1285,28 @@ Public Class Orders
         End Get
         Set(ByVal Value As String)
             ordStat = Value
+        End Set
+
+    End Property
+
+    Public Property MycmbShpType() As String
+
+        Get
+            Return cmbShpType
+        End Get
+        Set(ByVal Value As String)
+            cmbShpType = Value
+        End Set
+
+    End Property
+
+    Public Property Mycmbshpmethod() As String
+
+        Get
+            Return cmbshpmethod
+        End Get
+        Set(ByVal Value As String)
+            cmbshpmethod = Value
         End Set
 
     End Property
@@ -1399,15 +1425,10 @@ Public Class Orders
     Public Property MyBLadd2() As String
 
         Get
-
             Return BLadd2
-
         End Get
-
         Set(ByVal Value As String)
-
             BLadd2 = Value
-
         End Set
 
     End Property
