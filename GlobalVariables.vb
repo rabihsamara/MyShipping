@@ -44,10 +44,10 @@ Public Class GlobalVariables
 
     '**************Datagrid rows per screen*********************************
     '* 1) Customers
-    '* 2) Orders
     '*
     Public Shared Property GL_CSAcctsGridCNT As Integer
     Public Shared Property GL_CSOrdsGridCNT As Integer
+    '* 2) Orders
     Public Shared Property GL_selOrdShipID As String
     Public Shared Property GL_selshpmethod As Integer
     Public Shared Property GL_cmbShpType As Integer

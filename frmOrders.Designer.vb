@@ -32,16 +32,20 @@ Partial Class frmOrders
         Me.cmdNew = New System.Windows.Forms.Button()
         Me.GBSearch = New System.Windows.Forms.GroupBox()
         Me.GBOrdInfo = New System.Windows.Forms.GroupBox()
+        Me.cmbshpmethod = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cmbShpType = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.OrdStat = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.OrderNO = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.createdby = New System.Windows.Forms.TextBox()
         Me.Label31 = New System.Windows.Forms.Label()
         Me.dateupdated = New System.Windows.Forms.TextBox()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.datecreated = New System.Windows.Forms.TextBox()
         Me.Label29 = New System.Windows.Forms.Label()
-        Me.OrderNO = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
         Me.GBSHBLInfo = New System.Windows.Forms.GroupBox()
         Me.cmdCopyshp = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -79,10 +83,6 @@ Partial Class frmOrders
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.GBModInfo = New System.Windows.Forms.GroupBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.cmbShpType = New System.Windows.Forms.ComboBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.cmbshpmethod = New System.Windows.Forms.ComboBox()
         Me.GBOrdersIN.SuspendLayout()
         Me.GBOrdInfo.SuspendLayout()
         Me.GBSHBLInfo.SuspendLayout()
@@ -193,6 +193,40 @@ Partial Class frmOrders
         Me.GBOrdInfo.TabStop = False
         Me.GBOrdInfo.Text = "Order Information"
         '
+        'cmbshpmethod
+        '
+        Me.cmbshpmethod.FormattingEnabled = True
+        Me.cmbshpmethod.Location = New System.Drawing.Point(76, 70)
+        Me.cmbshpmethod.Name = "cmbshpmethod"
+        Me.cmbshpmethod.Size = New System.Drawing.Size(284, 21)
+        Me.cmbshpmethod.TabIndex = 41
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Location = New System.Drawing.Point(5, 72)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(70, 13)
+        Me.Label7.TabIndex = 40
+        Me.Label7.Text = "Ship Method:"
+        '
+        'cmbShpType
+        '
+        Me.cmbShpType.FormattingEnabled = True
+        Me.cmbShpType.Location = New System.Drawing.Point(76, 43)
+        Me.cmbShpType.Name = "cmbShpType"
+        Me.cmbShpType.Size = New System.Drawing.Size(193, 21)
+        Me.cmbShpType.TabIndex = 39
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(18, 45)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(58, 13)
+        Me.Label6.TabIndex = 38
+        Me.Label6.Text = "Ship Type:"
+        '
         'OrdStat
         '
         Me.OrdStat.FormattingEnabled = True
@@ -210,11 +244,27 @@ Partial Class frmOrders
         Me.Label4.TabIndex = 36
         Me.Label4.Text = "Order Status:"
         '
+        'OrderNO
+        '
+        Me.OrderNO.Location = New System.Drawing.Point(76, 17)
+        Me.OrderNO.Name = "OrderNO"
+        Me.OrderNO.Size = New System.Drawing.Size(120, 20)
+        Me.OrderNO.TabIndex = 1
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(22, 20)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(55, 13)
+        Me.Label3.TabIndex = 0
+        Me.Label3.Text = "Order NO:"
+        '
         'createdby
         '
         Me.createdby.BackColor = System.Drawing.SystemColors.Info
         Me.createdby.Enabled = False
-        Me.createdby.Location = New System.Drawing.Point(279, 37)
+        Me.createdby.Location = New System.Drawing.Point(276, 37)
         Me.createdby.Name = "createdby"
         Me.createdby.Size = New System.Drawing.Size(94, 20)
         Me.createdby.TabIndex = 35
@@ -240,7 +290,7 @@ Partial Class frmOrders
         'Label30
         '
         Me.Label30.AutoSize = True
-        Me.Label30.Location = New System.Drawing.Point(12, 44)
+        Me.Label30.Location = New System.Drawing.Point(10, 41)
         Me.Label30.Name = "Label30"
         Me.Label30.Size = New System.Drawing.Size(77, 13)
         Me.Label30.TabIndex = 32
@@ -258,27 +308,11 @@ Partial Class frmOrders
         'Label29
         '
         Me.Label29.AutoSize = True
-        Me.Label29.Location = New System.Drawing.Point(17, 20)
+        Me.Label29.Location = New System.Drawing.Point(13, 20)
         Me.Label29.Name = "Label29"
         Me.Label29.Size = New System.Drawing.Size(73, 13)
         Me.Label29.TabIndex = 30
         Me.Label29.Text = "Date Created:"
-        '
-        'OrderNO
-        '
-        Me.OrderNO.Location = New System.Drawing.Point(76, 17)
-        Me.OrderNO.Name = "OrderNO"
-        Me.OrderNO.Size = New System.Drawing.Size(120, 20)
-        Me.OrderNO.TabIndex = 1
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(22, 20)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(55, 13)
-        Me.Label3.TabIndex = 0
-        Me.Label3.Text = "Order NO:"
         '
         'GBSHBLInfo
         '
@@ -634,40 +668,6 @@ Partial Class frmOrders
         Me.GBModInfo.TabIndex = 9
         Me.GBModInfo.TabStop = False
         Me.GBModInfo.Text = "Update Information"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(18, 45)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(58, 13)
-        Me.Label6.TabIndex = 38
-        Me.Label6.Text = "Ship Type:"
-        '
-        'cmbShpType
-        '
-        Me.cmbShpType.FormattingEnabled = True
-        Me.cmbShpType.Location = New System.Drawing.Point(76, 43)
-        Me.cmbShpType.Name = "cmbShpType"
-        Me.cmbShpType.Size = New System.Drawing.Size(193, 21)
-        Me.cmbShpType.TabIndex = 39
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(5, 72)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(70, 13)
-        Me.Label7.TabIndex = 40
-        Me.Label7.Text = "Ship Method:"
-        '
-        'cmbshpmethod
-        '
-        Me.cmbshpmethod.FormattingEnabled = True
-        Me.cmbshpmethod.Location = New System.Drawing.Point(76, 70)
-        Me.cmbshpmethod.Name = "cmbshpmethod"
-        Me.cmbshpmethod.Size = New System.Drawing.Size(284, 21)
-        Me.cmbshpmethod.TabIndex = 41
         '
         'frmOrders
         '
