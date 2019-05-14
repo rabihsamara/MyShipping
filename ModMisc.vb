@@ -145,6 +145,7 @@ Module ModMisc
     '* ORSM = order screen shipping method
     '* ORCI = order screen customer id
     '* CANOA = Customer accounts per customer.
+    '* ORHO = Order screen search orders.
     '******************************************************************************************************
     '*
     Public Function FillCBoxBytable(incombo As ComboBox, ByVal callby As String, Optional ByVal invalue As Integer = 0, Optional ByVal invalue2 As Integer = 0, Optional ByVal invalue3 As String = "") As Boolean
@@ -195,6 +196,10 @@ Module ModMisc
             tsql = "select CustID, concat(CustID, ' - ',CIName) as CIName from customers where chCIactive = 1 order by CIName"
             vlname = "CustID"
             dspname = "CIName"
+        ElseIf (callby = "ORHO") Then
+            tsql = "SELECT Concat(CustNo,' - ',AccountNo,' - ',OrderNO) as OrderNO, Concat(CustNo,',',AccountNo,',',OrderNO) as  OrderNOID FROM Orders order by CustNo asc,AccountNo asc"
+            vlname = "OrderNOID"
+            dspname = "OrderNO"
         Else
             Exit Function
         End If

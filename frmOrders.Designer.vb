@@ -27,6 +27,7 @@ Partial Class frmOrders
         Me.Label2 = New System.Windows.Forms.Label()
         Me.inacctNO = New System.Windows.Forms.TextBox()
         Me.GBOrdersIN = New System.Windows.Forms.GroupBox()
+        Me.cmdCancel = New System.Windows.Forms.Button()
         Me.incmbMCustAcctID = New System.Windows.Forms.ComboBox()
         Me.incmbMcustID = New System.Windows.Forms.ComboBox()
         Me.cmdSave = New System.Windows.Forms.Button()
@@ -85,8 +86,11 @@ Partial Class frmOrders
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.GBModInfo = New System.Windows.Forms.GroupBox()
-        Me.cmdCancel = New System.Windows.Forms.Button()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.incmbSrchOrd = New System.Windows.Forms.ComboBox()
+        Me.cmdLoad = New System.Windows.Forms.Button()
         Me.GBOrdersIN.SuspendLayout()
+        Me.GBSearch.SuspendLayout()
         Me.GBOrdInfo.SuspendLayout()
         Me.GBSHBLInfo.SuspendLayout()
         Me.TabContord.SuspendLayout()
@@ -145,6 +149,15 @@ Partial Class frmOrders
         Me.GBOrdersIN.TabStop = False
         Me.GBOrdersIN.Text = "Orders"
         '
+        'cmdCancel
+        '
+        Me.cmdCancel.Location = New System.Drawing.Point(392, 43)
+        Me.cmdCancel.Name = "cmdCancel"
+        Me.cmdCancel.Size = New System.Drawing.Size(73, 22)
+        Me.cmdCancel.TabIndex = 0
+        Me.cmdCancel.Text = "Cancel"
+        Me.cmdCancel.UseVisualStyleBackColor = True
+        '
         'incmbMCustAcctID
         '
         Me.incmbMCustAcctID.FormattingEnabled = True
@@ -191,6 +204,9 @@ Partial Class frmOrders
         'GBSearch
         '
         Me.GBSearch.BackColor = System.Drawing.SystemColors.Control
+        Me.GBSearch.Controls.Add(Me.cmdLoad)
+        Me.GBSearch.Controls.Add(Me.incmbSrchOrd)
+        Me.GBSearch.Controls.Add(Me.Label8)
         Me.GBSearch.Location = New System.Drawing.Point(509, 1)
         Me.GBSearch.Name = "GBSearch"
         Me.GBSearch.Size = New System.Drawing.Size(893, 87)
@@ -691,14 +707,31 @@ Partial Class frmOrders
         Me.GBModInfo.TabStop = False
         Me.GBModInfo.Text = "Update Information"
         '
-        'cmdCancel
+        'Label8
         '
-        Me.cmdCancel.Location = New System.Drawing.Point(392, 43)
-        Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(73, 22)
-        Me.cmdCancel.TabIndex = 0
-        Me.cmdCancel.Text = "Cancel"
-        Me.cmdCancel.UseVisualStyleBackColor = True
+        Me.Label8.AutoSize = True
+        Me.Label8.Location = New System.Drawing.Point(15, 24)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(41, 13)
+        Me.Label8.TabIndex = 0
+        Me.Label8.Text = "Orders:"
+        '
+        'incmbSrchOrd
+        '
+        Me.incmbSrchOrd.FormattingEnabled = True
+        Me.incmbSrchOrd.Location = New System.Drawing.Point(69, 19)
+        Me.incmbSrchOrd.Name = "incmbSrchOrd"
+        Me.incmbSrchOrd.Size = New System.Drawing.Size(500, 21)
+        Me.incmbSrchOrd.TabIndex = 1
+        '
+        'cmdLoad
+        '
+        Me.cmdLoad.Location = New System.Drawing.Point(593, 16)
+        Me.cmdLoad.Name = "cmdLoad"
+        Me.cmdLoad.Size = New System.Drawing.Size(73, 24)
+        Me.cmdLoad.TabIndex = 2
+        Me.cmdLoad.Text = "Load"
+        Me.cmdLoad.UseVisualStyleBackColor = True
         '
         'frmOrders
         '
@@ -716,6 +749,8 @@ Partial Class frmOrders
         Me.Text = "frmOrders"
         Me.GBOrdersIN.ResumeLayout(False)
         Me.GBOrdersIN.PerformLayout()
+        Me.GBSearch.ResumeLayout(False)
+        Me.GBSearch.PerformLayout()
         Me.GBOrdInfo.ResumeLayout(False)
         Me.GBOrdInfo.PerformLayout()
         Me.GBSHBLInfo.ResumeLayout(False)
@@ -791,4 +826,7 @@ Partial Class frmOrders
     Friend WithEvents incmbMcustID As ComboBox
     Friend WithEvents incmbMCustAcctID As ComboBox
     Friend WithEvents cmdCancel As Button
+    Friend WithEvents cmdLoad As Button
+    Friend WithEvents incmbSrchOrd As ComboBox
+    Friend WithEvents Label8 As Label
 End Class

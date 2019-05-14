@@ -26,6 +26,7 @@ Public Class frmOrders
 
         cmdNew.Visible = False
         cmdCancel.Visible = False
+        cmdLoad.Enabled = True
         incmbMcustID.Visible = False
         incmbMCustAcctID.Visible = False
 
@@ -44,9 +45,12 @@ Public Class frmOrders
 
         tstat = ModMisc.FillCBoxBytable(cmbSHCountry, "ORSC")
         tstat = ModMisc.FillCBoxBytable(cmbBLCountry, "ORSC")
-        ordshipID.Items.Clear()
-        tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
 
+
+
+        tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
+        incmbSrchOrd.SelectedItem = ""
+        incmbSrchOrd.SelectedIndex = -1
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
@@ -62,6 +66,10 @@ Public Class frmOrders
                 MsgBox("Error reading Order !")
                 Exit Sub
             End If
+            ordshipID.Items.Clear()
+            tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
+            ordshipID.Text = GlobalVariables.GL_selOrdShipID
+            ordshipID.SelectedValue = GlobalVariables.GL_selOrdShipID
             LoadOrdToScreen()
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "CON") Then 'customer screen new order
             GlobalVariables.Gl_SQLStr = "select isnull(max(orderNO),0) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
@@ -72,6 +80,9 @@ Public Class frmOrders
             End If
             OrderNO.Text = GlobalVariables.Gl_SelOrder
             OrdStat.Text = "New"
+
+            ordshipID.Items.Clear()
+            tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
 
             OrdStat.SelectedItem = ""
             OrdStat.SelectedIndex = -1
@@ -145,20 +156,17 @@ Public Class frmOrders
         TabContord.Enabled = True
         cmdNew.Enabled = False
         cmdExit.Enabled = False
-        MsgBox(GlobalVariables.Gl_tmpcustid)
-        MsgBox(GlobalVariables.Gl_tmpacctname)
-
 
     End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
+        ClrFields()
         Me.Close()
     End Sub
 
     Private Sub CmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click
 
-        Dim topert As String = If(GlobalVariables.Gl_OrdCallFrmID = "CON", "LCOI", "LCOU")
-        If (ModUpdates.UpdateFormData(topert, Me, "Orders", GlobalVariables.Gl_tmpacctname) = False) Then
+        If (ModUpdates.UpdateFormData("LCOU", Me, "Orders", GlobalVariables.Gl_tmpacctname) = False) Then
             MsgBox("Error updating Orders table!")
             Exit Sub
         Else
@@ -403,17 +411,118 @@ Public Class frmOrders
 
     Private Sub CmdCancel_Click(sender As Object, e As EventArgs) Handles cmdCancel.Click
 
+        ClrFields()
         cmdCancel.Visible = False
         GBOrdInfo.Enabled = False
         GBSHBLInfo.Enabled = False
         GBModInfo.Enabled = False
         TabContord.Enabled = False
+        cmdLoad.Enabled = True
         cmdNew.Enabled = True
         cmdExit.Enabled = True
         incmbMcustID.SelectedItem = ""
         incmbMcustID.SelectedIndex = -1
         incmbMCustAcctID.SelectedItem = ""
         incmbMCustAcctID.SelectedIndex = -1
+
+    End Sub
+
+    Private Sub cmdLoad_Click(sender As Object, e As EventArgs) Handles cmdLoad.Click
+
+        If (incmbSrchOrd.Text = "") Then
+            MsgBox("Must select order!")
+            Exit Sub
+        End If
+
+        cmdCancel.Visible = True
+        cmdSave.Enabled = True
+        cmdExit.Enabled = False
+        cmdLoad.Enabled = False
+        cmdNew.Enabled = False
+
+        GBOrdInfo.Enabled = True
+        GBSHBLInfo.Enabled = True
+        GBModInfo.Enabled = True
+        TabContord.Enabled = True
+
+        GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,datecreated,dateupdated,CreatedBy"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
+        If (ReadOrder() = False) Then
+            MsgBox("Error reading Order !")
+            Exit Sub
+        End If
+        ordshipID.Items.Clear()
+        tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
+        ordshipID.Text = GlobalVariables.GL_selOrdShipID
+        ordshipID.SelectedValue = GlobalVariables.GL_selOrdShipID
+        LoadOrdToScreen()
+
+    End Sub
+
+    Private Sub incmbSrchOrd_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles incmbSrchOrd.SelectionChangeCommitted
+        'MsgBox(incmbSrchOrd.SelectedValue)
+        Dim slval As String = incmbSrchOrd.SelectedValue
+        Dim strArr() As String = slval.Split(",")
+
+        GlobalVariables.Gl_tmpcustid = Trim(strArr(0))
+        GlobalVariables.Gl_tmpacctname = Trim(strArr(1))
+        GlobalVariables.Gl_SelOrder = Convert.ToInt32(Trim(strArr(2)))
+
+    End Sub
+
+    Private Sub ClrFields()
+
+
+        OrdStat.DataSource = Nothing
+        cmbShpType.DataSource = Nothing
+        cmbshpmethod.DataSource = Nothing
+        ordshipID.DataSource = Nothing
+        cmbSHCity.DataSource = Nothing
+        cmbSHProv.DataSource = Nothing
+        cmbSHCountry.DataSource = Nothing
+        cmbBLcity.DataSource = Nothing
+        cmbBLProv.DataSource = Nothing
+        cmbBLCountry.DataSource = Nothing
+        incmbSrchOrd.DataSource = Nothing
+
+        incmbSrchOrd.Items.Clear()
+        incmbSrchOrd.Text = ""
+
+        OrderNO.Text = ""
+        OrdStat.Items.Clear()
+        cmbShpType.Items.Clear()
+        cmbshpmethod.Items.Clear()
+        ordshipID.Items.Clear()
+
+        ordshipID.Text = ""
+        SHName.Text = ""
+        SHadd1.Text = ""
+        SHadd2.Text = ""
+        cmbSHCity.Items.Clear()
+        cmbSHCity.Text = ""
+        SHPcode.Text = ""
+        cmbSHProv.Items.Clear()
+        cmbSHProv.Text = ""
+        cmbSHCountry.Items.Clear()
+        BLName.Text = ""
+        BLadd1.Text = ""
+        BLadd2.Text = ""
+        cmbBLcity.Items.Clear()
+        cmbBLcity.Text = ""
+        BLpcode.Text = ""
+        cmbBLProv.Items.Clear()
+        cmbBLProv.Text = ""
+        cmbBLCountry.Items.Clear()
+        datecreated.Text = ""
+        dateupdated.Text = ""
+        createdby.Text = ""
 
     End Sub
 
