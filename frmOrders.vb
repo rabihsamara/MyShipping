@@ -219,8 +219,15 @@ Public Class frmOrders
     End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
+
+        'Delete lock record
+        If (AppLocking.WriteDelLock("D", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "E") = False) Then
+            MsgBox("Error Deleting Lock Record!")
+        End If
+
         ClrFields()
         Me.Close()
+
     End Sub
 
     Private Sub CmdSave_Click(sender As Object, e As EventArgs) Handles cmdSave.Click

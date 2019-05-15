@@ -151,7 +151,7 @@ Module AppLocking
                         AppLockings.Myctrl2name = myReader.GetString(5)
                         AppLockings.Myctrl2value = myReader.GetString(6)
                         AppLockings.Myctrl3name = myReader.GetString(7)
-                        AppLockings.Myctrl3value = myReader.GetString(8)
+                        AppLockings.Myctrl3value = myReader.GetValue(8)
                         AppLockings.Myctrlopert = myReader.GetString(9)
                         AppLockings.Mylockeddate = myReader.GetDateTime(10)
                         GetLockRec = AppLockings
