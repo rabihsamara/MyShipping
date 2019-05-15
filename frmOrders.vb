@@ -21,6 +21,7 @@ Public Class frmOrders
     Private selSordBLCityID As Integer = 0
 
     Private ordshipto As shipto = New shipto()
+    Private OrderLocks As AppLocks = New AppLocks()
 
     Private Sub FrmOrders_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -69,10 +70,32 @@ Public Class frmOrders
             ordshipID.Text = GlobalVariables.GL_selOrdShipID
             ordshipID.SelectedValue = GlobalVariables.GL_selOrdShipID
             LoadOrdToScreen()
-        ElseIf (GlobalVariables.Gl_OrdCallFrmID = "CON") Then 'customer screen new order
-            GlobalVariables.Gl_SQLStr = "select isnull(max(orderNO),0) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
-            GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
+
+            'check if locked
+            GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrl2name,ctrl2value,ctrl3name,ctrl3value,ctrlopert,lockeddate FROM AppLocks"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where FormName = 'frmOrders' and ctrlname = 'Customer' and ctrlvalue = '" & GlobalVariables.Gl_tmpcustid & "' and ctrl2Name = 'account' and ctrl2value = '" & GlobalVariables.Gl_tmpacctname & "'"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " and ctrl3Name = 'order' and ctrl3value = " & GlobalVariables.Gl_SelOrder
+            OrderLocks = AppLocking.GetLockRec("APPL")
             If (GlobalVariables.GL_Stat = False) Then
+                'lock record
+                If (AppLocking.WriteDelLock("W", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "E") = False) Then
+                    MsgBox("Error Creating Lock Record!")
+                End If
+            Else
+                'check if same user or another
+                If (OrderLocks.MyFormname = "frmOrders" And OrderLocks.Myctrlname = "Customer" And OrderLocks.Myctrlvalue = GlobalVariables.Gl_tmpcustid And OrderLocks.Myctrl2name = "account" And OrderLocks.Myctrl2value = GlobalVariables.Gl_tmpacctname And OrderLocks.Myctrl3name = "order" And OrderLocks.Myctrl3value = GlobalVariables.Gl_SelOrder) Then
+                    'check if same user ! delete and continue or just continue ?
+                    If (OrderLocks.MyUserid <> GlobalVariables.Gl_LogUserID) Then
+                        MsgBox("Record for Customer " & GlobalVariables.Gl_tmpcustid & " account: " & GlobalVariables.Gl_tmpacctname & " order#: " & GlobalVariables.Gl_SelOrder & "Is locked by user " & OrderLocks.MyUserid)
+                        Exit Sub
+                    End If
+                End If
+            End If
+
+        ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COn") Then 'customer screen new order
+            GlobalVariables.Gl_SQLStr = "Select isnull(max(orderNO),0) + 1 As cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
+            GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
+                        If (GlobalVariables.GL_Stat = False) Then
                 MsgBox("Error getting next order#!")
                 Exit Sub
             End If
@@ -102,6 +125,11 @@ Public Class frmOrders
                 MsgBox("Error Creating new Order!")
                 Exit Sub
             End If
+            'lock record
+            If (AppLocking.WriteDelLock("W", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "E") = False) Then
+                MsgBox("Error Creating Lock Record!")
+            End If
+
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COM") Then 'menu
             cmdNew.Visible = True
             cmdSave.Enabled = False
@@ -183,6 +211,11 @@ Public Class frmOrders
         incmbMCustAcctID.Enabled = False
         tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
 
+        'lock record
+        If (AppLocking.WriteDelLock("W", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "N") = False) Then
+            MsgBox("Error Creating Lock Record!")
+        End If
+
     End Sub
 
     Private Sub CmdExit_Click(sender As Object, e As EventArgs) Handles cmdExit.Click
@@ -204,6 +237,7 @@ Public Class frmOrders
                 End If
             End If
         End If
+
         MsgBox("Orders Updated OK!")
         tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
         incmbSrchOrd.SelectedItem = ""
@@ -234,6 +268,8 @@ Public Class frmOrders
                     Ordrecord.MyCustNo = myReader.GetString(1).ToString
                     Ordrecord.MyAccountNo = myReader.GetString(2).ToString
                     Ordrecord.MyOrderNO = myReader.GetValue(3)
+                    GlobalVariables.Gl_SelOrder = Ordrecord.MyOrderNO
+
                     Ordrecord.MyordStat = myReader.GetString(4).ToString
                     Ordrecord.MyorshipID = myReader.GetString(5).ToString
                     GlobalVariables.GL_selOrdShipID = Ordrecord.MyorshipID
@@ -463,6 +499,11 @@ Public Class frmOrders
         incmbMCustAcctID.SelectedItem = ""
         incmbMCustAcctID.SelectedIndex = -1
 
+        'Delete lock record
+        If (AppLocking.WriteDelLock("D", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "E") = False) Then
+            MsgBox("Error Deleting Lock Record!")
+        End If
+
     End Sub
 
     Private Sub cmdLoad_Click(sender As Object, e As EventArgs) Handles cmdLoad.Click
@@ -505,6 +546,27 @@ Public Class frmOrders
         incmbMcustID.Enabled = False
         incmbMCustAcctID.Enabled = False
 
+        'check if locked
+        GlobalVariables.Gl_SQLStr = "SELECT ID,Userid,Formname,ctrlname,ctrlvalue,ctrl2name,ctrl2value,ctrl3name,ctrl3value,ctrlopert,lockeddate FROM AppLocks"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " where FormName = 'frmOrders' and ctrlname = 'Customer' and ctrlvalue = '" & GlobalVariables.Gl_tmpcustid & "' and ctrl2Name = 'account' and ctrl2value = '" & GlobalVariables.Gl_tmpacctname & "'"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " and ctrl3Name = 'order' and ctrl3value = " & GlobalVariables.Gl_SelOrder
+        OrderLocks = AppLocking.GetLockRec("APPL")
+        If (GlobalVariables.GL_Stat = False) Then
+            'lock record
+            If (AppLocking.WriteDelLock("W", 0, "frmOrders", "Customer", GlobalVariables.Gl_tmpcustid, "account", GlobalVariables.Gl_tmpacctname, "order", GlobalVariables.Gl_SelOrder, "E") = False) Then
+                MsgBox("Error Creating Lock Record!")
+            End If
+        Else
+            'check if same user or another
+            If (OrderLocks.MyFormname = "frmOrders" And OrderLocks.Myctrlname = "Customer" And OrderLocks.Myctrlvalue = GlobalVariables.Gl_tmpcustid And OrderLocks.Myctrl2name = "account" And OrderLocks.Myctrl2value = GlobalVariables.Gl_tmpacctname And OrderLocks.Myctrl3name = "order" And OrderLocks.Myctrl3value = GlobalVariables.Gl_SelOrder) Then
+                'check if same user ! delete and continue or just continue ?
+                If (OrderLocks.MyUserid <> GlobalVariables.Gl_LogUserID) Then
+                    MsgBox("Record for Customer " & GlobalVariables.Gl_tmpcustid & " account: " & GlobalVariables.Gl_tmpacctname & " order#: " & GlobalVariables.Gl_SelOrder & "Is locked by user " & OrderLocks.MyUserid)
+                    Exit Sub
+                End If
+            End If
+        End If
+
     End Sub
 
     Private Sub incmbSrchOrd_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles incmbSrchOrd.SelectionChangeCommitted
@@ -533,9 +595,6 @@ Public Class frmOrders
 
         incmbMcustID.Enabled = True
         incmbMCustAcctID.Enabled = True
-
-        'incmbSrchOrd.DataSource = Nothing
-        'incmbSrchOrd.Items.Clear()
 
         incmbSrchOrd.Text = ""
 

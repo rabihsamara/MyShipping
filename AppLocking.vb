@@ -9,6 +9,10 @@ Module AppLocking
         Private Formname As String
         Private ctrlname As String
         Private ctrlvalue As String
+        Private ctrl2name As String
+        Private ctrl2value As String
+        Private ctrl3name As String
+        Private ctrl3value As String
         Private ctrlopert As String
         Private lockeddate As DateTime
 
@@ -65,6 +69,42 @@ Module AppLocking
             End Set
         End Property
 
+        Public Property Myctrl2name() As String
+            Get
+                Return ctrl2name
+            End Get
+            Set(ByVal Value As String)
+                ctrl2name = Value
+            End Set
+        End Property
+
+        Public Property Myctrl2value() As String
+            Get
+                Return ctrl2value
+            End Get
+            Set(ByVal Value As String)
+                ctrl2value = Value
+            End Set
+        End Property
+
+        Public Property Myctrl3name() As String
+            Get
+                Return ctrl3name
+            End Get
+            Set(ByVal Value As String)
+                ctrl3name = Value
+            End Set
+        End Property
+
+        Public Property Myctrl3value() As String
+            Get
+                Return ctrl3value
+            End Get
+            Set(ByVal Value As String)
+                ctrl3value = Value
+            End Set
+        End Property
+
         Public Property Myctrlopert() As String
             Get
                 Return ctrlopert
@@ -108,8 +148,12 @@ Module AppLocking
                         AppLockings.MyFormname = myReader.GetString(2)
                         AppLockings.Myctrlname = myReader.GetString(3)
                         AppLockings.Myctrlvalue = myReader.GetString(4)
-                        AppLockings.Myctrlopert = myReader.GetString(5)
-                        AppLockings.Mylockeddate = myReader.GetDateTime(6)
+                        AppLockings.Myctrl2name = myReader.GetString(5)
+                        AppLockings.Myctrl2value = myReader.GetString(6)
+                        AppLockings.Myctrl3name = myReader.GetString(7)
+                        AppLockings.Myctrl3value = myReader.GetString(8)
+                        AppLockings.Myctrlopert = myReader.GetString(9)
+                        AppLockings.Mylockeddate = myReader.GetDateTime(10)
                         GetLockRec = AppLockings
                         GlobalVariables.GL_Stat = True
                     End If
@@ -131,12 +175,16 @@ Module AppLocking
     End Function
 
     'inoper - W=Write, D=Delete log.
-    Public Function WriteDelLock(ByVal inoper As String, Optional slid As Integer = 0, Optional ByVal infrmName As String = "", Optional ByVal inctrlName As String = "", Optional ByVal inctrlval As String = "", Optional ByVal inwrupd As String = "") As Boolean
+    Public Function WriteDelLock(ByVal inoper As String, Optional slid As Integer = 0, Optional ByVal infrmName As String = "",
+                                 Optional ByVal inctrlName As String = "", Optional ByVal inctrlval As String = "",
+                                 Optional ByVal inctrl2Name As String = "", Optional ByVal inctrl2val As String = "",
+                                 Optional ByVal inctrl3Name As String = "", Optional ByVal inctrl3val As String = "",
+                                 Optional ByVal inwrupd As String = "") As Boolean
 
         WriteDelLock = True
 
         If (inoper = "W") Then
-            GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','" & infrmName & "','" & inctrlName & "','" & inctrlval & "','" & inwrupd & "','" & Now() & "')"
+            GlobalVariables.Gl_SQLStr = "insert into AppLocks (Userid,Formname,ctrlname,ctrlvalue,ctrl2name,ctrl2value,ctrl3name,ctrl3value,ctrlopert,lockeddate) values ('" & GlobalVariables.Gl_LogUserID & "','" & infrmName & "','" & inctrlName & "','" & inctrlval & "','" & inctrl2Name & "','" & inctrl2val & "','" & inctrl3Name & "','" & inctrl3val & "','" & inwrupd & "','" & Now() & "')"
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 WriteDelLock = False
             End If
@@ -144,7 +192,13 @@ Module AppLocking
             If (slid <> 0) Then
                 GlobalVariables.Gl_SQLStr = "delete from AppLocks where ID = " & slid
             Else
-                GlobalVariables.Gl_SQLStr = "delete from AppLocks where Userid = '" & GlobalVariables.Gl_LogUserID & "' and Formname = '" & infrmName & "' and ctrlname = '" & inctrlName & "'"
+                GlobalVariables.Gl_SQLStr = "delete from AppLocks where Userid = '" & GlobalVariables.Gl_LogUserID & "' and Formname = '" & infrmName & "' and ctrlname = '" & inctrlName & "' and ctrlvalue = '" & inctrlval & "'"
+                If (inctrl2Name <> "") Then
+                    GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " and ctrl2name = '" & inctrl2Name & "' and ctrl2value = '" & inctrl2val & "'"
+                End If
+                If (inctrl3Name <> "") Then
+                    GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " and ctrl3name = '" & inctrl3Name & "' and ctrl3value = " & inctrl3val
+                End If
             End If
             If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                 WriteDelLock = False
