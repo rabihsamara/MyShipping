@@ -735,27 +735,4 @@ Exit_Excel:
 
     End Sub
 
-    '************************************************************************************************************
-    ' Procedure:  not used yet
-    '************************************************************************************************************
-    Public Sub RunProcedure()
-
-        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
-
-            Dim sqlCmd As New SqlCommand()
-
-            sqlCmd.Connection = mysqlConn
-            sqlCmd.CommandText = "InsertTransData"
-            sqlCmd.CommandType = CommandType.StoredProcedure
-
-            'sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
-
-
-            mysqlConn.Open()
-            sqlCmd.ExecuteNonQuery()
-
-        End Using
-
-    End Sub
-
 End Module

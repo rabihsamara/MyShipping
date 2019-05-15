@@ -94,5 +94,74 @@ Module ModTmp
         createClass = al
 
     End Function
+
     '********************************************END OF TMP FUNCTIONS *******************************************
+
+    '************************************************************************************************************
+    ' Procedure:  not used yet
+    '************************************************************************************************************
+    Public Sub RunProcedure()
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+
+            Dim sqlCmd As New SqlCommand()
+
+            sqlCmd.Connection = mysqlConn
+            sqlCmd.CommandText = "InsertTransData"
+            sqlCmd.CommandType = CommandType.StoredProcedure
+
+            'sqlCmd.Parameters.AddWithValue("@ptransacct", mytransRec.Transptransacct)
+
+
+            mysqlConn.Open()
+            sqlCmd.ExecuteNonQuery()
+
+        End Using
+
+    End Sub
+
+    Public Function CreateSelectStatement(ByVal Intable As String) As Boolean
+
+        Dim tcode As String = ""
+        Dim tsql As String = ""
+        Dim selstment As String = ""
+
+        CreateSelectStatement = False
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+
+            If (Intable <> "") Then
+                tsql = "SELECT COLUMN_NAME,DATA_Type,ISnull(CHARACTER_MAXIMUM_LENGTH,0) as maxlngth FROM INFORMATION_SCHEMA.COLUMNS where  TABLE_NAME = '" & Intable & "'"
+            Else
+                Exit Function
+            End If
+
+            Dim cmd As New SqlCommand(tsql, mysqlConn)
+            mysqlConn.Open()
+
+            Dim dbr As SqlDataReader = cmd.ExecuteReader()
+            Dim i = 0
+            selstment = "select "
+
+            While dbr.Read()
+                If (i > 0) Then selstment = selstment & ","
+                If (dbr.Item("Data_type") = "varchar" Or dbr.Item("Data_type") = "char" Or dbr.Item("Data_type") = "datetime") Then
+                    selstment = selstment & "isnull(" & dbr.Item("Column_Name") & ",'') as " & dbr.Item("Column_Name")
+                Else
+                    selstment = selstment & dbr.Item("Column_Name")
+                End If
+                i = 1
+            End While
+            selstment = selstment & " from " & Intable
+        End Using
+        MsgBox(selstment)
+
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & Intable & "_select.txt")
+
+        theWriter.WriteLine(selstment)
+        theWriter.Close()
+
+        CreateSelectStatement = True
+
+    End Function
+
 End Module
