@@ -147,6 +147,11 @@ Public Class frmOrders
             Exit Sub
         End If
 
+        Dim result As DialogResult = MessageBox.Show("Create New Order?", "Confirm adding new Order", MessageBoxButtons.YesNo)
+        If (result = DialogResult.No) Then
+            Exit Sub
+        End If
+
         GlobalVariables.Gl_SQLStr = "select isnull(max(orderNO),0) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
         GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
         If (GlobalVariables.GL_Stat = False) Then
@@ -164,6 +169,9 @@ Public Class frmOrders
             Exit Sub
         End If
 
+        ordshipID.Items.Clear()
+        tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
+
         cmdCancel.Visible = True
         GBOrdInfo.Enabled = True
         GBSHBLInfo.Enabled = True
@@ -173,6 +181,7 @@ Public Class frmOrders
         cmdExit.Enabled = False
         incmbMcustID.Enabled = False
         incmbMCustAcctID.Enabled = False
+        tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
 
     End Sub
 
