@@ -46,8 +46,6 @@ Public Class frmOrders
         tstat = ModMisc.FillCBoxBytable(cmbSHCountry, "ORSC")
         tstat = ModMisc.FillCBoxBytable(cmbBLCountry, "ORSC")
 
-
-
         tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
         incmbSrchOrd.SelectedItem = ""
         incmbSrchOrd.SelectedIndex = -1
@@ -149,6 +147,23 @@ Public Class frmOrders
             Exit Sub
         End If
 
+        GlobalVariables.Gl_SQLStr = "select isnull(max(orderNO),0) + 1 as cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
+        GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
+        If (GlobalVariables.GL_Stat = False) Then
+            MsgBox("Error getting next order#!")
+            Exit Sub
+        End If
+        OrderNO.Text = GlobalVariables.Gl_SelOrder
+        OrdStat.Text = "New"
+
+        GlobalVariables.Gl_SQLStr = "if not Exists(select 1 from Orders where custNO = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder & ") Begin "
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "INSERT INTO  Orders (CustNo,AccountNo,OrderNO,ordStat,ordshipID,cmbShpType,cmbshpmethod,datecreated,dateupdated,CreatedBy) VALUES "
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "('" & GlobalVariables.Gl_tmpcustid & "','" & GlobalVariables.Gl_tmpacctname & "'," & GlobalVariables.Gl_SelOrder & ",'NW','','','','" & Now() & "','" & Now() & "','" & GlobalVariables.Gl_LogUserID & "') END"
+        If (ModMisc.ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+            MsgBox("Error Creating new Order!")
+            Exit Sub
+        End If
+
         cmdCancel.Visible = True
         GBOrdInfo.Enabled = True
         GBSHBLInfo.Enabled = True
@@ -156,6 +171,8 @@ Public Class frmOrders
         TabContord.Enabled = True
         cmdNew.Enabled = False
         cmdExit.Enabled = False
+        incmbMcustID.Enabled = False
+        incmbMCustAcctID.Enabled = False
 
     End Sub
 
@@ -179,6 +196,9 @@ Public Class frmOrders
             End If
         End If
         MsgBox("Orders Updated OK!")
+        tstat = ModMisc.FillCBoxBytable(incmbSrchOrd, "ORHO")
+        incmbSrchOrd.SelectedItem = ""
+        incmbSrchOrd.SelectedIndex = -1
 
     End Sub
 
@@ -467,16 +487,19 @@ Public Class frmOrders
             MsgBox("Error reading Order !")
             Exit Sub
         End If
+
         ordshipID.Items.Clear()
         tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
         ordshipID.Text = GlobalVariables.GL_selOrdShipID
         ordshipID.SelectedValue = GlobalVariables.GL_selOrdShipID
         LoadOrdToScreen()
+        incmbMcustID.Enabled = False
+        incmbMCustAcctID.Enabled = False
 
     End Sub
 
     Private Sub incmbSrchOrd_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles incmbSrchOrd.SelectionChangeCommitted
-        'MsgBox(incmbSrchOrd.SelectedValue)
+
         Dim slval As String = incmbSrchOrd.SelectedValue
         Dim strArr() As String = slval.Split(",")
 
@@ -498,9 +521,13 @@ Public Class frmOrders
         cmbBLcity.DataSource = Nothing
         cmbBLProv.DataSource = Nothing
         cmbBLCountry.DataSource = Nothing
-        incmbSrchOrd.DataSource = Nothing
 
-        incmbSrchOrd.Items.Clear()
+        incmbMcustID.Enabled = True
+        incmbMCustAcctID.Enabled = True
+
+        'incmbSrchOrd.DataSource = Nothing
+        'incmbSrchOrd.Items.Clear()
+
         incmbSrchOrd.Text = ""
 
         OrderNO.Text = ""
