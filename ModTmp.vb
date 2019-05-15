@@ -126,6 +126,13 @@ Module ModTmp
         Dim tsql As String = ""
         Dim selstment As String = ""
 
+        Dim selreader As String = "Dim columnIndex AS integer " & vbNewLine
+        Dim al As ArrayList = New ArrayList()
+        al.Add(selreader)
+        selreader = ""
+        'Dim columnIndex As Integer = myReader.GetOrdinal("ID")
+        'Ordrecord.MyID = myReader.GetValue(columnIndex)
+
         CreateSelectStatement = False
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
@@ -149,15 +156,36 @@ Module ModTmp
                 Else
                     selstment = selstment & dbr.Item("Column_Name")
                 End If
+
+                selreader = "columnIndex = myReader.GetOrdinal('" & dbr.Item("Column_Name") & "')"
+                al.Add(selreader)
+                If (dbr.Item("Data_type") = "varchar" Or dbr.Item("Data_type") = "char") Then
+                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetString(columnIndex)" & vbNewLine
+                    al.Add(selreader)
+                ElseIf (dbr.Item("Data_type") = "datetime") Then
+                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetDateTime(columnIndex)" & vbNewLine
+                    al.Add(selreader)
+                Else
+                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetValue(columnIndex)" & vbNewLine
+                    al.Add(selreader)
+                End If
+                selreader = ""
+
                 i = 1
             End While
             selstment = selstment & " from " & Intable
         End Using
-        MsgBox(selstment)
+
 
         Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & Intable & "_select.txt")
 
         theWriter.WriteLine(selstment)
+
+
+        For Each currentElement As String In al
+            theWriter.WriteLine(currentElement)
+        Next
+
         theWriter.Close()
 
         CreateSelectStatement = True

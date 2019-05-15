@@ -1204,8 +1204,8 @@ Public Class Orders
     Private intShpType As Integer
     Private cmbshpmethod As String
     Private intshpmethod As Integer
-    Private orshipID As String
-    Private cmbShpID As String
+    Private ordshipID As String
+    'Private cmbShpID As String
     Private SHName As String
     Private SHadd1 As String
     Private SHadd2 As String
@@ -1335,13 +1335,13 @@ Public Class Orders
 
     End Property
 
-    Public Property MyorshipID() As String
+    Public Property MyordshipID() As String
 
         Get
-            Return orshipID
+            Return ordshipID
         End Get
         Set(ByVal Value As String)
-            orshipID = Value
+            ordshipID = Value
         End Set
 
     End Property

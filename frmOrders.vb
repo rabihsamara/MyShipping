@@ -258,6 +258,7 @@ Public Class frmOrders
 
     Public Function ReadOrder() As Boolean
 
+        Dim columnIndex As Integer = 0
         GlobalVariables.GL_Stat = False
         ReadOrder = False
 
@@ -271,45 +272,95 @@ Public Class frmOrders
                 myReader = sCommand.ExecuteReader()
                 Do While myReader.Read()
 
-                    Ordrecord.MyID = myReader.GetValue(0)
-                    Ordrecord.MyCustNo = myReader.GetString(1).ToString
-                    Ordrecord.MyAccountNo = myReader.GetString(2).ToString
-                    Ordrecord.MyOrderNO = myReader.GetValue(3)
+                    columnIndex = myReader.GetOrdinal("ID")
+                    Ordrecord.MyID = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("CustNo")
+                    Ordrecord.MyCustNo = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("AccountNo")
+                    Ordrecord.MyAccountNo = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("OrderNO")
+                    Ordrecord.MyOrderNO = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("ordStat")
+                    Ordrecord.MyordStat = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbShpType")
+                    Ordrecord.MycmbShpType = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("intshptype")
+                    Ordrecord.Myintshptype = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbshpmethod")
+                    Ordrecord.Mycmbshpmethod = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("intshpmethod")
+                    Ordrecord.Myintshpmethod = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("ordshipID")
+                    Ordrecord.MyordshipID = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHName")
+                    Ordrecord.MySHName = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHadd1")
+                    Ordrecord.MySHadd1 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHadd2")
+                    Ordrecord.MySHadd2 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHCity")
+                    Ordrecord.MycmbSHCity = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHPcode")
+                    Ordrecord.MySHPcode = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHProv")
+                    Ordrecord.MycmbSHProv = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHCountry")
+                    Ordrecord.MycmbSHCountry = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLName")
+                    Ordrecord.MyBLName = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLadd1")
+                    Ordrecord.MyBLadd1 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLadd2")
+                    Ordrecord.MyBLadd2 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLcity")
+                    Ordrecord.MycmbBLcity = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLpcode")
+                    Ordrecord.MyBLpcode = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLProv")
+                    Ordrecord.MycmbBLProv = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLCountry")
+                    Ordrecord.MycmbBLCountry = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("datecreated")
+                    Ordrecord.Mydatecreated = myReader.GetDateTime(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("dateupdated")
+                    Ordrecord.Mydateupdated = myReader.GetDateTime(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("CreatedBy")
+                    Ordrecord.MyCreatedBy = myReader.GetString(columnIndex)
+
                     GlobalVariables.Gl_SelOrder = Ordrecord.MyOrderNO
-
-                    Ordrecord.MyordStat = myReader.GetString(4).ToString
-                    Ordrecord.MyorshipID = myReader.GetString(5).ToString
-                    GlobalVariables.GL_selOrdShipID = Ordrecord.MyorshipID
-
-                    Ordrecord.MycmbShpType = myReader.GetString(6).ToString
-                    Ordrecord.Myintshptype = myReader.GetValue(7)
+                    GlobalVariables.GL_selOrdShipID = Ordrecord.MyordshipID
                     GlobalVariables.GL_cmbShpType = Ordrecord.Myintshptype
-                    cmbShpType.SelectedValue = Ordrecord.Myintshptype
-
-                    Ordrecord.Mycmbshpmethod = myReader.GetString(8).ToString
-                    Ordrecord.Myintshpmethod = myReader.GetValue(9)
                     GlobalVariables.GL_selshpmethod = Ordrecord.Myintshpmethod
+
+                    cmbShpType.SelectedValue = Ordrecord.Myintshptype
                     cmbshpmethod.SelectedValue = Ordrecord.Myintshpmethod
 
-                    Ordrecord.MySHName = myReader.GetString(10).ToString
-                    Ordrecord.MySHadd1 = myReader.GetString(11).ToString
-                    Ordrecord.MySHadd2 = myReader.GetString(12).ToString
-                    Ordrecord.MycmbSHCity = myReader.GetString(13).ToString
-
-                    Ordrecord.MySHPcode = myReader.GetString(14).ToString
-                    Ordrecord.MycmbSHProv = myReader.GetString(15).ToString
-                    Ordrecord.MycmbSHCountry = myReader.GetString(16).ToString
-                    Ordrecord.MyBLName = myReader.GetString(17).ToString
-                    Ordrecord.MyBLadd1 = myReader.GetString(18).ToString
-                    Ordrecord.MyBLadd2 = myReader.GetString(19).ToString
-                    Ordrecord.MycmbBLcity = myReader.GetString(20).ToString
-
-                    Ordrecord.MyBLpcode = myReader.GetString(21).ToString
-                    Ordrecord.MycmbBLProv = myReader.GetString(22).ToString
-                    Ordrecord.MycmbBLCountry = myReader.GetString(23).ToString
-                    Ordrecord.Mydatecreated = myReader.GetDateTime(24)
-                    Ordrecord.Mydateupdated = myReader.GetDateTime(25)
-                    Ordrecord.MyCreatedBy = myReader.GetString(26).ToString
                     ReadOrder = True
                 Loop
 

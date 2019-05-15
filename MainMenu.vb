@@ -107,6 +107,7 @@
 
         Dim ttable As String = InputBox("Enter Table", "Table", "", 100, 100)
         ModTmp.RunClassGen(ttable)
+        ModTmp.CreateSelectStatement(ttable)
 
     End Sub
 
