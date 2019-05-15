@@ -1201,7 +1201,9 @@ Public Class Orders
     Private OrderNO As Integer
     Private ordStat As String
     Private cmbShpType As String
+    Private intShpType As Integer
     Private cmbshpmethod As String
+    Private intshpmethod As Integer
     Private orshipID As String
     Private cmbShpID As String
     Private SHName As String
@@ -1300,6 +1302,17 @@ Public Class Orders
 
     End Property
 
+    Public Property Myintshptype() As Integer
+
+        Get
+            Return intShpType
+        End Get
+        Set(ByVal Value As Integer)
+            intShpType = Value
+        End Set
+
+    End Property
+
     Public Property Mycmbshpmethod() As String
 
         Get
@@ -1307,6 +1320,17 @@ Public Class Orders
         End Get
         Set(ByVal Value As String)
             cmbshpmethod = Value
+        End Set
+
+    End Property
+
+    Public Property Myintshpmethod() As Integer
+
+        Get
+            Return intshpmethod
+        End Get
+        Set(ByVal Value As Integer)
+            intshpmethod = Value
         End Set
 
     End Property

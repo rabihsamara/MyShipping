@@ -54,8 +54,8 @@ Public Class frmOrders
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
             GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,cmbShpType as intshptype,"
+            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,cmbshpmethod as intshpmethod,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
             GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
@@ -200,35 +200,44 @@ Public Class frmOrders
 
                 myReader = sCommand.ExecuteReader()
                 Do While myReader.Read()
+
                     Ordrecord.MyID = myReader.GetValue(0)
                     Ordrecord.MyCustNo = myReader.GetString(1).ToString
                     Ordrecord.MyAccountNo = myReader.GetString(2).ToString
                     Ordrecord.MyOrderNO = myReader.GetValue(3)
                     Ordrecord.MyordStat = myReader.GetString(4).ToString
-                    Ordrecord.MycmbShpType = myReader.GetString(5).ToString
-                    Ordrecord.Mycmbshpmethod = myReader.GetString(6).ToString
-
-                    Ordrecord.MyorshipID = myReader.GetString(7).ToString
+                    Ordrecord.MyorshipID = myReader.GetString(5).ToString
                     GlobalVariables.GL_selOrdShipID = Ordrecord.MyorshipID
-                    Ordrecord.MySHName = myReader.GetString(8).ToString
-                    Ordrecord.MySHadd1 = myReader.GetString(9).ToString
-                    Ordrecord.MySHadd2 = myReader.GetString(10).ToString
-                    Ordrecord.MycmbSHCity = myReader.GetString(11).ToString
 
-                    Ordrecord.MySHPcode = myReader.GetString(12).ToString
-                    Ordrecord.MycmbSHProv = myReader.GetString(13).ToString
-                    Ordrecord.MycmbSHCountry = myReader.GetString(14).ToString
-                    Ordrecord.MyBLName = myReader.GetString(15).ToString
-                    Ordrecord.MyBLadd1 = myReader.GetString(16).ToString
-                    Ordrecord.MyBLadd2 = myReader.GetString(17).ToString
-                    Ordrecord.MycmbBLcity = myReader.GetString(18).ToString
+                    Ordrecord.MycmbShpType = myReader.GetString(6).ToString
+                    Ordrecord.Myintshptype = myReader.GetValue(7)
+                    GlobalVariables.GL_cmbShpType = Ordrecord.Myintshptype
+                    cmbShpType.SelectedValue = Ordrecord.Myintshptype
 
-                    Ordrecord.MyBLpcode = myReader.GetString(19).ToString
-                    Ordrecord.MycmbBLProv = myReader.GetString(20).ToString
-                    Ordrecord.MycmbBLCountry = myReader.GetString(21).ToString
-                    Ordrecord.Mydatecreated = myReader.GetDateTime(22)
-                    Ordrecord.Mydateupdated = myReader.GetDateTime(23)
-                    Ordrecord.MyCreatedBy = myReader.GetString(24).ToString
+                    Ordrecord.Mycmbshpmethod = myReader.GetString(8).ToString
+                    Ordrecord.Myintshpmethod = myReader.GetValue(9)
+                    GlobalVariables.GL_selshpmethod = Ordrecord.Myintshpmethod
+                    cmbshpmethod.SelectedValue = Ordrecord.Myintshpmethod
+
+                    Ordrecord.MySHName = myReader.GetString(10).ToString
+                    Ordrecord.MySHadd1 = myReader.GetString(11).ToString
+                    Ordrecord.MySHadd2 = myReader.GetString(12).ToString
+                    Ordrecord.MycmbSHCity = myReader.GetString(13).ToString
+
+                    Ordrecord.MySHPcode = myReader.GetString(14).ToString
+                    Ordrecord.MycmbSHProv = myReader.GetString(15).ToString
+                    Ordrecord.MycmbSHCountry = myReader.GetString(16).ToString
+                    Ordrecord.MyBLName = myReader.GetString(17).ToString
+                    Ordrecord.MyBLadd1 = myReader.GetString(18).ToString
+                    Ordrecord.MyBLadd2 = myReader.GetString(19).ToString
+                    Ordrecord.MycmbBLcity = myReader.GetString(20).ToString
+
+                    Ordrecord.MyBLpcode = myReader.GetString(21).ToString
+                    Ordrecord.MycmbBLProv = myReader.GetString(22).ToString
+                    Ordrecord.MycmbBLCountry = myReader.GetString(23).ToString
+                    Ordrecord.Mydatecreated = myReader.GetDateTime(24)
+                    Ordrecord.Mydateupdated = myReader.GetDateTime(25)
+                    Ordrecord.MyCreatedBy = myReader.GetString(26).ToString
                     ReadOrder = True
                 Loop
 
@@ -446,8 +455,8 @@ Public Class frmOrders
         TabContord.Enabled = True
 
         GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
-        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,"
-        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,cmbShpType as intshptype,"
+        GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,cmbshpmethod as intshpmethod,"
         GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
         GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
         GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
@@ -478,7 +487,6 @@ Public Class frmOrders
     End Sub
 
     Private Sub ClrFields()
-
 
         OrdStat.DataSource = Nothing
         cmbShpType.DataSource = Nothing
