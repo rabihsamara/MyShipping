@@ -860,7 +860,7 @@ Public Class Customers
 
     End Property
 
-    Public Property Mydateupdated() As DateTime
+    Public Property Mydateupdate() As DateTime
 
         Get
             Return dtupdated
@@ -871,7 +871,7 @@ Public Class Customers
 
     End Property
 
-    Public Property MyCScreatedby() As String
+    Public Property MyCreatedby() As String
 
         Get
             Return CScreatedby

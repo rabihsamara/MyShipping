@@ -128,7 +128,7 @@ Module ModTmp
         Dim al As ArrayList = New ArrayList()
         Dim selreader As String = "Dim columnIndex AS integer " & vbNewLine
         Dim tstval As String = ""
-
+        Dim cltxt As String = If(InTable = "orders", "Ordrecord.MY", "Custrecord.MY")
         al.Add(selreader)
         selreader = ""
 
@@ -149,19 +149,19 @@ Module ModTmp
                 tstval = dbr2.Item("Column_Name")
                 selreader = "columnIndex = myReader.GetOrdinal('" & dbr2.Item("Column_Name") & "')"
                 al.Add(selreader)
+
                 If (dbr2.Item("Data_type") = "varchar" Or dbr2.Item("Data_type") = "char") Then
-                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetString(columnIndex)" & vbNewLine
+                    selreader = cltxt & dbr2.Item("Column_Name") & " =  myReader.GetString(columnIndex)" & vbNewLine
                     al.Add(selreader)
                 ElseIf (dbr2.Item("Data_type") = "datetime") Then
-                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetDateTime(columnIndex)" & vbNewLine
+                    selreader = cltxt & dbr2.Item("Column_Name") & " =  myReader.GetDateTime(columnIndex)" & vbNewLine
                     al.Add(selreader)
                 Else
-                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetValue(columnIndex)" & vbNewLine
+                    selreader = cltxt & dbr2.Item("Column_Name") & " =  myReader.GetValue(columnIndex)" & vbNewLine
                     al.Add(selreader)
                 End If
 
                 If (InTable = "orders") Then
-
                     If (String.Compare(InTable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "cmbShpType", StringComparison.InvariantCultureIgnoreCase) = 0) Then
                         selreader = "columnIndex = myReader.GetOrdinal('intshptype')"
                         al.Add(selreader)
@@ -173,7 +173,6 @@ Module ModTmp
                         selreader = "Ordrecord.Myintshpmethod = myReader.GetValue(columnIndex)" & vbNewLine
                         al.Add(selreader)
                     End If
-
                 End If
 
                 selreader = ""

@@ -191,15 +191,23 @@ Public Class frmCustomers
                 GoTo EDIT_EXIT
             End If
 
-            GlobalVariables.Gl_SQLStr = "SELECT CustID,CIName,ISNULL(CIadd1,'') as CIadd1,ISNULL(CIAdd2,'') as CIadd2,ISNULL(cmbCICity,'') as cmbCICity,ISNULL(CIpcode,'') as CIpcode ,ISNULL(cmbCIProv,'') as cmbCIProv ,ISNULL(cmbCICountry,'') as cmbCICountry,cmbCustType,chCIactive,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(BLName,'') as BLName, ISNULL(BLadd1,'') as BLadd1, ISNULL(BLadd2,'') as BLAdd2, ISNULL(cmbBLcity,'') as cmbBLcity, ISNULL(BLpcode,'') as BLpcode, ISNULL(cmbBLProv,'') as cmbBLProv, ISNULL(cmbBLCountry,'') as cmbBLCountry,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbShpID,'') as cmbShpID, ISNULL(SHName,'') as SHName, ISNULL(SHadd1,'') as SHadd1, ISNULL(SHadd2,'') as SHAdd2,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry, datecreated,dateupdate,createdby FROM Customers  "
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where CIname = '" & selcustname & "'")
-            If (ReadCustomer("C") = False) Then
-                terr = "Error reading customer !"
+            'GlobalVariables.Gl_SQLStr = "SELECT CustID,CIName,ISNULL(CIadd1,'') as CIadd1,ISNULL(CIAdd2,'') as CIadd2,ISNULL(cmbCICity,'') as cmbCICity,ISNULL(CIpcode,'') as CIpcode ,ISNULL(cmbCIProv,'') as cmbCIProv ,ISNULL(cmbCICountry,'') as cmbCICountry,cmbCustType,chCIactive,"
+            'GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(BLName,'') as BLName, ISNULL(BLadd1,'') as BLadd1, ISNULL(BLadd2,'') as BLAdd2, ISNULL(cmbBLcity,'') as cmbBLcity, ISNULL(BLpcode,'') as BLpcode, ISNULL(cmbBLProv,'') as cmbBLProv, ISNULL(cmbBLCountry,'') as cmbBLCountry,"
+            'GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbShpID,'') as cmbShpID, ISNULL(SHName,'') as SHName, ISNULL(SHadd1,'') as SHadd1, ISNULL(SHadd2,'') as SHAdd2,"
+            'GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "ISNULL(cmbSHCity,'') as cmbSHCity, ISNULL(SHPcode,'') as SHPcode, ISNULL(cmbSHProv,'') as cmbSHProv, ISNULL(cmbSHCountry,'') as cmbSHCountry, datecreated,dateupdate,createdby FROM Customers  "
+            'GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & If(selcustid <> "", " where CustID = '" & selcustid & "'", " where CIname = '" & selcustname & "'")
+
+            GlobalVariables.Gl_SQLCriteria = If(selcustid <> "", " where CustID = '" & selcustid & "'", " where CIname = '" & selcustname & "'")
+            If (ModMisc.CreateSelectStatement("Customers", GlobalVariables.Gl_SQLCriteria) = True) Then
+                If (ReadCustomer("C") = False) Then
+                    MsgBox("Error reading Order !")
+                    GoTo EDIT_EXIT
+                End If
+            Else
+                MsgBox("Error Creating SQL Statement!")
                 GoTo EDIT_EXIT
             End If
+
             seluw = "U"
             seluw2 = "U"
             selShipToid = Custrecord.MycmbShpID
@@ -344,6 +352,7 @@ EDIT_EXIT:
 
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
             Try
+                Dim columnIndex As Integer = 0
 
                 myCmd = mysqlConn.CreateCommand
                 myCmd.CommandText = GlobalVariables.Gl_SQLStr
@@ -351,39 +360,93 @@ EDIT_EXIT:
 
                 myReader = myCmd.ExecuteReader()
                 Do While myReader.Read()
-                    selcustid = myReader.GetString(0).ToString
-                    selcustname = myReader.GetString(1).ToString
 
-                    Custrecord.MyCustID = myReader.GetString(0).ToString
-                    Custrecord.MyCIName = myReader.GetString(1).ToString
-                    Custrecord.MyCIadd1 = myReader.GetString(2).ToString
-                    Custrecord.MyCIAdd2 = myReader.GetString(3).ToString
-                    Custrecord.MycmbCICity = myReader.GetString(4).ToString
-                    Custrecord.MyCIpcode = myReader.GetString(5).ToString
-                    Custrecord.MycmbCIProv = myReader.GetString(6).ToString
-                    Custrecord.MycmbCICountry = myReader.GetString(7).ToString
-                    Custrecord.MycmbCustType = myReader.GetString(8).ToString
-                    Custrecord.MychCIactive = myReader.GetValue(9)
+                    columnIndex = myReader.GetOrdinal("CustID")
+                    Custrecord.MyCustID = myReader.GetString(columnIndex)
+                    selcustid = Custrecord.MyCustID
 
-                    Custrecord.MyBLName = myReader.GetString(10).ToString
-                    Custrecord.MyBLadd1 = myReader.GetString(11).ToString
-                    Custrecord.MyBLadd2 = myReader.GetString(12).ToString
-                    Custrecord.MycmbBLcity = myReader.GetString(13).ToString
-                    Custrecord.MyBLpcode = myReader.GetString(14).ToString
-                    Custrecord.MycmbBLProv = myReader.GetString(15).ToString
-                    Custrecord.MycmbBLCountry = myReader.GetString(16).ToString
+                    columnIndex = myReader.GetOrdinal("CIName")
+                    Custrecord.MyCIName = myReader.GetString(columnIndex)
+                    selcustname = Custrecord.MyCIName
 
-                    Custrecord.MycmbShpID = myReader.GetString(17).ToString
-                    Custrecord.MySHName = myReader.GetString(18).ToString
-                    Custrecord.MySHadd1 = myReader.GetString(19).ToString
-                    Custrecord.MySHadd2 = myReader.GetString(20).ToString
-                    Custrecord.MycmbSHCity = myReader.GetString(21).ToString
-                    Custrecord.MySHPcode = myReader.GetString(22).ToString
-                    Custrecord.MycmbSHProv = myReader.GetString(23).ToString
-                    Custrecord.MycmbSHCountry = myReader.GetString(24).ToString
-                    Custrecord.Mydatecreated = myReader.GetDateTime(25)
-                    Custrecord.Mydateupdated = myReader.GetDateTime(26)
-                    Custrecord.MyCScreatedby = myReader.GetString(27).ToString
+                    columnIndex = myReader.GetOrdinal("CIadd1")
+                    Custrecord.MyCIadd1 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("CIAdd2")
+                    Custrecord.MyCIAdd2 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbCICity")
+                    Custrecord.MycmbCICity = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("CIpcode")
+                    Custrecord.MyCIpcode = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbCIProv")
+                    Custrecord.MycmbCIProv = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbCICountry")
+                    Custrecord.MycmbCICountry = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbCustType")
+                    Custrecord.MycmbCustType = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("chCIactive")
+                    Custrecord.MychCIactive = myReader.GetValue(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLName")
+                    Custrecord.MyBLName = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLadd1")
+                    Custrecord.MyBLadd1 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLadd2")
+                    Custrecord.MyBLadd2 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLcity")
+                    Custrecord.MycmbBLcity = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("BLpcode")
+                    Custrecord.MyBLpcode = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLProv")
+                    Custrecord.MycmbBLProv = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbBLCountry")
+                    Custrecord.MycmbBLCountry = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbShpID")
+                    Custrecord.MycmbShpID = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHName")
+                    Custrecord.MySHName = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHadd1")
+                    Custrecord.MySHadd1 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHadd2")
+                    Custrecord.MySHadd2 = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHCity")
+                    Custrecord.MycmbSHCity = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("SHPcode")
+                    Custrecord.MySHPcode = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHProv")
+                    Custrecord.MycmbSHProv = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("cmbSHCountry")
+                    Custrecord.MycmbSHCountry = myReader.GetString(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("datecreated")
+                    Custrecord.Mydatecreated = myReader.GetDateTime(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("dateupdate")
+                    Custrecord.Mydateupdate = myReader.GetDateTime(columnIndex)
+
+                    columnIndex = myReader.GetOrdinal("createdby")
+                    Custrecord.MyCreatedby = myReader.GetString(columnIndex)
+
                     ReadCustomer = True
                 Loop
 
@@ -485,7 +548,7 @@ EDIT_EXIT:
 
         If (inopt = "ACT" Or inopt = "BCT") Then
             'Set Customer Billto combobox: cmbBLCountry
-            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            GlobalVariables.Gl_SQLStr = "Select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbBLCountry)
             If (inmode = "U") Then
                 slBLCountry = cmbBLCountry.SelectedValue
@@ -494,7 +557,7 @@ EDIT_EXIT:
 
         If (inopt = "ACT" Or inopt = "SCT") Then
             'Set Shipto combobox: cmbSHCountry
-            GlobalVariables.Gl_SQLStr = "select countryname, ID from countries where active = 1 order by countryname"
+            GlobalVariables.Gl_SQLStr = "Select countryname, ID from countries where active = 1 order by countryname"
             ModMisc.ReadCountries(cmbSHCountry)
             If (inmode = "U") Then
                 slSHCountry = cmbSHCountry.SelectedValue
@@ -504,22 +567,22 @@ EDIT_EXIT:
         If (inmode = "U") Then
             'Customer info prov,city 
             If (inopt = "ACT" Or inopt = "CCT") Then
-                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slCICountry & " and active = 1 order by provshort"
+                GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slCICountry & " And active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbCIProv)
                 slCIProv = cmbCIProv.SelectedValue
 
-                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+                GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slCICountry & " And provid = " & slCIProv & " And cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbCICity)
                 slCICity = cmbCICity.SelectedValue
             End If
 
             'Customer Billto prov,city 
             If (inopt = "ACT" Or inopt = "BCT") Then
-                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slBLCountry & " and active = 1 order by provshort"
+                GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slBLCountry & " And active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbBLProv)
                 slBLProv = cmbBLProv.SelectedValue
 
-                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+                GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slBLCountry & " And provid = " & slBLProv & " And cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbBLcity)
                 slBLCity = cmbBLcity.SelectedValue
             End If
@@ -527,11 +590,11 @@ EDIT_EXIT:
 
             'Customer Shipto prov,city
             If (inopt = "ACT" Or inopt = "SCT") Then
-                GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slSHCountry & " and active = 1 order by provshort"
+                GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slSHCountry & " And active = 1 order by provshort"
                 ModMisc.ReadCountries(cmbSHProv)
                 slSHProv = cmbSHProv.SelectedValue
 
-                GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+                GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slSHCountry & " And provid = " & slSHProv & " And cityactive = 1 order by cityname"
                 ModMisc.ReadCountries(cmbSHCity)
                 slSHCity = cmbSHCity.SelectedValue
             End If
@@ -544,12 +607,12 @@ EDIT_EXIT:
     Private Sub CmbCICountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbCICountry.SelectionChangeCommitted
         slCIcountry = cmbCICountry.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slCICountry & " and active = 1 order by provshort"
+        GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slCICountry & " And active = 1 order by provshort"
         ModMisc.ReadCountries(cmbCIProv)
         cmbCIProv.Text = ""
         slCIProv = cmbCIProv.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slCICountry & " And provid = " & slCIProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbCICity)
         cmbCICity.Text = ""
         slCICity = cmbCICity.SelectedValue
@@ -558,7 +621,7 @@ EDIT_EXIT:
     Private Sub cmbCIPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbCIProv.SelectionChangeCommitted
 
         slCIProv = cmbCIProv.SelectedValue
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slCICountry & " and provid = " & slCIProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slCICountry & " And provid = " & slCIProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbCICity)
         cmbCICity.Text = ""
         slCICity = cmbCICity.SelectedValue
@@ -573,12 +636,12 @@ EDIT_EXIT:
     Private Sub CmbBLCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLCountry.SelectionChangeCommitted
         slBLCountry = cmbBLCountry.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slBLCountry & " and active = 1 order by provshort"
+        GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slBLCountry & " And active = 1 order by provshort"
         ModMisc.ReadCountries(cmbBLProv)
         cmbBLProv.Text = ""
         slBLProv = cmbBLProv.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slBLCountry & " And provid = " & slBLProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbBLcity)
         cmbBLcity.Text = ""
         slBLCity = cmbBLcity.SelectedValue
@@ -587,7 +650,7 @@ EDIT_EXIT:
     Private Sub cmbBLPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbBLProv.SelectionChangeCommitted
 
         slBLProv = cmbBLProv.SelectedValue
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slBLCountry & " and provid = " & slBLProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slBLCountry & " And provid = " & slBLProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbBLcity)
         cmbBLcity.Text = ""
         slBLCity = cmbBLcity.SelectedValue
@@ -602,12 +665,12 @@ EDIT_EXIT:
     Private Sub CmbSHCountry_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHCountry.SelectionChangeCommitted
         slSHCountry = cmbSHCountry.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select provshort as countryname, ID from provinces where countryid = " & slSHCountry & " and active = 1 order by provshort"
+        GlobalVariables.Gl_SQLStr = "Select provshort As countryname, ID from provinces where countryid = " & slSHCountry & " And active = 1 order by provshort"
         ModMisc.ReadCountries(cmbSHProv)
         cmbSHProv.Text = ""
         slSHProv = cmbSHProv.SelectedValue
 
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slSHCountry & " And provid = " & slSHProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbSHCity)
         cmbSHCity.Text = ""
         slSHCity = cmbSHCity.SelectedValue
@@ -616,7 +679,7 @@ EDIT_EXIT:
     Private Sub cmbSHPROV_SelectedChangeCommitted(sender As Object, e As EventArgs) Handles cmbSHProv.SelectionChangeCommitted
 
         slSHProv = cmbSHProv.SelectedValue
-        GlobalVariables.Gl_SQLStr = "select cityname as countryname, ID from cities where countryid = " & slSHCountry & " and provid = " & slSHProv & " and cityactive = 1 order by cityname"
+        GlobalVariables.Gl_SQLStr = "Select cityname As countryname, ID from cities where countryid = " & slSHCountry & " And provid = " & slSHProv & " And cityactive = 1 order by cityname"
         ModMisc.ReadCountries(cmbSHCity)
         cmbSHCity.Text = ""
         slSHCity = cmbSHCity.SelectedValue
@@ -646,7 +709,7 @@ EDIT_EXIT:
         Else
             If (seluw2 = "U") Then
                 GlobalVariables.Gl_SQLStr = "update Customers set dateupdate = '" & Now() & "' where custid = '" & selcustid & "'"
-                If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
+                    If (ExecuteSqlTransaction(GlobalVariables.Gl_ConnectionSTR) = False) Then
                     MsgBox("Error updating Customer update date!")
                     Exit Sub
                 End If

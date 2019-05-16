@@ -712,8 +712,8 @@ Exit_Excel:
 
     '*****************************************************************************************************
     '* Create select statement for:
-    '* 1) Orders getdata by coulumn name and by special options.
-    '*
+    '* 1) Orders    - getdata by coulumn name and by special options.
+    '* 2) Customers - getdata by coulumn name
     '*****************************************************************************************************
     Public Function CreateSelectStatement(ByVal Intable As String, ByVal criteria As String) As Boolean
 
@@ -768,6 +768,7 @@ Exit_Excel:
                 selstment = selstment & " " & criteria
             End If
             GlobalVariables.Gl_SQLStr = selstment
+            CreateSelectStatement = True
 
             If Not (dbr Is Nothing) Then
                 dbr.Close()
