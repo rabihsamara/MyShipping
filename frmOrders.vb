@@ -52,19 +52,18 @@ Public Class frmOrders
         incmbSrchOrd.SelectedIndex = -1
 
         If (GlobalVariables.Gl_OrdCallFrmID = "COE") Then 'customer screen Existing order
-            GlobalVariables.Gl_SQLStr = "SELECT ID,CustNo,AccountNo,OrderNO,(select ordstatfull from ordstatus where ordstatshort =  ordStat) as ordstat,isnull(ordshipID,'') as ordshipID,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,cmbShpType as intshptype,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,cmbshpmethod as intshpmethod,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHName,'') as SHname,isnull(SHadd1,'') as SHadd1,isnull(SHadd2,'') as SHadd2,isnull(cmbSHCity,'') as cmbSHCity,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(SHPcode,'') as SHPcode,isnull(cmbSHProv,'') as cmbSHProv,isnull(cmbSHCountry,'') as cmbSHCountry,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(BLName,'') as BLName,isnull(BLadd1,'') as BLadd1,isnull(BLadd2,'') as BLadd2,isnull(cmbBLcity,'') as cmbBLCity,isnull(BLpcode,'') as BLPcode,"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & "isnull(cmbBLProv,'') as cmbBLProv,isnull(cmbBLCountry,'') as cmbBLCountry,datecreated,dateupdated,CreatedBy"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & " FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
-            GlobalVariables.Gl_SQLStr = GlobalVariables.Gl_SQLStr & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
-            If (ReadOrder() = False) Then
-                MsgBox("Error reading Order !")
+            GlobalVariables.Gl_SQLCriteria = " where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '"
+            GlobalVariables.Gl_SQLCriteria = GlobalVariables.Gl_SQLCriteria & GlobalVariables.Gl_tmpacctname & "' and OrderNO = " & GlobalVariables.Gl_SelOrder
+            If (ModMisc.CreateSelectStatement("orders", GlobalVariables.Gl_SQLCriteria) = True) Then
+                If (ReadOrder() = False) Then
+                    MsgBox("Error reading Order !")
+                    Exit Sub
+                End If
+            Else
+                MsgBox("Error Creating SQL Statement!")
                 Exit Sub
             End If
+
             ordshipID.Items.Clear()
             tstat = ModMisc.FillCBoxBytable(ordshipID, "ORSHT", , , GlobalVariables.Gl_tmpcustid)
             ordshipID.Text = GlobalVariables.GL_selOrdShipID
@@ -95,7 +94,7 @@ Public Class frmOrders
         ElseIf (GlobalVariables.Gl_OrdCallFrmID = "COn") Then 'customer screen new order
             GlobalVariables.Gl_SQLStr = "Select isnull(max(orderNO),0) + 1 As cnt FROM orders where CustNo = '" & GlobalVariables.Gl_tmpcustid & "' and AccountNo  = '" & GlobalVariables.Gl_tmpacctname & "'"
             GlobalVariables.Gl_SelOrder = ReadSQL("MXONO")
-                        If (GlobalVariables.GL_Stat = False) Then
+            If (GlobalVariables.GL_Stat = False) Then
                 MsgBox("Error getting next order#!")
                 Exit Sub
             End If

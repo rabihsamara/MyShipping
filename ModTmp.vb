@@ -120,76 +120,91 @@ Module ModTmp
 
     End Sub
 
-    Public Function CreateSelectStatement(ByVal Intable As String) As Boolean
+
+    Public Sub CreateReadercode(ByVal InTable As String)
 
         Dim tcode As String = ""
         Dim tsql As String = ""
-        Dim selstment As String = ""
-
-        Dim selreader As String = "Dim columnIndex AS integer " & vbNewLine
         Dim al As ArrayList = New ArrayList()
+        Dim selreader As String = "Dim columnIndex AS integer " & vbNewLine
+        Dim tstval As String = ""
+
         al.Add(selreader)
         selreader = ""
-        'Dim columnIndex As Integer = myReader.GetOrdinal("ID")
-        'Ordrecord.MyID = myReader.GetValue(columnIndex)
 
-        CreateSelectStatement = False
         Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
 
-            If (Intable <> "") Then
-                tsql = "SELECT COLUMN_NAME,DATA_Type,ISnull(CHARACTER_MAXIMUM_LENGTH,0) as maxlngth FROM INFORMATION_SCHEMA.COLUMNS where  TABLE_NAME = '" & Intable & "'"
+            If (InTable <> "") Then
+                tsql = "SELECT COLUMN_NAME,DATA_Type,ISnull(CHARACTER_MAXIMUM_LENGTH,0) as maxlngth FROM INFORMATION_SCHEMA.COLUMNS where  TABLE_NAME = '" & InTable & "'"
             Else
-                Exit Function
+                Exit Sub
             End If
 
-            Dim cmd As New SqlCommand(tsql, mysqlConn)
             mysqlConn.Open()
+            Dim cmd As New SqlCommand(tsql, mysqlConn)
+            Dim dbr2 As SqlDataReader = cmd.ExecuteReader()
 
-            Dim dbr As SqlDataReader = cmd.ExecuteReader()
-            Dim i = 0
-            selstment = "select "
+            While dbr2.Read()
 
-            While dbr.Read()
-                If (i > 0) Then selstment = selstment & ","
-                If (dbr.Item("Data_type") = "varchar" Or dbr.Item("Data_type") = "char" Or dbr.Item("Data_type") = "datetime") Then
-                    selstment = selstment & "isnull(" & dbr.Item("Column_Name") & ",'') as " & dbr.Item("Column_Name")
-                Else
-                    selstment = selstment & dbr.Item("Column_Name")
-                End If
-
-                selreader = "columnIndex = myReader.GetOrdinal('" & dbr.Item("Column_Name") & "')"
+                tstval = dbr2.Item("Column_Name")
+                selreader = "columnIndex = myReader.GetOrdinal('" & dbr2.Item("Column_Name") & "')"
                 al.Add(selreader)
-                If (dbr.Item("Data_type") = "varchar" Or dbr.Item("Data_type") = "char") Then
-                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetString(columnIndex)" & vbNewLine
+                If (dbr2.Item("Data_type") = "varchar" Or dbr2.Item("Data_type") = "char") Then
+                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetString(columnIndex)" & vbNewLine
                     al.Add(selreader)
-                ElseIf (dbr.Item("Data_type") = "datetime") Then
-                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetDateTime(columnIndex)" & vbNewLine
+                ElseIf (dbr2.Item("Data_type") = "datetime") Then
+                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetDateTime(columnIndex)" & vbNewLine
                     al.Add(selreader)
                 Else
-                    selreader = "Ordrecord.My" & dbr.Item("Column_Name") & " =  myReader.GetValue(columnIndex)" & vbNewLine
+                    selreader = "Ordrecord.My" & dbr2.Item("Column_Name") & " =  myReader.GetValue(columnIndex)" & vbNewLine
                     al.Add(selreader)
                 End If
-                selreader = ""
 
-                i = 1
+                If (InTable = "orders") Then
+
+                    If (String.Compare(InTable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "cmbShpType", StringComparison.InvariantCultureIgnoreCase) = 0) Then
+                        selreader = "columnIndex = myReader.GetOrdinal('intshptype')"
+                        al.Add(selreader)
+                        selreader = "Ordrecord.Myintshptype = myReader.GetValue(columnIndex)" & vbNewLine
+                        al.Add(selreader)
+                    ElseIf (String.Compare(InTable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "cmbshpmethod", StringComparison.InvariantCultureIgnoreCase) = 0) Then
+                        selreader = "columnIndex = myReader.GetOrdinal('intshpmethod')"
+                        al.Add(selreader)
+                        selreader = "Ordrecord.Myintshpmethod = myReader.GetValue(columnIndex)" & vbNewLine
+                        al.Add(selreader)
+                    End If
+
+                End If
+
+                selreader = ""
             End While
-            selstment = selstment & " from " & Intable
+
+            If (InTable = "orders") Then
+                al.Add("GlobalVariables.Gl_SelOrder = Ordrecord.MyOrderNO" & vbNewLine)
+                al.Add("GlobalVariables.GL_selOrdShipID = Ordrecord.MyordshipID" & vbNewLine)
+                al.Add("GlobalVariables.GL_cmbShpType = Ordrecord.Myintshptype" & vbNewLine)
+                al.Add("GlobalVariables.GL_selshpmethod = Ordrecord.Myintshpmethod" & vbNewLine)
+                al.Add("cmbShpType.SelectedValue = Ordrecord.Myintshptype" & vbNewLine)
+                al.Add("cmbshpmethod.SelectedValue = Ordrecord.Myintshpmethod" & vbNewLine)
+            End If
+
+            If Not (dbr2 Is Nothing) Then
+                dbr2.Close()
+            End If
+            If Not (mysqlConn Is Nothing) Then
+                mysqlConn.Close()
+            End If
+
         End Using
 
-
-        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & Intable & "_select.txt")
-
-        theWriter.WriteLine(selstment)
-
+        Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & InTable & "_reader.txt")
 
         For Each currentElement As String In al
             theWriter.WriteLine(currentElement)
         Next
-
         theWriter.Close()
 
-        CreateSelectStatement = True
+    End Sub
 
-    End Function
 
 End Module

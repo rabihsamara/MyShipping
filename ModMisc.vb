@@ -710,6 +710,82 @@ Exit_Excel:
 
     End Function
 
+    '*****************************************************************************************************
+    '* Create select statement for:
+    '* 1) Orders getdata by coulumn name and by special options.
+    '*
+    '*****************************************************************************************************
+    Public Function CreateSelectStatement(ByVal Intable As String, ByVal criteria As String) As Boolean
+
+        Dim tcode As String = ""
+        Dim tsql As String = ""
+        Dim selstment As String = ""
+        Dim tstval As String = ""
+        Dim i = 0
+
+        CreateSelectStatement = False
+
+        Using mysqlConn As New SqlConnection(GlobalVariables.Gl_ConnectionSTR)
+
+            If (Intable <> "") Then
+                tsql = "SELECT COLUMN_NAME,DATA_Type,ISnull(CHARACTER_MAXIMUM_LENGTH,0) as maxlngth FROM INFORMATION_SCHEMA.COLUMNS where  TABLE_NAME = '" & Intable & "'"
+            Else
+                Exit Function
+            End If
+
+            mysqlConn.Open()
+            Dim cmd As New SqlCommand(tsql, mysqlConn)
+            Dim dbr As SqlDataReader = cmd.ExecuteReader()
+
+            selstment = "select "
+
+            While dbr.Read()
+
+                If (i > 0) Then selstment = selstment & ","
+                tstval = dbr.Item("Column_Name")
+
+                If (dbr.Item("Data_type") = "varchar" Or dbr.Item("Data_type") = "char" Or dbr.Item("Data_type") = "datetime") Then
+                    If (String.Compare(Intable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "ordStat", StringComparison.InvariantCultureIgnoreCase) = 0) Then
+                        selstment = selstment & "(select ordstatfull from ordstatus where ordstatshort = ordStat) as ordstat"
+                    Else
+                        selstment = selstment & "isnull(" & dbr.Item("Column_Name") & ",'') as " & dbr.Item("Column_Name")
+                    End If
+                Else
+                    If (String.Compare(Intable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "cmbShpType", StringComparison.InvariantCultureIgnoreCase) = 0) Then
+                        selstment = selstment & "IIF(cmbShpType < 1,' ',(select Concat(shptype,' - ',shptime) from ordtypes where ID = cmbShpType)) as cmbShpType,cmbShpType as intshptype"
+                    ElseIf (String.Compare(Intable, "Orders", StringComparison.InvariantCultureIgnoreCase) = 0 And String.Compare(tstval, "cmbshpmethod", StringComparison.InvariantCultureIgnoreCase) = 0) Then
+                        selstment = selstment & "IIF(cmbshpmethod < 1,' ',(select concat(shpmshort,' - ',shpmfull) from shpmethods where ID = cmbshpmethod)) as cmbshpmethod,cmbshpmethod as intshpmethod"
+                    Else
+                        selstment = selstment & dbr.Item("Column_Name")
+                    End If
+                End If
+
+                i = 1
+            End While
+
+            selstment = selstment & " from " & Intable
+            If (criteria <> "") Then
+                selstment = selstment & " " & criteria
+            End If
+            GlobalVariables.Gl_SQLStr = selstment
+
+            If Not (dbr Is Nothing) Then
+                dbr.Close()
+            End If
+            If Not (mysqlConn Is Nothing) Then
+                mysqlConn.Close()
+            End If
+
+        End Using
+
+        '*************************************debug**************************************************
+        'Dim theWriter As New StreamWriter("C:\SCC\Projects\VbNetProjects\SourceFiling\Project_MYShipping\REL_01\" & Intable & "_select.txt")
+        'theWriter.WriteLine(selstment)
+        'theWriter.Close()
+        'CreateSelectStatement = True
+
+    End Function
+
     '***********************************************************************************************
     '* Misc functions/subs                                                                         *
     '***********************************************************************************************

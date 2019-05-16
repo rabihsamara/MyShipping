@@ -106,9 +106,9 @@
     Private Sub CmdTmp_Click(sender As Object, e As EventArgs) Handles cmdTmp.Click
 
         Dim ttable As String = InputBox("Enter Table", "Table", "", 100, 100)
-        ModTmp.RunClassGen(ttable)
-        ModTmp.CreateSelectStatement(ttable)
-
+        'ModTmp.RunClassGen(ttable)
+        'ModMisc.CreateSelectStatement(ttable, "where CustNo = 'SCC01' and AccountNo  = 'AC12345' and OrderNO = 3")
+        ModTmp.CreateReadercode(ttable)
     End Sub
 
     '**********************End tmp function *************************
